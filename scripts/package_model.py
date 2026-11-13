@@ -1,6 +1,7 @@
 """Conserva un checkpoint de desarrollo y su evidencia, sin copiar todo el entrenamiento."""
 
 import argparse
+import csv
 import hashlib
 import json
 from pathlib import Path
@@ -39,12 +40,23 @@ def main():
             if provenance["model_sha256"] != model_hash:
                 parser.error(f"{name} corresponde a otro modelo; no se mezclan resultados")
     metadata = json.loads((args.run_dir / "metadata.json").read_text(encoding="utf-8"))
+    partition_results = {}
+    for partition, filename in (("training/development", "comparison.csv"),
+                                ("validation", "validation.csv"), ("test", "test.csv")):
+        if filename in sources:
+            with (args.run_dir / filename).open(encoding="utf-8", newline="") as file:
+                rows = [row for row in csv.DictReader(file) if row["strategy"] == "dqn"]
+            partition_results[partition] = {
+                "episodes": len(rows), "successes": sum(row["success"] == "True" for row in rows),
+                "scenarios": [row["scenario"] for row in rows],
+            }
     summary = {
-        "scope": "development only; one training seed; not a held-out benchmark",
+        "scope": "checkpoint selected on development; one training seed; held-out checks listed separately",
         "selected_checkpoint": best,
         "last_checkpoint": records[-1],
         "model_sha256": model_hash,
         "observation_mode": metadata["config"].get("observation_mode", "full"),
+        "dqn_successes_by_partition": partition_results,
     }
     args.destination.mkdir(parents=True)
     for target, source in sources.items():

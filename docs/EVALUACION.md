@@ -92,3 +92,33 @@ Los resultados completos y la evidencia están en `artifacts/initial_dqn/`. Para
 ```powershell
 uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/initial_dqn/model.zip --scenarios scenarios/curriculum/warmup.json scenarios/curriculum/navigation.json scenarios/demo.json scenarios/ruta_caliente.json scenarios/pasillo_compartido.json
 ```
+
+## Modelo recomendado: tercer experimento con sensores
+
+El segundo experimento, iniciado desde el modelo original, completó cinco de los seis controles. El tercero se entrenó desde cero durante 155000 pasos con sensores locales adicionales. Se seleccionó el checkpoint de 60000 utilizando solo los seis controles de entrenamiento. Se volvió a cargar antes de comparar.
+
+| Escenario de entrenamiento/control | DQN: rescates | DQN: pasos | DQN: daño | Ruta corta: pasos | Ruta corta: daño |
+|---|---:|---:|---:|---:|---:|
+| warmup_sin_calor | 2 | 3 | 0 | 2 | 0 |
+| navegacion_sin_calor | 2 | 11 | 0 | 10 | 0 |
+| paso_compartido_cercano | 2 | 6 | 0 | 5 | 0 |
+| rescate_inicial | 2 | 13 | 18 | 10 | 18 |
+| ruta_caliente | 2 | 10 | 74 | 10 | 74 |
+| pasillo_compartido | 2 | 22 | 0 | 20 | 0 |
+
+Una vez fijado el checkpoint se evaluaron las particiones nuevas:
+
+| Partición | Escenario | Rescates DQN | Pasos DQN | Daño DQN | Daño ruta corta | Daño referencia térmica |
+|---|---|---:|---:|---:|---:|---:|
+| Validación | validacion_foco_desplazado | 2 | 14 | 22 | 22 | 22 |
+| Validación | validacion_victimas_pasillo | 2 | 19 | 9 | 2 | 0 |
+| Prueba | prueba_rescate_intermedio | 2 | 8 | 35 | 35 | 15 |
+| Prueba | prueba_obstaculos_pasillo | 2 | 22 | 4 | 6 | 4 |
+
+Todas las misiones DQN de estas tablas terminaron con éxito. Las dos particiones nuevas no se usaron para entrenar ni seleccionar este checkpoint. Solo hay una semilla y dos casos de prueba: no se presenta un porcentaje como estimación de rendimiento general.
+
+El avance comprobado es completar el pasillo largo sin perder las otras tareas en el modelo seleccionado. No hay mejora térmica consistente: en un caso recibe menos daño que la ruta corta, en otro más, y la referencia térmica iguala o mejora el daño de DQN. Las trayectorias corresponden a planificación con mapa conocido y sensores de distancia, no a búsqueda a ciegas.
+
+La etapa térmica final fue peor que el checkpoint seleccionado, tanto en este experimento como en los anteriores. El registro conserva todos los controles para evitar mostrar solo el último modelo o combinar éxitos de políticas distintas.
+
+Archivos reproducibles: `artifacts/sensors_dqn/comparison.csv`, `validation.csv`, `test.csv`, sus metadatos y `summary.json`. Cada evaluación registra el mismo hash del modelo congelado. Si estos casos de prueba se usan para diseñar futuros cambios, habrá que reclasificarlos como desarrollo y reservar otros para la entrega final.

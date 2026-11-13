@@ -1,0 +1,9 @@
+damage_robot_1,damage_robot_2,damage_total,integrity_robot_1,integrity_robot_2,outcome,planning_failures,rescued,return,scenario,seed,steps,strategy,success
+,,35,65,100,success,,2,165.12,prueba_rescate_intermedio,,8,dqn,True
+,,4,100,96,success,,2,245.48000000000002,prueba_obstaculos_pasillo,,22,dqn,True
+35,0,35,65,100,success,0,2,,prueba_rescate_intermedio,,8,shortest,True
+0,15,15,100,85,success,0,2,,prueba_rescate_intermedio,,36,thermal,True
+20,100,120,80,0,destroyed,0,0,,prueba_rescate_intermedio,0,18,random,False
+0,6,6,100,94,success,0,2,,prueba_obstaculos_pasillo,,20,shortest,True
+0,4,4,100,96,success,0,2,,prueba_obstaculos_pasillo,,20,thermal,True
+2,100,102,98,0,destroyed,0,0,,prueba_obstaculos_pasillo,0,38,random,False

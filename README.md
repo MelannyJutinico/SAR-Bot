@@ -6,7 +6,7 @@ Simulación académica de rescate cooperativo: dos robots deben evacuar a dos so
 
 ## Estado del proyecto
 
-Ya existe el motor, navegación de referencia, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. Se ejecutó un primer entrenamiento de 82000 pasos y se conserva un checkpoint cargable. Completa los cuatro escenarios del currículo, pero falla en el pasillo compartido e iguala el daño de la referencia en los mapas térmicos: todavía no demuestra generalización ni mejor gestión del calor. La interfaz Pygame sigue pendiente.
+Ya existe el motor, referencias geométrica y térmica, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. El modelo recomendado usa sensores locales y completa los seis controles de entrenamiento, dos casos de validación y dos de prueba. Resuelve el pasillo compartido que fallaba antes; todavía no demuestra mejor gestión térmica ni generalización amplia. La interfaz Pygame sigue pendiente.
 
 - [Contexto, alcance y reglas acordadas](docs/CONTEXTO.md)
 - [Plan de trabajo y base de la persona 1](docs/PLAN_DE_TRABAJO.md)
@@ -35,25 +35,33 @@ El motor y las referencias usan únicamente la biblioteca estándar de Python 3.
 
 ```powershell
 uv sync --extra rl --python 3.12
-uv run --extra rl python scripts/demo.py --strategy dqn --model artifacts/initial_dqn/model.zip
+uv run --extra rl python scripts/demo.py --strategy dqn --model artifacts/sensors_dqn/model.zip
 ```
 
 Para comparar el modelo cargado con las referencias:
 
 ```powershell
-uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/initial_dqn/model.zip
+uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/sensors_dqn/model.zip --split training
 ```
 
-El modelo incluido es el mejor checkpoint de desarrollo, a los 42000 pasos; no el último checkpoint, que empeoró en el escenario más caliente. Sus metadatos y resultados están en `artifacts/initial_dqn/`. Es una primera semilla de entrenamiento y no una entrega final validada.
+El modelo recomendado es el checkpoint de 60000 pasos de un entrenamiento de 155000. El último checkpoint empeoró y no fue seleccionado. Sus metadatos y resultados están en `artifacts/sensors_dqn/`. Se conserva la evidencia de los experimentos anteriores en `artifacts/initial_dqn/` y `artifacts/cooperation_dqn/`. Cada configuración se probó con una sola semilla; no es una entrega final validada.
+
+Para reproducir el pasillo compartido:
+
+```powershell
+uv run --extra rl python scripts/demo.py --strategy dqn --model artifacts/sensors_dqn/model.zip --scenario scenarios/pasillo_compartido.json
+```
+
+El modelo recomendado entrega ambas víctimas en 22 pasos, sin daño; la referencia geométrica necesita 20. En el escenario más caliente, DQN y la ruta corta reciben 74 puntos de daño; la referencia térmica recibe 34, pero tarda más. No se debe afirmar superioridad térmica de DQN.
 
 ### Entrenar y verificar
 
 ```powershell
 uv run --extra rl python -m unittest discover -s tests -v
-uv run --extra rl python scripts/train.py --run-dir outputs/nuevo-experimento
+uv run --extra rl python scripts/train.py --config configs/dqn_sensors.json --run-dir outputs/nuevo-experimento
 ```
 
-El directorio del experimento debe estar vacío. El entrenamiento usa `configs/dqn_initial.json`, registra episodios y evaluaciones, y guarda modelos por etapa, final y mejor. No hace falta entrenar para ejecutar el checkpoint incluido.
+El directorio del experimento debe estar vacío. El entrenamiento registra episodios y evaluaciones, y guarda modelos por etapa, final y mejor. Sin `--config` conserva la configuración histórica inicial. No hace falta entrenar para ejecutar los checkpoints incluidos.
 
 ### Ejecutar solo el motor y las referencias
 
@@ -84,6 +92,8 @@ uv run --no-project --python 3.12 scripts/demo.py --strategy random --seed 0
 
 `shortest` asigna víctimas distintas y busca movimientos conjuntos para llegar a los objetivos actuales en el menor número de pasos, sin considerar temperatura. Puede esperar o apartar un robot para evitar bloqueos; no garantiza completar cualquier misión. `random` selecciona entre las 25 acciones conjuntas usando una semilla reproducible. La demostración devuelve código de salida 1 si la misión fracasa o agota el tiempo.
 
+`thermal` añade el daño previsto al costo de los movimientos para buscar rutas más seguras. Tampoco aprende. La comparación de referencias incluye las tres estrategias.
+
 Para evaluar todas las referencias sobre los tres escenarios actuales:
 
 ```powershell
@@ -91,6 +101,8 @@ uv run --no-project --python 3.12 scripts/evaluate.py
 ```
 
 El CSV se guarda en `outputs/reference_results.csv`, excluido de Git porque puede regenerarse. Se pueden indicar `--scenarios`, `--strategy`, `--seed` y `--output`. Esta ejecución produce un episodio por escenario y estrategia; no es una evaluación estadística ni un conjunto de prueba reservado.
+
+Las particiones para el aprendizaje están en `configs/scenario_splits.json`. La comparación DQN admite `--split training`, `--split validation` o `--split test`, y genera metadatos con hashes. Los mapas nuevos se consultaron después de fijar el checkpoint; solo hay dos casos de prueba.
 
 ### Archivos para continuar
 
@@ -108,6 +120,9 @@ El CSV se guarda en `outputs/reference_results.csv`, excluido de Git porque pued
 | `scripts/evaluate_dqn.py` | Comparación de una política guardada con referencias |
 | `configs/dqn_initial.json` | Configuración reproducible del primer experimento |
 | `artifacts/initial_dqn/` | Modelo seleccionado, metadatos y resultados medidos |
+| `configs/dqn_sensors.json` | Experimento recomendado, con exploración por etapa y sensores |
+| `configs/scenario_splits.json` | Escenarios de entrenamiento, validación y prueba |
+| `artifacts/sensors_dqn/` | Modelo recomendado y comprobaciones de las tres particiones |
 
 `RescueSimulation.step(acción_conjunta)` avanza una unidad de tiempo para ambos robots. `snapshot()` expone datos JSON, y `reset()` reinicia el escenario estático. La acción conjunta es `5 * acción_robot_1 + acción_robot_2`, con acciones `UP=0`, `DOWN=1`, `LEFT=2`, `RIGHT=3`, `WAIT=4`.
 
@@ -115,4 +130,4 @@ La validación actual comprueba estructura y conectividad del mapa. La misión d
 
 ### Próximo hito
 
-Mejorar exploración y variedad de escenarios, separar entrenamiento/validación/prueba y comprobar adaptación térmica. La visualización Pygame puede consumir el mismo motor y `DQNPolicy`, sin replicar reglas.
+Mejorar la gestión térmica y repetir con varias semillas y más mapas reservados. La visualización Pygame puede consumir el mismo motor y `DQNPolicy`, sin replicar reglas. Si los casos de prueba actuales se usan para ajustar el entrenamiento, habrá que reservar otros nuevos.

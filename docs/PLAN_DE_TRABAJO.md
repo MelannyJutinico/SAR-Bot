@@ -16,7 +16,7 @@ Nosotros construiremos la base integrada, el aprendizaje y la dirección técnic
 8. Evaluación que exporte resultados por episodio.
 9. Verificaciones de reglas críticas y un escenario de misión completa reproducible.
 
-La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor, exposición térmica, referencias, evaluación CSV, Gymnasium, entrenamiento DQN, reproducción del modelo y verificaciones. Hay un primer modelo entrenado y un reporte de sus límites. Siguen pendientes la interfaz Pygame, una política que gestione mejor el calor y el diseño experimental con escenarios reservados.
+La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor, exposición térmica, referencias geométrica y térmica, evaluación CSV, Gymnasium, entrenamiento DQN, reproducción del modelo y verificaciones. El modelo con sensores completa seis controles y cuatro configuraciones nuevas separadas. Siguen pendientes la interfaz Pygame, una política que gestione mejor el calor y una evaluación más amplia con varias semillas y nuevos casos reservados.
 
 ## Separación de responsabilidades
 

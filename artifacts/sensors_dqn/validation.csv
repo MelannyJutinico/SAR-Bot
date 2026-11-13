@@ -1,0 +1,9 @@
+damage_robot_1,damage_robot_2,damage_total,integrity_robot_1,integrity_robot_2,outcome,planning_failures,rescued,return,scenario,seed,steps,strategy,success
+,,22,82,96,success,,2,194.2,validacion_foco_desplazado,,14,dqn,True
+,,9,100,91,success,,2,228.98000000000002,validacion_victimas_pasillo,,19,dqn,True
+18,4,22,82,96,success,0,2,,validacion_foco_desplazado,,10,shortest,True
+18,4,22,82,96,success,0,2,,validacion_foco_desplazado,,10,thermal,True
+74,100,174,26,0,destroyed,0,0,,validacion_foco_desplazado,0,24,random,False
+0,2,2,100,98,success,0,2,,validacion_victimas_pasillo,,18,shortest,True
+0,0,0,100,100,success,0,2,,validacion_victimas_pasillo,,18,thermal,True
+2,15,17,98,85,time_limit,0,0,,validacion_victimas_pasillo,0,100,random,False

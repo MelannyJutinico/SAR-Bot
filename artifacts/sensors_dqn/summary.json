@@ -1,0 +1,205 @@
+{
+  "scope": "checkpoint selected on development; one training seed; held-out checks listed separately",
+  "selected_checkpoint": {
+    "steps": 60000,
+    "stage": "cooperation",
+    "exploration_rate": 0.050000000000000044,
+    "elapsed_seconds": 123.58,
+    "results": [
+      {
+        "scenario": "warmup_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 3,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 215.07999999999998
+      },
+      {
+        "scenario": "navegacion_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 11,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 240.88
+      },
+      {
+        "scenario": "paso_compartido_cercano",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 6,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 216.3
+      },
+      {
+        "scenario": "rescate_inicial",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 13,
+        "damage_total": 18,
+        "integrity_robot_1": 82,
+        "integrity_robot_2": 100,
+        "return": 203.10000000000002
+      },
+      {
+        "scenario": "ruta_caliente",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 74,
+        "integrity_robot_1": 26,
+        "integrity_robot_2": 100,
+        "return": 93.80000000000001
+      },
+      {
+        "scenario": "pasillo_compartido",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 22,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 253.48000000000002
+      }
+    ],
+    "score": [
+      6,
+      12,
+      1222.64
+    ]
+  },
+  "last_checkpoint": {
+    "steps": 155000,
+    "stage": "thermal",
+    "exploration_rate": 0.050000000000000044,
+    "elapsed_seconds": 301.16,
+    "results": [
+      {
+        "scenario": "warmup_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 2,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 216.04
+      },
+      {
+        "scenario": "navegacion_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 241.8
+      },
+      {
+        "scenario": "paso_compartido_cercano",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 212.46
+      },
+      {
+        "scenario": "rescate_inicial",
+        "strategy": "dqn",
+        "outcome": "time_limit",
+        "success": false,
+        "rescued": 1,
+        "steps": 100,
+        "damage_total": 2,
+        "integrity_robot_1": 98,
+        "integrity_robot_2": 100,
+        "return": -28.240000000000006
+      },
+      {
+        "scenario": "ruta_caliente",
+        "strategy": "dqn",
+        "outcome": "time_limit",
+        "success": false,
+        "rescued": 1,
+        "steps": 100,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": -24.099999999999902
+      },
+      {
+        "scenario": "pasillo_compartido",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 23,
+        "damage_total": 2,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 98,
+        "return": 249.06
+      }
+    ],
+    "score": [
+      4,
+      10,
+      867.0200000000001
+    ]
+  },
+  "model_sha256": "897538a81faadc8449e0d6045afe073638ca090e2072389b93a8dcab055bdff0",
+  "observation_mode": "sensors",
+  "dqn_successes_by_partition": {
+    "training/development": {
+      "episodes": 6,
+      "successes": 6,
+      "scenarios": [
+        "warmup_sin_calor",
+        "navegacion_sin_calor",
+        "paso_compartido_cercano",
+        "rescate_inicial",
+        "ruta_caliente",
+        "pasillo_compartido"
+      ]
+    },
+    "validation": {
+      "episodes": 2,
+      "successes": 2,
+      "scenarios": [
+        "validacion_foco_desplazado",
+        "validacion_victimas_pasillo"
+      ]
+    },
+    "test": {
+      "episodes": 2,
+      "successes": 2,
+      "scenarios": [
+        "prueba_rescate_intermedio",
+        "prueba_obstaculos_pasillo"
+      ]
+    }
+  }
+}

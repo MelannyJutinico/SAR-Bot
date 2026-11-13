@@ -128,10 +128,14 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Implementar referencia automática, política aleatoria y evaluación CSV.
 - [x] Completar adaptador Gymnasium y recompensas verificadas.
 - [x] Entrenar, guardar, cargar y reproducir una primera política.
+- [x] Mejorar el controlador hasta completar el pasillo largo y los seis controles con un mismo checkpoint.
+- [x] Hacer una primera comprobación en dos mapas de validación y dos de prueba, fuera del entrenamiento.
 - [ ] Completar visualización Pygame.
 - [ ] Evaluar y preparar demostración.
 
 Ya hay evidencia de aprendizaje en escenarios del currículo: el modelo sin entrenar no los completaba y el checkpoint seleccionado sí. Todavía no hay evidencia de superioridad sobre la referencia ni de generalización.
+
+Actualización: el tercer experimento completa también los dos casos de validación y los dos de prueba registrados. Es una comprobación limitada de transferencia, no evidencia estadística de generalización amplia ni superioridad térmica.
 
 ### Primer incremento implementado
 
@@ -150,3 +154,11 @@ La referencia automática asigna objetivos a partir del mapa y calcula acciones 
 Se añadieron Gymnasium, observaciones completas normalizadas, recompensa compartida y guía por potencial. Se ejecutaron 82000 pasos DQN con semilla 0, en tres etapas. El mejor checkpoint quedó a los 42000 pasos y completa los cuatro escenarios del currículo. El checkpoint final falla en el escenario caliente, por lo que no se seleccionó.
 
 El modelo seleccionado se cargó de nuevo y se comparó con referencias. En los mapas del currículo iguala sus tiempos y daño; en el pasillo compartido falla. El modelo y los resultados están en `artifacts/initial_dqn/`. Falta mejorar adaptación térmica, variedad de mapas, separación experimental y visualización. Los comandos y el contrato están en `APRENDIZAJE.md`.
+
+### Cuarto incremento: cooperación, sensores y particiones
+
+Se añadió una referencia térmica que confirma una ruta de menor daño, exploración que reinicia por etapa y escenarios separados para validación y prueba. El segundo experimento aprendió el paso compartido cercano, pero no consolidó todas las tareas.
+
+El tercero añadió sensores locales y distancias de camino, conservando mapa completo y 25 acciones. Se entrenó desde cero durante 155000 pasos, semilla 0, y se seleccionó el checkpoint de 60000 con seis misiones completas. Después de congelarlo se consultaron dos casos de validación y dos de prueba: también completó los cuatro.
+
+El modelo recomendado está en `artifacts/sensors_dqn/`. En el pasillo largo entrega las dos víctimas en 22 pasos sin daño. En `ruta_caliente` mantiene 74 puntos de daño, por lo que no resolvió todavía la optimización térmica. La referencia térmica recibe 34 en ese escenario. Quedan pendientes más semillas, mapas reservados, mejor gestión térmica y la interfaz gráfica.

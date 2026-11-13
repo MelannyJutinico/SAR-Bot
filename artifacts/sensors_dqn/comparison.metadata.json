@@ -1,0 +1,26 @@
+{
+  "partition": "training",
+  "model_sha256": "897538a81faadc8449e0d6045afe073638ca090e2072389b93a8dcab055bdff0",
+  "scenario_hashes": {
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\curriculum\\warmup.json": "3f38b085e51abead0ce597d1c24df5514a50ba0a0bdc5ed3dafc1bb80cb6aef1",
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\curriculum\\navigation.json": "ea335dd06701337453151ac20ec2f0706341e344f5d475920940b99c2368ab0a",
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\curriculum\\handoff.json": "2678129dfe75a2052431d93b671d68ef711b2531090f649d46324d4f07eafa96",
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\demo.json": "4727b14840395e0e4f9db64f956b34d9ba74e84890c4a270e058a8fd962bf35e",
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\ruta_caliente.json": "a47b1c38d986812863a11d70f5b0eaf7e15129b01e04474968cb47a0d5990bed",
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\pasillo_compartido.json": "321cda8e3dbdbec575265e37ab65fb991025a49d516db03d97ebdf8508ab9617"
+  },
+  "reward_config": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99
+  },
+  "random_seed": 0,
+  "thermal_reference_damage_weight": 2.0,
+  "episodes_per_strategy_and_scenario": 1
+}

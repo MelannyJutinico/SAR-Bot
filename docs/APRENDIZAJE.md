@@ -15,7 +15,7 @@ uv run --extra rl python -m unittest discover -s tests -v
 
 El espacio de acción es `Discrete(25)` con la codificación conjunta existente. El adaptador llama una sola vez al motor por acción, conserva la exposición simultánea y distingue `terminated` de `truncated`.
 
-La observación tiene `2 × ancho × alto + 25` valores float32 entre 0 y 1; 97 para 6 × 6. Orden:
+La observación original (modo `full`) tiene `2 × ancho × alto + 25` valores float32 entre 0 y 1; 97 para 6 × 6. El modo recomendado `sensors` añade otros 60, descritos al final. Orden original:
 
 1. Paredes, por filas.
 2. Temperaturas por filas, recortadas al intervalo [0, 200] y divididas por 200. Esto normaliza la observación; el motor sigue usando la temperatura original.
@@ -142,6 +142,16 @@ uv run --extra rl python scripts/train.py --config configs/dqn_sensors.json --ru
 ```
 
 No se han usado los resultados de validación o prueba para diseñar este cambio.
+
+### Resultado del tercer experimento
+
+Se entrenaron 155000 pasos desde cero con semilla 0. El mejor checkpoint se obtuvo a los 60000; el último volvió a perder tareas térmicas. Se recargó el checkpoint seleccionado y resolvió los seis controles: warmup en 3 pasos, navegación en 11, paso cercano en 6, rescate inicial en 13, ruta caliente en 10 y pasillo largo en 22.
+
+Después de fijar el modelo se ejecutaron las particiones nuevas: completó los dos casos de validación y los dos de prueba. No se modificaron pesos, hiperparámetros o selección usando esos resultados. Se conserva la evidencia y sus hashes en `artifacts/sensors_dqn/`.
+
+El pasillo largo ahora queda resuelto con un único controlador que también completa las otras cinco tareas. La optimización térmica no está lograda: mantiene 18 y 74 puntos de daño en los dos mapas térmicos originales. Los cambios de inicialización, sensores, tasa de aprendizaje y muestreo no se aislaron en ablaciones; no puede atribuirse toda la mejora exclusivamente a los sensores.
+
+Los diez casos evaluados usan mapa conocido y distancias calculadas a partir del mapa; no se evalúa exploración a ciegas. Una sola semilla y dos configuraciones de prueba no bastan para generalización amplia.
 
 ## Fuentes técnicas
 

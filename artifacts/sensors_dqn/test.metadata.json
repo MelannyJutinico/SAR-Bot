@@ -1,0 +1,22 @@
+{
+  "partition": "test",
+  "model_sha256": "897538a81faadc8449e0d6045afe073638ca090e2072389b93a8dcab055bdff0",
+  "scenario_hashes": {
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\test\\shorter_rescue.json": "52b76730cf9cacb8662f98fe1f54ae59e203f32a0040e44cc415f2580c86c600",
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\test\\changed_corridor.json": "847f5ccbc1b07782e65858a03c7d786f2d46eecebd97a4498075060de02e57c4"
+  },
+  "reward_config": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99
+  },
+  "random_seed": 0,
+  "thermal_reference_damage_weight": 2.0,
+  "episodes_per_strategy_and_scenario": 1
+}
