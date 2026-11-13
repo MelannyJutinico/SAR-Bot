@@ -66,6 +66,14 @@ La comparación carga las recompensas de `metadata.json` junto al modelo, si exi
 
 Los resultados reales del primer entrenamiento se registrarán al terminar la ejecución.
 
+## Reproducir un controlador guardado
+
+```powershell
+uv run --extra rl python scripts/demo.py --strategy dqn --model outputs/dqn-initial/best_model.zip
+```
+
+Se puede agregar `--scenario escenarios/archivo.json` con la ruta real correspondiente (por ejemplo `scenarios/ruta_caliente.json`) o `--json`. La política actúa sobre la observación actual del motor, sin usar la referencia de caminos. La carga comprueba dimensiones del modelo y espacio de acciones. El entrenamiento de rescate cercano usa un mapa de 6 × 6 para mantener el mismo tamaño de observación en todas las etapas.
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)

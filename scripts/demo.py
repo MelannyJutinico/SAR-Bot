@@ -37,10 +37,13 @@ def render(simulation):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", action="store_true", help="Una instantánea JSON por paso")
-    parser.add_argument("--strategy", choices=("scripted", "shortest", "random"), default="scripted")
+    parser.add_argument("--strategy", choices=("scripted", "shortest", "random", "dqn"), default="scripted")
+    parser.add_argument("--model", type=Path, help="Modelo .zip para --strategy dqn")
     parser.add_argument("--scenario", type=Path, default=ROOT / "scenarios" / "demo.json")
     parser.add_argument("--seed", type=int, default=0, help="Semilla de la estrategia aleatoria")
     args = parser.parse_args()
+    if args.strategy == "dqn" and args.model is None:
+        parser.error("--strategy dqn requiere --model")
     if args.strategy == "scripted" and args.scenario.resolve() != (ROOT / "scenarios/demo.json").resolve():
         parser.error("La secuencia scripted solo es válida para el escenario demo.json")
     simulation = RescueSimulation(Scenario.load(args.scenario))
@@ -51,6 +54,9 @@ def main():
     plan = [(Action.RIGHT, Action.DOWN)] * 5 + [(Action.LEFT, Action.UP)] * 5
     policy = (ShortestPathPolicy(simulation) if args.strategy == "shortest" else
               RandomPolicy(simulation, args.seed) if args.strategy == "random" else None)
+    if args.strategy == "dqn":
+        from sar_bot.agents.dqn import DQNPolicy
+        policy = DQNPolicy(simulation, args.model)
     while simulation.state.outcome == "running":
         if policy is None:
             if simulation.state.steps >= len(plan):

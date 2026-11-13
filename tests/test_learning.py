@@ -47,6 +47,14 @@ class LearningTests(unittest.TestCase):
             self.assertLessEqual(result["steps"], scenario.max_steps)
             self.assertEqual(result["strategy"], "dqn")
             self.assertTrue(np.isfinite(result["return"]))
+            from sar_bot.agents.dqn import DQNPolicy
+            from sar_bot.core import RescueSimulation
+            simulation = RescueSimulation(scenario)
+            policy = DQNPolicy(simulation, path)
+            self.assertEqual(policy.act(simulation.state), int(action_after))
+            before = simulation.snapshot()
+            policy.act(simulation.state)
+            self.assertEqual(before, simulation.snapshot())
         env.close()
 
     def test_selection_prioritizes_mission_over_return(self):
