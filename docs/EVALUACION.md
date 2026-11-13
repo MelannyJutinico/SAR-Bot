@@ -2,7 +2,7 @@
 
 ## Qué existe
 
-Las referencias actuales no aprenden. Sirven para verificar escenarios y ofrecer una comparación futura con DQN.
+Las referencias no aprenden. Sirven para verificar escenarios y comparar con el primer modelo DQN, que ya fue entrenado y evaluado.
 
 ### Navegación automática: shortest
 
@@ -54,8 +54,29 @@ El escenario `pasillo_compartido` obliga a que los robots salgan de la base por 
 
 ## Próximos pasos experimentales
 
-- Adaptador Gymnasium con observaciones y recompensas fijadas en configuración.
-- Entrenamiento de una política, empezando con escenarios sin riesgo.
+- Mejorar la política a partir del primer entrenamiento ya ejecutado.
 - Escenarios separados de entrenamiento, validación y prueba.
 - Varias configuraciones y semillas; no repetir un mapa determinista para aparentar muestras distintas.
 - Comparar rescates y éxito antes de interpretar menor daño o menor duración.
+
+## Primer DQN: evaluación del modelo recargado
+
+Se entrenó una única semilla (0), durante 82000 pasos, y se seleccionó el checkpoint de 42000 mediante controles de desarrollo. La carga desde archivo produjo estos resultados:
+
+| Escenario | DQN: rescates | DQN: pasos | DQN: daño | Referencia: rescates | Referencia: pasos | Referencia: daño |
+|---|---:|---:|---:|---:|---:|---:|
+| warmup_sin_calor | 2 | 2 | 0 | 2 | 2 | 0 |
+| navegacion_sin_calor | 2 | 10 | 0 | 2 | 10 | 0 |
+| rescate_inicial | 2 | 10 | 18 | 2 | 10 | 18 |
+| ruta_caliente | 2 | 10 | 74 | 2 | 10 | 74 |
+| pasillo_compartido | 0 | 100 | 0 | 2 | 20 | 0 |
+
+Los primeros cuatro escenarios aparecen en el currículo y se usaron para seleccionar el checkpoint. El pasillo compartido es una comprobación adicional fuera del currículo; tampoco constituye por sí solo una prueba estadística reservada. DQN agota el tiempo en ese mapa.
+
+El modelo sin entrenar no completó ninguno de los primeros cuatro escenarios. Esto es evidencia de aprendizaje de la tarea en esos casos, pero el checkpoint seleccionado no supera la referencia ni demuestra adaptación al riesgo térmico. La política de daño cero que no entrega víctimas no debe considerarse mejor.
+
+Los resultados completos y la evidencia están en `artifacts/initial_dqn/`. Para regenerar la misma comparación:
+
+```powershell
+uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/initial_dqn/model.zip --scenarios scenarios/curriculum/warmup.json scenarios/curriculum/navigation.json scenarios/demo.json scenarios/ruta_caliente.json scenarios/pasillo_compartido.json
+```

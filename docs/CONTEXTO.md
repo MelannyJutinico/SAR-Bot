@@ -126,11 +126,12 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Implementar primera base del motor, ejecutable por consola.
 - [x] Verificar reglas críticas y una misión viable en el escenario de demostración.
 - [x] Implementar referencia automática, política aleatoria y evaluación CSV.
-- [ ] Completar la base integrada: Gymnasium y visualización Pygame.
-- [ ] Entrenar y guardar una política.
+- [x] Completar adaptador Gymnasium y recompensas verificadas.
+- [x] Entrenar, guardar, cargar y reproducir una primera política.
+- [ ] Completar visualización Pygame.
 - [ ] Evaluar y preparar demostración.
 
-No existe aún evidencia experimental de que el agente aprenda o supere la referencia.
+Ya hay evidencia de aprendizaje en escenarios del currículo: el modelo sin entrenar no los completaba y el checkpoint seleccionado sí. Todavía no hay evidencia de superioridad sobre la referencia ni de generalización.
 
 ### Primer incremento implementado
 
@@ -143,3 +144,9 @@ La demostración programada evacúa dos víctimas en diez pasos con integridad f
 ### Segundo incremento implementado
 
 La referencia automática asigna objetivos a partir del mapa y calcula acciones sin una secuencia predefinida. La búsqueda usa la misma función de movimiento que el simulador y no modifica el tiempo ni la integridad mientras planifica. Hay tres escenarios de desarrollo, una política aleatoria con semilla y exportación CSV de un episodio por estrategia y escenario. Los resultados medidos y sus límites figuran en `EVALUACION.md`. Todavía no hay entrenamiento ni prueba reservada.
+
+### Tercer incremento: aprendizaje ejecutado
+
+Se añadieron Gymnasium, observaciones completas normalizadas, recompensa compartida y guía por potencial. Se ejecutaron 82000 pasos DQN con semilla 0, en tres etapas. El mejor checkpoint quedó a los 42000 pasos y completa los cuatro escenarios del currículo. El checkpoint final falla en el escenario caliente, por lo que no se seleccionó.
+
+El modelo seleccionado se cargó de nuevo y se comparó con referencias. En los mapas del currículo iguala sus tiempos y daño; en el pasillo compartido falla. El modelo y los resultados están en `artifacts/initial_dqn/`. Falta mejorar adaptación térmica, variedad de mapas, separación experimental y visualización. Los comandos y el contrato están en `APRENDIZAJE.md`.

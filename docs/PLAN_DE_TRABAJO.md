@@ -16,7 +16,7 @@ Nosotros construiremos la base integrada, el aprendizaje y la dirección técnic
 8. Evaluación que exporte resultados por episodio.
 9. Verificaciones de reglas críticas y un escenario de misión completa reproducible.
 
-La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor determinista, exposición térmica, tres escenarios de desarrollo, reproducción por consola, referencia automática, política aleatoria, evaluación CSV y verificaciones. Siguen pendientes Gymnasium, DQN, la interfaz Pygame y el diseño experimental con escenarios reservados.
+La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor, exposición térmica, referencias, evaluación CSV, Gymnasium, entrenamiento DQN, reproducción del modelo y verificaciones. Hay un primer modelo entrenado y un reporte de sus límites. Siguen pendientes la interfaz Pygame, una política que gestione mejor el calor y el diseño experimental con escenarios reservados.
 
 ## Separación de responsabilidades
 
@@ -74,11 +74,11 @@ El calendario es un objetivo, no evidencia de progreso ni una garantía de conve
 
 ## Criterios de entrega
 
-- [ ] Instalación documentada y reproducible.
-- [ ] Dos robots y dos sobrevivientes visibles.
-- [ ] Calor y daño acumulativo según tiempo simulado.
-- [ ] Controlador entrenado guardado y cargable.
-- [ ] Referencia comparable y resultados medidos.
+- [x] Instalación documentada y reproducible.
+- [x] Dos robots y dos sobrevivientes visibles por consola; falta interfaz gráfica.
+- [x] Calor y daño acumulativo según tiempo simulado.
+- [x] Primer controlador entrenado guardado y cargable.
+- [x] Referencia comparable y resultados de desarrollo medidos; falta evaluación final.
 - [ ] Panel de integridad, turnos, rescates y estado de misión.
 - [ ] Pausa, reinicio, velocidad y selección de estrategia.
 - [ ] Informe de resultados y limitaciones.

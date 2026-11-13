@@ -64,7 +64,17 @@ El directorio de ejecución debe estar vacío. Guarda metadatos, hashes y copias
 
 La comparación carga las recompensas de `metadata.json` junto al modelo, si existe; permite indicar otro archivo con `--metadata`. Sin metadatos usa `RewardConfig` predeterminado. Las métricas de misión siempre proceden del motor.
 
-Los resultados reales del primer entrenamiento se registrarán al terminar la ejecución.
+## Resultado del primer entrenamiento real
+
+Se ejecutaron 82000 pasos con semilla 0 en CPU. La última evaluación quedó registrada a los 172,84 segundos desde el inicio del callback; la carga de dependencias y preparación están fuera de ese tiempo. El modelo sin entrenar no completó ninguna de las cuatro misiones del currículo.
+
+El mejor checkpoint se obtuvo a los 42000 pasos, al terminar navegación. Se volvió a cargar del archivo y completó las cuatro misiones. La etapa térmica posterior fue inestable y no produjo un mejor checkpoint: al terminar rescató solo una víctima en `ruta_caliente`, aunque recibió daño cero. Esto muestra por qué conservar éxito y rescates como criterios de selección es necesario.
+
+Los archivos compartibles del experimento están en `artifacts/initial_dqn/`: modelo, metadatos, evaluación temporal, comparación CSV y resumen con SHA-256. El entrenamiento completo, modelos por etapa y registros por episodio permanecen en `outputs/dqn-initial/`, fuera de Git.
+
+El checkpoint seleccionado iguala a la referencia en los mapas del currículo; no demostró mejor gestión térmica. Falla en el pasillo compartido, que no formó parte del currículo. Una sola semilla y mapas usados para selección no permiten afirmar generalización.
+
+Un próximo experimento debe revisar exploración al cambiar de etapa, aumentar diversidad gradualmente y separar validación y prueba. No basta con aumentar pasos: en esta ejecución entrenar más empeoró parte de la conducta.
 
 ## Reproducir un controlador guardado
 
@@ -72,7 +82,19 @@ Los resultados reales del primer entrenamiento se registrarán al terminar la ej
 uv run --extra rl python scripts/demo.py --strategy dqn --model outputs/dqn-initial/best_model.zip
 ```
 
-Se puede agregar `--scenario escenarios/archivo.json` con la ruta real correspondiente (por ejemplo `scenarios/ruta_caliente.json`) o `--json`. La política actúa sobre la observación actual del motor, sin usar la referencia de caminos. La carga comprueba dimensiones del modelo y espacio de acciones. El entrenamiento de rescate cercano usa un mapa de 6 × 6 para mantener el mismo tamaño de observación en todas las etapas.
+Se puede agregar `--scenario scenarios/ruta_caliente.json` o `--json`. La política actúa sobre la observación actual del motor, sin usar la referencia de caminos. La carga comprueba dimensiones del modelo y espacio de acciones. El entrenamiento de rescate cercano usa un mapa de 6 × 6 para mantener el mismo tamaño de observación en todas las etapas.
+
+Para compartir el checkpoint sin copiar todo el entrenamiento, después de generar `comparison.csv`:
+
+```powershell
+uv run --extra rl python scripts/package_model.py --run-dir outputs/dqn-initial --destination artifacts/nuevo-modelo
+```
+
+El destino debe ser nuevo. El primer modelo ya está empaquetado y se puede reproducir directamente:
+
+```powershell
+uv run --extra rl python scripts/demo.py --strategy dqn --model artifacts/initial_dqn/model.zip
+```
 
 ## Fuentes técnicas
 
