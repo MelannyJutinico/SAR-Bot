@@ -83,6 +83,24 @@ class EnvTests(unittest.TestCase):
                 env.step(action)
         self.assertEqual(before, env.simulation.snapshot())
 
+    def test_local_sensors_expose_legal_moves_heat_and_goal_distances(self):
+        env = RescueEnv([self.scenario()], observation_mode="sensors")
+        obs, _ = env.reset(seed=0)
+        self.assertEqual(obs.shape, (157,))
+        self.assertTrue(env.observation_space.contains(obs))
+        # Sensores: 6 valores por acción, primero robot 0, orden UP/DOWN/LEFT/RIGHT/WAIT.
+        up = obs[97:103]
+        right = obs[97 + 3 * 6:97 + 4 * 6]
+        self.assertEqual(up[0], 0)
+        np.testing.assert_allclose(right, [1, 0, 30 / 200, 1 / 36, 4 / 36, 6 / 36])
+
+    def test_sensor_mode_passes_both_official_checkers(self):
+        from gymnasium.utils.env_checker import check_env as check_gym
+        from stable_baselines3.common.env_checker import check_env as check_sb3
+        env = RescueEnv([self.scenario()], observation_mode="sensors")
+        check_gym(env, skip_render_check=True)
+        check_sb3(env)
+
 
 if __name__ == "__main__":
     unittest.main()

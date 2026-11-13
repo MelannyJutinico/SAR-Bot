@@ -3,10 +3,19 @@
 from sar_bot.env import RescueEnv, RewardConfig
 
 
+def observation_mode_for_model(model, scenario):
+    size = 2 * scenario.width * scenario.height + 25
+    modes = {(size,): "full", (size + 60,): "sensors"}
+    try:
+        return modes[model.observation_space.shape]
+    except KeyError:
+        raise ValueError("El modelo no coincide con las dimensiones o esquema del escenario") from None
+
+
 def evaluate_model(model, scenarios, rewards: RewardConfig | None = None):
     results = []
     for scenario in scenarios:
-        env = RescueEnv([scenario], rewards)
+        env = RescueEnv([scenario], rewards, observation_mode=observation_mode_for_model(model, scenario))
         observation, _ = env.reset(seed=0)
         episode_return = 0.0
         while True:

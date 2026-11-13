@@ -41,7 +41,8 @@ class RescueEnv(gym.Env):
 
     metadata = {"render_modes": []}
 
-    def __init__(self, scenarios: list[Scenario], rewards: RewardConfig | None = None):
+    def __init__(self, scenarios: list[Scenario], rewards: RewardConfig | None = None,
+                 observation_mode: str = "full"):
         super().__init__()
         if not scenarios:
             raise ValueError("Se requiere al menos un escenario")
@@ -50,9 +51,14 @@ class RescueEnv(gym.Env):
         if any((s.width, s.height) != (self.width, self.height) for s in scenarios):
             raise ValueError("Todos los escenarios deben compartir dimensiones")
         self.rewards = rewards or RewardConfig()
+        if observation_mode not in ("full", "sensors"):
+            raise ValueError("observation_mode debe ser full o sensors")
+        self.observation_mode = observation_mode
         self.action_space = spaces.Discrete(25)
         self.observation_space = spaces.Box(
-            0.0, 1.0, shape=(2 * self.width * self.height + 25,), dtype=np.float32
+            0.0, 1.0,
+            shape=(2 * self.width * self.height + 25 + (60 if observation_mode == "sensors" else 0),),
+            dtype=np.float32
         )
         self._distances = [self._compute_distances(s) for s in scenarios]
         self.scenario_index = 0
@@ -110,6 +116,22 @@ class RescueEnv(gym.Env):
                       1 if any(r.carrying == victim_id for r in state.robots) else 0)
             values.extend(float(i == status) for i in range(3))
         values.append(state.steps / scenario.max_steps)
+        if self.observation_mode == "sensors":
+            # Datos locales explícitos: la MLP no necesita aprender a indexar el
+            # mapa a partir de coordenadas para reconocer paredes o calor cercano.
+            distances = self._distances[self.scenario_index]
+            for robot_id, robot in enumerate(state.robots):
+                for dx, dy in OFFSETS:
+                    candidate = (robot.position[0] + dx, robot.position[1] + dy)
+                    legal = scenario.walkable(candidate)
+                    destination = candidate if legal else robot.position
+                    occupied = (destination == state.robots[1 - robot_id].position
+                                and destination != scenario.base)
+                    values.extend((float(legal), float(occupied),
+                                   float(np.clip(scenario.temperature_at(destination), 0, 200)) / 200))
+                    for goal in (scenario.base, *scenario.victims):
+                        values.append(distances.get((destination, goal), self.width * self.height)
+                                      / (self.width * self.height))
         return np.asarray(values, dtype=np.float32)
 
     def _potential(self, state: MissionState):

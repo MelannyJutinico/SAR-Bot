@@ -62,6 +62,30 @@ class LearningTests(unittest.TestCase):
         incomplete = [{"success": False, "rescued": 1, "return": 1000}]
         self.assertGreater(model_score(successful), model_score(incomplete))
 
+    def test_sensor_policy_and_stage_schedule_survive_save_load(self):
+        from sar_bot.agents.dqn import DQNPolicy
+        from sar_bot.core import RescueSimulation
+        from sar_bot.training import StageExploration
+        scenario = Scenario.load(ROOT / "scenarios/curriculum/warmup.json")
+        env = RescueEnv([scenario], observation_mode="sensors")
+        torch.set_num_threads(1)
+        model = DQN("MlpPolicy", env, seed=0, device="cpu", buffer_size=100,
+                    learning_starts=4, batch_size=8, train_freq=4,
+                    policy_kwargs={"net_arch": [16, 16]})
+        model.exploration_schedule = StageExploration(0, 16)
+        model.learn(total_timesteps=16)
+        temporary_root = ROOT / "tmp" / "tests"
+        temporary_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=temporary_root) as directory:
+            path = Path(directory) / "sensors.zip"
+            model.save(path)
+            policy = DQNPolicy(RescueSimulation(scenario), path)
+            self.assertEqual(policy.env.observation_mode, "sensors")
+            self.assertAlmostEqual(policy.model.exploration_schedule(0), 0.05)
+            result = evaluate_model(policy.model, [scenario])[0]
+            self.assertLessEqual(result["steps"], scenario.max_steps)
+        env.close()
+
 
 if __name__ == "__main__":
     unittest.main()

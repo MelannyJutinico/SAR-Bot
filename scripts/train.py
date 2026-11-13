@@ -74,7 +74,9 @@ def main():
                           for stage in config["stages"]]
     evaluation = [Scenario.load(ROOT / p) for p in config["evaluation_scenarios"]]
     # Validar dimensiones antes de crear archivos o comenzar un entrenamiento.
-    check_env(RescueEnv([s for stage in scenarios_by_stage for s in stage] + evaluation, rewards))
+    observation_mode = config.get("observation_mode", "full")
+    check_env(RescueEnv([s for stage in scenarios_by_stage for s in stage] + evaluation,
+                       rewards, observation_mode=observation_mode))
     for stage in config["stages"]:
         if "exploration" in stage:
             StageExploration(0, stage["steps"], **stage["exploration"])
@@ -109,7 +111,8 @@ def main():
     model = None
     try:
         for stage, scenarios in zip(config["stages"], scenarios_by_stage):
-            env = Monitor(RescueEnv(scenarios, rewards), str(args.run_dir / f"{stage['name']}.monitor.csv"))
+            env = Monitor(RescueEnv(scenarios, rewards, observation_mode=observation_mode),
+                          str(args.run_dir / f"{stage['name']}.monitor.csv"))
             env.reset(seed=config["seed"])
             if model is None:
                 if initial_model is None:

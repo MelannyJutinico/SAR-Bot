@@ -27,6 +27,9 @@ class ScenarioSplitTests(unittest.TestCase):
         self.assertLessEqual(used, set(splits["training"]))
         self.assertFalse(used & set(splits["validation"] + splits["test"]))
         self.assertLessEqual(set(config["evaluation_scenarios"]), set(splits["training"]))
+        sensors = json.loads((ROOT / "configs/dqn_sensors.json").read_text(encoding="utf-8"))
+        sensor_inputs = {path for stage in sensors["stages"] for path in stage["scenarios"]}
+        self.assertLessEqual(sensor_inputs | set(sensors["evaluation_scenarios"]), set(splits["training"]))
 
     def test_unseen_scenarios_are_physically_solvable(self):
         splits = json.loads((ROOT / "configs/scenario_splits.json").read_text(encoding="utf-8"))

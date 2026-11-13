@@ -125,6 +125,24 @@ uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/initial_dqn/m
 
 Estos comandos son ejemplos de uso; no implica que se haya evaluado ya cada modelo sobre esas particiones. Cada comparación genera un CSV y un archivo `.metadata.json` con partición, hashes de modelo y escenarios, recompensas y semilla. Dos casos de prueba solo constituyen una comprobación inicial; no permiten una conclusión estadística de generalización.
 
+## Tercer experimento: sensores locales explícitos
+
+El segundo experimento completó cinco de los seis controles con su mejor checkpoint: aprendió el paso compartido cercano, pero todavía entregó una sola víctima en el pasillo largo. Algunos checkpoints resolvieron el pasillo a costa de perder otras tareas. La exploración por etapas no bastó para consolidarlas.
+
+Se añadió un modo opcional `observation_mode="sensors"`. Conserva los 97 valores originales y añade 60: por cada robot y cada una de las cinco acciones, informa legalidad frente a paredes, ocupación por el compañero, temperatura de la celda resultante y distancia de camino hasta base y ambas víctimas. Las distancias ignoran calor y se normalizan por el número de celdas; no son acciones del planificador ni un plan de rescate conjunto.
+
+Esto evita que la red tenga que aprender primero a indexar la matriz del edificio para reconocer riesgos inmediatos. DQN sigue eligiendo las 25 acciones conjuntas y aprendiendo sus consecuencias. El motor, la exposición y los objetivos de misión no cambian.
+
+El modo completo original sigue disponible y los modelos previos continúan cargando con sus 97 entradas. Los comandos de evaluación y reproducción identifican el esquema por las dimensiones de entrada del modelo. El modelo con sensores usa 157 entradas para 6 × 6.
+
+`configs/dqn_sensors.json` entrena desde cero (no usa pesos de otra dimensión): 15000 pasos de rescates cercanos, 50000 de cooperación y 90000 térmicos. Mantiene la penalización de daño −2 y la exploración por etapa. Usa únicamente la partición de entrenamiento.
+
+```powershell
+uv run --extra rl python scripts/train.py --config configs/dqn_sensors.json --run-dir outputs/dqn-sensors
+```
+
+No se han usado los resultados de validación o prueba para diseñar este cambio.
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)
