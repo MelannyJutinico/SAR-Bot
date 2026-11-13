@@ -9,5 +9,16 @@ description = "Simulador académico de rescate cooperativo con riesgo térmico"
 requires-python = ">=3.11"
 dependencies = []
 
+[project.optional-dependencies]
+rl = ["gymnasium>=1.0,<2", "numpy>=1.26,<3", "stable-baselines3>=2.4,<3"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
