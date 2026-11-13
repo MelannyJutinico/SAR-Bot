@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Configuración local y secretos
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+
+# Archivos temporales y resultados regenerables
+tmp/
+outputs/
+runs/
+models/
+*.log
+Thumbs.db
+.DS_Store
