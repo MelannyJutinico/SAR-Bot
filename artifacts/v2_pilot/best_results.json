@@ -1,0 +1,30 @@
+[
+  {
+    "scenario": "v2_rescate_cercano_tres_personas",
+    "strategy": "dqn",
+    "outcome": "success",
+    "scenario_id": "be50e50645b81bf72654d7624845cbc809289f1a6358d11b3180222cc1737467",
+    "victims_total": 3,
+    "success": true,
+    "rescued": 3,
+    "steps": 6,
+    "damage_total": 0,
+    "integrity_robot_1": 100,
+    "integrity_robot_2": 100,
+    "return": 260.2952380952381
+  },
+  {
+    "scenario": "edificio_10x10_tres_personas",
+    "strategy": "dqn",
+    "outcome": "time_limit",
+    "scenario_id": "39c0ecebd429a79da144d13c604fed2dedc306c5dd4f62cfbe2ca0b885e7edeb",
+    "victims_total": 3,
+    "success": false,
+    "rescued": 0,
+    "steps": 240,
+    "damage_total": 0,
+    "integrity_robot_1": 100,
+    "integrity_robot_2": 100,
+    "return": -229.26507936507934
+  }
+]

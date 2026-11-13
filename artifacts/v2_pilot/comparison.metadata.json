@@ -1,0 +1,23 @@
+{
+  "partition": "development/custom",
+  "model_sha256": "77af198aee3cdd7b7134ca994a7bb6923b579f91ffe36b24124539f233999f2e",
+  "scenario_hashes": {
+    "scenarios\\v2\\warmup_10x10.json": "c310dc3b0d64e85788cd2325c567c7295b05b8f39729da9da029974dfe48aef9",
+    "scenarios\\v2\\building_10x10.json": "44e0953649a3d89abb05a77840f411e4c14f0b6ad67290b3e40e0354ea6b0748"
+  },
+  "reward_config": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99,
+    "potential_bound": 40.0
+  },
+  "random_seed": 0,
+  "thermal_reference_damage_weight": 2.0,
+  "episodes_per_strategy_and_scenario": 1
+}
