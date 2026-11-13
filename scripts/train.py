@@ -46,7 +46,7 @@ class DevelopmentEvaluation(BaseCallback):
         if self.best_score is None or score > self.best_score:
             self.best_score = score
             self.model.save(self.run_dir / "best_model")
-        status = "; ".join(f"{r['scenario']}: {r['rescued']}/2, {r['outcome']}, "
+        status = "; ".join(f"{r['scenario']}: {r['rescued']}/{r['victims_total']}, {r['outcome']}, "
                            f"pasos={r['steps']}, daño={r['damage_total']}" for r in results)
         print(f"[{self.stage} | {self.model.num_timesteps} pasos] {status}", flush=True)
         return results
@@ -61,8 +61,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=ROOT / "configs/dqn_initial.json")
     parser.add_argument("--run-dir", type=Path, default=ROOT / "outputs/dqn-initial")
+    parser.add_argument("--seed", type=int, help="Sobrescribe la semilla del JSON para una ejecución independiente")
     args = parser.parse_args()
     config = json.loads(args.config.read_text(encoding="utf-8"))
+    if args.seed is not None:
+        if not 0 <= args.seed < 2**32:
+            parser.error("La semilla debe estar entre 0 y 2**32 - 1")
+        config["seed"] = args.seed
     if args.run_dir.exists() and any(args.run_dir.iterdir()):
         parser.error("run-dir debe estar vacío para no sobrescribir otro experimento")
     rewards = RewardConfig(**config["rewards"])
@@ -75,8 +80,9 @@ def main():
     evaluation = [Scenario.load(ROOT / p) for p in config["evaluation_scenarios"]]
     # Validar dimensiones antes de crear archivos o comenzar un entrenamiento.
     observation_mode = config.get("observation_mode", "full")
-    check_env(RescueEnv([s for stage in scenarios_by_stage for s in stage] + evaluation,
-                       rewards, observation_mode=observation_mode))
+    checked_env = RescueEnv([s for stage in scenarios_by_stage for s in stage] + evaluation,
+                           rewards, observation_mode=observation_mode)
+    check_env(checked_env)
     for stage in config["stages"]:
         if "exploration" in stage:
             StageExploration(0, stage["steps"], **stage["exploration"])
@@ -89,12 +95,16 @@ def main():
                    | set(config["evaluation_scenarios"]))
     revision = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT,
                               capture_output=True, text=True, check=False).stdout.strip()
+    training_ids = {scenario.fingerprint() for stage in scenarios_by_stage for scenario in stage}
+    overlap = [scenario.name for scenario in evaluation if scenario.fingerprint() in training_ids]
     metadata = {"config": config, "rewards": asdict(rewards), "git_revision": revision,
+                "observation_profile": checked_env.profile,
                 "python": sys.version, "packages": {
                     name: importlib.metadata.version(name)
                     for name in ("torch", "gymnasium", "stable-baselines3", "numpy")},
                 "scenario_hashes": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths},
-                "evaluation_scope": "development scenarios also used in training; not held-out test"}
+                "evaluation_scope": "development/selection; overlap listed explicitly; not final test",
+                "evaluation_overlap_with_training": overlap}
     if initial_model is not None:
         metadata["initial_model"] = {
             "path": config["initial_model"],
@@ -126,6 +136,7 @@ def main():
                     # Contabilizar pasos nuevos del experimento, sin borrar pesos ni optimizador.
                     model.num_timesteps = 0
                     callback.stage = "warm_start"
+                model.sar_bot_profile = env.unwrapped.profile
                 callback.init_callback(model)
                 callback.evaluate()
             else:

@@ -4,8 +4,12 @@ from sar_bot.env import RescueEnv, RewardConfig
 
 
 def observation_mode_for_model(model, scenario):
-    size = 2 * scenario.width * scenario.height + 25
-    modes = {(size,): "full", (size + 60,): "sensors"}
+    profile = getattr(model, "sar_bot_profile", None)
+    if profile and (profile["width"], profile["height"], profile["victims"]) != (
+            scenario.width, scenario.height, scenario.victim_count):
+        raise ValueError("Modelo incompatible: tamaño de edificio o cantidad de personas distintos")
+    modes = {(RescueEnv.observation_size(scenario.width, scenario.height, scenario.victim_count, mode),): mode
+             for mode in ("full", "sensors")}
     try:
         return modes[model.observation_space.shape]
     except KeyError:

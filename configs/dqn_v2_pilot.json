@@ -1,0 +1,31 @@
+{
+  "seed": 0,
+  "torch_threads": 1,
+  "evaluation_interval": 5000,
+  "observation_mode": "sensors",
+  "rewards": {
+    "step": -1.0, "pickup": 5.0, "delivery": 50.0,
+    "success": 100.0, "destruction": -100.0,
+    "timeout": -20.0, "damage": -2.0, "shaping": 2.0, "gamma": 0.99
+  },
+  "dqn": {
+    "learning_rate": 0.0005, "buffer_size": 50000, "learning_starts": 500,
+    "batch_size": 64, "gamma": 0.99, "train_freq": 4, "gradient_steps": 1,
+    "target_update_interval": 500,
+    "exploration_fraction": 0.8, "exploration_initial_eps": 1.0, "exploration_final_eps": 0.05,
+    "policy_kwargs": {"net_arch": [128, 128]}
+  },
+  "stages": [
+    {
+      "name": "v2_warmup", "steps": 30000,
+      "exploration": {"initial": 1.0, "final": 0.05, "fraction": 0.8},
+      "scenarios": ["scenarios/v2/warmup_10x10.json"]
+    },
+    {
+      "name": "v2_building", "steps": 60000,
+      "exploration": {"initial": 0.6, "final": 0.05, "fraction": 0.8},
+      "scenarios": ["scenarios/v2/warmup_10x10.json", "scenarios/v2/building_10x10.json"]
+    }
+  ],
+  "evaluation_scenarios": ["scenarios/v2/warmup_10x10.json", "scenarios/v2/building_10x10.json"]
+}

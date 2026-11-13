@@ -2,7 +2,7 @@
 
 from collections import deque
 from dataclasses import dataclass
-from itertools import permutations, product
+from itertools import product
 from math import isfinite
 
 import gymnasium as gym
@@ -48,8 +48,10 @@ class RescueEnv(gym.Env):
             raise ValueError("Se requiere al menos un escenario")
         self.scenarios = tuple(scenarios)
         self.width, self.height = scenarios[0].width, scenarios[0].height
-        if any((s.width, s.height) != (self.width, self.height) for s in scenarios):
-            raise ValueError("Todos los escenarios deben compartir dimensiones")
+        self.victim_count = scenarios[0].victim_count
+        if any((s.width, s.height, s.victim_count) != (self.width, self.height, self.victim_count)
+               for s in scenarios):
+            raise ValueError("Los escenarios de un perfil deben compartir dimensiones y cantidad de personas")
         self.rewards = rewards or RewardConfig()
         if observation_mode not in ("full", "sensors"):
             raise ValueError("observation_mode debe ser full o sensors")
@@ -57,13 +59,23 @@ class RescueEnv(gym.Env):
         self.action_space = spaces.Discrete(25)
         self.observation_space = spaces.Box(
             0.0, 1.0,
-            shape=(2 * self.width * self.height + 25 + (60 if observation_mode == "sensors" else 0),),
+            shape=(self.observation_size(self.width, self.height, self.victim_count, observation_mode),),
             dtype=np.float32
         )
         self._distances = [self._compute_distances(s) for s in scenarios]
         self.scenario_index = 0
         self.simulation = RescueSimulation(scenarios[0])
         self._needs_reset = True
+
+    @staticmethod
+    def observation_size(width, height, victims, mode):
+        return 2 * width * height + 11 + 7 * victims + (40 + 10 * victims if mode == "sensors" else 0)
+
+    @property
+    def profile(self):
+        return {"schema_version": 2, "width": self.width, "height": self.height,
+                "victims": self.victim_count, "mode": self.observation_mode,
+                "observation_size": self.observation_space.shape[0], "actions": 25}
 
     @staticmethod
     def _compute_distances(scenario):
@@ -93,8 +105,13 @@ class RescueEnv(gym.Env):
                 raise ValueError("scenario_index fuera de rango")
         else:
             index = int(self.np_random.integers(len(self.scenarios)))
+        scenario = self.scenarios[index]
+        if options and "victim_positions" in options:
+            scenario = scenario.with_victims(options["victim_positions"])
+            if scenario.victim_count != self.victim_count:
+                raise ValueError("La cantidad de personas editadas debe coincidir con el perfil")
         self.scenario_index = index
-        self.simulation = RescueSimulation(self.scenarios[index])
+        self.simulation = RescueSimulation(scenario)
         self._needs_reset = False
         return self.observation(), self._info()
 
@@ -110,8 +127,8 @@ class RescueEnv(gym.Env):
         values.extend(r.integrity / 100 for r in state.robots)
         for robot in state.robots:
             slot = 0 if robot.carrying is None else robot.carrying + 1
-            values.extend(float(i == slot) for i in range(3))
-        for victim_id in range(2):
+            values.extend(float(i == slot) for i in range(self.victim_count + 1))
+        for victim_id in range(self.victim_count):
             status = (2 if victim_id in state.rescued else
                       1 if any(r.carrying == victim_id for r in state.robots) else 0)
             values.extend(float(i == status) for i in range(3))
@@ -140,26 +157,23 @@ class RescueEnv(gym.Env):
         scenario = self.simulation.scenario
         distances = self._distances[self.scenario_index]
         carried = {r.carrying for r in state.robots if r.carrying is not None}
-        pending = sorted(set(range(2)) - set(state.rescued) - carried)
+        pending = sorted(set(range(self.victim_count)) - set(state.rescued) - carried)
+        # Capacidad uno: tras la primera entrega todos los viajes restantes salen
+        # de la base. Basta elegir la primera persona de cada robot, sin N! rutas.
+        starts = [scenario.base if r.carrying is not None else r.position for r in state.robots]
+        baseline = sum(distances[r.position, scenario.base] for r in state.robots if r.carrying is not None)
+        baseline += 2 * sum(distances[scenario.base, scenario.victims[v]] for v in pending)
         best = float("inf")
-        # Heurística de trabajo restante: distancias sin colisiones ni calor.
-        for owners in product(range(2), repeat=len(pending)):
-            total = 0
-            for robot_id, robot in enumerate(state.robots):
-                position = robot.position
-                if robot.carrying is not None:
-                    total += distances[position, scenario.base]
-                    position = scenario.base
-                assigned = [v for v, owner in zip(pending, owners) if owner == robot_id]
-                route_costs = []
-                for order in permutations(assigned):
-                    cost, current = 0, position
-                    for victim_id in order:
-                        victim = scenario.victims[victim_id]
-                        cost += distances[current, victim] + distances[victim, scenario.base]
-                        current = scenario.base
-                    route_costs.append(cost)
-                total += min(route_costs)
+        for first in product([None, *pending], repeat=2):
+            if pending and first == (None, None):
+                continue
+            if first[0] is not None and first[0] == first[1]:
+                continue
+            total = baseline
+            for i, victim_id in enumerate(first):
+                if victim_id is not None:
+                    victim = scenario.victims[victim_id]
+                    total += distances[starts[i], victim] - distances[scenario.base, victim]
             best = min(best, total)
         return -float(best)
 
