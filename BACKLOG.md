@@ -94,7 +94,7 @@ No usar este calendario para dar por aprobados hitos que no se cumplieron. Si el
 
 **P0 · Responsable:** persona 1 · **Revisa:** persona 4 · **Depende de:** ninguna · **Esfuerzo:** 1 h.
 
-Resolver la autenticación pendiente y publicar todos los commits de la base. Comunicar la rama estable real; todavía no asumir que `main` tiene el modelo o la interfaz.
+Publicación realizada el 13 de noviembre de 2026: la base V2 está en `feature/simulation-core` y se verificó el remoto. Falta completar la revisión del equipo y confirmar el mismo commit en otro clon para cerrar esta tarea. No asumir que `main` tiene el modelo o la interfaz.
 
 **Aceptación:**
 - El remoto contiene README, interfaz, checkpoint recomendado y evidencia; el commit comunicado coincide con el obtenido por otro integrante.

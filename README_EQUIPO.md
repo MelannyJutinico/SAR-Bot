@@ -40,7 +40,7 @@ La simulación es académica. Las temperaturas y daños son reglas de juego, no 
 | Selección final sobre validación y evaluación con varias semillas | Pendientes |
 | Gráficas finales, informe, presentación y versión de entrega | Pendientes |
 
-**Publicación pendiente:** al preparar esta guía hay commits locales aún sin subir por autenticación de GitHub. La rama de trabajo es `feature/simulation-core`. La persona 1 debe publicar la base y cerrar SARB-001 antes de asegurar que otro integrante puede obtenerla mediante un clon. Que el repositorio exista no significa que `main` contenga la última interfaz o el modelo.
+**Base publicada:** el 13 de noviembre de 2026 se subieron los commits de la base V2 a `feature/simulation-core` y se verificó la rama en GitHub. Usar esa rama para obtener motor, interfaz y modelos; no asumir que `main` contiene la misma versión. SARB-001 conserva la revisión del equipo y SARB-003 la comprobación de instalación en los otros computadores.
 
 ## 4. Qué demuestran los modelos disponibles
 
@@ -117,7 +117,7 @@ La configuración comprobada usa Windows y Python 3.12. El proyecto declara Pyth
 
 Si falta `uv`, seguir su [guía oficial de instalación](https://docs.astral.sh/uv/getting-started/installation/). Después de instalarlo, abrir una terminal nueva y comprobar `uv --version`.
 
-Después de que la persona 1 confirme la publicación:
+Para obtener la base publicada:
 
 ```powershell
 git clone https://github.com/MelannyJutinico/SAR-Bot.git
