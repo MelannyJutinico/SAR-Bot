@@ -27,6 +27,7 @@ def evaluate_model(model, scenarios, rewards: RewardConfig | None = None):
         state = env.simulation.state
         results.append({
             "scenario": scenario.name, "strategy": "dqn", "outcome": state.outcome,
+            "scenario_id": scenario.fingerprint(), "victims_total": scenario.victim_count,
             "success": info["is_success"], "rescued": len(state.rescued), "steps": state.steps,
             "damage_total": sum(r.damage for r in state.robots),
             "integrity_robot_1": state.robots[0].integrity,

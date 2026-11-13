@@ -27,7 +27,7 @@ def render(simulation):
     for i, robot in enumerate(state.robots):
         x, y = robot.position
         cells[y][x] = "12" if state.robots[0].position == state.robots[1].position else f" {i+1}"
-    print(f"\nPaso {state.steps} | {state.outcome} | Rescatados: {len(state.rescued)}/2")
+    print(f"\nPaso {state.steps} | {state.outcome} | Rescatados: {len(state.rescued)}/{scenario.victim_count}")
     print("\n".join(" ".join(row) for row in cells))
     for i, robot in enumerate(state.robots):
         print(f"Robot {i+1}: integridad={robot.integrity}, daño={robot.damage}, "

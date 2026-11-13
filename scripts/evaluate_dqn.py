@@ -73,7 +73,7 @@ def main():
     args.output.with_suffix(".metadata.json").write_text(json.dumps(provenance, indent=2), encoding="utf-8")
     for r in results:
         print(f"{r['scenario']} | {r['strategy']} | {r['outcome']} | "
-              f"rescates={r['rescued']}/2 | pasos={r['steps']} | daño={r['damage_total']}")
+              f"rescates={r['rescued']}/{r['victims_total']} | pasos={r['steps']} | daño={r['damage_total']}")
     print(f"CSV: {args.output}")
     print("Un episodio determinista por escenario y una semilla aleatoria; no demuestra generalización.")
 

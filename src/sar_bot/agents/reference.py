@@ -49,11 +49,18 @@ class ShortestPathPolicy:
         self.simulation = simulation
         self.assignments: dict[int, int] = {}
         self.last_plan_found = True
+        self._planned_goals = None
+        self._plan = deque()
+        self._distances = {}
+        self._legal_cache = {}
+        self.damage_weight = 0.0
+        self.replans = 0
+        self.total_expanded = 0
 
     def targets(self, state: MissionState) -> tuple[Position, Position]:
         scenario = self.simulation.scenario
         carried = {r.carrying for r in state.robots if r.carrying is not None}
-        pending = set(range(2)) - set(state.rescued) - carried
+        pending = set(range(scenario.victim_count)) - set(state.rescued) - carried
         self.assignments = {
             robot_id: victim_id for robot_id, victim_id in self.assignments.items()
             if state.robots[robot_id].carrying is None and victim_id in pending
@@ -61,16 +68,15 @@ class ShortestPathPolicy:
         unassigned = sorted(pending - set(self.assignments.values()))
         free_robots = [i for i, r in enumerate(state.robots)
                        if r.carrying is None and i not in self.assignments]
-        if unassigned:
+        count = min(len(unassigned), len(free_robots))
+        if count:
             options = []
-            for robot_ids in combinations(free_robots, len(unassigned)):
-                for victim_ids in permutations(unassigned):
+            for robot_ids in combinations(free_robots, count):
+                for victim_ids in permutations(unassigned, count):
                     pairs = tuple(zip(robot_ids, victim_ids))
-                    distance = sum(shortest_distance(scenario, state.robots[i].position,
-                                                     scenario.victims[v]) for i, v in pairs)
+                    distance = sum(self._distance_to(scenario.victims[v])[state.robots[i].position]
+                                   for i, v in pairs)
                     options.append((distance, pairs))
-            if not options:
-                raise ValueError("Estado inconsistente: faltan robots para asignar víctimas")
             self.assignments.update(min(options)[1])
 
         return tuple(
@@ -83,34 +89,77 @@ class ShortestPathPolicy:
             raise RuntimeError("No se puede decidir después de finalizar la misión")
         goals = self.targets(state)
         start = tuple(r.position for r in state.robots)
-        # BFS en pares de posiciones: hasta 36*36 estados en mapas 6x6.
-        # El primer movimiento de cada rama basta; se replantea tras cada paso real.
-        queue = deque([(start, None)])
-        visited = {start}
+        if self._planned_goals == goals and self._plan and self._plan[0][0] == start:
+            self.last_plan_found = True
+            return self._plan.popleft()[1]
+        self._plan.clear()
+        self._planned_goals = goals
+        self.replans += 1
+        maps = tuple(self._distance_to(goal) for goal in goals)
+
+        def heuristic(positions):
+            return max(maps[i][position] for i, position in enumerate(positions))
+
+        # A* conjunto: la distancia máxima individual es una cota inferior de pasos.
+        # El costo térmico es no negativo; la misma cota sirve para ambas referencias.
+        queue = [(heuristic(start), 0, 0.0, start)]
+        best_cost, parents = {start: 0.0}, {start: None}
+        counter = 0
         while queue:
-            positions, first_action = queue.popleft()
+            _, _, cost, positions = heappop(queue)
+            if cost != best_cost[positions]:
+                continue
+            self.total_expanded += 1
             if positions == goals:
+                plan = []
+                current = positions
+                while parents[current] is not None:
+                    previous, joint = parents[current]
+                    plan.append((previous, joint))
+                    current = previous
+                self._plan = deque(reversed(plan))
                 self.last_plan_found = True
-                return first_action if first_action is not None else 24
+                return self._plan.popleft()[1] if self._plan else 24
             for actions in product(*(self._legal_actions(p) for p in positions)):
                 joint = self.simulation.encode_actions(*actions)
                 destination = self.simulation.resolve_movement(positions, joint)
-                if destination not in visited:
-                    visited.add(destination)
-                    queue.append((destination, joint if first_action is None else first_action))
+                exposure = (sum(damage_rate(self.simulation.scenario.temperature_at(p))
+                                for p in destination) if self.damage_weight else 0)
+                next_cost = cost + 1 + self.damage_weight * exposure
+                if next_cost < best_cost.get(destination, float("inf")):
+                    best_cost[destination] = next_cost
+                    parents[destination] = positions, joint
+                    counter += 1
+                    heappush(queue, (next_cost + heuristic(destination), counter, next_cost, destination))
 
         # No se inventa una ruta: espera hasta el límite y registra el bloqueo.
         self.last_plan_found = False
         return self.simulation.encode_actions(Action.WAIT, Action.WAIT)
 
     def _legal_actions(self, position: Position) -> list[Action]:
-        return [action for action in Action
-                if self.simulation.scenario.walkable(
-                    (position[0] + OFFSETS[action][0], position[1] + OFFSETS[action][1]))]
+        if position not in self._legal_cache:
+            self._legal_cache[position] = [action for action in Action
+                if self.simulation.scenario.walkable((position[0] + OFFSETS[action][0],
+                                                     position[1] + OFFSETS[action][1]))]
+        return self._legal_cache[position]
+
+    def _distance_to(self, goal):
+        if goal not in self._distances:
+            distances = {goal: 0}
+            queue = deque([goal])
+            while queue:
+                position = queue.popleft()
+                for dx, dy in OFFSETS[:4]:
+                    neighbor = (position[0] + dx, position[1] + dy)
+                    if self.simulation.scenario.walkable(neighbor) and neighbor not in distances:
+                        distances[neighbor] = distances[position] + 1
+                        queue.append(neighbor)
+            self._distances[goal] = distances
+        return self._distances[goal]
 
 
 class ThermalPathPolicy(ShortestPathPolicy):
-    """Referencia Dijkstra: minimiza pasos + peso × exposición prevista.
+    """Referencia A* térmica: minimiza pasos + peso × exposición prevista.
 
     Conserva la asignación de la referencia geométrica. No es aprendizaje ni
     un óptimo global de toda la misión; replanifica para los objetivos actuales.
@@ -122,31 +171,3 @@ class ThermalPathPolicy(ShortestPathPolicy):
             raise ValueError("El peso del daño debe ser finito y no negativo")
         self.damage_weight = damage_weight
 
-    def act(self, state: MissionState) -> int:
-        if state.outcome != "running":
-            raise RuntimeError("No se puede decidir después de finalizar la misión")
-        goals = self.targets(state)
-        start = tuple(r.position for r in state.robots)
-        queue = [(0.0, 0, start, None)]
-        best_cost = {start: 0.0}
-        counter = 0
-        while queue:
-            cost, _, positions, first_action = heappop(queue)
-            if cost != best_cost[positions]:
-                continue
-            if positions == goals:
-                self.last_plan_found = True
-                return first_action if first_action is not None else 24
-            for actions in product(*(self._legal_actions(p) for p in positions)):
-                joint = self.simulation.encode_actions(*actions)
-                destination = self.simulation.resolve_movement(positions, joint)
-                exposure = sum(damage_rate(self.simulation.scenario.temperature_at(p))
-                               for p in destination)
-                next_cost = cost + 1.0 + self.damage_weight * exposure
-                if next_cost < best_cost.get(destination, float("inf")):
-                    best_cost[destination] = next_cost
-                    counter += 1
-                    heappush(queue, (next_cost, counter, destination,
-                                    joint if first_action is None else first_action))
-        self.last_plan_found = False
-        return 24

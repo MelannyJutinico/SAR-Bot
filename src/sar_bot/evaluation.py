@@ -17,6 +17,8 @@ def evaluate_episode(simulation: RescueSimulation, policy, strategy: str,
     state = simulation.state
     return {
         "scenario": simulation.scenario.name,
+        "scenario_id": simulation.scenario.fingerprint(),
+        "victims_total": simulation.scenario.victim_count,
         "strategy": strategy,
         "seed": seed,
         "outcome": state.outcome,
@@ -29,4 +31,6 @@ def evaluate_episode(simulation: RescueSimulation, policy, strategy: str,
         "integrity_robot_1": state.robots[0].integrity,
         "integrity_robot_2": state.robots[1].integrity,
         "planning_failures": planning_failures,
+        "replans": getattr(policy, "replans", 0),
+        "expanded_states": getattr(policy, "total_expanded", 0),
     }

@@ -34,7 +34,7 @@ def main():
                                       args.seed if strategy == "random" else None)
             results.append(result)
             print(f"{result['scenario']} | {strategy} | {result['outcome']} | "
-                  f"rescates={result['rescued']}/2 | pasos={result['steps']} | "
+                  f"rescates={result['rescued']}/{result['victims_total']} | pasos={result['steps']} | "
                   f"daño={result['damage_total']}")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8", newline="") as file:
