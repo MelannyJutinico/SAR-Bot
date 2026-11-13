@@ -61,6 +61,8 @@ class ScenarioV2Tests(unittest.TestCase):
         self.assertNotEqual(custom.fingerprint(), scenario.fingerprint())
         self.assertEqual(custom.fingerprint(), replace(custom, name="other").fingerprint())
         self.assertEqual(custom.fingerprint(), custom.with_victims(reversed(custom.victims)).fingerprint())
+        self.assertNotEqual(custom.configuration_id,
+                            custom.with_victims(reversed(custom.victims)).configuration_id)
 
     def test_bad_input_and_stale_fingerprints_are_rejected(self):
         scenario = self.scenario()

@@ -18,6 +18,10 @@ class Episode:
     def scenario_id(self):
         return self.scenario.fingerprint()
 
+    @property
+    def configuration_id(self):
+        return self.scenario.configuration_id
+
 
 def prepare_episode(scenario_path: Scenario | str | Path, strategy: str, model_path: Path | None = None,
                     seed: int = 0) -> Episode:

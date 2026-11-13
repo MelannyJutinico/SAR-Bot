@@ -45,6 +45,14 @@ class EnvV2Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             RescueEnv([self.scenario(), self.scenario().with_victims([[1, 0], [0, 1]])])
 
+    def test_twelve_by_twelve_has_its_own_fixed_observation_profile(self):
+        scenario = Scenario("twelve", 12, 12, (0, 0), ((11, 0), (0, 11), (11, 11)),
+                            frozenset(), ((25.,) * 12,) * 12)
+        env = RescueEnv([scenario], observation_mode="sensors")
+        obs, _ = env.reset(seed=0)
+        self.assertEqual(obs.shape, (390,))
+        self.assertTrue(env.observation_space.contains(obs))
+
     def test_potential_counts_repeated_returns_without_factorial_search(self):
         from sar_bot.core import MissionState, Robot
         env = RescueEnv([self.scenario()])
@@ -90,6 +98,11 @@ class EnvV2Tests(unittest.TestCase):
                              frozenset(), ((25.,) * 20,) * 5)
             with self.assertRaises(ValueError):
                 DQNPolicy(RescueSimulation(other), path)
+            model.sar_bot_profile = {**env.profile, "schema_version": 99}
+            incompatible = Path(directory) / "unsupported.zip"
+            model.save(incompatible)
+            with self.assertRaises(ValueError):
+                DQNPolicy(RescueSimulation(self.scenario()), incompatible)
 
 
 if __name__ == "__main__":

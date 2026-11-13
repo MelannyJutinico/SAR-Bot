@@ -18,6 +18,7 @@ class ContractV2Tests(unittest.TestCase):
         custom = template.with_victims(((1, 0), (0, 1), (1, 1)))
         episode = prepare_episode(custom, "shortest")
         self.assertEqual(episode.scenario_id, custom.fingerprint())
+        self.assertEqual(episode.configuration_id, custom.configuration_id)
         self.assertNotEqual(episode.scenario_id, template.fingerprint())
         self.assertEqual(episode.states[-1].outcome, "success")
         self.assertEqual(len(episode.states[-1].rescued), 3)

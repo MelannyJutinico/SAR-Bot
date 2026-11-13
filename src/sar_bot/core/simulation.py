@@ -173,6 +173,8 @@ class Scenario:
                 max_steps=data.get("max_steps", 100), heat_sources=sources, ambient_temperature=ambient)
             if "scenario_id" in data and data["scenario_id"] != scenario.fingerprint():
                 raise ValueError("scenario_id no coincide con el contenido del escenario")
+            if "configuration_id" in data and data["configuration_id"] != scenario.configuration_id:
+                raise ValueError("configuration_id no coincide con las etiquetas de las personas")
             return scenario
         except (KeyError, TypeError) as error:
             raise ValueError(f"Formato de escenario inválido: {error}") from error
@@ -196,9 +198,16 @@ class Scenario:
                     "temperatures": self.temperatures, "max_steps": self.max_steps}
         return sha256(json.dumps(physical, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
+    @cached_property
+    def configuration_id(self) -> str:
+        """Identidad exacta para reproducción: también distingue el orden de personas."""
+        labeled = {"scenario_id": self.fingerprint(), "victims": self.victims}
+        return sha256(json.dumps(labeled, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
     def to_dict(self) -> dict:
         """La exportación conserva exactamente la matriz usada por el motor."""
-        return {"schema_version": 2, "scenario_id": self.fingerprint(), "name": self.name,
+        return {"schema_version": 2, "scenario_id": self.fingerprint(),
+                "configuration_id": self.configuration_id, "name": self.name,
                 "width": self.width, "height": self.height, "base": list(self.base),
                 "victims": [list(v) for v in self.victims], "walls": [list(w) for w in sorted(self.walls)],
                 "temperatures": [list(row) for row in self.temperatures], "max_steps": self.max_steps,
@@ -325,6 +334,7 @@ class RescueSimulation:
             "schema_version": 2,
             "scenario": self.scenario.name,
             "scenario_id": self.scenario.fingerprint(),
+            "configuration_id": self.scenario.configuration_id,
             "victims_total": self.scenario.victim_count,
             "victims": [{"id": i, "position": list(position),
                          "status": "rescued" if i in self.state.rescued else

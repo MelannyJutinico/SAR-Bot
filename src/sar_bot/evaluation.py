@@ -18,6 +18,7 @@ def evaluate_episode(simulation: RescueSimulation, policy, strategy: str,
     return {
         "scenario": simulation.scenario.name,
         "scenario_id": simulation.scenario.fingerprint(),
+        "configuration_id": simulation.scenario.configuration_id,
         "victims_total": simulation.scenario.victim_count,
         "strategy": strategy,
         "seed": seed,
