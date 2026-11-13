@@ -8,7 +8,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from sar_bot.agents import RandomPolicy, ShortestPathPolicy
+from sar_bot.agents import RandomPolicy, ShortestPathPolicy, ThermalPathPolicy
 from sar_bot.core import RescueSimulation, Scenario
 from sar_bot.evaluation import evaluate_episode
 
@@ -17,18 +17,19 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scenarios", nargs="+", type=Path,
                         default=sorted((ROOT / "scenarios").glob("*.json")))
-    parser.add_argument("--strategy", choices=("all", "shortest", "random"), default="all")
+    parser.add_argument("--strategy", choices=("all", "shortest", "thermal", "random"), default="all")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--output", type=Path, default=ROOT / "outputs/reference_results.csv")
     args = parser.parse_args()
-    strategies = ("shortest", "random") if args.strategy == "all" else (args.strategy,)
+    strategies = ("shortest", "thermal", "random") if args.strategy == "all" else (args.strategy,)
     results = []
     for path in args.scenarios:
         scenario = Scenario.load(path)
         for strategy in strategies:
             simulation = RescueSimulation(scenario)
-            policy = (ShortestPathPolicy(simulation) if strategy == "shortest"
-                      else RandomPolicy(simulation, args.seed))
+            policy = (ShortestPathPolicy(simulation) if strategy == "shortest" else
+                      ThermalPathPolicy(simulation) if strategy == "thermal" else
+                      RandomPolicy(simulation, args.seed))
             result = evaluate_episode(simulation, policy, strategy,
                                       args.seed if strategy == "random" else None)
             results.append(result)

@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from sar_bot.core import Action, RescueSimulation, Scenario
-from sar_bot.agents import RandomPolicy, ShortestPathPolicy
+from sar_bot.agents import RandomPolicy, ShortestPathPolicy, ThermalPathPolicy
 
 
 def render(simulation):
@@ -37,7 +37,7 @@ def render(simulation):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", action="store_true", help="Una instantánea JSON por paso")
-    parser.add_argument("--strategy", choices=("scripted", "shortest", "random", "dqn"), default="scripted")
+    parser.add_argument("--strategy", choices=("scripted", "shortest", "thermal", "random", "dqn"), default="scripted")
     parser.add_argument("--model", type=Path, help="Modelo .zip para --strategy dqn")
     parser.add_argument("--scenario", type=Path, default=ROOT / "scenarios" / "demo.json")
     parser.add_argument("--seed", type=int, default=0, help="Semilla de la estrategia aleatoria")
@@ -57,6 +57,8 @@ def main():
     if args.strategy == "dqn":
         from sar_bot.agents.dqn import DQNPolicy
         policy = DQNPolicy(simulation, args.model)
+    elif args.strategy == "thermal":
+        policy = ThermalPathPolicy(simulation)
     while simulation.state.outcome == "running":
         if policy is None:
             if simulation.state.steps >= len(plan):

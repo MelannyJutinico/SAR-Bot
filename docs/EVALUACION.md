@@ -59,6 +59,18 @@ El escenario `pasillo_compartido` obliga a que los robots salgan de la base por 
 - Varias configuraciones y semillas; no repetir un mapa determinista para aparentar muestras distintas.
 - Comparar rescates y éxito antes de interpretar menor daño o menor duración.
 
+## Referencia adicional que considera temperatura
+
+`thermal` usa Dijkstra sobre posiciones conjuntas con costo `1 + 2 × daño previsto de ambos robots` por paso. Reutiliza las reglas de movimiento y la asignación de víctimas de `shortest`. Replanifica para los objetivos actuales; no garantiza un óptimo global ni incorpora la integridad como restricción de búsqueda.
+
+Se comprobó una misión completa en `ruta_caliente`: **35 pasos y 34 puntos de daño total**, frente a 10 pasos y 74 puntos de `shortest`. Confirma que existe una alternativa térmicamente más segura. La referencia no alimenta acciones ni demostraciones al entrenamiento DQN.
+
+```powershell
+uv run --no-project --python 3.12 scripts/demo.py --strategy thermal --scenario scenarios/ruta_caliente.json
+```
+
+Los comandos de comparación ahora incluyen `thermal` además de `shortest` y `random`. Las tablas históricas conservan los resultados originales, previos a esta referencia.
+
 ## Primer DQN: evaluación del modelo recargado
 
 Se entrenó una única semilla (0), durante 82000 pasos, y se seleccionó el checkpoint de 42000 mediante controles de desarrollo. La carga desde archivo produjo estos resultados:

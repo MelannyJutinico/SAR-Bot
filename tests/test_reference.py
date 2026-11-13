@@ -7,7 +7,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from sar_bot.agents import RandomPolicy, ShortestPathPolicy
+from sar_bot.agents import RandomPolicy, ShortestPathPolicy, ThermalPathPolicy
 from sar_bot.agents.reference import shortest_distance
 from sar_bot.core import Action, MissionState, RescueSimulation, Robot, Scenario
 from sar_bot.evaluation import evaluate_episode
@@ -84,6 +84,17 @@ class ReferenceTests(unittest.TestCase):
         self.assertEqual(result["steps"], 1)
         self.assertEqual(result["outcome"], "time_limit")
         self.assertFalse(result["success"])
+
+    def test_thermal_reference_finds_lower_damage_complete_rescue(self):
+        sim = self.simulation("ruta_caliente.json")
+        before = sim.snapshot()
+        policy = ThermalPathPolicy(sim)
+        policy.act(sim.state)
+        self.assertEqual(sim.snapshot(), before)
+        result = evaluate_episode(sim, policy, "thermal")
+        self.assertTrue(result["success"])
+        self.assertLess(result["damage_total"], 74)
+        self.assertGreater(result["steps"], 10)
 
 
 if __name__ == "__main__":

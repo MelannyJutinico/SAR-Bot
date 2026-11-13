@@ -1,10 +1,12 @@
-"""Referencias determinista y aleatoria, independientes del calor."""
+"""Referencias de navegación, riesgo térmico y acciones aleatorias."""
 
 from collections import deque
 from itertools import combinations, permutations, product
+from heapq import heappop, heappush
+from math import isfinite
 import random
 
-from sar_bot.core import Action, MissionState, RescueSimulation
+from sar_bot.core import Action, MissionState, RescueSimulation, damage_rate
 from sar_bot.core.simulation import OFFSETS, Position, Scenario
 
 
@@ -105,3 +107,46 @@ class ShortestPathPolicy:
         return [action for action in Action
                 if self.simulation.scenario.walkable(
                     (position[0] + OFFSETS[action][0], position[1] + OFFSETS[action][1]))]
+
+
+class ThermalPathPolicy(ShortestPathPolicy):
+    """Referencia Dijkstra: minimiza pasos + peso × exposición prevista.
+
+    Conserva la asignación de la referencia geométrica. No es aprendizaje ni
+    un óptimo global de toda la misión; replanifica para los objetivos actuales.
+    """
+
+    def __init__(self, simulation: RescueSimulation, damage_weight: float = 2.0):
+        super().__init__(simulation)
+        if not isfinite(damage_weight) or damage_weight < 0:
+            raise ValueError("El peso del daño debe ser finito y no negativo")
+        self.damage_weight = damage_weight
+
+    def act(self, state: MissionState) -> int:
+        if state.outcome != "running":
+            raise RuntimeError("No se puede decidir después de finalizar la misión")
+        goals = self.targets(state)
+        start = tuple(r.position for r in state.robots)
+        queue = [(0.0, 0, start, None)]
+        best_cost = {start: 0.0}
+        counter = 0
+        while queue:
+            cost, _, positions, first_action = heappop(queue)
+            if cost != best_cost[positions]:
+                continue
+            if positions == goals:
+                self.last_plan_found = True
+                return first_action if first_action is not None else 24
+            for actions in product(*(self._legal_actions(p) for p in positions)):
+                joint = self.simulation.encode_actions(*actions)
+                destination = self.simulation.resolve_movement(positions, joint)
+                exposure = sum(damage_rate(self.simulation.scenario.temperature_at(p))
+                               for p in destination)
+                next_cost = cost + 1.0 + self.damage_weight * exposure
+                if next_cost < best_cost.get(destination, float("inf")):
+                    best_cost[destination] = next_cost
+                    counter += 1
+                    heappush(queue, (next_cost, counter, destination,
+                                    joint if first_action is None else first_action))
+        self.last_plan_found = False
+        return 24
