@@ -1,0 +1,18 @@
+{
+  "training": [
+    "scenarios/curriculum/warmup.json",
+    "scenarios/curriculum/navigation.json",
+    "scenarios/curriculum/handoff.json",
+    "scenarios/demo.json",
+    "scenarios/ruta_caliente.json",
+    "scenarios/pasillo_compartido.json"
+  ],
+  "validation": [
+    "scenarios/validation/heat_shift.json",
+    "scenarios/validation/corridor_targets.json"
+  ],
+  "test": [
+    "scenarios/test/shorter_rescue.json",
+    "scenarios/test/changed_corridor.json"
+  ]
+}

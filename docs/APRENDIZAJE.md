@@ -112,6 +112,19 @@ Al inicializar desde un ZIP se conservan pesos y optimizador, pero se crea una m
 
 Los seis mapas de control también se usan para entrenar. Este experimento busca corregir fallos conocidos, no medir generalización. La referencia térmica se usa únicamente para comparar, no para proporcionar acciones al agente.
 
+## Separación de escenarios para las próximas comprobaciones
+
+`configs/scenario_splits.json` registra seis escenarios de entrenamiento, dos de validación y dos de prueba. Son configuraciones distintas, no copias idénticas con otro nombre. La viabilidad de los mapas nuevos se verificó con una misión completa de la referencia, sin consultar DQN.
+
+Los mapas de validación y prueba no participan en este segundo entrenamiento ni en su selección de checkpoint. Se comprobarán después de congelar el modelo. Si sus fallos se usan para ajustar futuros experimentos, deberán considerarse datos de desarrollo y reservarse nuevos casos para una prueba final independiente.
+
+```powershell
+uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/initial_dqn/model.zip --split validation --output outputs/validation.csv
+uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/initial_dqn/model.zip --split test --output outputs/test.csv
+```
+
+Estos comandos son ejemplos de uso; no implica que se haya evaluado ya cada modelo sobre esas particiones. Cada comparación genera un CSV y un archivo `.metadata.json` con partición, hashes de modelo y escenarios, recompensas y semilla. Dos casos de prueba solo constituyen una comprobación inicial; no permiten una conclusión estadística de generalización.
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)

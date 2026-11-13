@@ -1,0 +1,8 @@
+{
+  "name": "validacion_victimas_pasillo",
+  "width": 6, "height": 6, "base": [0, 0],
+  "victims": [[4, 0], [5, 4]],
+  "walls": [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [2, 2], [2, 3], [4, 3]],
+  "heat": {"ambient": 25, "focus": [3, 3], "peak": 70, "falloff": 20},
+  "max_steps": 100
+}

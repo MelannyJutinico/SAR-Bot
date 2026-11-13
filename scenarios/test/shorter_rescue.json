@@ -1,0 +1,8 @@
+{
+  "name": "prueba_rescate_intermedio",
+  "width": 6, "height": 6, "base": [0, 0],
+  "victims": [[4, 0], [0, 4]],
+  "walls": [[2, 2], [2, 3], [4, 4]],
+  "heat": {"ambient": 25, "focus": [3, 1], "peak": 120, "falloff": 30},
+  "max_steps": 100
+}
