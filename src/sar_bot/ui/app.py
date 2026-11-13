@@ -366,7 +366,7 @@ class RescueApp:
             y = 475 + i * 31
             pygame.draw.rect(self.canvas, heat_color(temperature), (532, y, 14, 14), border_radius=3)
             self.text(label, (557, y - 3), 14, MUTED)
-            self.text(f"−{damage} / paso", (740, y - 3), 13, TEXT)
+            self.text(f"{'−' if damage else ''}{damage} / paso", (740, y - 3), 13, TEXT)
         self.wrap("Cada paso expone a ambos robots, incluso si esperan.", 532, 615, 288, 14)
 
     def _robots(self):
@@ -442,7 +442,11 @@ class RescueApp:
 
 
 def run_app(app: RescueApp):
-    window = pygame.display.set_mode(SIZE, pygame.RESIZABLE)
+    desktop_width, desktop_height = pygame.display.get_desktop_sizes()[0]
+    initial_scale = min(1.0, max(1, desktop_width - 64) / SIZE[0],
+                        max(1, desktop_height - 96) / SIZE[1])
+    initial_size = tuple(max(1, round(value * initial_scale)) for value in SIZE)
+    window = pygame.display.set_mode(initial_size, pygame.RESIZABLE)
     pygame.display.set_caption("SAR-Bot · Rescate cooperativo")
     clock = pygame.time.Clock()
     running = True

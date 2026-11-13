@@ -16,7 +16,7 @@ Nosotros construiremos la base integrada, el aprendizaje y la dirección técnic
 8. Evaluación que exporte resultados por episodio.
 9. Verificaciones de reglas críticas y un escenario de misión completa reproducible.
 
-La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor, exposición térmica, referencias geométrica y térmica, evaluación CSV, Gymnasium, entrenamiento DQN, reproducción del modelo y verificaciones. El modelo con sensores completa seis controles y cuatro configuraciones nuevas separadas. Siguen pendientes la interfaz Pygame, una política que gestione mejor el calor y una evaluación más amplia con varias semillas y nuevos casos reservados.
+La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor, exposición térmica, referencias geométrica y térmica, evaluación CSV, Gymnasium, entrenamiento DQN, interfaz Pygame y verificaciones. El modelo con sensores completa seis controles y cuatro configuraciones nuevas separadas. Siguen pendientes refinar la interfaz, una política que gestione mejor el calor y una evaluación más amplia con varias semillas y nuevos casos reservados.
 
 ## Separación de responsabilidades
 
@@ -75,11 +75,11 @@ El calendario es un objetivo, no evidencia de progreso ni una garantía de conve
 ## Criterios de entrega
 
 - [x] Instalación documentada y reproducible.
-- [x] Dos robots y dos sobrevivientes visibles por consola; falta interfaz gráfica.
+- [x] Dos robots y dos sobrevivientes visibles en consola y en interfaz Pygame.
 - [x] Calor y daño acumulativo según tiempo simulado.
 - [x] Primer controlador entrenado guardado y cargable.
 - [x] Referencia comparable y resultados de desarrollo medidos; falta evaluación final.
-- [ ] Panel de integridad, turnos, rescates y estado de misión.
-- [ ] Pausa, reinicio, velocidad y selección de estrategia.
+- [x] Panel de integridad, pasos, rescates y estado de misión.
+- [x] Pausa, reinicio, velocidad y selección de estrategia.
 - [ ] Informe de resultados y limitaciones.
 - [ ] Todos los integrantes pueden explicar el problema y sus reglas.

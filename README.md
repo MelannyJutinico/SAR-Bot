@@ -6,12 +6,13 @@ Simulación académica de rescate cooperativo: dos robots deben evacuar a dos so
 
 ## Estado del proyecto
 
-Ya existe el motor, referencias geométrica y térmica, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. El modelo recomendado usa sensores locales y completa los seis controles de entrenamiento, dos casos de validación y dos de prueba. Resuelve el pasillo compartido que fallaba antes; todavía no demuestra mejor gestión térmica ni generalización amplia. La interfaz Pygame sigue pendiente.
+Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. El modelo recomendado usa sensores locales y completa los seis controles de entrenamiento, dos casos de validación y dos de prueba. Resuelve el pasillo compartido que fallaba antes; todavía no demuestra mejor gestión térmica ni generalización amplia.
 
 - [Contexto, alcance y reglas acordadas](docs/CONTEXTO.md)
 - [Plan de trabajo y base de la persona 1](docs/PLAN_DE_TRABAJO.md)
 - [Referencias y primeros resultados de desarrollo](docs/EVALUACION.md)
 - [Instalación, observaciones, recompensas y entrenamiento](docs/APRENDIZAJE.md)
+- [Interfaz visual y controles](docs/INTERFAZ.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
@@ -21,7 +22,7 @@ Investigar si un controlador aprendido puede coordinar dos robots para completar
 
 ## Tecnología prevista
 
-Python, NumPy, Gymnasium y Stable-Baselines3 con DQN. Las versiones están fijadas en `uv.lock`, con PyTorch CPU. Pygame se incorporará como interfaz.
+Python, NumPy, Gymnasium, Stable-Baselines3 con DQN y Pygame. Las versiones están fijadas en `uv.lock`, con PyTorch CPU.
 
 ## Principio térmico
 
@@ -30,6 +31,19 @@ El daño depende de la **temperatura y el tiempo de exposición**, incluso cuand
 ## Desarrollo
 
 El motor y las referencias usan únicamente la biblioteca estándar de Python 3.11 o superior. El aprendizaje requiere el extra `rl`. Los cambios se trabajan en ramas `feature/…`.
+
+### Abrir la interfaz
+
+```powershell
+uv sync --extra ui --extra rl --python 3.12
+uv run --extra ui --extra rl python scripts/ui.py
+```
+
+Abre el pasillo compartido con el modelo recomendado. Permite cambiar escenario y estrategia, iniciar, pausar, avanzar un paso, reiniciar y ajustar la velocidad. Muestra temperatura, recorridos, rescates e integridad de ambos robots.
+
+![Interfaz de SAR-Bot durante un rescate con riesgo térmico](docs/images/ui-preview.png)
+
+El primer episodio se prepara en segundo plano y comienza pausado. La velocidad solo afecta la reproducción; no modifica el daño. Los controles y la arquitectura están en [INTERFAZ.md](docs/INTERFAZ.md).
 
 ### Ejecutar el agente ya entrenado
 
@@ -123,6 +137,9 @@ Las particiones para el aprendizaje están en `configs/scenario_splits.json`. La
 | `configs/dqn_sensors.json` | Experimento recomendado, con exploración por etapa y sensores |
 | `configs/scenario_splits.json` | Escenarios de entrenamiento, validación y prueba |
 | `artifacts/sensors_dqn/` | Modelo recomendado y comprobaciones de las tres particiones |
+| `scripts/ui.py` | Ventana interactiva y capturas sin ventana |
+| `src/sar_bot/ui/app.py` | Presentación y controles Pygame |
+| `src/sar_bot/ui/playback.py` | Episodios del motor y reloj de reproducción |
 
 `RescueSimulation.step(acción_conjunta)` avanza una unidad de tiempo para ambos robots. `snapshot()` expone datos JSON, y `reset()` reinicia el escenario estático. La acción conjunta es `5 * acción_robot_1 + acción_robot_2`, con acciones `UP=0`, `DOWN=1`, `LEFT=2`, `RIGHT=3`, `WAIT=4`.
 
@@ -130,4 +147,4 @@ La validación actual comprueba estructura y conectividad del mapa. La misión d
 
 ### Próximo hito
 
-Mejorar la gestión térmica y repetir con varias semillas y más mapas reservados. La visualización Pygame puede consumir el mismo motor y `DQNPolicy`, sin replicar reglas. Si los casos de prueba actuales se usan para ajustar el entrenamiento, habrá que reservar otros nuevos.
+Mejorar la gestión térmica y repetir con varias semillas y más mapas reservados. Refinar la interfaz inicial y preparar la demostración. Si los casos de prueba actuales se usan para ajustar el entrenamiento, habrá que reservar otros nuevos.

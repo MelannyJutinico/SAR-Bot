@@ -130,7 +130,7 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Entrenar, guardar, cargar y reproducir una primera política.
 - [x] Mejorar el controlador hasta completar el pasillo largo y los seis controles con un mismo checkpoint.
 - [x] Hacer una primera comprobación en dos mapas de validación y dos de prueba, fuera del entrenamiento.
-- [ ] Completar visualización Pygame.
+- [x] Construir una interfaz Pygame inicial con controles y métricas.
 - [ ] Evaluar y preparar demostración.
 
 Ya hay evidencia de aprendizaje en escenarios del currículo: el modelo sin entrenar no los completaba y el checkpoint seleccionado sí. Todavía no hay evidencia de superioridad sobre la referencia ni de generalización.
@@ -162,3 +162,9 @@ Se añadió una referencia térmica que confirma una ruta de menor daño, explor
 El tercero añadió sensores locales y distancias de camino, conservando mapa completo y 25 acciones. Se entrenó desde cero durante 155000 pasos, semilla 0, y se seleccionó el checkpoint de 60000 con seis misiones completas. Después de congelarlo se consultaron dos casos de validación y dos de prueba: también completó los cuatro.
 
 El modelo recomendado está en `artifacts/sensors_dqn/`. En el pasillo largo entrega las dos víctimas en 22 pasos sin daño. En `ruta_caliente` mantiene 74 puntos de daño, por lo que no resolvió todavía la optimización térmica. La referencia térmica recibe 34 en ese escenario. Quedan pendientes más semillas, mapas reservados, mejor gestión térmica y la interfaz gráfica.
+
+### Quinto incremento: interfaz inicial
+
+Se implementó una ventana Pygame con selector de escenario y estrategia, mapa de calor, trayectorias, personas y robots, integridad, temperatura, rescates y pasos. Incluye iniciar, pausar, reiniciar, avanzar un paso y cambiar velocidad. Se reproduce un episodio real preparado en segundo plano, sin duplicar reglas ni alterar exposición con el reloj visual.
+
+Comando: `uv run --extra ui --extra rl python scripts/ui.py`. La aplicación comienza en el pasillo compartido y con el modelo recomendado. `INTERFAZ.md` documenta controles y verificación. La persona 3 puede refinar la presentación sobre esta base; siguen pendientes mejor gestión térmica, evaluación más amplia e integración final de la entrega.
