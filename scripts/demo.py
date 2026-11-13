@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from sar_bot.core import Action, RescueSimulation, Scenario
-from sar_bot.agents import RandomPolicy, ShortestPathPolicy, ThermalPathPolicy
+from sar_bot.agents import create_policy
 
 
 def render(simulation):
@@ -52,13 +52,8 @@ def main():
     # Ruta reproducible para este escenario: ida por dos bordes y vuelta a la base.
     # No es una estrategia general ni una política aprendida.
     plan = [(Action.RIGHT, Action.DOWN)] * 5 + [(Action.LEFT, Action.UP)] * 5
-    policy = (ShortestPathPolicy(simulation) if args.strategy == "shortest" else
-              RandomPolicy(simulation, args.seed) if args.strategy == "random" else None)
-    if args.strategy == "dqn":
-        from sar_bot.agents.dqn import DQNPolicy
-        policy = DQNPolicy(simulation, args.model)
-    elif args.strategy == "thermal":
-        policy = ThermalPathPolicy(simulation)
+    policy = (None if args.strategy == "scripted" else
+              create_policy(simulation, args.strategy, model_path=args.model, seed=args.seed))
     while simulation.state.outcome == "running":
         if policy is None:
             if simulation.state.steps >= len(plan):

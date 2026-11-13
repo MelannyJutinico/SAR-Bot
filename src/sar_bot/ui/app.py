@@ -41,6 +41,8 @@ SCENARIO_NAMES = {
     "validacion_victimas_pasillo": "Víctimas en el pasillo",
     "prueba_rescate_intermedio": "Rescate intermedio",
     "prueba_obstaculos_pasillo": "Pasillo con otros obstáculos",
+    "edificio_10x10_tres_personas": "Edificio 10 × 10 · Tres personas",
+    "v2_rescate_cercano_tres_personas": "V2 · Rescate cercano",
 }
 
 
@@ -108,6 +110,8 @@ class RescueApp:
                 self.error = "Faltan dependencias del modelo. Ejecuta: uv sync --extra ui --extra rl"
             except FileNotFoundError:
                 self.error = "No se encontró el modelo. Revisa su ruta o selecciona otra estrategia."
+            except ValueError as error:
+                self.error = str(error)
             except Exception:
                 self.error = "No se pudo preparar esta estrategia. Selecciona otra y revisa el detalle en la consola."
                 traceback.print_exc()
@@ -262,7 +266,7 @@ class RescueApp:
         self.text(name, (52, 130), 21, bold=True)
         self.text(f"{scenario.width} × {scenario.height}  /  edificio simulado", (582, 138), 13, MUTED)
         for x, label, value, color in (
-            (52, "PERSONAS RESCATADAS", f"{len(state.rescued)} / 2", GREEN),
+            (52, "PERSONAS RESCATADAS", f"{len(state.rescued)} / {scenario.victim_count}", GREEN),
             (314, "PASOS DE LA MISIÓN", f"{state.steps} / {scenario.max_steps}", TEXT),
             (576, "DAÑO DEL EQUIPO", str(sum(r.damage for r in state.robots)), GOLD),
         ):
@@ -277,8 +281,10 @@ class RescueApp:
         for y in range(scenario.height):
             self.text(y + 1, (gx - 14, gy + y * cell + cell // 2), 11, MUTED, center=True)
         max_temp = max(t for row in scenario.temperatures for t in row)
-        focus = next(((x, y) for y in range(scenario.height) for x in range(scenario.width)
-                      if scenario.temperature_at((x, y)) == max_temp), None) if max_temp > 35 else None
+        foci = {source.focus for source in scenario.heat_sources if source.peak > 35}
+        if not foci and max_temp > 35:
+            foci = {next((x, y) for y in range(scenario.height) for x in range(scenario.width)
+                         if scenario.temperature_at((x, y)) == max_temp)}
         for y in range(scenario.height):
             for x in range(scenario.width):
                 rect = pygame.Rect(gx + x * cell + 2, gy + y * cell + 2, cell - 4, cell - 4)
@@ -295,7 +301,7 @@ class RescueApp:
                 if position == scenario.base:
                     pygame.draw.rect(self.canvas, GREEN, rect.inflate(-13, -13), 2, border_radius=7)
                     self.text("BASE", (rect.x + 10, rect.y + 6), 9, GREEN, bold=True)
-                if position == focus:
+                if position in foci:
                     fx, fy = rect.x + 8, rect.y + 7
                     pygame.draw.polygon(self.canvas, GOLD,
                                         [(fx + 5, fy), (fx + 12, fy + 8), (fx + 10, fy + 15),
@@ -317,20 +323,22 @@ class RescueApp:
             if victim_id in state.rescued or any(r.carrying == victim_id for r in state.robots):
                 continue
             cx, cy = gx + x * cell + cell // 2, gy + y * cell + cell // 2
-            pygame.draw.circle(self.canvas, GOLD, (cx, cy - 9), 7)
-            pygame.draw.rect(self.canvas, GOLD, (cx - 8, cy + 1, 16, 16), border_radius=5)
+            head = max(3, min(7, cell // 10))
+            pygame.draw.circle(self.canvas, GOLD, (cx, cy - head - 2), head)
+            pygame.draw.rect(self.canvas, GOLD, (cx - head - 1, cy + 1, 2 * head + 2, 2 * head + 2), border_radius=4)
         together = state.robots[0].position == state.robots[1].position
         for i, robot in enumerate(state.robots):
             x, y = robot.position
-            cx = gx + x * cell + cell // 2 + ((i * 2 - 1) * 15 if together else 0)
+            radius = min(16, max(7, cell // 4 - 1)) if together else min(21, max(9, cell // 3))
+            cx = gx + x * cell + cell // 2 + ((i * 2 - 1) * (radius - 1) if together else 0)
             cy = gy + y * cell + cell // 2
-            radius = 16 if together else 21
             pygame.draw.circle(self.canvas, BG, (cx, cy), radius + 3)
             pygame.draw.circle(self.canvas, ROBOT_COLORS[i], (cx, cy), radius)
-            self.text(i + 1, (cx, cy - 1), 18, BG, bold=True, center=True)
+            self.text(i + 1, (cx, cy - 1), min(18, max(11, cell // 3)), BG, bold=True, center=True)
             if robot.carrying is not None:
-                pygame.draw.circle(self.canvas, GOLD, (cx + radius - 1, cy - radius + 1), 7)
-                self.text("+", (cx + radius - 1, cy - radius), 13, BG, bold=True, center=True)
+                badge = min(7, max(4, cell // 10))
+                pygame.draw.circle(self.canvas, GOLD, (cx + radius - 1, cy - radius + 1), badge)
+                self.text("+", (cx + radius - 1, cy - radius), min(13, 2 * badge), BG, bold=True, center=True)
         self._mission_details()
         self.text("1 / 2  Robots     •     Persona     •     Base segura     •     # Obstáculo",
                   (60, 686), 12, MUTED)
@@ -348,16 +356,19 @@ class RescueApp:
     def _mission_details(self):
         state = self.state
         self.text("SOBREVIVIENTES", (532, 248), 11, MUTED, bold=True)
-        for victim_id in range(2):
-            y = 274 + victim_id * 78
+        count = self.scenario.victim_count
+        for victim_id in range(min(count, 3)):
+            y = 274 + victim_id * (78 if count <= 2 else 54)
             delivered = victim_id in state.rescued
             carrier = next((i + 1 for i, r in enumerate(state.robots) if r.carrying == victim_id), None)
             status = "En la base" if delivered else f"Con robot {carrier}" if carrier else "Por rescatar"
             color = GREEN if delivered else CYAN if carrier else GOLD
-            self.card((532, y, 294, 64), INSET, 9)
+            self.card((532, y, 294, 64 if count <= 2 else 48), INSET, 9)
             pygame.draw.circle(self.canvas, color, (550, y + 21), 4)
-            self.text(f"Persona {victim_id + 1}", (563, y + 9), 15, bold=True)
-            self.text(status, (550, y + 35), 13, color)
+            self.text(f"Persona {victim_id + 1}", (563, y + (9 if count <= 2 else 4)), 15, bold=True)
+            self.text(status, (550, y + (35 if count <= 2 else 25)), 13, color)
+        if count > 3:
+            self.text(f"+ {count - 3} personas en el mapa", (532, 425), 11, MUTED)
         self.text("EXPOSICIÓN TÉRMICA", (532, 442), 11, MUTED, bold=True)
         for i, (label, damage, temperature) in enumerate((
             ("Menos de 40 °C", 0, 25), ("40 a <60 °C", 2, 45),

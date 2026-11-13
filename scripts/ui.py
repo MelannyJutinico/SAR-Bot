@@ -40,7 +40,8 @@ def main():
             args.screenshot.parent.mkdir(parents=True, exist_ok=True)
             pygame.image.save(surface, str(args.screenshot))
             print(json.dumps({"steps": app.state.steps, "outcome": app.state.outcome,
-                              "rescued": len(app.state.rescued), "screenshot": str(args.screenshot)}))
+                              "rescued": len(app.state.rescued), "victims_total": app.scenario.victim_count,
+                              "screenshot": str(args.screenshot)}))
         finally:
             app.close()
             pygame.quit()

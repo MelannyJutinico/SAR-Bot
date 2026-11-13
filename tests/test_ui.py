@@ -97,6 +97,19 @@ class UITests(unittest.TestCase):
         self.app.key(pygame.K_SPACE)
         self.assertEqual(self.app.state.steps, 0)
 
+    def test_v2_three_people_render_and_finish_using_same_controls(self):
+        app = RescueApp(ROOT, ROOT / "scenarios/v2/building_10x10.json", "shortest", asynchronous=False)
+        try:
+            app.render()
+            app.click(app.controls["play"].center)
+            app.update(100)
+            self.assertEqual(app.scenario.victim_count, 3)
+            self.assertEqual(app.state.outcome, "success")
+            self.assertEqual(len(app.state.rescued), 3)
+            self.assertEqual(app.render().get_size(), SIZE)
+        finally:
+            app.close()
+
 
 if __name__ == "__main__":
     unittest.main()

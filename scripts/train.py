@@ -21,7 +21,7 @@ from stable_baselines3.common.monitor import Monitor
 
 from sar_bot.core import Scenario
 from sar_bot.env import RescueEnv, RewardConfig
-from sar_bot.learning import evaluate_model, model_score
+from sar_bot.learning import evaluate_model, model_score, observation_mode_for_model
 from sar_bot.training import StageExploration
 
 
@@ -131,6 +131,7 @@ def main():
                 else:
                     model = DQN.load(initial_model, env=env, seed=config["seed"],
                                      device="cpu", verbose=0, **config["dqn"])
+                    observation_mode_for_model(model, scenarios[0])
                     metadata["initial_model"]["previous_training_steps"] = model.num_timesteps
                     (args.run_dir / "metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
                     # Contabilizar pasos nuevos del experimento, sin borrar pesos ni optimizador.

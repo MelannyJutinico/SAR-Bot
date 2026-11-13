@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from math import isfinite
 from pathlib import Path
 
-from sar_bot.agents import RandomPolicy, ShortestPathPolicy, ThermalPathPolicy
+from sar_bot.agents import create_policy
 from sar_bot.core import MissionState, RescueSimulation, Scenario
 
 
@@ -14,24 +14,17 @@ class Episode:
     states: tuple[MissionState, ...]
     actions: tuple[int, ...]
 
+    @property
+    def scenario_id(self):
+        return self.scenario.fingerprint()
 
-def prepare_episode(scenario_path: Path, strategy: str, model_path: Path | None = None,
+
+def prepare_episode(scenario_path: Scenario | str | Path, strategy: str, model_path: Path | None = None,
                     seed: int = 0) -> Episode:
     """Calcula una misión real antes de reproducirla; no fabrica estados visuales."""
-    simulation = RescueSimulation(Scenario.load(scenario_path))
-    if strategy == "dqn":
-        if model_path is None:
-            raise ValueError("Seleccionar un modelo para el controlador aprendido")
-        from sar_bot.agents.dqn import DQNPolicy
-        policy = DQNPolicy(simulation, model_path)
-    elif strategy == "shortest":
-        policy = ShortestPathPolicy(simulation)
-    elif strategy == "thermal":
-        policy = ThermalPathPolicy(simulation)
-    elif strategy == "random":
-        policy = RandomPolicy(simulation, seed)
-    else:
-        raise ValueError(f"Estrategia desconocida: {strategy}")
+    scenario = scenario_path if isinstance(scenario_path, Scenario) else Scenario.load(scenario_path)
+    simulation = RescueSimulation(scenario)
+    policy = create_policy(simulation, strategy, model_path=model_path, seed=seed)
     states, actions = [simulation.state], []
     while simulation.state.outcome == "running":
         action = policy.act(simulation.state)
