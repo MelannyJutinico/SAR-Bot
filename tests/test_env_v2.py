@@ -53,6 +53,18 @@ class EnvV2Tests(unittest.TestCase):
         env.simulation.state = MissionState((Robot((1, 0), carrying=0), Robot((0, 1), carrying=1)))
         self.assertEqual(env._potential(env.simulation.state), -6)
 
+    def test_bounded_guidance_does_not_reward_waiting_in_large_map(self):
+        from sar_bot.env import RewardConfig
+        scenario = Scenario.load(ROOT / "scenarios/v2/building_10x10.json")
+        rewards = RewardConfig(potential_bound=40)
+        env = RescueEnv([scenario], rewards, observation_mode="sensors")
+        env.reset()
+        self.assertGreaterEqual(env._potential(env.simulation.state), -40)
+        _, reward, _, _, info = env.step(24)
+        self.assertLess(reward, 0)
+        self.assertEqual(info["reward_terms"]["pickup"], 0)
+        self.assertEqual(info["reward_terms"]["delivery"], 0)
+
     def test_real_v2_model_profile_survives_save_load_and_blocks_wrong_map(self):
         import tempfile
         import torch

@@ -24,12 +24,15 @@ class RewardConfig:
     damage: float = -1.0
     shaping: float = 2.0
     gamma: float = 0.99
+    potential_bound: float = 0.0
 
     def __post_init__(self):
         if not all(isfinite(value) for value in vars(self).values()):
             raise ValueError("Las recompensas deben ser finitas")
         if not 0 < self.gamma <= 1:
             raise ValueError("gamma debe estar en (0, 1]")
+        if self.potential_bound < 0:
+            raise ValueError("El límite del potencial debe ser no negativo")
 
 
 class RescueEnv(gym.Env):
@@ -63,6 +66,11 @@ class RescueEnv(gym.Env):
             dtype=np.float32
         )
         self._distances = [self._compute_distances(s) for s in scenarios]
+        # Toda entrega con capacidad uno cuesta a lo sumo dos recorridos simples
+        # por persona. Escala fija por edificio: no altera el potencial entre pasos.
+        self._potential_scales = [min(1.0, self.rewards.potential_bound / max(
+            1, 2 * self.victim_count * (s.width * s.height - len(s.walls) - 1)))
+            if self.rewards.potential_bound else 1.0 for s in scenarios]
         self.scenario_index = 0
         self.simulation = RescueSimulation(scenarios[0])
         self._needs_reset = True
@@ -175,7 +183,7 @@ class RescueEnv(gym.Env):
                     victim = scenario.victims[victim_id]
                     total += distances[starts[i], victim] - distances[scenario.base, victim]
             best = min(best, total)
-        return -float(best)
+        return -float(best) * self._potential_scales[self.scenario_index]
 
     def _info(self):
         return {**self.simulation.snapshot(), "is_success": self.simulation.state.outcome == "success",

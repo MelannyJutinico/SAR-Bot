@@ -6,7 +6,7 @@
   "rewards": {
     "step": -1.0, "pickup": 5.0, "delivery": 50.0,
     "success": 100.0, "destruction": -100.0,
-    "timeout": -20.0, "damage": -2.0, "shaping": 2.0, "gamma": 0.99
+    "timeout": -20.0, "damage": -2.0, "shaping": 2.0, "gamma": 0.99, "potential_bound": 40.0
   },
   "dqn": {
     "learning_rate": 0.0005, "buffer_size": 50000, "learning_starts": 500,
