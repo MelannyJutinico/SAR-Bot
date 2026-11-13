@@ -51,6 +51,8 @@ El indicador de personas rescatadas aumenta al entregarlas en la base, no al rec
 
 Esta primera versión reproduce una misión preparada. No entrena en vivo ni permite editar el mapa durante el episodio. Las gráficas de entrenamiento y comparación permanecen fuera de esta ventana; son ampliaciones posibles para el integrante encargado de visualización.
 
+El editor para colocar sobrevivientes antes de iniciar y la comparación dentro de la aplicación están planificados en [BACKLOG.md](../BACKLOG.md). No son controles disponibles todavía en esta versión.
+
 ## Parámetros de arranque
 
 ```powershell

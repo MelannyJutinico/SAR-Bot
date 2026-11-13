@@ -168,3 +168,11 @@ El modelo recomendado está en `artifacts/sensors_dqn/`. En el pasillo largo ent
 Se implementó una ventana Pygame con selector de escenario y estrategia, mapa de calor, trayectorias, personas y robots, integridad, temperatura, rescates y pasos. Incluye iniciar, pausar, reiniciar, avanzar un paso y cambiar velocidad. Se reproduce un episodio real preparado en segundo plano, sin duplicar reglas ni alterar exposición con el reloj visual.
 
 Comando: `uv run --extra ui --extra rl python scripts/ui.py`. La aplicación comienza en el pasillo compartido y con el modelo recomendado. `INTERFAZ.md` documenta controles y verificación. La persona 3 puede refinar la presentación sobre esta base; siguen pendientes mejor gestión térmica, evaluación más amplia e integración final de la entrega.
+
+### Alcance de cierre para el equipo: editor y posiciones variables
+
+Se priorizó como próxima ampliación que el profesor pueda colocar dos sobrevivientes antes de iniciar el rescate, conservando edificios preparados, base, obstáculos y fuego estáticos. Esta capacidad todavía no está implementada; requiere editor, validación, serialización y entrenamiento con ubicaciones variables. No implica que el modelo actual resuelva cualquier posición elegida.
+
+El validador distinguirá errores estructurales de viabilidad térmica certificada o no certificada. La derrota de DQN o de una referencia no se usará como prueba de imposibilidad. La comparación mantendrá exactamente la misma configuración para todas las estrategias.
+
+La guía para los cuatro integrantes está en [README_EQUIPO.md](../README_EQUIPO.md). [BACKLOG.md](../BACKLOG.md) es la fuente de tareas pendientes para la entrega: incluye responsables, dependencias, criterios verificables, evaluación con varias semillas y cierre reproducible. Batería, urgencia y propagación del incendio quedan fuera del alcance de cierre.

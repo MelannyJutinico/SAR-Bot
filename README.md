@@ -1,5 +1,7 @@
 # SAR-Bot
 
+**Para incorporarse al equipo:** empezar por [README_EQUIPO.md](README_EQUIPO.md) y continuar con el [backlog de entrega](BACKLOG.md). Esta página conserva la referencia técnica de la base implementada.
+
 Simulación académica de rescate cooperativo: dos robots deben evacuar a dos sobrevivientes en un edificio 2D con riesgo térmico acumulativo.
 
 **Asignatura:** Sistemas Inteligentes. **Equipo:** cuatro personas. **Plazo objetivo:** una semana.
@@ -13,6 +15,8 @@ Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, eva
 - [Referencias y primeros resultados de desarrollo](docs/EVALUACION.md)
 - [Instalación, observaciones, recompensas y entrenamiento](docs/APRENDIZAJE.md)
 - [Interfaz visual y controles](docs/INTERFAZ.md)
+- [Guía para los cuatro integrantes](README_EQUIPO.md)
+- [Backlog con responsables, dependencias y criterios de aceptación](BACKLOG.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
@@ -147,4 +151,6 @@ La validación actual comprueba estructura y conectividad del mapa. La misión d
 
 ### Próximo hito
 
-Mejorar la gestión térmica y repetir con varias semillas y más mapas reservados. Refinar la interfaz inicial y preparar la demostración. Si los casos de prueba actuales se usan para ajustar el entrenamiento, habrá que reservar otros nuevos.
+Implementar el editor para que el profesor coloque dos personas antes de la misión, entrenar con posiciones variables y cerrar la evaluación y presentación. El editor todavía no está implementado. La fuente principal de tareas pendientes es [BACKLOG.md](BACKLOG.md); batería, urgencia y fuego dinámico quedan fuera de este alcance.
+
+También falta mejorar la gestión térmica y repetir con varias semillas y más mapas reservados. Los resultados de prueba actuales ya se han consultado; para el nuevo desarrollo se conservarán como antecedentes y se reservarán nuevas configuraciones antes de la evaluación final.

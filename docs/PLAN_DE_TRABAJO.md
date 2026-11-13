@@ -1,10 +1,12 @@
 # Plan de trabajo: cuatro personas y una semana
 
+**Plan de cierre vigente:** las tareas pendientes, dependencias y criterios de aceptación están en [BACKLOG.md](../BACKLOG.md). La guía de incorporación está en [README_EQUIPO.md](../README_EQUIPO.md). Este documento resume la base ya construida y la distribución de responsabilidades.
+
 ## Nuestro rol: persona 1
 
 Nosotros construiremos la base integrada, el aprendizaje y la dirección técnica. Las otras tres personas refinarán y continuarán esa base. La meta inicial es que todos puedan ejecutar el mismo proyecto y trabajar en módulos separados.
 
-## Base que dejaremos durante los primeros dos días
+## Base construida por la persona 1
 
 1. Estructura Python con dependencias verificadas e instrucciones de instalación.
 2. Motor con dos robots, recogida, entrega, obstáculos y pasos globales.
@@ -27,9 +29,9 @@ La base debe funcionar de principio a fin, aunque su aspecto visual y el desempe
 | 3 | Visualización | Pygame, controles, indicadores y claridad de la demostración |
 | 4 | Evaluación y documentación | Referencia refinada, experimentos, gráficas e informe |
 
-Durante la construcción inicial, la persona 2 diseña escenarios, la 3 prepara vistas con estados de ejemplo y la 4 especifica casos de verificación y resultados esperados.
+Para el cierre, persona 2 continúa con validación, viabilidad y posiciones variables; persona 3 construye el editor sobre la interfaz inicial; persona 4 organiza particiones, evaluación, gráficas e informe. Persona 1 mantiene el aprendizaje y la integración. Las asignaciones detalladas están en el backlog.
 
-## Estructura prevista, todavía por implementar
+## Estructura de la base disponible
 
 ```text
 src/sar_bot/
@@ -46,7 +48,9 @@ docs/              # Contexto, diseño y resultados
 
 El motor será la única fuente de las reglas. La interfaz no calculará daño ni decidirá rescates. La evaluación y el entrenamiento consumirán el mismo entorno.
 
-## Calendario relativo
+## Calendario original de construcción de la base
+
+La siguiente tabla conserva la planificación de la primera versión. Para el trabajo restante usar el calendario de cierre de [BACKLOG.md](../BACKLOG.md).
 
 | Día | Hito |
 |---|---|
