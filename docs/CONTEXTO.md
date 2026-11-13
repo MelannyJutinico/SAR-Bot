@@ -108,7 +108,7 @@ Progresión: un robot y una víctima para verificar reglas; dos robots y dos ví
 
 ## 9. Evaluación y límites de las conclusiones
 
-Referencia principal: dos robots con asignación de víctimas distintas por distancia de camino y rutas más cortas que ignoran calor, usando las mismas reglas de colisión y tiempo. Se implementará espera cuando corresponda y se documentará cómo resuelve bloqueos.
+Referencia principal implementada: dos robots con asignación de víctimas distintas por distancia de camino y movimientos conjuntos que ignoran calor, usando las mismas reglas de colisión y tiempo. La búsqueda conjunta incluye esperar y desplazarse para resolver conflictos. Los detalles y límites están en `EVALUACION.md`.
 
 Usar pocos diseños de edificio y variar ubicaciones válidas de víctimas y calor. Separar configuraciones de entrenamiento, validación y prueba. Comprobar conectividad y existencia de al menos una misión viable bajo daño y límite temporal; conectividad por sí sola no basta.
 
@@ -125,7 +125,8 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Registrar exposición térmica para ambos robots por paso global.
 - [x] Implementar primera base del motor, ejecutable por consola.
 - [x] Verificar reglas críticas y una misión viable en el escenario de demostración.
-- [ ] Completar la base integrada: referencia general, Gymnasium y visualización Pygame.
+- [x] Implementar referencia automática, política aleatoria y evaluación CSV.
+- [ ] Completar la base integrada: Gymnasium y visualización Pygame.
 - [ ] Entrenar y guardar una política.
 - [ ] Evaluar y preparar demostración.
 
@@ -138,3 +139,7 @@ El motor aplica daño después de resolver movimientos y antes de recogidas y en
 El campo térmico inicial usa distancia Manhattan: `T(x,y) = max(ambiente, pico - caída × distancia_al_foco)`. Las paredes todavía no atenúan el calor. El daño registrado es pérdida efectiva de integridad: se limita a la integridad restante al destruirse un robot.
 
 La demostración programada evacúa dos víctimas en diez pasos con integridad final 82 y 100. Las verificaciones incluyen exposición en espera, choques, umbrales, conflictos entre robots, no duplicación de recogidas y prioridad de destrucción. No representan entrenamiento ni comparación de estrategias.
+
+### Segundo incremento implementado
+
+La referencia automática asigna objetivos a partir del mapa y calcula acciones sin una secuencia predefinida. La búsqueda usa la misma función de movimiento que el simulador y no modifica el tiempo ni la integridad mientras planifica. Hay tres escenarios de desarrollo, una política aleatoria con semilla y exportación CSV de un episodio por estrategia y escenario. Los resultados medidos y sus límites figuran en `EVALUACION.md`. Todavía no hay entrenamiento ni prueba reservada.

@@ -1,4 +1,4 @@
-"""Demostración programada del motor; todavía no ejecuta aprendizaje."""
+"""Reproduce rescates programados o estrategias de referencia, sin aprendizaje."""
 
 import argparse
 import json
@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from sar_bot.core import Action, RescueSimulation, Scenario
+from sar_bot.agents import RandomPolicy, ShortestPathPolicy
 
 
 def render(simulation):
@@ -36,18 +37,29 @@ def render(simulation):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", action="store_true", help="Una instantánea JSON por paso")
+    parser.add_argument("--strategy", choices=("scripted", "shortest", "random"), default="scripted")
+    parser.add_argument("--scenario", type=Path, default=ROOT / "scenarios" / "demo.json")
+    parser.add_argument("--seed", type=int, default=0, help="Semilla de la estrategia aleatoria")
     args = parser.parse_args()
-    simulation = RescueSimulation(Scenario.load(ROOT / "scenarios" / "demo.json"))
+    if args.strategy == "scripted" and args.scenario.resolve() != (ROOT / "scenarios/demo.json").resolve():
+        parser.error("La secuencia scripted solo es válida para el escenario demo.json")
+    simulation = RescueSimulation(Scenario.load(args.scenario))
     emit = (lambda s: print(json.dumps(s.snapshot(), ensure_ascii=False))) if args.json else render
     emit(simulation)
     # Ruta reproducible para este escenario: ida por dos bordes y vuelta a la base.
     # No es una estrategia general ni una política aprendida.
     plan = [(Action.RIGHT, Action.DOWN)] * 5 + [(Action.LEFT, Action.UP)] * 5
-    for first, second in plan:
-        simulation.step(simulation.encode_actions(first, second))
+    policy = (ShortestPathPolicy(simulation) if args.strategy == "shortest" else
+              RandomPolicy(simulation, args.seed) if args.strategy == "random" else None)
+    while simulation.state.outcome == "running":
+        if policy is None:
+            if simulation.state.steps >= len(plan):
+                raise RuntimeError("La secuencia programada terminó sin completar la misión")
+            action = simulation.encode_actions(*plan[simulation.state.steps])
+        else:
+            action = policy.act(simulation.state)
+        simulation.step(action)
         emit(simulation)
-        if simulation.state.outcome != "running":
-            break
     return 0 if simulation.state.outcome == "success" else 1
 
 

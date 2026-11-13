@@ -161,11 +161,15 @@ class RescueSimulation:
         first, second = divmod(joint_action, 5)
         return Action(first), Action(second)
 
-    def step(self, joint_action: int) -> MissionState:
-        if self.state.outcome != "running":
-            raise RuntimeError("La misión terminó; ejecutar reset antes de continuar")
+    def resolve_movement(
+        self, positions: tuple[Position, Position], joint_action: int
+    ) -> tuple[Position, Position]:
+        """Resuelve un movimiento hipotético sin avanzar tiempo ni alterar el estado.
+
+        El planificador y step comparten estas reglas de colisión.
+        """
         actions = self.decode_action(joint_action)
-        old = tuple(robot.position for robot in self.state.robots)
+        old = positions
         destinations = []
         for position, action in zip(old, actions):
             dx, dy = OFFSETS[action]
@@ -176,6 +180,15 @@ class RescueSimulation:
         swap = old[0] != old[1] and destinations == [old[1], old[0]]
         if same_cell or swap:
             destinations = list(old)
+
+        return tuple(destinations)
+
+    def step(self, joint_action: int) -> MissionState:
+        if self.state.outcome != "running":
+            raise RuntimeError("La misión terminó; ejecutar reset antes de continuar")
+        destinations = self.resolve_movement(
+            tuple(robot.position for robot in self.state.robots), joint_action
+        )
 
         robots = []
         for robot, destination in zip(self.state.robots, destinations):
