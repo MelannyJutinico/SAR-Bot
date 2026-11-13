@@ -1,5 +1,7 @@
 # Entorno de aprendizaje
 
+**Base V2:** el entorno ahora admite perfiles de dimensiones y cantidad de sobrevivientes configurables. El detalle y las fórmulas están en [CONTRATOS_V2.md](CONTRATOS_V2.md). Las secciones de experimentos anteriores conservan sus resultados históricos de dos personas.
+
 ## Instalación
 
 ```powershell

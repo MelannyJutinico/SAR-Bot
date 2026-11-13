@@ -6,7 +6,9 @@ Este backlog parte de una base funcional; no asigna como pendientes el motor, la
 
 ## 1. Meta de cierre
 
-Entregar una simulación en la que el profesor pueda colocar dos sobrevivientes en edificios preparados, observar a los robots, comparar estrategias sobre la misma misión y revisar evidencia de aprendizaje con ubicaciones variadas y casos reservados.
+Entregar una simulación en la que el profesor pueda colocar tres sobrevivientes en edificios preparados, observar a dos robots realizar varios viajes, comparar estrategias sobre la misma misión y revisar evidencia de aprendizaje con ubicaciones variadas y casos reservados. El objetivo de escala es 12 × 12, partiendo de una base integrada de 10 × 10.
+
+**Punto de partida V2:** ya existen motor configurable, varios focos, firmas, serialización, fábrica de estrategias, episodios desde objetos, perfiles de aprendizaje e interfaz básica para tres personas. Las referencias completan el edificio 10 × 10; el piloto DQN aún no. Las tareas siguientes amplían y verifican esa base; no piden reconstruirla. Leer [CONTRATOS_V2.md](docs/CONTRATOS_V2.md).
 
 El éxito del proyecto se valorará con funcionamiento, formulación del problema, aprendizaje reproducible, calidad experimental y explicación de límites. No se garantiza que DQN supere una búsqueda clásica en cada escenario, ni que todas las ubicaciones transitables sean rescatables.
 
@@ -14,7 +16,7 @@ El éxito del proyecto se valorará con funcionamiento, formulación del problem
 
 - **P0:** necesario para cerrar el funcionamiento o la validez de la entrega.
 - **P1:** necesario para la calidad de la entrega que queremos mostrar. Se aborda después de sus dependencias P0.
-- No hay tareas opcionales escondidas entre los requisitos: la meta es cerrar las 27 tareas P0 y P1. Batería, urgencia, fuego dinámico, web y 3D quedan fuera.
+- No hay tareas opcionales escondidas entre los requisitos: la meta es cerrar las 32 tareas P0 y P1. Batería, urgencia, fuego dinámico, web y 3D quedan fuera. El alcance final de 12 × 12 debe validarse con el profesor y el presupuesto de cómputo; una reducción formal al hito de 10 × 10 se registra antes de la prueba final, no se oculta.
 - Marcar la casilla del índice solo cuando se cumplan los criterios, exista evidencia y el cambio esté integrado en la base acordada. Una rama aislada que aún no se integra no está terminada.
 - Cada tarea tiene autor principal y revisor; los nombres reales se asignan entre integrantes. Las horas son esfuerzo activo orientativo, no duración garantizada de entrenamiento ni disponibilidad del profesor.
 - Ante un bloqueo, registrar causa, siguiente acción y persona que puede resolverla. Continuar otras tareas independientes; no cambiar el alcance o inventar resultados para cerrar una casilla.
@@ -30,7 +32,7 @@ El éxito del proyecto se valorará con funcionamiento, formulación del problem
 - [ ] [SARB-007 — Guardar y cargar escenarios personalizados](#sarb-007) · P0 · Persona 2
 - [ ] [SARB-008 — Generar ubicaciones variables reproducibles](#sarb-008) · P0 · Persona 2
 - [ ] [SARB-009 — Reservar nuevas particiones experimentales](#sarb-009) · P0 · Persona 4
-- [ ] [SARB-010 — Editor visual de dos sobrevivientes](#sarb-010) · P0 · Persona 3
+- [ ] [SARB-010 — Editor visual de tres sobrevivientes](#sarb-010) · P0 · Persona 3
 - [ ] [SARB-011 — Conectar editor, motor y reproducción](#sarb-011) · P0 · Persona 3 + persona 1
 - [ ] [SARB-012 — Importar y exportar desde la interfaz](#sarb-012) · P0 · Persona 3
 - [ ] [SARB-013 — Comparar estrategias en pantalla](#sarb-013) · P1 · Persona 3 + persona 4
@@ -48,17 +50,22 @@ El éxito del proyecto se valorará con funcionamiento, formulación del problem
 - [ ] [SARB-025 — Escribir el informe técnico final](#sarb-025) · P0 · Persona 4 + equipo
 - [ ] [SARB-026 — Preparar y ensayar la demostración](#sarb-026) · P0 · Persona 4 + equipo
 - [ ] [SARB-027 — Cerrar la versión reproducible de entrega](#sarb-027) · P0 · Persona 1 + equipo
+- [ ] [SARB-028 — Diseñar edificios y familias de dificultad](#sarb-028) · P0 · Persona 2
+- [ ] [SARB-029 — Calibrar focos y exposición térmica](#sarb-029) · P1 · Persona 2
+- [ ] [SARB-030 — Separar vistas y seleccionar modelos por perfil](#sarb-030) · P1 · Persona 3
+- [ ] [SARB-031 — Estudiar escala, reparto de rescates y dificultad](#sarb-031) · P1 · Persona 4
+- [ ] [SARB-032 — Mostrar historial y exportar trazas de misión](#sarb-032) · P1 · Personas 3 y 4
 
 ## 3. Reparto y orden de trabajo
 
 | Persona | Frente principal | Carga activa orientativa, con revisiones |
 |---|---|---|
 | 1 | Contratos, aprendizaje e integración | 24–32 h |
-| 2 | Entorno, validación, viabilidad y generación | 16–24 h |
-| 3 | Editor, interacción y presentación visual | 18–26 h |
-| 4 | Protocolo, evaluación, gráficas y entrega académica | 22–30 h |
+| 2 | Entorno, validación, viabilidad, edificios y calibración | 24–32 h |
+| 3 | Editor, vistas, modelos por perfil e historial visual | 24–32 h |
+| 4 | Protocolo, escala, evaluación, gráficas y entrega académica | 26–34 h |
 
-La persona 1 tiene mayor complejidad técnica y revisa integraciones; no debe absorber la implementación del editor, todos los mapas y todo el informe. Las estimaciones dependen de la experiencia del grupo y deben ajustarse al empezar. Los entrenamientos se pueden ejecutar en máquinas distintas con el mismo entorno y configuración.
+La persona 1 tiene mayor complejidad técnica y revisa integraciones; no debe absorber la implementación del editor, todos los mapas y todo el informe. La ampliación requiere aproximadamente 98–130 horas activas del equipo, además de cómputo. Revisar disponibilidad antes de prometer cerrarla en una semana; no es una estimación de convergencia. Los entrenamientos se pueden ejecutar en máquinas distintas con el mismo entorno y configuración.
 
 ### Dependencia principal
 
@@ -101,11 +108,11 @@ Resolver la autenticación pendiente y publicar todos los commits de la base. Co
 
 **P0 · Responsable:** persona 4 con todo el equipo · **Revisa:** persona 1 · **Depende de:** ninguna · **Esfuerzo:** 1 h más disponibilidad del profesor.
 
-Validar dos robots, control centralizado, simulación 2D, editor de personas y aprendizaje por refuerzo. Preguntar entregables, fecha, duración de exposición y criterios de evaluación.
+Validar dos robots, tres sobrevivientes, objetivo 12 × 12, control centralizado, simulación 2D, editor de personas y aprendizaje por refuerzo. Preguntar entregables, fecha, duración de exposición y criterios de evaluación.
 
 **Aceptación:**
 - Hay una nota con requisitos confirmados, decisiones propias y dudas pendientes, diferenciados.
-- El equipo adopta como entrega dos personas en edificios preparados; no añade batería o fuego dinámico sin revisar tiempo y alcance.
+- El equipo adopta tres personas, varios focos estáticos y edificios preparados. Se confirma el objetivo 12 × 12 o una reducción explícita al hito 10 × 10, sin añadir batería o fuego dinámico.
 - Se acuerda evaluar rescates completos, daño y pasos, admitiendo resultados negativos y límites del aprendizaje.
 
 **Evidencia:** nota en `docs/` con fecha y acuerdos; no atribuir al profesor decisiones sin confirmar.
@@ -118,6 +125,7 @@ Validar dos robots, control centralizado, simulación 2D, editor de personas y a
 **Aceptación:**
 - Cada integrante instala desde el mismo commit con el lockfile y abre la interfaz sin entrenar otra vez.
 - Se reproduce el pasillo actual: dos rescates, 22 pasos, daño cero.
+- Se reproduce también la base V2 con la referencia térmica: tres rescates, 62 pasos y daño total 64 en el edificio de 10 × 10.
 - Se ejecutan las pruebas y se registran sistema, Python, commit y cualquier incidencia.
 - Las instrucciones se corrigen usando los errores de instalación reales encontrados.
 
@@ -128,7 +136,7 @@ Validar dos robots, control centralizado, simulación 2D, editor de personas y a
 
 **P0 · Responsable:** persona 1 con persona 2 · **Revisa:** personas 3 y 4 · **Depende de:** SARB-002 · **Esfuerzo:** 1 h.
 
-Definir una representación única del edificio fijo y las dos posiciones editables. Decidir dónde residen validación, serialización e identificador de configuración.
+Revisar con los consumidores el contrato V2 ya construido: edificio fijo, tres posiciones editables, validación, serialización, firma y perfiles. Completar lo que falte sin crear formatos paralelos.
 
 **Aceptación:**
 - Hay un ejemplo concreto que UI, motor, entrenamiento y evaluación pueden consumir.
@@ -179,7 +187,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 **P0 · Responsable:** persona 2 · **Revisa:** personas 1 y 3 · **Depende de:** SARB-004, SARB-005 · **Esfuerzo:** 2 h.
 
 **Aceptación:**
-- Exporta edificio, dos personas, parámetros térmicos, base, límites, versión del esquema e identificador o hash.
+- Exporta edificio, tres personas, parámetros térmicos, base, límites, versión del esquema e identificador o hash; reutiliza `Scenario.to_dict/save` y verifica el recorrido completo de importación.
 - La importación reconstruye un `Scenario` equivalente; no cambia el campo térmico ni la plantilla original.
 - Guardar y volver a cargar conserva resultados de una estrategia determinista y semilla.
 - Los escenarios creados durante la demo se guardan fuera de las particiones reservadas.
@@ -190,10 +198,10 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 <a id="sarb-008"></a>
 ### SARB-008 — Generar ubicaciones variables reproducibles
 
-**P0 · Responsable:** persona 2 · **Revisa:** personas 1 y 4 · **Depende de:** SARB-005, SARB-006, SARB-007 · **Esfuerzo:** 3 h.
+**P0 · Responsable:** persona 2 · **Revisa:** personas 1 y 4 · **Depende de:** SARB-005, SARB-006, SARB-007, SARB-028, SARB-029 · **Esfuerzo:** 3 h.
 
 **Aceptación:**
-- Genera posiciones distintas para dos personas en dos edificios de 6 × 6, manteniendo la geometría y el calor por plantilla.
+- Genera posiciones distintas para tres personas en al menos dos edificios del perfil final, manteniendo geometría y calor por plantilla. El hito es 10 × 10 y el objetivo siguiente 12 × 12.
 - Una semilla reproduce exactamente las configuraciones y sus identificadores.
 - Incluye casos cercanos/lejanos, rutas compartidas y distintas exposiciones; no genera solo posiciones cómodas.
 - Elimina duplicados físicos aunque se intercambien etiquetas de las personas.
@@ -214,6 +222,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 - Se documentan los criterios de generación y certificación y la distribución resultante; un conjunto de casos certificados no representa todas las posiciones transitables posibles.
 - Se preservan los conjuntos y resultados antiguos como históricos; no se presentan como la nueva prueba final.
 - Se fija un manifiesto versionado y sus hashes antes de abrir resultados de DQN en prueba.
+- Si se conservan ambos tamaños, se usan manifiestos y modelos por perfil; no se mezclan dimensiones incompatibles en un solo entrenamiento o evaluación DQN.
 - El conjunto de prueba no se usa para entrenar, elegir checkpoints, ajustar recompensas o decidir qué semilla mostrar.
 
 **Evidencia:** nuevo manifiesto, resumen de distribución y verificación automática de separación. El edificio puede repetirse porque se estudia generalización a ubicaciones dentro de edificios conocidos.
@@ -221,12 +230,12 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 ## 6. Editor e interfaz
 
 <a id="sarb-010"></a>
-### SARB-010 — Editor visual de dos sobrevivientes
+### SARB-010 — Editor visual de tres sobrevivientes
 
 **P0 · Responsable:** persona 3 · **Revisa:** persona 2 · **Depende de:** SARB-004, SARB-005 · **Esfuerzo:** 4 h.
 
 **Aceptación:**
-- Botón visible para entrar a edición antes de la misión; permite elegir Persona 1 o Persona 2 y colocarla con clics.
+- Botón visible para entrar a edición antes de la misión; permite elegir Persona 1, 2 o 3 y colocarla con clics.
 - Ofrece limpiar posiciones y restaurar las de la plantilla; muestra cuántas personas faltan.
 - No permite editar paredes, base o fuego. Un clic inválido explica la causa sin cerrar la aplicación.
 - El clic se traduce correctamente al redimensionar la ventana y no se confunde con controles o márgenes.
@@ -243,7 +252,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 - Iniciar utiliza exactamente las posiciones editadas y el escenario validado, no el archivo original sin cambios.
 - Editar cancela o invalida la preparación anterior y deja la nueva misión pausada en el paso cero.
 - Cambiar estrategia conserva las ubicaciones elegidas y reinicia integridad, carga y contadores.
-- El episodio preparado contiene la firma de su configuración; nunca aparece en pantalla un resultado de una selección anterior pendiente.
+- El episodio preparado contiene `configuration_id` y se controla la generación de preparación; nunca aparece un resultado anterior. La firma física `scenario_id` se reserva para agrupar datos y no basta para distinguir un intercambio de etiquetas de personas.
 - Se identifica viabilidad no certificada y se permite explorar sin prometer éxito. El modelo actual puede fallar en posiciones nuevas; no se cambia silenciosamente a una referencia para ocultarlo.
 - El daño sigue calculándose solo en el motor y depende de pasos globales, no de la velocidad de reproducción.
 
@@ -298,9 +307,9 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 **P0 · Responsable:** persona 1 · **Revisa:** persona 2 · **Depende de:** SARB-004, SARB-008 · **Esfuerzo:** 4 h.
 
 **Aceptación:**
-- `reset` selecciona configuraciones solo de la partición solicitada y se reproduce con semilla.
-- La observación refleja las dos posiciones reales y actualiza sensores/distancias para el escenario elegido.
-- Se conserva el espacio de 25 acciones y, si es posible, el esquema de 157 entradas; si cambia, se versionan esquema y modelos.
+- `reset` selecciona configuraciones solo de la partición solicitada y se reproduce con semilla. La opción `victim_positions` ya está construida; completar su uso con el generador y las particiones.
+- La observación refleja las tres posiciones reales y actualiza sensores/distancias para el escenario elegido.
+- Se conserva el espacio de 25 acciones y se usa el perfil correcto: 302 entradas con sensores para 10 × 10/3, o 390 para 12 × 12/3. Las 157 entradas pertenecen a V1.
 - Un modelo antiguo no se presenta como validado para el nuevo alcance aunque su dimensión permita cargarlo.
 - Se comprueban rescate automático, daño simultáneo y límites en varias ubicaciones, y pasan los verificadores oficiales de Gymnasium/SB3.
 - No hay posiciones o respuestas de prueba en la generación de entrenamiento.
@@ -313,7 +322,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 **P0 · Responsable:** persona 1 · **Revisa:** persona 4 · **Depende de:** SARB-009, SARB-015 · **Esfuerzo:** 2 h.
 
 **Aceptación:**
-- Se puede configurar cada semilla sin editar el motor; añadir un argumento de CLI es válido si queda documentado.
+- `--seed` ya permite configurar cada semilla sin editar el motor; preparar su uso reproducible en ejecuciones independientes y pruebas de metadatos.
 - La evaluación periódica para elegir checkpoint usa validación separada; los controles de entrenamiento se identifican como tales.
 - La selección no consulta el conjunto de prueba ni depende de elegir luego la semilla que mejor salió en prueba.
 - Se guardan configuración efectiva, semilla, versión de código y observación, hashes de datos/modelo y registros de episodios.
@@ -375,7 +384,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 **Aceptación:**
 - DQN y las tres referencias reciben el mismo escenario, posiciones, temperaturas, integridad y límite temporal.
 - Cada ejecución comienza limpia; cambiar velocidad visual no afecta las métricas.
-- El CSV registra configuración, partición, estrategia, semilla del modelo o aleatoria según corresponda, hash del modelo, rescates, éxito, finalización, pasos y daño/integridad por robot y total.
+- El CSV registra `scenario_id` físico, `configuration_id` exacto, partición, estrategia, semilla del modelo o aleatoria según corresponda, hash del modelo, cantidad total de personas, rescates, éxito, finalización, pasos y daño/integridad por robot y total.
 - Se distinguen semillas de entrenamiento, de generación de escenarios y de acciones aleatorias.
 - Se prueba que las métricas corresponden a la traza del motor y que no se reutilizan datos de una misión anterior.
 - El retorno se interpreta con su función de recompensa; no se comparan directamente retornos de perfiles distintos como si fueran la misma escala.
@@ -417,7 +426,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 <a id="sarb-023"></a>
 ### SARB-023 — Analizar fallos y límites con trazas
 
-**P1 · Responsable:** persona 4 con persona 1 · **Revisa:** persona 2 · **Depende de:** SARB-017, SARB-021 · **Esfuerzo:** 2 h.
+**P1 · Responsable:** persona 4 con persona 1 · **Revisa:** persona 2 · **Depende de:** SARB-017, SARB-021, SARB-032 · **Esfuerzo:** 2 h.
 
 **Aceptación:**
 - Se conservan escenario y traza de al menos un rescate eficiente, un caso térmico y un fallo real del desarrollo o de la evaluación.
@@ -433,7 +442,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 <a id="sarb-024"></a>
 ### SARB-024 — Verificar el flujo completo de la aplicación
 
-**P0 · Responsable:** personas 3 y 2 · **Revisa:** persona 1 · **Depende de:** SARB-011, SARB-012, SARB-013, SARB-014 · **Esfuerzo:** 3 h.
+**P0 · Responsable:** personas 3 y 2 · **Revisa:** persona 1 · **Depende de:** SARB-011, SARB-012, SARB-013, SARB-014, SARB-030, SARB-032 · **Esfuerzo:** 3 h.
 
 **Aceptación:**
 - Flujo completo: seleccionar edificio → colocar personas → validar → guardar → ejecutar → pausar → avanzar → comparar → recuperar el escenario.
@@ -448,7 +457,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 <a id="sarb-025"></a>
 ### SARB-025 — Escribir el informe técnico final
 
-**P0 · Responsable:** persona 4 coordina; todos aportan · **Revisa:** persona 1 · **Depende de:** SARB-002, SARB-021, SARB-022, SARB-023 · **Esfuerzo:** 4 h.
+**P0 · Responsable:** persona 4 coordina; todos aportan · **Revisa:** persona 1 · **Depende de:** SARB-002, SARB-021, SARB-022, SARB-023, SARB-031 · **Esfuerzo:** 4 h.
 
 **Aceptación:**
 - Incluye problema, objetivos, alcance, arquitectura, reglas y formulación de observación, acciones, transición, recompensa y finalización.
@@ -491,12 +500,85 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 
 **Evidencia:** hash/etiqueta final, comprobación de instalación limpia, lista de archivos entregados y enlace compartido con el equipo.
 
-## 10. Definición global de terminado
+## 10. Nuevos frentes técnicos de la ampliación
 
-El backlog se considera cerrado cuando las 27 tareas están integradas y sus evidencias están disponibles. La revisión final debe poder responder sí a lo siguiente:
+<a id="sarb-028"></a>
+### SARB-028 — Diseñar edificios y familias de dificultad
+
+**P0 · Responsable:** persona 2 · **Revisa:** persona 1 · **Depende de:** SARB-004, SARB-005 · **Esfuerzo:** 4 h.
+
+**Aceptación:**
+- Se entregan al menos dos diseños del perfil final con habitaciones, corredores y puertas; el objetivo es 12 × 12 y se conserva el hito 10 × 10.
+- Cada edificio prueba una decisión concreta: cruce de robots, rodeo térmico, personas separadas o segundo viaje por una tercera persona.
+- Hay familias fácil, intermedia y exigente con criterio documentado; un mapa grande y abierto no se etiqueta difícil solo por tamaño.
+- Se comprueba conectividad, viabilidad de ejemplos y ausencia de obstáculos sobre base o personas. Se conserva un escenario de tres rescates completos por edificio.
+- Las plantillas usan los contratos V2 y no fuerzan cambios de reglas o formatos específicos en la UI.
+
+**Evidencia:** mapas, explicación de su propósito y trayectorias testigo. Un diseño nuevo de 12 × 12 requiere su propio perfil de modelo.
+
+<a id="sarb-029"></a>
+### SARB-029 — Calibrar focos y exposición térmica
+
+**P1 · Responsable:** persona 2 · **Revisa:** personas 1 y 4 · **Depende de:** SARB-006, SARB-028 · **Esfuerzo:** 3 h.
+
+**Aceptación:**
+- Los edificios tienen al menos dos focos estáticos con efectos visibles sobre varias celdas y una base segura.
+- Se construyen casos con rutas rápidas de mayor exposición y rodeos viables; se miden ambos, incluyendo el regreso y viajes adicionales.
+- Se explican ambiente, pico, caída por distancia y combinación máxima disponible en V2; no se presentan como física real.
+- Se calibran parámetros para que el peligro no desaparezca por completo ni vuelva imposibles casi todas las ubicaciones.
+- Se prueban los umbrales de daño y la independencia entre velocidad visual y exposición; el campo exportado coincide con el mostrado.
+- Cualquier modelo térmico alternativo se versiona y se compara en desarrollo antes de congelar datos. La atenuación por paredes es una extensión futura, no un requisito adicional obligatorio.
+
+**Evidencia:** tabla de parámetros, mapas de calor y pares de trayectorias con pasos y daño.
+
+<a id="sarb-030"></a>
+### SARB-030 — Separar vistas y seleccionar modelos por perfil
+
+**P1 · Responsable:** persona 3 · **Revisa:** persona 1 · **Depende de:** SARB-010, SARB-011 · **Esfuerzo:** 3 h.
+
+**Aceptación:**
+- La aplicación distingue preparación, ejecución y análisis, sin permitir que una edición modifique una misión calculada.
+- Un registro de modelos declara dimensiones, número de personas, esquema, ruta y estado: piloto o validado para la versión de entrega.
+- La UI permite seleccionar modelos compatibles o explica la incompatibilidad; nunca carga silenciosamente el modelo V1 para un edificio V2.
+- La condición de piloto se ve con claridad y no se presenta como garantía de rescate en cualquier posición.
+- El usuario puede volver a preparar otra misión sin perder las que guardó ni sus resultados de comparación.
+
+**Evidencia:** flujo probado entre vistas y capturas de modelo compatible, incompatible y piloto. La base actual detecta incompatibilidad; aún falta el registro visual.
+
+<a id="sarb-031"></a>
+### SARB-031 — Estudiar escala, reparto de rescates y dificultad
+
+**P1 · Responsable:** persona 4 · **Revisa:** personas 1 y 2 · **Depende de:** SARB-020, SARB-021, SARB-028 · **Esfuerzo:** 3 h.
+
+**Aceptación:**
+- Se analiza cómo cambian rescates, pasos y daño según familia de edificio, separación de personas y exposición térmica.
+- Se comparan tamaños con las referencias y, donde existan modelos entrenados, con DQN del perfil correspondiente. Un checkpoint 10 × 10 no se usa como si fuera un modelo 12 × 12.
+- Se registran entregas por robot, segundos viajes, esperas y bloqueos a partir de trazas; se distingue reparto de trabajo observado de una afirmación causal de cooperación superior.
+- Se mide tiempo de preparación y estados expandidos de las referencias por separado del tiempo simulado y la reproducción.
+- Se declaran configuraciones, semillas, cantidad de casos y limitaciones; no se mezclan distintos entrenamientos en una curva para aparentar un solo agente estable.
+
+**Evidencia:** tabla o figuras de dificultad y escala y una explicación de al menos un cambio de comportamiento observado.
+
+<a id="sarb-032"></a>
+### SARB-032 — Mostrar historial y exportar trazas de misión
+
+**P1 · Responsable:** personas 3 y 4 · **Revisa:** persona 1 · **Depende de:** SARB-007, SARB-011 · **Esfuerzo:** 3 h.
+
+**Aceptación:**
+- El historial identifica recogidas, entregas, daño y finalización a partir de cambios reales del estado, sin inventar razones internas del agente.
+- Una traza exportada vincula escenario, estrategia, modelo/semillas, acciones conjuntas y estados por paso con sus versiones y hashes.
+- Se puede recuperar la traza para reproducir un caso o inspeccionar un fallo, sin volver a entrenar.
+- Los contadores de daño y rescates coinciden con los eventos y no duplican recogidas o entregas.
+- Una misión guardada conserva sus resultados aunque el usuario prepare otra configuración.
+
+**Evidencia:** historial visible y exportación de un éxito, un caso de calor y un fracaso reproducible.
+
+## 11. Definición global de terminado
+
+El backlog se considera cerrado cuando las 32 tareas están integradas y sus evidencias están disponibles. La revisión final debe poder responder sí a lo siguiente:
 
 1. ¿Otro integrante puede instalar y abrir el proyecto desde la versión publicada?
-2. ¿El profesor puede ubicar dos personas y comprender validación, rescate y finalización?
+2. ¿El profesor puede ubicar tres personas y comprender validación, varios viajes, rescate y finalización?
 3. ¿Las cuatro estrategias se ejecutan sobre el mismo caso y se puede repetir la comparación?
 4. ¿El controlador fue entrenado con ubicaciones variadas y se eligió sin mirar prueba final?
 5. ¿Hay varias semillas, configuraciones reservadas y resultados medidos, incluidos fallos?

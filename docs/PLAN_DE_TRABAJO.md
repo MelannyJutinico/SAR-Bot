@@ -2,6 +2,8 @@
 
 **Plan de cierre vigente:** las tareas pendientes, dependencias y criterios de aceptación están en [BACKLOG.md](../BACKLOG.md). La guía de incorporación está en [README_EQUIPO.md](../README_EQUIPO.md). Este documento resume la base ya construida y la distribución de responsabilidades.
 
+**Ampliación V2:** se entregó una base de 10 × 10, tres sobrevivientes, varios focos y contratos generalizados. El objetivo siguiente es diseñar edificios de 12 × 12. Los contratos y límites del piloto están en [CONTRATOS_V2.md](CONTRATOS_V2.md); no confundir los resultados V1 con aprendizaje validado del nuevo alcance.
+
 ## Nuestro rol: persona 1
 
 Nosotros construiremos la base integrada, el aprendizaje y la dirección técnica. Las otras tres personas refinarán y continuarán esa base. La meta inicial es que todos puedan ejecutar el mismo proyecto y trabajar en módulos separados.
@@ -79,7 +81,7 @@ El calendario es un objetivo, no evidencia de progreso ni una garantía de conve
 ## Criterios de entrega
 
 - [x] Instalación documentada y reproducible.
-- [x] Dos robots y dos sobrevivientes visibles en consola y en interfaz Pygame.
+- [x] Dos robots y sobrevivientes configurables visibles; interfaz inicial para tres personas en V2.
 - [x] Calor y daño acumulativo según tiempo simulado.
 - [x] Primer controlador entrenado guardado y cargable.
 - [x] Referencia comparable y resultados de desarrollo medidos; falta evaluación final.

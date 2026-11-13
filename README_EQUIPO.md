@@ -6,9 +6,9 @@ Este documento permite continuar el proyecto sin haber participado en las conver
 
 ## 1. Qué queremos presentar
 
-Una aplicación de rescate en un edificio 2D donde **dos robots controlados por una política aprendida** recogen a dos sobrevivientes y los llevan a una base, considerando obstáculos, coordinación y exposición al calor.
+Una aplicación de rescate en un edificio 2D donde **dos robots controlados por una política aprendida** recogen a tres sobrevivientes y los llevan a una base, considerando obstáculos, coordinación y exposición al calor. La ampliación V2 comienza con un hito de 10 × 10 y tiene como objetivo edificios de 12 × 12.
 
-La ampliación principal será que **el profesor pueda colocar a las personas con clics antes de iniciar la misión**, dentro de un edificio preparado por el equipo. Luego podrá observar el rescate y comparar DQN con estrategias programadas, manteniendo exactamente el mismo escenario.
+La ampliación principal será que **el profesor pueda colocar a las tres personas con clics antes de iniciar la misión**, dentro de un edificio preparado por el equipo. Luego podrá observar el rescate y comparar DQN con estrategias programadas, manteniendo exactamente el mismo escenario. Como cada robot carga una persona, hacen falta viajes adicionales y decisiones sobre el reparto del trabajo.
 
 La pregunta del trabajo es: **¿qué tan bien responde un controlador aprendido a distintas ubicaciones de sobrevivientes y cómo equilibra rescates, pasos y daño térmico frente a referencias clásicas?**
 
@@ -25,12 +25,15 @@ La simulación es académica. Las temperaturas y daños son reglas de juego, no 
 | Componente | Estado |
 |---|---|
 | Motor 2D con dos robots, paredes y rescates | Implementado |
+| Base V2 de 10 × 10, tres personas y varios focos | Implementada; referencias completan la misión |
+| Contratos para escenarios editados, firmas y serialización | Disponibles en `docs/CONTRATOS_V2.md` |
 | Temperatura y exposición acumulada por paso global | Implementadas |
 | Referencias aleatoria, geométrica y térmica | Implementadas |
 | Gymnasium, recompensas, entrenamiento y checkpoints DQN | Implementados |
-| Modelo con sensores guardado y cargable | Disponible |
+| Modelo con sensores V1 guardado y cargable | Disponible para 6 × 6 y dos personas |
+| Modelo V2 | Piloto de integración; aún no resuelve el edificio grande |
 | Interfaz Pygame con controles, calor, rutas e indicadores | Implementada como primera versión |
-| Pruebas de motor, aprendizaje, reproducción y controles | 54 pruebas pasaron en la última comprobación completa |
+| Pruebas de motor, aprendizaje, reproducción y controles | Ampliadas para V2; conservar la suite completa al integrar |
 | Editor para colocar sobrevivientes con clics | Pendiente |
 | Entrenamiento con muchas combinaciones de ubicaciones | Pendiente |
 | Certificación general de viabilidad térmica de posiciones nuevas | Pendiente |
@@ -39,9 +42,9 @@ La simulación es académica. Las temperaturas y daños son reglas de juego, no 
 
 **Publicación pendiente:** al preparar esta guía hay commits locales aún sin subir por autenticación de GitHub. La rama de trabajo es `feature/simulation-core`. La persona 1 debe publicar la base y cerrar SARB-001 antes de asegurar que otro integrante puede obtenerla mediante un clon. Que el repositorio exista no significa que `main` contenga la última interfaz o el modelo.
 
-## 4. Qué demuestra el modelo actual
+## 4. Qué demuestran los modelos disponibles
 
-El modelo recomendado está en `artifacts/sensors_dqn/model.zip`. Se entrenó desde cero con una semilla, durante 155000 pasos; se seleccionó el checkpoint de 60000 mediante controles de desarrollo.
+El modelo V1 está en `artifacts/sensors_dqn/model.zip`. Se entrenó desde cero con una semilla, durante 155000 pasos; se seleccionó el checkpoint de 60000 mediante controles de desarrollo. Los siguientes datos son históricos de 6 × 6 y dos personas, no resultados del nuevo alcance:
 
 - Completa los seis escenarios de control actuales.
 - Completó dos configuraciones de validación y dos de prueba que se consultaron después de fijar ese checkpoint.
@@ -52,12 +55,14 @@ Estos resultados son un punto de partida, no una garantía para cualquier ubicac
 
 Los casos de prueba actuales ya se han observado. Para el nuevo desarrollo deben considerarse antecedentes de desarrollo y reservarse configuraciones nuevas para una prueba final. Conservaremos sus archivos y resultados históricos.
 
+En V2, la ruta corta entrega tres personas en 58 pasos con daño total 107 y la térmica en 62 con daño 64. El total suma los dos robots. El piloto DQN aprende el escenario cercano, pero no domina ese edificio. Se necesita ampliar el currículo y la variedad; no basta con cargar el checkpoint V1 en el nuevo mapa.
+
 ## 5. Reglas que todos debemos comprender
 
 | Regla | Definición |
 |---|---|
-| Edificio inicial | Cuadrícula 6 × 6; mantener ese tamaño en la entrega prevista |
-| Robots y personas | Dos robots, dos personas; una persona por robot |
+| Edificio | Hito integrado de 10 × 10; objetivo de entrega 12 × 12, según validación del alcance |
+| Robots y personas | Dos robots, tres personas; una persona por robot |
 | Inicio | Ambos robots parten de una base compartida y segura |
 | Recogida y entrega | Automáticas al alcanzar la persona o la base |
 | Información del controlador | Mapa y posiciones conocidos, integridad, carga, estado de víctimas y sensores |
@@ -67,7 +72,7 @@ Los casos de prueba actuales ya se han observado. Para el nuevo desarrollo deben
 | Colisiones | Sin coincidencia fuera de la base ni intercambio directo de posiciones |
 | Calor | Campo fijo durante el episodio; no hay propagación de fuego |
 | Integridad | Empieza en 100 por robot; no se recupera |
-| Éxito | Las dos personas entregadas y ambos robots operativos |
+| Éxito | Todas las personas entregadas y ambos robots operativos |
 | Fracaso | Destrucción de cualquiera de los robots |
 | Límite | Máximo de pasos del escenario; se distingue de la destrucción |
 
@@ -88,8 +93,8 @@ Esperar o intentar atravesar un obstáculo también consume un paso. Cuatro paso
 
 ## 6. Alcance de la versión que vamos a terminar
 
-1. Elegir uno de dos o tres edificios preparados de 6 × 6.
-2. Colocar exactamente dos personas en celdas válidas antes de iniciar.
+1. Elegir edificios preparados, partiendo de 10 × 10 y avanzando al objetivo de 12 × 12.
+2. Colocar exactamente tres personas en celdas válidas antes de iniciar.
 3. Informar errores estructurales y el resultado de comprobar viabilidad térmica.
 4. Ejecutar el controlador aprendido y las tres referencias en el mismo escenario.
 5. Mostrar rescates, integridad, temperatura, daño, pasos, trayectorias y motivo de finalización.
@@ -97,6 +102,8 @@ Esperar o intentar atravesar un obstáculo también consume un paso. Cuatro paso
 7. Presentar un entrenamiento con ubicaciones variables y una evaluación final reproducible.
 
 Inicialmente el editor no cambia paredes, base, incendio ni cantidad de robots o personas. Las ediciones ocurren antes de preparar la misión: cambiar una ubicación invalida la reproducción anterior.
+
+El motor ya permite configurar el número de personas, pero cada entorno y modelo tienen un perfil fijo de dimensiones y cantidad. No mezclar mapas 10 × 10 y 12 × 12 dentro del mismo modelo actual. La versión 6 × 6 se usa como regresión e historia de desarrollo.
 
 El validador no debe rechazar ubicaciones porque DQN falle en ellas. Una referencia que encuentra un rescate completo demuestra viabilidad; una referencia que falla no demuestra imposibilidad. Si no se logra certificar un caso dentro del presupuesto de búsqueda, se mostrará como no certificado y podrá explorarse con esa advertencia. Un error estructural sí impide iniciar.
 
@@ -117,17 +124,17 @@ git clone https://github.com/MelannyJutinico/SAR-Bot.git
 cd SAR-Bot
 git switch feature/simulation-core
 uv sync --locked --extra ui --extra rl --python 3.12
-uv run --locked --extra ui --extra rl python scripts/ui.py
+uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/v2/building_10x10.json --strategy thermal
 ```
 
 Si ya tienen un clon, revisar `git status` y conservar sus cambios antes de cambiar de rama o actualizar. No ejecutar operaciones para descartar trabajo propio. La persona 1 comunicará la rama estable o etiqueta definitiva cuando exista.
 
 ### Primera comprobación de cada integrante
 
-1. Abrir la interfaz y ejecutar el pasillo compartido con DQN.
-2. Confirmar dos rescates, 22 pasos y daño cero con el modelo actual.
-3. Ejecutar la ruta caliente con DQN y observar el daño acumulado.
-4. Comparar con la estrategia térmica sobre el mismo escenario.
+1. Abrir V2 con la referencia térmica y comprobar tres rescates, 62 pasos y daño total 64.
+2. Comparar con ruta corta en el mismo edificio: tres rescates, 58 pasos y daño total 107.
+3. Ejecutar también la versión V1, seleccionando el pasillo compartido y DQN con su modelo 6 × 6: dos rescates, 22 pasos y daño cero.
+4. Leer los contratos V2 antes de crear el editor o nuevos conjuntos de posiciones.
 5. Ejecutar las pruebas y compartir resultado, versión de Python y commit utilizado.
 
 ```powershell
@@ -139,17 +146,17 @@ No hay que volver a entrenar para abrir la interfaz. Tampoco hay que activar man
 ### Comandos técnicos disponibles hoy
 
 ```powershell
-# Comparación de desarrollo sobre el conjunto actual.
+# Comparación histórica V1 sobre su conjunto de desarrollo.
 uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/sensors_dqn/model.zip --split training --output outputs/comparison.csv
 
-# Reproducir el entrenamiento actual en un directorio nuevo.
-uv run --extra rl python scripts/train.py --config configs/dqn_sensors.json --run-dir outputs/experimento-equipo-01
+# Entrenamiento piloto V2 en un directorio nuevo.
+uv run --extra rl python scripts/train.py --config configs/dqn_v2_pilot.json --run-dir outputs/experimento-equipo-01 --seed 0
 
 # Captura sin abrir una ventana.
 uv run --extra ui --extra rl python scripts/ui.py --headless --steps 22 --screenshot outputs/ui-success.png
 ```
 
-El entrenador actual recibe la semilla desde el JSON de configuración; todavía no tiene un argumento `--seed`. Entrenamiento dinámico, selección final sobre validación y ejecución de múltiples semillas forman parte del backlog. Los comandos de esta sección reproducen la base, no esas capacidades futuras.
+El entrenador recibe la semilla desde el JSON y permite sobrescribirla con `--seed`. Para el piloto V2 usar `configs/dqn_v2_pilot.json` y un directorio nuevo. La API de reinicio ya admite posiciones personalizadas, pero los conjuntos variados finales, selección sobre validación y evaluación de varias semillas siguen en el backlog.
 
 ### Si algo no abre
 
@@ -169,6 +176,7 @@ El entrenador actual recibe la semilla desde el JSON de configuración; todavía
 | `src/sar_bot/core/simulation.py` | Estado y reglas del motor | Persona 2, revisión de persona 1 |
 | `src/sar_bot/env/rescue_env.py` | Observaciones y recompensas | Persona 1 |
 | `src/sar_bot/agents/` | DQN y referencias | Personas 1 y 4 |
+| `docs/CONTRATOS_V2.md` | Contratos entre escenarios, políticas, episodios y perfiles | Todos |
 | `src/sar_bot/training.py`, `scripts/train.py` | Entrenamiento y exploración | Persona 1 |
 | `src/sar_bot/ui/app.py` | Presentación y controles | Persona 3 |
 | `src/sar_bot/ui/playback.py` | Preparación del episodio y reproducción | Persona 3, revisión de persona 1 |
@@ -215,6 +223,7 @@ La entrega contendrá código reproducible, interfaz, modelo guardado, escenario
 - [Backlog de entrega](BACKLOG.md): fuente principal para tareas pendientes.
 - [README técnico](README.md): comandos y mapa del repositorio.
 - [Contexto y reglas](docs/CONTEXTO.md).
+- [Contratos V2](docs/CONTRATOS_V2.md).
 - [Aprendizaje y experimentos](docs/APRENDIZAJE.md).
 - [Resultados y límites medidos](docs/EVALUACION.md).
 - [Interfaz actual](docs/INTERFAZ.md).

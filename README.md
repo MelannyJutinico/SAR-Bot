@@ -2,11 +2,23 @@
 
 **Para incorporarse al equipo:** empezar por [README_EQUIPO.md](README_EQUIPO.md) y continuar con el [backlog de entrega](BACKLOG.md). Esta página conserva la referencia técnica de la base implementada.
 
-Simulación académica de rescate cooperativo: dos robots deben evacuar a dos sobrevivientes en un edificio 2D con riesgo térmico acumulativo.
+Simulación académica de rescate cooperativo con dos robots, sobrevivientes configurables y exposición térmica. La base V2 integrada usa **10 × 10, tres personas y dos focos**; el equipo continuará hacia edificios de **12 × 12**. La versión histórica de 6 × 6 permanece disponible.
 
 **Asignatura:** Sistemas Inteligentes. **Equipo:** cuatro personas. **Plazo objetivo:** una semana.
 
 ## Estado del proyecto
+
+**Base V2 entregada:** motor generalizado, escenarios con varios focos, firmas y serialización, fábrica de estrategias, episodios desde objetos editados, aprendizaje por perfiles e interfaz básica para tres personas. Leer [CONTRATOS_V2.md](docs/CONTRATOS_V2.md) antes de modificar los módulos.
+
+Para ver el edificio grande funcionando con la referencia térmica:
+
+```powershell
+uv run --extra ui --extra rl python scripts/ui.py --scenario scenarios/v2/building_10x10.json --strategy thermal
+```
+
+![Base V2 de 10 × 10 con tres personas y dos focos](docs/images/ui-v2.png)
+
+Las referencias completan sus tres rescates. DQN V2 es todavía un piloto: aprende el rescate cercano, pero no completa el edificio grande en la evaluación realizada. El editor, nuevos edificios, generación variada y evaluación final siguen pendientes. El resto de resultados de esta sección corresponde a la **base V1**.
 
 Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. El modelo recomendado usa sensores locales y completa los seis controles de entrenamiento, dos casos de validación y dos de prueba. Resuelve el pasillo compartido que fallaba antes; todavía no demuestra mejor gestión térmica ni generalización amplia.
 
@@ -17,6 +29,7 @@ Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, eva
 - [Interfaz visual y controles](docs/INTERFAZ.md)
 - [Guía para los cuatro integrantes](README_EQUIPO.md)
 - [Backlog con responsables, dependencias y criterios de aceptación](BACKLOG.md)
+- [Contratos y punto de partida V2](docs/CONTRATOS_V2.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
@@ -151,6 +164,6 @@ La validación actual comprueba estructura y conectividad del mapa. La misión d
 
 ### Próximo hito
 
-Implementar el editor para que el profesor coloque dos personas antes de la misión, entrenar con posiciones variables y cerrar la evaluación y presentación. El editor todavía no está implementado. La fuente principal de tareas pendientes es [BACKLOG.md](BACKLOG.md); batería, urgencia y fuego dinámico quedan fuera de este alcance.
+Implementar el editor para que el profesor coloque tres personas antes de la misión, diseñar edificios de 12 × 12, entrenar por perfil con posiciones variables y cerrar la evaluación y presentación. El editor todavía no está implementado. La fuente principal de tareas pendientes es [BACKLOG.md](BACKLOG.md); batería, urgencia y fuego dinámico quedan fuera de este alcance.
 
 También falta mejorar la gestión térmica y repetir con varias semillas y más mapas reservados. Los resultados de prueba actuales ya se han consultado; para el nuevo desarrollo se conservarán como antecedentes y se reservarán nuevas configuraciones antes de la evaluación final.

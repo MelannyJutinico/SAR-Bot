@@ -176,3 +176,11 @@ Se priorizó como próxima ampliación que el profesor pueda colocar dos sobrevi
 El validador distinguirá errores estructurales de viabilidad térmica certificada o no certificada. La derrota de DQN o de una referencia no se usará como prueba de imposibilidad. La comparación mantendrá exactamente la misma configuración para todas las estrategias.
 
 La guía para los cuatro integrantes está en [README_EQUIPO.md](../README_EQUIPO.md). [BACKLOG.md](../BACKLOG.md) es la fuente de tareas pendientes para la entrega: incluye responsables, dependencias, criterios verificables, evaluación con varias semillas y cierre reproducible. Batería, urgencia y propagación del incendio quedan fuera del alcance de cierre.
+
+### Ampliación V2: más escala y trabajo por módulos
+
+Se aceptó ampliar el proyecto: dos robots, tres sobrevivientes, varios focos estáticos y objetivo de edificios de 12 × 12. El hito de base es 10 × 10. Persona 1 prepara la plataforma y mantiene entrenamiento/integración; persona 2 diseña edificios, calor y escenarios; persona 3 desarrolla editor y vistas; persona 4 realiza experimentación y análisis.
+
+La implementación ahora admite conteo configurable de personas, firmas físicas, importación/exportación exacta y estrategias/episodios sobre una configuración común. Las referencias resuelven el mapa 10 × 10 de tres personas; el aprendizaje V2 sigue en piloto. Se preservó la versión 6 × 6 y se verificó su checkpoint sin alterar su resultado de 22 pasos en el pasillo.
+
+El backlog creció a 32 tareas, con nuevos frentes de edificios y dificultad, calibración térmica, vistas/modelos por perfil, análisis de escala y trazas. [CONTRATOS_V2.md](CONTRATOS_V2.md) describe las APIs ya disponibles para que el equipo amplíe módulos sin reimplementar las reglas.

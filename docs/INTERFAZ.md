@@ -53,6 +53,12 @@ Esta primera versión reproduce una misión preparada. No entrena en vivo ni per
 
 El editor para colocar sobrevivientes antes de iniciar y la comparación dentro de la aplicación están planificados en [BACKLOG.md](../BACKLOG.md). No son controles disponibles todavía en esta versión.
 
+### Base V2
+
+La interfaz también dibuja el edificio de 10 × 10, tres personas y varios focos. Abrirlo con `--scenario scenarios/v2/building_10x10.json --strategy thermal`. La referencia completa tres rescates; no se está ejecutando DQN con ese comando.
+
+El modelo V1 predeterminado sirve para sus escenarios de 6 × 6 y dos personas. Para un modelo V2 hay que pasar su archivo con `--model`; la incompatibilidad de perfil se informa y no se sustituye silenciosamente la estrategia. El piloto V2 no se considera un controlador validado del edificio grande. El registro y selector visual de modelos por perfil siguen en el backlog de persona 3.
+
 ## Parámetros de arranque
 
 ```powershell
