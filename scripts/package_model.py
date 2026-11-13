@@ -22,16 +22,29 @@ def main():
     for source in sources.values():
         if not (args.run_dir / source).is_file():
             parser.error(f"Falta {source}; completar el entrenamiento y su comparación")
+    # Conservar también las particiones consultadas y la procedencia de cada CSV.
+    for optional in ("comparison.metadata.json", "validation.csv", "validation.metadata.json",
+                     "test.csv", "test.metadata.json"):
+        if (args.run_dir / optional).is_file():
+            sources[optional] = optional
     if args.destination.exists():
         parser.error("El destino debe ser nuevo para no sobrescribir un modelo publicado")
     records = [json.loads(line) for line in (args.run_dir / "evaluations.jsonl").read_text(
         encoding="utf-8").splitlines() if line.strip()]
     best = max(records, key=lambda r: tuple(r["score"]))
+    model_hash = hashlib.sha256((args.run_dir / "best_model.zip").read_bytes()).hexdigest()
+    for name in ("comparison.metadata.json", "validation.metadata.json", "test.metadata.json"):
+        if name in sources:
+            provenance = json.loads((args.run_dir / name).read_text(encoding="utf-8"))
+            if provenance["model_sha256"] != model_hash:
+                parser.error(f"{name} corresponde a otro modelo; no se mezclan resultados")
+    metadata = json.loads((args.run_dir / "metadata.json").read_text(encoding="utf-8"))
     summary = {
         "scope": "development only; one training seed; not a held-out benchmark",
         "selected_checkpoint": best,
         "last_checkpoint": records[-1],
-        "model_sha256": hashlib.sha256((args.run_dir / "best_model.zip").read_bytes()).hexdigest(),
+        "model_sha256": model_hash,
+        "observation_mode": metadata["config"].get("observation_mode", "full"),
     }
     args.destination.mkdir(parents=True)
     for target, source in sources.items():
