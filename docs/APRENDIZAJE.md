@@ -47,7 +47,24 @@ El potencial se hace cero en estados terminales reales. En truncamiento se conse
 
 Se verificaron los contratos oficiales con `gymnasium.utils.env_checker.check_env` y `stable_baselines3.common.env_checker.check_env`, además de observaciones, recompensas de entrega, exposición, semilla y finalización.
 
-El entrenamiento y su evaluación se documentarán después de ejecutarlos. Pasar los verificadores no implica que DQN aprenda.
+También existe una prueba que entrena DQN durante 32 pasos, guarda el modelo, vuelve a cargarlo y verifica que conserve sus predicciones. Comprueba integración; no convergencia.
+
+## Entrenamiento por etapas
+
+```powershell
+uv run --extra rl python scripts/train.py --run-dir outputs/dqn-initial
+uv run --extra rl python scripts/evaluate_dqn.py --model outputs/dqn-initial/best_model.zip
+```
+
+`configs/dqn_initial.json` fija semilla, recompensas, arquitectura, hiperparámetros, escenarios y duración de cada etapa: 12000 pasos de rescate cercano sin calor, 30000 de navegación y 40000 con mezcla de escenarios térmicos. Se comparte el modelo y la memoria de experiencias entre etapas. El entrenamiento usa CPU y un hilo de PyTorch.
+
+El directorio de ejecución debe estar vacío. Guarda metadatos, hashes y copias de los escenarios, registros de episodios, evaluaciones periódicas, modelos por etapa, modelo final y mejor modelo de desarrollo. El mejor se elige por número de misiones completas, después víctimas entregadas y finalmente retorno. El modelo sin entrenar también se evalúa antes del primer paso de aprendizaje.
+
+**Los cuatro escenarios de evaluación inicial también aparecen en el entrenamiento.** Estos controles sirven para diagnosticar si aprende la tarea y para seleccionar un checkpoint; no constituyen prueba reservada. No se deben publicar como evidencia de generalización.
+
+La comparación carga las recompensas de `metadata.json` junto al modelo, si existe; permite indicar otro archivo con `--metadata`. Sin metadatos usa `RewardConfig` predeterminado. Las métricas de misión siempre proceden del motor.
+
+Los resultados reales del primer entrenamiento se registrarán al terminar la ejecución.
 
 ## Fuentes técnicas
 
