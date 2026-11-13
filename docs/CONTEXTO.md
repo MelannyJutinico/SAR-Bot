@@ -123,9 +123,18 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Definir alcance de una semana y cuatro integrantes.
 - [x] Registrar que nosotros asumimos la persona 1.
 - [x] Registrar exposición térmica para ambos robots por paso global.
-- [ ] Implementar base ejecutable.
-- [ ] Verificar reglas y escenarios.
+- [x] Implementar primera base del motor, ejecutable por consola.
+- [x] Verificar reglas críticas y una misión viable en el escenario de demostración.
+- [ ] Completar la base integrada: referencia general, Gymnasium y visualización Pygame.
 - [ ] Entrenar y guardar una política.
 - [ ] Evaluar y preparar demostración.
 
 No existe aún evidencia experimental de que el agente aprenda o supere la referencia.
+
+### Primer incremento implementado
+
+El motor aplica daño después de resolver movimientos y antes de recogidas y entregas. Las acciones conjuntas avanzan una sola vez el reloj. Incluye instantáneas JSON, reinicio, colisiones y finales por éxito, destrucción y límite.
+
+El campo térmico inicial usa distancia Manhattan: `T(x,y) = max(ambiente, pico - caída × distancia_al_foco)`. Las paredes todavía no atenúan el calor. El daño registrado es pérdida efectiva de integridad: se limita a la integridad restante al destruirse un robot.
+
+La demostración programada evacúa dos víctimas en diez pasos con integridad final 82 y 100. Las verificaciones incluyen exposición en espera, choques, umbrales, conflictos entre robots, no duplicación de recogidas y prioridad de destrucción. No representan entrenamiento ni comparación de estrategias.

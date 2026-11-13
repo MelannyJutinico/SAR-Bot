@@ -16,7 +16,7 @@ Nosotros construiremos la base integrada, el aprendizaje y la dirección técnic
 8. Evaluación que exporte resultados por episodio.
 9. Verificaciones de reglas críticas y un escenario de misión completa reproducible.
 
-La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. El estado actual del repositorio es documentación: estos componentes todavía están pendientes.
+La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor determinista, exposición térmica, un escenario, una demostración por consola y verificaciones. Siguen pendientes Gymnasium, DQN, la referencia general, la interfaz Pygame y la evaluación experimental.
 
 ## Separación de responsabilidades
 

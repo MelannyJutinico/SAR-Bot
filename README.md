@@ -6,7 +6,7 @@ Simulación académica de rescate cooperativo: dos robots deben evacuar a dos so
 
 ## Estado del proyecto
 
-El repositorio comienza con la documentación del alcance y el plan de trabajo. Todavía no contiene el simulador, una política entrenada ni resultados experimentales.
+Ya existe una primera versión del motor: dos robots, acciones conjuntas, colisiones, rescates automáticos, temperatura y daño acumulado por paso global. Incluye una demostración por consola y verificaciones de las reglas. Todavía no hay una política entrenada ni resultados de aprendizaje.
 
 - [Contexto, alcance y reglas acordadas](docs/CONTEXTO.md)
 - [Plan de trabajo y base de la persona 1](docs/PLAN_DE_TRABAJO.md)
@@ -27,4 +27,38 @@ El daño depende de la **temperatura y el tiempo de exposición**, incluso cuand
 
 ## Desarrollo
 
-La implementación aún está pendiente. No hay comandos de entrenamiento o demostración disponibles. Los cambios se trabajarán en ramas `feature/…` y se integrarán sobre una versión ejecutable común.
+Esta etapa usa únicamente la biblioteca estándar de Python 3.11 o superior. Pygame, Gymnasium y DQN se incorporarán después. Los cambios se trabajan en ramas `feature/…`.
+
+Con Python disponible:
+
+```powershell
+python scripts/demo.py
+python scripts/demo.py --json
+python -m unittest discover -s tests -v
+```
+
+Si Python está administrado por `uv`, ejecutar desde la raíz del repositorio:
+
+```powershell
+uv run --no-project --python 3.12 scripts/demo.py
+uv run --no-project --python 3.12 -m unittest discover -s tests -v
+```
+
+La demostración usa una secuencia programada para `scenarios/demo.json`: rescata a las dos víctimas en diez pasos globales; los robots terminan con integridad 82 y 100. **No es una política aprendida ni una referencia general de navegación.**
+
+### Archivos para continuar
+
+| Archivo | Función |
+|---|---|
+| `src/sar_bot/core/simulation.py` | Estado y reglas del entorno |
+| `scenarios/demo.json` | Primer mapa y parámetros térmicos |
+| `scripts/demo.py` | Reproducción por consola y salida JSON |
+| `tests/test_simulation.py` | Verificación de reglas críticas |
+
+`RescueSimulation.step(acción_conjunta)` avanza una unidad de tiempo para ambos robots. `snapshot()` expone datos JSON, y `reset()` reinicia el escenario estático. La acción conjunta es `5 * acción_robot_1 + acción_robot_2`, con acciones `UP=0`, `DOWN=1`, `LEFT=2`, `RIGHT=3`, `WAIT=4`.
+
+La validación actual comprueba estructura y conectividad del mapa. La misión del escenario de demostración se verifica con una trayectoria completa. Todavía no existe un validador general de viabilidad térmica y coordinación para escenarios arbitrarios.
+
+### Próximo hito
+
+Construir la estrategia de referencia con búsqueda de caminos y el adaptador Gymnasium, fijar recompensas y entrenar primero sin calor. La visualización puede consumir el estado del mismo motor mientras se desarrolla el aprendizaje.
