@@ -22,6 +22,7 @@ from stable_baselines3.common.monitor import Monitor
 from sar_bot.core import Scenario
 from sar_bot.env import RescueEnv, RewardConfig
 from sar_bot.learning import evaluate_model, model_score
+from sar_bot.training import StageExploration
 
 
 class DevelopmentEvaluation(BaseCallback):
@@ -37,6 +38,7 @@ class DevelopmentEvaluation(BaseCallback):
         results = evaluate_model(self.model, self.scenarios, self.rewards)
         score = model_score(results)
         record = {"steps": self.model.num_timesteps, "stage": self.stage,
+                  "exploration_rate": self.model.exploration_rate,
                   "elapsed_seconds": round(time.monotonic() - self.started, 2),
                   "results": results, "score": score}
         with (self.run_dir / "evaluations.jsonl").open("a", encoding="utf-8") as file:
@@ -73,6 +75,12 @@ def main():
     evaluation = [Scenario.load(ROOT / p) for p in config["evaluation_scenarios"]]
     # Validar dimensiones antes de crear archivos o comenzar un entrenamiento.
     check_env(RescueEnv([s for stage in scenarios_by_stage for s in stage] + evaluation, rewards))
+    for stage in config["stages"]:
+        if "exploration" in stage:
+            StageExploration(0, stage["steps"], **stage["exploration"])
+    initial_model = ROOT / config["initial_model"] if config.get("initial_model") else None
+    if initial_model is not None and not initial_model.is_file():
+        parser.error("No existe el modelo de inicialización")
     args.run_dir.mkdir(parents=True, exist_ok=True)
     torch.set_num_threads(config["torch_threads"])
     paths = sorted({p for stage in config["stages"] for p in stage["scenarios"]}
@@ -85,6 +93,12 @@ def main():
                     for name in ("torch", "gymnasium", "stable-baselines3", "numpy")},
                 "scenario_hashes": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths},
                 "evaluation_scope": "development scenarios also used in training; not held-out test"}
+    if initial_model is not None:
+        metadata["initial_model"] = {
+            "path": config["initial_model"],
+            "sha256": hashlib.sha256(initial_model.read_bytes()).hexdigest(),
+            "replay_buffer": "fresh; not included in the saved checkpoint",
+        }
     (args.run_dir / "metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     # Copias de escenarios para conservar exactamente las entradas del experimento.
     for path in paths:
@@ -98,14 +112,28 @@ def main():
             env = Monitor(RescueEnv(scenarios, rewards), str(args.run_dir / f"{stage['name']}.monitor.csv"))
             env.reset(seed=config["seed"])
             if model is None:
-                model = DQN("MlpPolicy", env, seed=config["seed"], device="cpu", verbose=0,
-                            **config["dqn"])
+                if initial_model is None:
+                    model = DQN("MlpPolicy", env, seed=config["seed"], device="cpu", verbose=0,
+                                **config["dqn"])
+                else:
+                    model = DQN.load(initial_model, env=env, seed=config["seed"],
+                                     device="cpu", verbose=0, **config["dqn"])
+                    metadata["initial_model"]["previous_training_steps"] = model.num_timesteps
+                    (args.run_dir / "metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+                    # Contabilizar pasos nuevos del experimento, sin borrar pesos ni optimizador.
+                    model.num_timesteps = 0
+                    callback.stage = "warm_start"
                 callback.init_callback(model)
                 callback.evaluate()
             else:
                 model.get_env().close()
                 model.set_env(env)
             callback.stage = stage["name"]
+            if "exploration" in stage:
+                schedule = StageExploration(model.num_timesteps, stage["steps"], **stage["exploration"])
+                model.exploration_schedule = schedule
+                model.exploration_rate = schedule.initial
+                print(f"Etapa {stage['name']}: exploración reinicia en {schedule.initial}", flush=True)
             model.learn(total_timesteps=stage["steps"], callback=callback, reset_num_timesteps=False)
             model.save(args.run_dir / f"{stage['name']}_model")
             callback.evaluate()

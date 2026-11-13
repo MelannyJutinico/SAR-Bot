@@ -96,6 +96,22 @@ El destino debe ser nuevo. El primer modelo ya está empaquetado y se puede repr
 uv run --extra rl python scripts/demo.py --strategy dqn --model artifacts/initial_dqn/model.zip
 ```
 
+## Segundo experimento: cooperación y exploración por etapa
+
+`configs/dqn_cooperation.json` parte del modelo inicial y añade un escenario cercano con salida compartida antes del pasillo completo. Duplica entradas de algunos mapas para aumentar su probabilidad de muestreo; cada índice sigue seleccionándose uniformemente.
+
+Se observó que, con el progreso acumulado y la fracción anterior, la etapa térmica comenzaba ya en la exploración mínima. Las etapas nuevas permiten declarar `exploration` con probabilidades inicial y final y fracción de decaimiento. `StageExploration` convierte el progreso acumulado de SB3 a progreso local: cada etapa reinicia en 0,6 y desciende a 0,05 durante su primer 80%.
+
+El experimento usa 20000 pasos de paso compartido cercano, 60000 de cooperación y 80000 térmicos. La penalización por daño pasa a −2. Estos cambios se estudian juntos como un experimento de desarrollo; no permiten atribuir causalmente una mejora a uno de ellos sin ablaciones.
+
+```powershell
+uv run --extra rl python scripts/train.py --config configs/dqn_cooperation.json --run-dir outputs/dqn-cooperation
+```
+
+Al inicializar desde un ZIP se conservan pesos y optimizador, pero se crea una memoria de experiencias nueva. El contador del nuevo experimento empieza en cero y los pasos previos del modelo quedan en metadatos. El modelo original y su evidencia no se sobrescriben.
+
+Los seis mapas de control también se usan para entrenar. Este experimento busca corregir fallos conocidos, no medir generalización. La referencia térmica se usa únicamente para comparar, no para proporcionar acciones al agente.
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)
