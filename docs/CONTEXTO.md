@@ -184,3 +184,9 @@ Se aceptó ampliar el proyecto: dos robots, tres sobrevivientes, varios focos es
 La implementación ahora admite conteo configurable de personas, firmas físicas, importación/exportación exacta y estrategias/episodios sobre una configuración común. Las referencias resuelven el mapa 10 × 10 de tres personas; el aprendizaje V2 sigue en piloto. Se preservó la versión 6 × 6 y se verificó su checkpoint sin alterar su resultado de 22 pasos en el pasillo.
 
 El backlog creció a 32 tareas, con nuevos frentes de edificios y dificultad, calibración térmica, vistas/modelos por perfil, análisis de escala y trazas. [CONTRATOS_V2.md](CONTRATOS_V2.md) describe las APIs ya disponibles para que el equipo amplíe módulos sin reimplementar las reglas.
+
+### Nueva decisión: aprendizaje persistente entre ejecuciones
+
+El equipo solicitó que los agentes continúen aprendiendo en cada ejecución y pidió documentarlo en el backlog, sin implementarlo todavía. Se añadieron SARB-033 a SARB-035, elevando el total a 35 tareas: persona 1 implementará persistencia de modelo y memoria de experiencias; persona 3 integrará misiones de aprendizaje en la interfaz; persona 4 medirá cambios y regresiones.
+
+El modo «Aprender y guardar» continuará una sesión del controlador centralizado entre misiones y reinicios. El modo «Evaluar sin aprender» conservará un checkpoint fijo, especialmente para prueba final. Reproducir una traza no genera entrenamiento adicional. Cada misión nueva de aprendizaje aportará experiencias; las actualizaciones dependerán del calentamiento y lote definidos, sin prometer una mejora en cada misión. Esta decisión sustituye la exclusión anterior del aprendizaje en vivo; no cambia el estado actual de la interfaz, que todavía reproduce episodios preparados.

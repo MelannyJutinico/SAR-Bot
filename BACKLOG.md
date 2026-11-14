@@ -16,7 +16,7 @@ El éxito del proyecto se valorará con funcionamiento, formulación del problem
 
 - **P0:** necesario para cerrar el funcionamiento o la validez de la entrega.
 - **P1:** necesario para la calidad de la entrega que queremos mostrar. Se aborda después de sus dependencias P0.
-- No hay tareas opcionales escondidas entre los requisitos: la meta es cerrar las 32 tareas P0 y P1. Batería, urgencia, fuego dinámico, web y 3D quedan fuera. El alcance final de 12 × 12 debe validarse con el profesor y el presupuesto de cómputo; una reducción formal al hito de 10 × 10 se registra antes de la prueba final, no se oculta.
+- No hay tareas opcionales escondidas entre los requisitos: la meta es cerrar las 35 tareas P0 y P1, incluido el modo de aprendizaje continuo solicitado por el equipo. Batería, urgencia, fuego dinámico, web y 3D quedan fuera. El alcance final de 12 × 12 debe validarse con el profesor y el presupuesto de cómputo; una reducción formal al hito de 10 × 10 se registra antes de la prueba final, no se oculta.
 - Marcar la casilla del índice solo cuando se cumplan los criterios, exista evidencia y el cambio esté integrado en la base acordada. Una rama aislada que aún no se integra no está terminada.
 - Cada tarea tiene autor principal y revisor; los nombres reales se asignan entre integrantes. Las horas son esfuerzo activo orientativo, no duración garantizada de entrenamiento ni disponibilidad del profesor.
 - Ante un bloqueo, registrar causa, siguiente acción y persona que puede resolverla. Continuar otras tareas independientes; no cambiar el alcance o inventar resultados para cerrar una casilla.
@@ -55,17 +55,20 @@ El éxito del proyecto se valorará con funcionamiento, formulación del problem
 - [ ] [SARB-030 — Separar vistas y seleccionar modelos por perfil](#sarb-030) · P1 · Persona 3
 - [ ] [SARB-031 — Estudiar escala, reparto de rescates y dificultad](#sarb-031) · P1 · Persona 4
 - [ ] [SARB-032 — Mostrar historial y exportar trazas de misión](#sarb-032) · P1 · Personas 3 y 4
+- [ ] [SARB-033 — Persistir aprendizaje y experiencias entre ejecuciones](#sarb-033) · P0 · Persona 1
+- [ ] [SARB-034 — Integrar misiones con aprendizaje continuo en la interfaz](#sarb-034) · P0 · Persona 3
+- [ ] [SARB-035 — Medir aprendizaje continuo y conservar evaluación congelada](#sarb-035) · P1 · Persona 4
 
 ## 3. Reparto y orden de trabajo
 
 | Persona | Frente principal | Carga activa orientativa, con revisiones |
 |---|---|---|
-| 1 | Contratos, aprendizaje e integración | 24–32 h |
+| 1 | Contratos, aprendizaje persistente e integración | 28–38 h |
 | 2 | Entorno, validación, viabilidad, edificios y calibración | 24–32 h |
-| 3 | Editor, vistas, modelos por perfil e historial visual | 24–32 h |
-| 4 | Protocolo, escala, evaluación, gráficas y entrega académica | 26–34 h |
+| 3 | Editor, vistas, modelos por perfil, aprendizaje continuo e historial visual | 26–35 h |
+| 4 | Protocolo, escala, evaluación, gráficas y entrega académica | 28–38 h |
 
-La persona 1 tiene mayor complejidad técnica y revisa integraciones; no debe absorber la implementación del editor, todos los mapas y todo el informe. La ampliación requiere aproximadamente 98–130 horas activas del equipo, además de cómputo. Revisar disponibilidad antes de prometer cerrarla en una semana; no es una estimación de convergencia. Los entrenamientos se pueden ejecutar en máquinas distintas con el mismo entorno y configuración.
+La persona 1 tiene mayor complejidad técnica y revisa integraciones; no debe absorber la implementación del editor, todos los mapas y todo el informe. La ampliación requiere aproximadamente 106–143 horas activas del equipo, además de cómputo. El aprendizaje continuo añade 8–13 horas respecto al alcance anterior; revisar disponibilidad y calendario antes de prometer cerrarlo en una semana. No es una estimación de convergencia. Los entrenamientos independientes se pueden ejecutar en máquinas distintas; una sesión persistente no admite escritores simultáneos.
 
 ### Dependencia principal
 
@@ -442,7 +445,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 <a id="sarb-024"></a>
 ### SARB-024 — Verificar el flujo completo de la aplicación
 
-**P0 · Responsable:** personas 3 y 2 · **Revisa:** persona 1 · **Depende de:** SARB-011, SARB-012, SARB-013, SARB-014, SARB-030, SARB-032 · **Esfuerzo:** 3 h.
+**P0 · Responsable:** personas 3 y 2 · **Revisa:** persona 1 · **Depende de:** SARB-011, SARB-012, SARB-013, SARB-014, SARB-030, SARB-032, SARB-034 · **Esfuerzo:** 3 h.
 
 **Aceptación:**
 - Flujo completo: seleccionar edificio → colocar personas → validar → guardar → ejecutar → pausar → avanzar → comparar → recuperar el escenario.
@@ -457,7 +460,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 <a id="sarb-025"></a>
 ### SARB-025 — Escribir el informe técnico final
 
-**P0 · Responsable:** persona 4 coordina; todos aportan · **Revisa:** persona 1 · **Depende de:** SARB-002, SARB-021, SARB-022, SARB-023, SARB-031 · **Esfuerzo:** 4 h.
+**P0 · Responsable:** persona 4 coordina; todos aportan · **Revisa:** persona 1 · **Depende de:** SARB-002, SARB-021, SARB-022, SARB-023, SARB-031, SARB-035 · **Esfuerzo:** 4 h.
 
 **Aceptación:**
 - Incluye problema, objetivos, alcance, arquitectura, reglas y formulación de observación, acciones, transición, recompensa y finalización.
@@ -481,7 +484,7 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 - Hay casos guardados de respaldo que permiten mostrar coordinación y riesgo térmico, además de un video corto o capturas de la versión final.
 - Se puede explicar la diferencia entre modelo entrenado y referencias, y por qué menor daño sin rescate no es suficiente.
 - Cada integrante puede responder qué observa el agente, qué acciones elige, cómo se aplica el daño, cómo se entrena y cómo se evitó evaluar solo mapas memorizados.
-- El ensayo se realiza en el equipo de presentación sin depender de entrenar ni descargar dependencias en vivo.
+- El ensayo se realiza en el equipo de presentación con dependencias y modelo inicial preparados; incluye continuar una sesión de aprendizaje y conserva un modelo congelado para comparación y respaldo.
 
 **Evidencia:** guion, presentación, archivos de respaldo y ensayo completo con tiempos.
 
@@ -573,9 +576,55 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 
 **Evidencia:** historial visible y exportación de un éxito, un caso de calor y un fracaso reproducible.
 
+<a id="sarb-033"></a>
+### SARB-033 — Persistir aprendizaje y experiencias entre ejecuciones
+
+**P0 · Responsable:** persona 1 · **Revisa:** persona 4 · **Depende de:** SARB-015, SARB-016 · **Esfuerzo:** 4–6 h.
+
+Implementar sesiones de aprendizaje continuo del controlador centralizado de los dos robots. Cada misión nueva del modo de aprendizaje aporta transiciones reales y actualizaciones; cerrar y abrir la aplicación continúa la sesión en lugar de empezar desde cero. Esta funcionalidad está solicitada, pero todavía no está implementada.
+
+**Aceptación:**
+- La sesión conserva pesos, optimizador, red objetivo, memoria de experiencias (replay buffer), pasos acumulados, estado de exploración y configuración de recompensas. Documenta también semillas y estado aleatorio necesario para reproducir la continuación.
+- Cada transición contiene observación, acción conjunta, recompensa, siguiente observación y finalización/truncamiento correctos, usando RescueEnv y sus recompensas. Se define cuándo se actualiza la red, con lote y calentamiento explícitos; una misión breve puede aportar experiencia sin alcanzar todavía una actualización.
+- Se guarda al terminar cada misión y periódicamente durante su ejecución. El guardado usa generaciones completas y publicación atómica del último checkpoint válido, de modo que una interrupción no mezcle pesos, memoria y metadatos de momentos distintos.
+- Se valida perfil de dimensiones, cantidad de personas, observaciones y versión de recompensas antes de reanudar. Se rechaza una incompatibilidad sin sobrescribir la sesión; se impiden dos escritores simultáneos.
+- Se permite iniciar una sesión nueva desde un modelo compatible, indicando si no incluye memoria previa, y recuperar un checkpoint anterior. Los modelos publicados de referencia permanecen disponibles.
+- Una prueba de integración ejecuta suficientes pasos para actualizar pesos, guarda, recarga y verifica memoria, contadores, configuración y continuación de actualizaciones. Otra comprueba recuperación ante guardado incompleto e incompatibilidad de perfil.
+
+**Evidencia:** dos ejecuciones consecutivas de la misma sesión con hashes de checkpoints, tamaño de memoria, pasos y actualizaciones acumuladas antes/después. Un cambio de pesos demuestra actualización, no mejora de desempeño.
+
+<a id="sarb-034"></a>
+### SARB-034 — Integrar misiones con aprendizaje continuo en la interfaz
+
+**P0 · Responsable:** persona 3 · **Revisa:** persona 1 · **Depende de:** SARB-011, SARB-030, SARB-033 · **Esfuerzo:** 2–3 h.
+
+**Aceptación:**
+- La interfaz ofrece modos explícitos «Aprender y guardar» y «Evaluar sin aprender». Las misiones nuevas del primero continúan la sesión seleccionada, incluida después de reiniciar la aplicación; la evaluación utiliza un checkpoint fijo sin modificarlo.
+- Durante aprendizaje, cada avance del entorno genera una sola transición y se muestra el estado real de esa misión. No entrenar anticipadamente toda la misión mediante prepare_episode para luego presentarla como aprendizaje en vivo.
+- Pausar, redibujar, cambiar velocidad y reproducir una traza no agregan experiencias ni actualizaciones. Reproducir de nuevo una misión guardada se distingue de iniciar una misión nueva que sí aprende.
+- Se muestran sesión, modo, pasos acumulados, exploración, actualizaciones y estado de guardado. Se avisa que explorar puede causar fallos y que cada misión no garantiza una mejora inmediata.
+- El trabajador de aprendizaje no bloquea la interfaz; al cerrar se detiene de forma coordinada y guarda un estado consistente. Cambios de escenario o modelo no aplican resultados de otra sesión ni mezclan perfiles.
+- Se verifica el flujo nueva misión → aprendizaje → guardado → cierre → reapertura → continuación, además de evaluación sin cambios y reproducción sin duplicar experiencias.
+
+**Evidencia:** demostración de dos misiones con reinicio de la aplicación y registro que relaciona transiciones, pasos y guardados, incluyendo pausa y reproducción.
+
+<a id="sarb-035"></a>
+### SARB-035 — Medir aprendizaje continuo y conservar evaluación congelada
+
+**P1 · Responsable:** persona 4 · **Revisa:** persona 1 · **Depende de:** SARB-009, SARB-020, SARB-033, SARB-034 · **Esfuerzo:** 2–4 h.
+
+**Aceptación:**
+- Se evalúan snapshots antes y después de un presupuesto fijo de aprendizaje, sobre los mismos casos de desarrollo, sin exploración ni actualizaciones durante la medición. Se registran éxito, rescates, daño, pasos, semillas y hashes.
+- Se distingue adaptación al caso repetido de desempeño en ubicaciones nuevas; se registran regresiones sobre casos anteriores y el costo de entrenamiento. No se promete mejora en cada ejecución.
+- La evaluación final reservada de SARB-021 sigue usando modelos congelados: sus transiciones no entran en la memoria, no actualizan pesos y no deciden ajustes. Una misión elegida para aprender pasa a desarrollo y no se presenta luego como prueba inédita.
+- El historial identifica el checkpoint al comenzar cada misión y sus actualizaciones posteriores. Comparaciones de estrategias usan una copia fija del checkpoint, sin modificar el modelo a mitad de la comparación.
+- Informe y demostración explican la diferencia entre continuar aprendizaje, evaluar una política y reproducir una misión; el modo continuo figura como implementado solo tras cumplir SARB-033 y SARB-034.
+
+**Evidencia:** tabla antes/después con presupuesto, checkpoints y casos identificados, al menos una traza de continuación y análisis de mejoras o regresiones observadas.
+
 ## 11. Definición global de terminado
 
-El backlog se considera cerrado cuando las 32 tareas están integradas y sus evidencias están disponibles. La revisión final debe poder responder sí a lo siguiente:
+El backlog se considera cerrado cuando las 35 tareas están integradas y sus evidencias están disponibles. La revisión final debe poder responder sí a lo siguiente:
 
 1. ¿Otro integrante puede instalar y abrir el proyecto desde la versión publicada?
 2. ¿El profesor puede ubicar tres personas y comprender validación, varios viajes, rescate y finalización?
@@ -585,5 +634,6 @@ El backlog se considera cerrado cuando las 32 tareas están integradas y sus evi
 6. ¿Las conclusiones distinguen éxito, daño, duración y los límites de la evidencia?
 7. ¿La demostración y el informe corresponden al modelo y código realmente entregados?
 8. ¿Los cuatro integrantes pueden explicar y defender el trabajo?
+9. ¿Cada misión nueva del modo de aprendizaje aporta experiencia persistente, mientras evaluación y reproducción conservan sus modelos sin cambios?
 
 Cerrar el backlog produce una entrega completa y defendible. La calidad del aprendizaje y las conclusiones se juzgan con los datos obtenidos; no se garantiza que DQN gane siempre ni se sustituye la rúbrica del profesor.

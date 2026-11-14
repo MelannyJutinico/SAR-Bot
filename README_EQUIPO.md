@@ -36,6 +36,7 @@ La simulación es académica. Las temperaturas y daños son reglas de juego, no 
 | Pruebas de motor, aprendizaje, reproducción y controles | Ampliadas para V2; conservar la suite completa al integrar |
 | Editor para colocar sobrevivientes con clics | Pendiente |
 | Entrenamiento con muchas combinaciones de ubicaciones | Pendiente |
+| Aprendizaje continuo con memoria y modelo persistentes entre ejecuciones | Solicitado; pendiente en SARB-033 a SARB-035 |
 | Certificación general de viabilidad térmica de posiciones nuevas | Pendiente |
 | Selección final sobre validación y evaluación con varias semillas | Pendientes |
 | Gráficas finales, informe, presentación y versión de entrega | Pendientes |
@@ -100,6 +101,9 @@ Esperar o intentar atravesar un obstáculo también consume un paso. Cuatro paso
 5. Mostrar rescates, integridad, temperatura, daño, pasos, trayectorias y motivo de finalización.
 6. Guardar el escenario y sus resultados para poder repetir la comparación.
 7. Presentar un entrenamiento con ubicaciones variables y una evaluación final reproducible.
+8. Ofrecer un modo de aprendizaje continuo: cada misión nueva aporta experiencia y conserva modelo y memoria para la siguiente ejecución. Mantener un modo de evaluación con modelo congelado para comparaciones.
+
+El aprendizaje continuo todavía no está implementado. SARB-033 a SARB-035 detallan persistencia, integración visual y medición; reproducir una misión ya calculada no cuenta como continuar aprendiendo. La actualización corresponde al controlador compartido de ambos robots, no a dos redes independientes, y no garantiza mejorar después de cada misión.
 
 Inicialmente el editor no cambia paredes, base, incendio ni cantidad de robots o personas. Las ediciones ocurren antes de preparar la misión: cambiar una ubicación invalida la reproducción anterior.
 
@@ -109,7 +113,7 @@ El validador no debe rechazar ubicaciones porque DQN falle en ellas. Una referen
 
 ### Fuera del alcance de esta entrega
 
-Batería, plazos de supervivencia, fuego dinámico, visión artificial, varios pisos, más robots, física 3D, aplicación web, edición completa del edificio y aprendizaje en vivo durante la presentación. Son posibles extensiones; no son requisitos del backlog de entrega.
+Batería, plazos de supervivencia, fuego dinámico, visión artificial, varios pisos, más robots, física 3D, aplicación web y edición completa del edificio. Son posibles extensiones; no son requisitos del backlog de entrega. El aprendizaje continuo sí se incorporó al alcance por decisión del equipo.
 
 ## 7. Instalar y ejecutar la base
 
