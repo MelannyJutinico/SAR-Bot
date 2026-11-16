@@ -178,7 +178,57 @@ Partir de la etapa 2 (`--init-model`, exploración inicial 0,3) es lo que hace a
 - Recibe menos daño en 14 escenarios, igual en 74 y más en 39.
 - De sus 23 fracasos, 8 son por robot destruido y 15 por límite de pasos.
 
-Interpretación: con γ = 0,95, cada paso de retraso cuesta aproximadamente un 5 % del premio pendiente, mientras que cada punto de daño solo cuesta 0,1. Al agente le conviene más cruzar el calor que rodearlo. El peso del daño (`reward.damage`) fija el equilibrio entre duración y daño que pide la pregunta del proyecto. Es una decisión del equipo que debe fijarse antes de la evaluación final.
+Interpretación inicial: con γ = 0,95, cada paso de retraso cuesta aproximadamente un 5 % del premio pendiente, mientras que cada punto de daño solo cuesta 0,1. Al agente le conviene más cruzar el calor que rodearlo. El experimento siguiente pone a prueba esta explicación.
+
+### Experimento: peso del daño (día 4)
+
+Se partió de `etapa3_desde2_s0`, con exploración inicial 0,2, y se entrenaron 200.000 pasos más cambiando solo `reward.damage`. La columna Δ compara escenario por escenario con la referencia, solo donde DQN tiene éxito.
+
+| Corrida | Daño por punto | Éxito | Destruido | Límite | Daño medio | Éxitos | Δ daño | Δ pasos | Menos daño que la referencia |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `etapa3_desde2_s0` (punto de partida) | −0,1 | 84,7 % | 5,3 % | 10,0 % | 23,1 | 127 | +2,98 | +3,66 | 14 |
+| `dano01_s0` (control) | −0,1 | 82,0 % | 4,0 % | 14,0 % | 23,0 | 123 | +3,07 | +4,65 | 13 |
+| `dano03_s0` | −0,3 | 38,0 % | 5,3 % | 56,7 % | 16,2 | 57 | +1,05 | +10,54 | 5 |
+| `dano05_s0` | −0,5 | 22,7 % | 9,3 % | 68,0 % | 20,3 | 34 | +2,32 | +13,00 | 4 |
+
+Conclusiones:
+- **Encarecer el daño no enseña a rodear el calor.** El agente deja de completar misiones: el límite de pasos sube del 14 % al 57–68 %. Incluso en los escenarios que sí resuelve, sigue recibiendo más daño que la referencia y tarda mucho más.
+- El daño medio más bajo con −0,3 viene de moverse menos y fracasar, no de mejores rutas.
+- El control muestra que reiniciar la exploración y entrenar 200.000 pasos más no mejora el 84,7 % de partida.
+- Por tanto, la limitación no es solo de incentivos. Con este presupuesto de entrenamiento, DQN aprende a rescatar pero no a planificar rutas que eviten el calor mejor que el camino más corto. Se mantiene `damage = −0,1`.
+
+Siguientes pasos posibles:
+- Repetir el currículo con 2 o 3 semillas para medir la variabilidad.
+- Entrenar la etapa 3 durante más tiempo.
+- Si se quiere insistir en evitar el calor, probar variantes de DQN (por ejemplo, Double DQN o QR-DQN de `sb3-contrib`) o una red más grande.
+
+Si no mejora, el resultado negativo también se documenta (CONTEXTO.md §9).
+
+### Variabilidad entre semillas (día 4)
+
+Se repitió el currículo completo con las semillas 1 y 2, con la misma receta que la semilla 0: etapa 2 durante 250.000 pasos y luego etapa 3 durante 250.000 pasos partiendo del modelo final de la etapa 2, con exploración inicial 0,3. Todo se midió en validación (150 escenarios). La columna "Menos / igual / más daño" compara cada escenario resuelto con la referencia.
+
+| Etapa | Semilla | Éxito | Destruido | Límite | Daño medio | Pasos (éxito) | Δ daño en éxitos | Δ pasos en éxitos | Menos / igual / más daño |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 2 | 0 | 90,7 % | 0 % | 9,3 % | 0 | 16,65 | 0 | +2,71 | — |
+| 2 | 1 | 93,3 % | 0 % | 6,7 % | 0 | 17,74 | 0 | +3,66 | — |
+| 2 | 2 | 95,3 % | 0 % | 4,7 % | 0 | 19,01 | 0 | +4,85 | — |
+| 3 | 0 | 84,7 % | 5,3 % | 10,0 % | 23,05 | 17,61 | +2,98 | +3,66 | 14 / 74 / 39 |
+| 3 | 1 | 95,3 % | 1,3 % | 3,3 % | 18,35 | 16,34 | +0,26 | +2,41 | 23 / 84 / 36 |
+| 3 | 2 | **96,0 %** | 2,7 % | 1,3 % | 19,79 | 17,36 | +0,38 | +3,21 | 22 / 85 / 37 |
+
+La referencia logra 100 % de éxito, 14,07 pasos y un daño de 0 sin calor o de 17,70 con calor.
+
+Resumen de la etapa 3 sobre tres semillas:
+- Éxito de **92,0 % ± 6,4 %**.
+- Daño medio de **20,4 ± 2,4**, frente a 17,7 de la referencia.
+- En los escenarios resueltos, de media +1,2 de daño y +3,1 pasos.
+
+Conclusiones:
+- **La semilla 0 fue una corrida desfavorable.** Con las semillas 1 y 2, DQN llega al 95–96 % y su daño en los éxitos queda casi igual al de la referencia (+0,3).
+- **DQN todavía no supera a la referencia** en ninguna métrica. Aprende a rescatar y a coordinar dos robots, pero sus rutas son algo más largas (+2 a +5 pasos, también sin calor). Recibe menos daño que la referencia en unos 22 escenarios y más en unos 37.
+- La dispersión entre semillas es grande (±6,4 puntos de éxito), así que cualquier conclusión debe apoyarse en varias semillas y no en una sola corrida.
+- **Modelo elegido con validación:** `etapa3_desde2_s2`, el de mayor éxito (96,0 %). La partición de prueba no se ha usado. La evaluación final debe reportar las tres semillas y señalar el modelo elegido.
 
 ## Evaluación
 

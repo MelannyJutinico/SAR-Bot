@@ -128,4 +128,4 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Entrenar y guardar una política (primera versión; aún no supera a la referencia, ver [DISENO.md](DISENO.md)).
 - [ ] Evaluar y preparar demostración.
 
-Hay evidencia en validación de que el agente aprende las tres etapas (98,7 %, 90,7 % y 84,7 % de éxito), pero todavía no supera a la referencia en éxito, daño ni duración. No hay resultados en la partición de prueba.
+Hay evidencia en validación de que el agente aprende las tres etapas. En la etapa con calor alcanza 92,0 % ± 6,4 % de éxito con tres semillas (96,0 % la mejor), pero todavía no supera a la referencia en éxito, daño ni duración. No hay resultados en la partición de prueba (ver [DISENO.md](DISENO.md)).
