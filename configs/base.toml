@@ -1,0 +1,55 @@
+# Configuración base de SAR-Bot: dos robots, dos víctimas y calor.
+# Los valores de recompensa y entrenamiento deben quedar registrados
+# antes de comparar resultados (docs/CONTEXTO.md §8).
+
+[rules]
+initial_integrity = 100.0
+max_steps = 100
+delta_t = 1.0
+# [temperatura mínima en °C, tasa de daño por unidad de tiempo]
+damage_bands = [[40.0, 2.0], [60.0, 5.0], [80.0, 10.0]]
+
+[heat]
+ambient = 25.0
+peak = 95.0
+gradient = 20.0          # °C menos por casilla de distancia Manhattan al foco
+min_base_distance = 3    # distancia Manhattan mínima entre foco y base
+safe_base = true
+
+[scenarios]
+layouts = ["edificio_a", "edificio_b", "edificio_c"]
+n_victims = 2
+min_victim_base_distance = 2
+# Rangos de semillas [inicio, fin) por plano. Sus escenarios se excluyen del entrenamiento.
+validation_seeds = [100000, 100050]
+test_seeds = [200000, 200100]
+
+[reward]
+step = -0.05          # por paso global
+damage = -0.1         # por punto de daño (suma de ambos robots)
+pickup = 2.0          # por recogida; cada víctima solo se recoge una vez
+delivery = 10.0       # por entrega en la base
+success = 20.0        # misión completa
+destruction = -20.0   # algún robot llega a integridad 0
+blocked = -0.1        # por choque con pared o bloqueo entre robots
+shaping = 1.0         # guía por potencial: γ·Φ(s') − Φ(s), Φ = −1 × trabajo pendiente
+
+[training]
+total_timesteps = 300000
+seed = 0
+device = "cpu"
+# Ajustados en la etapa 1 (docs/DISENO.md, "Ajuste de hiperparámetros").
+learning_rate = 0.0005
+buffer_size = 100000
+learning_starts = 1000
+batch_size = 128
+gamma = 0.95
+train_freq = 4
+gradient_steps = 1
+target_update_interval = 500
+exploration_fraction = 0.3
+exploration_initial_eps = 1.0
+exploration_final_eps = 0.05
+net_arch = [256, 256]
+eval_freq = 10000
+threads = 0              # hilos de torch; 0 = valor por defecto

@@ -1,0 +1,6 @@
+# Etapa 1: una víctima sin calor, para verificar reglas y aprendizaje básico.
+# El entorno siempre tiene dos robots; la observación reserva el espacio de la segunda víctima.
+extends = "sin_calor.toml"
+
+[scenarios]
+n_victims = 1

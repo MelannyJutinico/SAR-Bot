@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sar-bot"
+version = "0.1.0"
+description = "Simulación de rescate cooperativo con dos robots y riesgo térmico acumulativo."
+readme = "README.md"
+requires-python = ">=3.11"
+# Versiones verificadas juntas en Windows con Python 3.11.9 (torch 2.15.0+cpu llega como dependencia de SB3).
+dependencies = [
+    "numpy==2.4.6",
+    "gymnasium==1.4.0",
+    "stable-baselines3==2.9.2",
+    "pygame==2.6.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

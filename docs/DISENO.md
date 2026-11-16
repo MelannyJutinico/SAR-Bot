@@ -1,0 +1,273 @@
+# Diseño técnico de la base
+
+Este documento describe el contrato implementado en `src/sar_bot/`. Las reglas de fondo y su justificación están en [CONTEXTO.md](CONTEXTO.md); aquí se registra cómo quedaron en código y qué decisiones nuevas se tomaron al implementarlas.
+
+## Estado
+
+| Componente | Estado | Módulo | Responsable siguiente |
+|---|---|---|---|
+| Plano, acciones y acción conjunta | Hecho | `core/grid.py`, `core/actions.py` | Persona 2 |
+| Daño térmico y campo de calor | Hecho | `core/rules.py`, `core/heat.py` | Persona 2 |
+| Escenarios reproducibles y viabilidad | Hecho | `core/scenario.py`, `scenarios/layouts/` | Persona 2 |
+| Motor de paso global | Hecho | `core/engine.py` | Persona 2 |
+| Configuración y etapas | Hecho | `config.py`, `configs/` | Persona 1 |
+| Adaptador Gymnasium, observación y recompensa | Hecho | `env/` | Persona 1 |
+| Particiones entrenamiento / validación / prueba | Hecho | `env/sampling.py` | Personas 1 y 4 |
+| Estrategia de referencia | Hecho | `agents/baseline.py` | Persona 4 |
+| Entrenamiento DQN, guardado y carga | Hecho; hiperparámetros ajustados; etapa 3 por currículo | `agents/dqn.py`, `training.py`, `scripts/train.py` | Persona 1 |
+| Evaluación por episodio a CSV | Hecho | `evaluation.py`, `scripts/evaluate.py` | Persona 4 |
+| Render Pygame y demo | Hecho, versión mínima | `ui/renderer.py`, `scripts/play.py` | Persona 3 |
+| Guía por potencial de la recompensa | Hecho | `env/shaping.py` | Persona 1 |
+| Pruebas | 119 pruebas | `tests/` | Todos |
+
+## Convenciones
+
+- Posiciones `(fila, columna)`; la fila 0 está arriba.
+- Acciones individuales: `UP=0`, `DOWN=1`, `LEFT=2`, `RIGHT=3`, `WAIT=4`.
+- Acción conjunta: `5 × acción_robot_0 + acción_robot_1`, en `[0, 25)`. Se usan `encode_joint` y `decode_joint`.
+- El código usa identificadores en inglés y comentarios en español.
+- El motor es la única fuente de reglas. Entorno, interfaz, referencia y evaluación lo consumen; no recalculan daño ni deciden rescates.
+
+## Paso global
+
+`RescueSim.step(a0, a1)` (o `step_joint(j)`) sigue el orden de CONTEXTO.md §5:
+
+1. Resuelve destinos, obstáculos y conflictos (`resolve_moves`).
+2. Mueve a ambos robots y les aplica exposición térmica en su celda final, aunque esperen o queden bloqueados.
+3. Si algún robot llega a integridad 0, termina en `robot_destruido` sin procesar entregas de ese paso.
+4. Si no, procesa entregas en la base y recogidas automáticas.
+5. Termina en `exito` si todas las víctimas están rescatadas; si no, en `limite_de_pasos` al alcanzar `max_steps`.
+
+Cada paso devuelve un `StepResult` con posiciones, bloqueos, temperaturas, daño, recogidas, entregas y finalización. `terminated` corresponde a éxito o destrucción; `truncated`, al límite de pasos.
+
+## Movimiento simultáneo
+
+Implementa CONTEXTO.md §6:
+
+- Un obstáculo o el borde del mapa bloquea el movimiento (`blocked_by_wall`).
+- Si ambos robots apuntan a la misma celda fuera de la base, los dos se quedan (`blocked_by_robot`). Esto cubre entrar en la celda de un robot que espera o que choca con una pared.
+- El intercambio directo se bloquea para ambos, incluso si uno está en la base.
+- Seguir al otro robot (entrar en la celda que abandona) está permitido.
+- En la base ambos pueden coincidir.
+
+## Calor y daño
+
+- Tasas por temperatura: menos de 40 °C → 0; de 40 a 60 → 2; de 60 a 80 → 5; desde 80 → 10. Cada franja es `[umbral, siguiente)`.
+- `daño = tasa × delta_t` con `delta_t = 1`. La integridad se recorta en 0.
+- `damage_taken` registra la integridad perdida, así que siempre se cumple `damage_taken = inicial − integridad`.
+- Campo de un foco fijo: `T = max(25, 95 − 20 × distancia_Manhattan)`. Queda en 95 °C sobre el foco, 75 a distancia 1, 55 a distancia 2 y como mucho 35 desde distancia 3. Se ajusta en `[heat]`.
+- La base se fuerza a temperatura ambiente (celda segura).
+
+### Hallazgo para decidir en equipo
+
+Con el calor actual, la referencia que ignora el calor completa el 100 % de los 150 escenarios de validación, con 17,7 de daño total medio. Evitando el calor, el daño podría bajar a unos 5 de media. Por tanto, el margen de mejora del agente aprendido está en **reducir daño y mantener la duración**, no en rescatar más.
+
+Con un calor más severo (pico 100 y gradiente 15), la referencia sigue completando 149 de 150, pero el daño medio sube a 46,4. Si el equipo quiere que ignorar el calor cause fracasos, hay que endurecer `[heat]` o las franjas de daño. Es una decisión de la persona 2 que debe registrarse antes de comparar resultados.
+
+## Escenarios y particiones
+
+Los planos son archivos de texto en `scenarios/layouts/`: `.` libre, `#` obstáculo, `B` base. Hay tres de 6 × 6 (`edificio_a`, `edificio_b`, `edificio_c`), todos conexos.
+
+`generate_scenario(plano, semilla)` es reproducible. Reglas del generador:
+
+- Ambos robots empiezan en la base.
+- Las víctimas quedan en celdas libres distintas, a una distancia de camino de al menos 2 desde la base.
+- El foco queda en una celda libre a una distancia Manhattan de al menos 3 de la base.
+- Se descartan los escenarios que `estimate_viability` considera inviables. Es una estimación aproximada: ignora conflictos entre robots. La referencia confirma la viabilidad completando los escenarios en el motor.
+
+Particiones (`env/sampling.py`):
+
+- **Validación:** cada plano con las semillas `[100000, 100050)`, es decir, 150 escenarios fijos.
+- **Prueba:** cada plano con las semillas `[200000, 200100)`, es decir, 300 escenarios fijos.
+- **Entrenamiento:** plano y semilla aleatorios. Se descarta cualquier escenario con la misma misión (plano, celdas de víctimas y foco) que uno de validación o prueba.
+
+## Configuración y etapas
+
+`configs/*.toml` tiene las secciones `[rules]`, `[heat]`, `[scenarios]`, `[reward]` y `[training]`. Un archivo puede heredar con `extends`. Las claves desconocidas producen error.
+
+| Archivo | Etapa (CONTEXTO.md §8) |
+|---|---|
+| `una_victima.toml` | 1: una víctima, sin calor, dos robots en el entorno |
+| `sin_calor.toml` | 2: dos víctimas sin calor, para validar coordinación |
+| `base.toml` | 3: dos víctimas con calor |
+
+## Entorno Gymnasium
+
+`RescueEnv(config, split)` está registrado como `SARBot-v0`.
+
+- **Acción:** `Discrete(25)`.
+- **Observación:** vector `float32` de 227 valores en [0, 1] para planos de 6 × 6.
+  - Seis capas del mapa: obstáculos, calor (tasa / tasa máxima), base, robot 0, robot 1 y víctimas esperando.
+  - Integridad relativa y carga de cada robot.
+  - Estado one-hot de cada víctima, con ceros si no existe.
+  - Fracción de pasos restantes.
+- **Recompensa compartida** (`[reward]`):
+
+| Evento | Valor inicial |
+|---|---:|
+| Cada paso | −0,05 |
+| Cada punto de daño (suma de ambos robots) | −0,1 |
+| Recogida (una vez por víctima) | +2 |
+| Entrega | +10 |
+| Misión completa | +20 |
+| Robot destruido | −20 |
+| Choque con pared o bloqueo entre robots | −0,1 |
+| Guía por potencial (`shaping`) | `γ·Φ(s') − Φ(s)`, con `Φ = −1 × trabajo pendiente` |
+
+- **Guía por potencial** (`env/shaping.py`). El trabajo pendiente es la suma de distancias de camino que faltan: llevar cada víctima transportada a la base y, para cada víctima esperando, acercar un robot vacío y volver a la base. Una guía de esta forma (Ng, Harada y Russell, 1999) no cambia qué política es óptima entre misiones exitosas: solo da una señal densa de progreso. En el éxito vale 0, y en una destrucción añade una penalización proporcional al trabajo pendiente. Se desactiva con `shaping = 0`.
+- **`info`:** `scenario_id`, `step`, `outcome`, `rescued`, `integrity`, `step_result`, `reward_task` y `reward_shaping`. Al terminar incluye además `is_success` y `metrics`, las métricas del episodio más:
+  - `return`: con guía, lo que optimiza el agente.
+  - `task_return`: sin guía, comparable entre configuraciones.
+- `reset(options={"scenario": s})` fuerza un escenario concreto.
+
+## Estrategia de referencia
+
+`ShortestPathBaseline` sigue estas reglas (detalle en el docstring de `agents/baseline.py`):
+
+- Asigna víctimas distintas minimizando la suma de distancias de camino, y reasigna cuando cambia el estado de las víctimas.
+- Sigue rutas más cortas que ignoran el calor.
+- Ante un bloqueo, cede el robot sin prioridad. Tiene prioridad el que transporta una víctima; si ambos o ninguno, el más cercano a su objetivo; si empatan, el robot 0. El que cede elige la acción que no bloquea al otro y deja menor distancia a su objetivo. Prefiere esperar y, si hace falta, se aparta en un pasillo.
+
+Completa el 100 % de validación y prueba en las tres etapas.
+
+## Entrenamiento
+
+`scripts/train.py` entrena DQN (`MlpPolicy`, red 256×256, CPU). Cada `eval_freq` pasos evalúa la política greedy en los 150 escenarios de validación y guarda:
+
+- `models/<corrida>/best_model.zip`: el mejor en validación por **tasa de éxito** y, a igualdad, por **retorno de la tarea** (sin guía).
+- `models/<corrida>/final_model.zip`: el modelo al terminar.
+- `models/<corrida>/metadata.json`: configuración completa, modelo de partida, versiones, duración y resumen de la mejor evaluación.
+- `runs/<corrida>/`: registro de Monitor y `evaluations.npz`, con la curva de validación (`success_rate`, `task_return`, `damage`, `steps_success`).
+
+**No se elige por el retorno con guía.** Con γ < 1, la guía suma `(1 − γ) × trabajo pendiente` por cada paso de espera, así que el retorno sin descontar puede premiar quedarse quieto lejos del objetivo. Con el criterio antiguo, el "mejor modelo" de la etapa 3 tenía 0 % de éxito, aunque el entrenamiento llegó a pasar por puntos con 25 %.
+
+Opciones útiles:
+- `--set seccion.clave=valor` cambia valores sin editar archivos.
+- `--init-model ruta.zip` parte de los pesos de otro modelo, por ejemplo de la etapa anterior.
+- `--threads` limita los hilos de torch cuando se entrenan varias corridas a la vez.
+
+### Ajuste de hiperparámetros (etapa 1, 60.000 pasos, 60 escenarios de validación)
+
+| Variante | Cambios sobre los valores iniciales | Éxito |
+|---|---|---:|
+| Inicial | γ 0,99, guía 0,2, objetivo cada 2.000 pasos | 0 % |
+| V1 | objetivo cada 500 pasos | 5 % |
+| V2 | V1 + γ 0,95 + guía 1,0 | 81,7 % |
+| V3 | V2 + `train_freq` 1 + tasa de aprendizaje 2,5e-4 | 93,3 % |
+| V4 | V2 + exploración más larga + `learning_starts` 1.000 | 88,3 % |
+
+Quedan por defecto γ 0,95, guía 1,0, objetivo cada 500 pasos y `learning_starts` 1.000. V3 aprende mejor por paso, pero es unas 2,5 veces más lenta en tiempo de reloj y fue peor en corridas largas: 82 % frente a 90,7 % en la etapa 2.
+
+### Diagnóstico del primer entrenamiento (sin guía)
+
+La etapa 1 sin guía y sin penalizar choques (100.000 pasos) no aprendió. El éxito en validación llegó al 12,7 % a los 20.000 pasos y cayó a 0 % al final. La política se quedaba repitiendo una misma acción conjunta, chocaba con paredes en más de un robot por paso y agotaba el límite de pasos. Las causas probables eran una recompensa muy escasa (solo había premio al recoger o entregar), choques sin costo y una exploración que terminaba antes de encontrar rescates con frecuencia. Por eso se añadieron la guía por potencial y la penalización por choques.
+
+### Resultados en validación (día 3, semilla de entrenamiento 0)
+
+Todas las cifras son de los 150 escenarios de validación. La partición de prueba queda reservada para la evaluación final.
+
+| Etapa | Modelo | DQN: éxito | DQN: daño medio | Referencia: éxito / daño |
+|---|---|---:|---:|---:|
+| 1: una víctima, sin calor | `etapa1_s0` (100.000 pasos) | 98,7 % | 0 | 100 % / 0 |
+| 2: dos víctimas, sin calor | `etapa2_s0` (250.000 pasos) | 90,7 % | 0 | 100 % / 0 |
+| 3: con calor, desde cero | `etapa3_s0` (250.000 pasos) | 24,0 % | 27,8 | 100 % / 17,7 |
+| 3: con calor, partiendo de la etapa 2 | `etapa3_desde2_s0` (+250.000 pasos) | **84,7 %** | 23,1 | 100 % / 17,7 |
+
+Partir de la etapa 2 (`--init-model`, exploración inicial 0,3) es lo que hace aprender la etapa 3; la curva seguía subiendo al terminar. Aun así, **DQN todavía no supera a la referencia**:
+- En los 127 escenarios donde tiene éxito, recibe de media 3,0 puntos más de daño y tarda 3,7 pasos más.
+- Recibe menos daño en 14 escenarios, igual en 74 y más en 39.
+- De sus 23 fracasos, 8 son por robot destruido y 15 por límite de pasos.
+
+Interpretación inicial: con γ = 0,95, cada paso de retraso cuesta aproximadamente un 5 % del premio pendiente, mientras que cada punto de daño solo cuesta 0,1. Al agente le conviene más cruzar el calor que rodearlo. El experimento siguiente pone a prueba esta explicación.
+
+### Experimento: peso del daño (día 4)
+
+Se partió de `etapa3_desde2_s0`, con exploración inicial 0,2, y se entrenaron 200.000 pasos más cambiando solo `reward.damage`. La columna Δ compara escenario por escenario con la referencia, solo donde DQN tiene éxito.
+
+| Corrida | Daño por punto | Éxito | Destruido | Límite | Daño medio | Éxitos | Δ daño | Δ pasos | Menos daño que la referencia |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `etapa3_desde2_s0` (punto de partida) | −0,1 | 84,7 % | 5,3 % | 10,0 % | 23,1 | 127 | +2,98 | +3,66 | 14 |
+| `dano01_s0` (control) | −0,1 | 82,0 % | 4,0 % | 14,0 % | 23,0 | 123 | +3,07 | +4,65 | 13 |
+| `dano03_s0` | −0,3 | 38,0 % | 5,3 % | 56,7 % | 16,2 | 57 | +1,05 | +10,54 | 5 |
+| `dano05_s0` | −0,5 | 22,7 % | 9,3 % | 68,0 % | 20,3 | 34 | +2,32 | +13,00 | 4 |
+
+Conclusiones:
+- **Encarecer el daño no enseña a rodear el calor.** El agente deja de completar misiones: el límite de pasos sube del 14 % al 57–68 %. Incluso en los escenarios que sí resuelve, sigue recibiendo más daño que la referencia y tarda mucho más.
+- El daño medio más bajo con −0,3 viene de moverse menos y fracasar, no de mejores rutas.
+- El control muestra que reiniciar la exploración y entrenar 200.000 pasos más no mejora el 84,7 % de partida.
+- Por tanto, la limitación no es solo de incentivos. Con este presupuesto de entrenamiento, DQN aprende a rescatar pero no a planificar rutas que eviten el calor mejor que el camino más corto. Se mantiene `damage = −0,1`.
+
+Siguientes pasos posibles:
+- Repetir el currículo con 2 o 3 semillas para medir la variabilidad.
+- Entrenar la etapa 3 durante más tiempo.
+- Si se quiere insistir en evitar el calor, probar variantes de DQN (por ejemplo, Double DQN o QR-DQN de `sb3-contrib`) o una red más grande.
+
+Si no mejora, el resultado negativo también se documenta (CONTEXTO.md §9).
+
+### Variabilidad entre semillas (día 4)
+
+Se repitió el currículo completo con las semillas 1 y 2, con la misma receta que la semilla 0: etapa 2 durante 250.000 pasos y luego etapa 3 durante 250.000 pasos partiendo del modelo final de la etapa 2, con exploración inicial 0,3. Todo se midió en validación (150 escenarios). La columna "Menos / igual / más daño" compara cada escenario resuelto con la referencia.
+
+| Etapa | Semilla | Éxito | Destruido | Límite | Daño medio | Pasos (éxito) | Δ daño en éxitos | Δ pasos en éxitos | Menos / igual / más daño |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| 2 | 0 | 90,7 % | 0 % | 9,3 % | 0 | 16,65 | 0 | +2,71 | — |
+| 2 | 1 | 93,3 % | 0 % | 6,7 % | 0 | 17,74 | 0 | +3,66 | — |
+| 2 | 2 | 95,3 % | 0 % | 4,7 % | 0 | 19,01 | 0 | +4,85 | — |
+| 3 | 0 | 84,7 % | 5,3 % | 10,0 % | 23,05 | 17,61 | +2,98 | +3,66 | 14 / 74 / 39 |
+| 3 | 1 | 95,3 % | 1,3 % | 3,3 % | 18,35 | 16,34 | +0,26 | +2,41 | 23 / 84 / 36 |
+| 3 | 2 | **96,0 %** | 2,7 % | 1,3 % | 19,79 | 17,36 | +0,38 | +3,21 | 22 / 85 / 37 |
+
+La referencia logra 100 % de éxito, 14,07 pasos y un daño de 0 sin calor o de 17,70 con calor.
+
+Resumen de la etapa 3 sobre tres semillas:
+- Éxito de **92,0 % ± 6,4 %**.
+- Daño medio de **20,4 ± 2,4**, frente a 17,7 de la referencia.
+- En los escenarios resueltos, de media +1,2 de daño y +3,1 pasos.
+
+Conclusiones:
+- **La semilla 0 fue una corrida desfavorable.** Con las semillas 1 y 2, DQN llega al 95–96 % y su daño en los éxitos queda casi igual al de la referencia (+0,3).
+- **DQN todavía no supera a la referencia** en ninguna métrica. Aprende a rescatar y a coordinar dos robots, pero sus rutas son algo más largas (+2 a +5 pasos, también sin calor). Recibe menos daño que la referencia en unos 22 escenarios y más en unos 37.
+- La dispersión entre semillas es grande (±6,4 puntos de éxito), así que cualquier conclusión debe apoyarse en varias semillas y no en una sola corrida.
+- **Modelo elegido con validación:** `etapa3_desde2_s2`, el de mayor éxito (96,0 %). La partición de prueba no se ha usado. La evaluación final debe reportar las tres semillas y señalar el modelo elegido.
+
+## Evaluación
+
+`scripts/evaluate.py` ejecuta una o varias estrategias sobre la partición fija de validación o prueba y exporta un CSV con una fila por episodio. Las columnas son `strategy`, `split`, `layout`, `scenario_id`, `seed`, `outcome`, `success`, `rescued`, `victims`, `steps`, `damage_r0`, `damage_r1`, `damage_total`, `integrity_r0`, `integrity_r1`, `wall_bumps`, `robot_blocks` y `return`.
+
+El resumen por consola reporta tasa de éxito, destrucción y límite, rescates, daño y retorno. Los pasos y el daño también se calculan solo entre misiones exitosas, para no favorecer fracasos tempranos (CONTEXTO.md §9).
+
+## Visualización
+
+`scripts/play.py` reproduce una estrategia sobre validación o prueba con Pygame. Controles:
+
+- Espacio: pausa o continúa.
+- →: avanza un paso en pausa.
+- R: reinicia el escenario.
+- N / B: escenario siguiente o anterior.
+- + / −: velocidad.
+- E: cambia de estrategia.
+- Esc: sale.
+
+La velocidad solo cambia cuántos pasos se muestran por segundo; no altera el tiempo simulado, el calor ni el daño. El render (`ui/renderer.py`) solo lee el estado del motor.
+
+## Decisiones tomadas al implementar (revisar en equipo)
+
+- Los robots empiezan en la base, y ninguna víctima puede estar en la base ni en la celda inicial de un robot.
+- El campo de calor usa distancia Manhattan y los obstáculos no lo bloquean.
+- El intercambio directo se bloquea también cuando involucra la base.
+- La observación usa capas one-hot del mapa en lugar de coordenadas, para que una red densa generalice entre planos.
+- Los valores de recompensa e hiperparámetros son iniciales. Deben fijarse y registrarse antes de comparar resultados.
+- Los choques cuestan −0,1. Como el controlador es centralizado, elige las acciones de ambos robots y siempre puede evitarlos.
+- Se usa una guía por potencial con distancias que ignoran el calor. No sesga la política óptima; el calor se aprende por la penalización de daño.
+
+## Ejemplo de uso
+
+```python
+from sar_bot.core import Action, RescueSim, generate_scenario, load_layouts
+
+layout = load_layouts()["edificio_a"]
+sim = RescueSim(generate_scenario(layout, seed=0))
+result = sim.step(Action.RIGHT, Action.DOWN)
+print(sim.to_text())
+print(result.damage, result.outcome)
+```
