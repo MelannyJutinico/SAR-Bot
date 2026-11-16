@@ -14,7 +14,7 @@ La base funciona de principio a fin:
 - Evaluación exportada a CSV.
 - Demo en Pygame.
 
-Los hiperparámetros y la recompensa son iniciales. Todavía no hay una política seleccionada ni resultados experimentales finales.
+DQN aprende con un currículo: primero sin calor y después con calor. En validación, con tres semillas de entrenamiento, alcanza 92,0 % ± 6,4 % de éxito con calor. Todavía no supera a la estrategia de referencia, que logra el 100 % con menos daño y menos pasos. El modelo elegido con validación es `etapa3_desde2_s2` (96,0 %). La partición de prueba aún no se ha usado, porque falta decidir la severidad del calor. Los detalles están en [DISENO.md](docs/DISENO.md).
 
 - [Contexto, alcance y reglas acordadas](docs/CONTEXTO.md)
 - [Plan de trabajo y base de la persona 1](docs/PLAN_DE_TRABAJO.md)
@@ -78,14 +78,16 @@ Después la etapa con calor, partiendo del modelo anterior (sin ese punto de par
 python scripts/train.py --config configs/base.toml --timesteps 250000 --init-model models/etapa2_s0/final_model.zip --set training.exploration_initial_eps=0.3 --name etapa3_desde2_s0
 ```
 
-Comparar el modelo con la referencia y verlo en acción:
+Para otras semillas se cambian `--seed` y el sufijo del nombre, por ejemplo `--seed 2 --name etapa2_s2`, y la etapa con calor parte de `models/etapa2_s2/final_model.zip`.
+
+Comparar el modelo elegido con la referencia y verlo en acción. Los modelos no se suben al repositorio; hay que entrenarlos o recibir el archivo `.zip`:
 
 ```bash
-python scripts/evaluate.py --strategy referencia dqn --model models/etapa3_desde2_s0/best_model.zip
+python scripts/evaluate.py --strategy referencia dqn --model models/etapa3_desde2_s2/best_model.zip
 ```
 
 ```bash
-python scripts/play.py --strategy dqn --model models/etapa3_desde2_s0/best_model.zip
+python scripts/play.py --strategy dqn --model models/etapa3_desde2_s2/best_model.zip
 ```
 
 Los detalles de observación, recompensa, particiones y referencia están en [docs/DISENO.md](docs/DISENO.md). Los cambios se trabajan en ramas `feature/…` y se integran sobre una versión ejecutable común.
