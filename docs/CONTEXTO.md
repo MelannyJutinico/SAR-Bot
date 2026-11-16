@@ -123,7 +123,7 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Definir alcance de una semana y cuatro integrantes.
 - [x] Registrar que nosotros asumimos la persona 1.
 - [x] Registrar exposición térmica para ambos robots por paso global.
-- [ ] Implementar base ejecutable.
+- [x] Implementar base ejecutable (ver [DISENO.md](DISENO.md)).
 - [ ] Verificar reglas y escenarios.
 - [ ] Entrenar y guardar una política.
 - [ ] Evaluar y preparar demostración.

@@ -16,7 +16,7 @@ Nosotros construiremos la base integrada, el aprendizaje y la dirección técnic
 8. Evaluación que exporte resultados por episodio.
 9. Verificaciones de reglas críticas y un escenario de misión completa reproducible.
 
-La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. El estado actual del repositorio es documentación: estos componentes todavía están pendientes.
+La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Los nueve componentes ya existen; su estado y sus contratos están en [DISENO.md](DISENO.md).
 
 ## Separación de responsabilidades
 
@@ -29,7 +29,7 @@ La base debe funcionar de principio a fin, aunque su aspecto visual y el desempe
 
 Durante la construcción inicial, la persona 2 diseña escenarios, la 3 prepara vistas con estados de ejemplo y la 4 especifica casos de verificación y resultados esperados.
 
-## Estructura prevista, todavía por implementar
+## Estructura del proyecto
 
 ```text
 src/sar_bot/
