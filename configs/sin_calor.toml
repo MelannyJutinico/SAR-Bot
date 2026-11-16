@@ -1,5 +1,0 @@
-# Etapa 2: dos robots y dos víctimas sin calor, para validar coordinación.
-extends = "base.toml"
-
-[heat]
-peak = 25.0   # igual a la temperatura ambiente: ninguna celda causa daño
