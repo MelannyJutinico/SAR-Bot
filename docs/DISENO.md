@@ -232,7 +232,7 @@ Conclusiones:
 
 ## Evaluación
 
-`scripts/evaluate.py` ejecuta una o varias estrategias sobre la partición fija de validación o prueba y exporta un CSV con una fila por episodio. Las columnas son `strategy`, `split`, `layout`, `scenario_id`, `seed`, `outcome`, `success`, `rescued`, `victims`, `steps`, `damage_r0`, `damage_r1`, `damage_total`, `integrity_r0`, `integrity_r1`, `wall_bumps`, `robot_blocks` y `return`.
+`scripts/evaluate.py` ejecuta una o varias estrategias sobre la partición fija de validación o prueba y exporta un CSV con una fila por episodio. Las columnas son `strategy`, `split`, `layout`, `scenario_id`, `seed`, `outcome`, `success`, `rescued`, `victims`, `steps`, `damage_r0`, `damage_r1`, `damage_total`, `integrity_r0`, `integrity_r1`, `wall_bumps`, `robot_blocks`, `return` (con guía) y `task_return` (sin guía).
 
 El resumen por consola reporta tasa de éxito, destrucción y límite, rescates, daño y retorno. Los pasos y el daño también se calculan solo entre misiones exitosas, para no favorecer fracasos tempranos (CONTEXTO.md §9).
 

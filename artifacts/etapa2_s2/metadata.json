@@ -1,0 +1,110 @@
+{
+  "run_name": "etapa2_s2",
+  "config_name": "sin_calor",
+  "config": {
+    "rules": {
+      "initial_integrity": 100.0,
+      "max_steps": 100,
+      "delta_t": 1.0,
+      "damage_bands": [
+        [
+          40.0,
+          2.0
+        ],
+        [
+          60.0,
+          5.0
+        ],
+        [
+          80.0,
+          10.0
+        ]
+      ]
+    },
+    "heat": {
+      "ambient": 25.0,
+      "peak": 25.0,
+      "gradient": 20.0,
+      "min_base_distance": 3,
+      "safe_base": true
+    },
+    "scenarios": {
+      "layouts": [
+        "edificio_a",
+        "edificio_b",
+        "edificio_c"
+      ],
+      "n_victims": 2,
+      "min_victim_base_distance": 2,
+      "validation_seeds": [
+        100000,
+        100050
+      ],
+      "test_seeds": [
+        200000,
+        200100
+      ]
+    },
+    "reward": {
+      "step": -0.05,
+      "damage": -0.1,
+      "pickup": 2.0,
+      "delivery": 10.0,
+      "success": 20.0,
+      "destruction": -20.0,
+      "blocked": -0.1,
+      "shaping": 1.0
+    },
+    "training": {
+      "total_timesteps": 300000,
+      "seed": 2,
+      "device": "cpu",
+      "learning_rate": 0.0005,
+      "buffer_size": 100000,
+      "learning_starts": 1000,
+      "batch_size": 128,
+      "gamma": 0.95,
+      "train_freq": 4,
+      "gradient_steps": 1,
+      "target_update_interval": 500,
+      "exploration_fraction": 0.3,
+      "exploration_initial_eps": 1.0,
+      "exploration_final_eps": 0.05,
+      "net_arch": [
+        256,
+        256
+      ],
+      "eval_freq": 10000,
+      "threads": 6
+    },
+    "name": "sin_calor"
+  },
+  "init_model": null,
+  "total_timesteps": 250000,
+  "validation_episodes": 150,
+  "selection": "max (success_rate, task_return_mean) en validación",
+  "best": {
+    "timesteps": 220000,
+    "episodes": 150,
+    "success_rate": 0.9533333333333334,
+    "destroyed_rate": 0.0,
+    "timeout_rate": 0.04666666666666667,
+    "rescued_mean": 1.9133333333333333,
+    "damage_total_mean": 0.0,
+    "steps_mean": 22.786666666666665,
+    "steps_mean_success": 19.006993006993007,
+    "damage_total_mean_success": 0.0,
+    "return_mean": 72.72200000000004,
+    "task_return_mean": 39.798666666666655
+  },
+  "started": "2026-11-16T11:20:20",
+  "duration_s": 433.0,
+  "versions": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "gymnasium": "1.4.0",
+    "stable-baselines3": "2.9.2",
+    "torch": "2.15.0",
+    "pygame": "2.6.1"
+  }
+}

@@ -19,6 +19,7 @@ DQN aprende con un currículo: primero sin calor y después con calor. En valida
 - [Contexto, alcance y reglas acordadas](docs/CONTEXTO.md)
 - [Plan de trabajo y base de la persona 1](docs/PLAN_DE_TRABAJO.md)
 - [Diseño técnico de la base implementada](docs/DISENO.md)
+- [Traspaso al equipo: qué falta por persona y cómo arrancar](docs/TRASPASO.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
@@ -80,14 +81,14 @@ python scripts/train.py --config configs/base.toml --timesteps 250000 --init-mod
 
 Para otras semillas se cambian `--seed` y el sufijo del nombre, por ejemplo `--seed 2 --name etapa2_s2`, y la etapa con calor parte de `models/etapa2_s2/final_model.zip`.
 
-Comparar el modelo elegido con la referencia y verlo en acción. Los modelos no se suben al repositorio; hay que entrenarlos o recibir el archivo `.zip`:
+Las corridas de `models/` no se suben al repositorio. Los modelos elegidos de las tres semillas están en [artifacts/](artifacts/README.md), así que no hace falta entrenar para comparar el modelo elegido con la referencia o verlo en acción:
 
 ```bash
-python scripts/evaluate.py --strategy referencia dqn --model models/etapa3_desde2_s2/best_model.zip
+python scripts/evaluate.py --strategy referencia dqn --model artifacts/etapa3_desde2_s2/best_model.zip
 ```
 
 ```bash
-python scripts/play.py --strategy dqn --model models/etapa3_desde2_s2/best_model.zip
+python scripts/play.py --strategy dqn --model artifacts/etapa3_desde2_s2/best_model.zip
 ```
 
 Los detalles de observación, recompensa, particiones y referencia están en [docs/DISENO.md](docs/DISENO.md). Los cambios se trabajan en ramas `feature/…` y se integran sobre una versión ejecutable común.
