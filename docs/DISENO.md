@@ -14,10 +14,11 @@ Este documento describe el contrato implementado en `src/sar_bot/`. Las reglas d
 | Adaptador Gymnasium, observación y recompensa | Hecho | `env/` | Persona 1 |
 | Particiones entrenamiento / validación / prueba | Hecho | `env/sampling.py` | Personas 1 y 4 |
 | Estrategia de referencia | Hecho | `agents/baseline.py` | Persona 4 |
-| Entrenamiento DQN, guardado y carga | Hecho, sin ajuste de hiperparámetros | `agents/dqn.py`, `training.py`, `scripts/train.py` | Persona 1 |
+| Entrenamiento DQN, guardado y carga | Hecho; hiperparámetros ajustados; etapa 3 por currículo | `agents/dqn.py`, `training.py`, `scripts/train.py` | Persona 1 |
 | Evaluación por episodio a CSV | Hecho | `evaluation.py`, `scripts/evaluate.py` | Persona 4 |
 | Render Pygame y demo | Hecho, versión mínima | `ui/renderer.py`, `scripts/play.py` | Persona 3 |
-| Pruebas | 111 pruebas | `tests/` | Todos |
+| Guía por potencial de la recompensa | Hecho | `env/shaping.py` | Persona 1 |
+| Pruebas | 119 pruebas | `tests/` | Todos |
 
 ## Convenciones
 
@@ -110,9 +111,13 @@ Particiones (`env/sampling.py`):
 | Entrega | +10 |
 | Misión completa | +20 |
 | Robot destruido | −20 |
-| Choque o bloqueo | 0 |
+| Choque con pared o bloqueo entre robots | −0,1 |
+| Guía por potencial (`shaping`) | `γ·Φ(s') − Φ(s)`, con `Φ = −1 × trabajo pendiente` |
 
-- **`info`:** `scenario_id`, `step`, `outcome`, `rescued`, `integrity` y `step_result`. Al terminar incluye además `is_success` y `metrics`, las métricas del episodio más `return`.
+- **Guía por potencial** (`env/shaping.py`). El trabajo pendiente es la suma de distancias de camino que faltan: llevar cada víctima transportada a la base y, para cada víctima esperando, acercar un robot vacío y volver a la base. Una guía de esta forma (Ng, Harada y Russell, 1999) no cambia qué política es óptima entre misiones exitosas: solo da una señal densa de progreso. En el éxito vale 0, y en una destrucción añade una penalización proporcional al trabajo pendiente. Se desactiva con `shaping = 0`.
+- **`info`:** `scenario_id`, `step`, `outcome`, `rescued`, `integrity`, `step_result`, `reward_task` y `reward_shaping`. Al terminar incluye además `is_success` y `metrics`, las métricas del episodio más:
+  - `return`: con guía, lo que optimiza el agente.
+  - `task_return`: sin guía, comparable entre configuraciones.
 - `reset(options={"scenario": s})` fuerza un escenario concreto.
 
 ## Estrategia de referencia
@@ -127,14 +132,53 @@ Completa el 100 % de validación y prueba en las tres etapas.
 
 ## Entrenamiento
 
-`scripts/train.py` entrena DQN (`MlpPolicy`, red 256×256, CPU). Evalúa en los 150 escenarios de validación cada `eval_freq` pasos y guarda:
+`scripts/train.py` entrena DQN (`MlpPolicy`, red 256×256, CPU). Cada `eval_freq` pasos evalúa la política greedy en los 150 escenarios de validación y guarda:
 
-- `models/<corrida>/best_model.zip`: el de mejor retorno medio en validación.
-- `models/<corrida>/final_model.zip`.
-- `models/<corrida>/metadata.json`: configuración completa, versiones y duración.
-- `runs/<corrida>/`: registros de Monitor y `evaluations.npz`.
+- `models/<corrida>/best_model.zip`: el mejor en validación por **tasa de éxito** y, a igualdad, por **retorno de la tarea** (sin guía).
+- `models/<corrida>/final_model.zip`: el modelo al terminar.
+- `models/<corrida>/metadata.json`: configuración completa, modelo de partida, versiones, duración y resumen de la mejor evaluación.
+- `runs/<corrida>/`: registro de Monitor y `evaluations.npz`, con la curva de validación (`success_rate`, `task_return`, `damage`, `steps_success`).
 
-Los hiperparámetros iniciales no están ajustados.
+**No se elige por el retorno con guía.** Con γ < 1, la guía suma `(1 − γ) × trabajo pendiente` por cada paso de espera, así que el retorno sin descontar puede premiar quedarse quieto lejos del objetivo. Con el criterio antiguo, el "mejor modelo" de la etapa 3 tenía 0 % de éxito, aunque el entrenamiento llegó a pasar por puntos con 25 %.
+
+Opciones útiles:
+- `--set seccion.clave=valor` cambia valores sin editar archivos.
+- `--init-model ruta.zip` parte de los pesos de otro modelo, por ejemplo de la etapa anterior.
+- `--threads` limita los hilos de torch cuando se entrenan varias corridas a la vez.
+
+### Ajuste de hiperparámetros (etapa 1, 60.000 pasos, 60 escenarios de validación)
+
+| Variante | Cambios sobre los valores iniciales | Éxito |
+|---|---|---:|
+| Inicial | γ 0,99, guía 0,2, objetivo cada 2.000 pasos | 0 % |
+| V1 | objetivo cada 500 pasos | 5 % |
+| V2 | V1 + γ 0,95 + guía 1,0 | 81,7 % |
+| V3 | V2 + `train_freq` 1 + tasa de aprendizaje 2,5e-4 | 93,3 % |
+| V4 | V2 + exploración más larga + `learning_starts` 1.000 | 88,3 % |
+
+Quedan por defecto γ 0,95, guía 1,0, objetivo cada 500 pasos y `learning_starts` 1.000. V3 aprende mejor por paso, pero es unas 2,5 veces más lenta en tiempo de reloj y fue peor en corridas largas: 82 % frente a 90,7 % en la etapa 2.
+
+### Diagnóstico del primer entrenamiento (sin guía)
+
+La etapa 1 sin guía y sin penalizar choques (100.000 pasos) no aprendió. El éxito en validación llegó al 12,7 % a los 20.000 pasos y cayó a 0 % al final. La política se quedaba repitiendo una misma acción conjunta, chocaba con paredes en más de un robot por paso y agotaba el límite de pasos. Las causas probables eran una recompensa muy escasa (solo había premio al recoger o entregar), choques sin costo y una exploración que terminaba antes de encontrar rescates con frecuencia. Por eso se añadieron la guía por potencial y la penalización por choques.
+
+### Resultados en validación (día 3, semilla de entrenamiento 0)
+
+Todas las cifras son de los 150 escenarios de validación. La partición de prueba queda reservada para la evaluación final.
+
+| Etapa | Modelo | DQN: éxito | DQN: daño medio | Referencia: éxito / daño |
+|---|---|---:|---:|---:|
+| 1: una víctima, sin calor | `etapa1_s0` (100.000 pasos) | 98,7 % | 0 | 100 % / 0 |
+| 2: dos víctimas, sin calor | `etapa2_s0` (250.000 pasos) | 90,7 % | 0 | 100 % / 0 |
+| 3: con calor, desde cero | `etapa3_s0` (250.000 pasos) | 24,0 % | 27,8 | 100 % / 17,7 |
+| 3: con calor, partiendo de la etapa 2 | `etapa3_desde2_s0` (+250.000 pasos) | **84,7 %** | 23,1 | 100 % / 17,7 |
+
+Partir de la etapa 2 (`--init-model`, exploración inicial 0,3) es lo que hace aprender la etapa 3; la curva seguía subiendo al terminar. Aun así, **DQN todavía no supera a la referencia**:
+- En los 127 escenarios donde tiene éxito, recibe de media 3,0 puntos más de daño y tarda 3,7 pasos más.
+- Recibe menos daño en 14 escenarios, igual en 74 y más en 39.
+- De sus 23 fracasos, 8 son por robot destruido y 15 por límite de pasos.
+
+Interpretación: con γ = 0,95, cada paso de retraso cuesta aproximadamente un 5 % del premio pendiente, mientras que cada punto de daño solo cuesta 0,1. Al agente le conviene más cruzar el calor que rodearlo. El peso del daño (`reward.damage`) fija el equilibrio entre duración y daño que pide la pregunta del proyecto. Es una decisión del equipo que debe fijarse antes de la evaluación final.
 
 ## Evaluación
 
@@ -163,7 +207,8 @@ La velocidad solo cambia cuántos pasos se muestran por segundo; no altera el ti
 - El intercambio directo se bloquea también cuando involucra la base.
 - La observación usa capas one-hot del mapa en lugar de coordenadas, para que una red densa generalice entre planos.
 - Los valores de recompensa e hiperparámetros son iniciales. Deben fijarse y registrarse antes de comparar resultados.
-- Los choques no se penalizan por ahora (`blocked = 0`).
+- Los choques cuestan −0,1. Como el controlador es centralizado, elige las acciones de ambos robots y siempre puede evitarlos.
+- Se usa una guía por potencial con distancias que ignoran el calor. No sesga la política óptima; el calor se aprende por la penalización de daño.
 
 ## Ejemplo de uso
 

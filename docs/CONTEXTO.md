@@ -125,7 +125,7 @@ No afirmar generalización a edificios arbitrarios ni aprendizaje superior sin e
 - [x] Registrar exposición térmica para ambos robots por paso global.
 - [x] Implementar base ejecutable (ver [DISENO.md](DISENO.md)).
 - [ ] Verificar reglas y escenarios.
-- [ ] Entrenar y guardar una política.
+- [x] Entrenar y guardar una política (primera versión; aún no supera a la referencia, ver [DISENO.md](DISENO.md)).
 - [ ] Evaluar y preparar demostración.
 
-No existe aún evidencia experimental de que el agente aprenda o supere la referencia.
+Hay evidencia en validación de que el agente aprende las tres etapas (98,7 %, 90,7 % y 84,7 % de éxito), pero todavía no supera a la referencia en éxito, daño ni duración. No hay resultados en la partición de prueba.

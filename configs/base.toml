@@ -31,22 +31,25 @@ pickup = 2.0          # por recogida; cada víctima solo se recoge una vez
 delivery = 10.0       # por entrega en la base
 success = 20.0        # misión completa
 destruction = -20.0   # algún robot llega a integridad 0
-blocked = 0.0         # por choque con pared o bloqueo entre robots
+blocked = -0.1        # por choque con pared o bloqueo entre robots
+shaping = 1.0         # guía por potencial: γ·Φ(s') − Φ(s), Φ = −1 × trabajo pendiente
 
 [training]
 total_timesteps = 300000
 seed = 0
 device = "cpu"
+# Ajustados en la etapa 1 (docs/DISENO.md, "Ajuste de hiperparámetros").
 learning_rate = 0.0005
 buffer_size = 100000
-learning_starts = 5000
+learning_starts = 1000
 batch_size = 128
-gamma = 0.99
+gamma = 0.95
 train_freq = 4
 gradient_steps = 1
-target_update_interval = 2000
+target_update_interval = 500
 exploration_fraction = 0.3
 exploration_initial_eps = 1.0
 exploration_final_eps = 0.05
 net_arch = [256, 256]
 eval_freq = 10000
+threads = 0              # hilos de torch; 0 = valor por defecto

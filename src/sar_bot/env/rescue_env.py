@@ -22,6 +22,7 @@ from sar_bot.core.scenario import Scenario
 from sar_bot.env.observation import build_observation, heat_layer, observation_size
 from sar_bot.env.reward import compute_reward
 from sar_bot.env.sampling import ScenarioSampler, Split
+from sar_bot.env.shaping import DistanceCache, potential
 
 
 class RescueEnv(gym.Env):
@@ -45,7 +46,10 @@ class RescueEnv(gym.Env):
         self.sim: RescueSim | None = None
         self._heat: np.ndarray | None = None
         self._renderer = None
+        self._distances = DistanceCache()
+        self._potential = 0.0
         self.episode_return = 0.0
+        self.task_return = 0.0
 
     @property
     def split(self) -> str:
@@ -63,20 +67,33 @@ class RescueEnv(gym.Env):
         else:
             self.sim.reset(scenario)
         self._heat = heat_layer(scenario, self.config.rules)
+        self._potential = potential(self.sim, self._distances, self.config.reward.shaping)
         self.episode_return = 0.0
+        self.task_return = 0.0
         return self._observation(), self._info()
 
     def step(self, action):
         if self.sim is None:
             raise RuntimeError("llama a reset() antes de step()")
         result = self.sim.step_joint(int(action))
-        reward = compute_reward(result, self.config.reward)
+        task_reward = compute_reward(result, self.config.reward)
+        next_potential = potential(self.sim, self._distances, self.config.reward.shaping)
+        shaping = self.config.training.gamma * next_potential - self._potential
+        self._potential = next_potential
+        reward = task_reward + shaping
+        self.task_return += task_reward
         self.episode_return += reward
         info = self._info()
         info["step_result"] = result
+        info["reward_task"] = task_reward
+        info["reward_shaping"] = shaping
         if result.done:
             info["is_success"] = result.outcome is Outcome.SUCCESS
-            info["metrics"] = {**self.sim.episode_metrics(), "return": self.episode_return}
+            info["metrics"] = {
+                **self.sim.episode_metrics(),
+                "return": self.episode_return,
+                "task_return": self.task_return,
+            }
         return self._observation(), reward, result.terminated, result.truncated, info
 
     def _observation(self) -> np.ndarray:

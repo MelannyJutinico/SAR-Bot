@@ -60,7 +60,9 @@ class RewardConfig:
     delivery: float = 10.0
     success: float = 20.0
     destruction: float = -20.0
-    blocked: float = 0.0
+    blocked: float = -0.1
+    shaping: float = 1.0
+    """Coeficiente de la guía por potencial (0 la desactiva); ver env/shaping.py."""
 
 
 @dataclass(frozen=True)
@@ -70,17 +72,19 @@ class TrainingConfig:
     device: str = "cpu"
     learning_rate: float = 5e-4
     buffer_size: int = 100_000
-    learning_starts: int = 5_000
+    learning_starts: int = 1_000
     batch_size: int = 128
-    gamma: float = 0.99
+    gamma: float = 0.95
     train_freq: int = 4
     gradient_steps: int = 1
-    target_update_interval: int = 2_000
+    target_update_interval: int = 500
     exploration_fraction: float = 0.3
     exploration_initial_eps: float = 1.0
     exploration_final_eps: float = 0.05
     net_arch: tuple[int, ...] = (256, 256)
     eval_freq: int = 10_000
+    threads: int = 0
+    """Hilos de torch; 0 usa el valor por defecto. Útil al entrenar varias corridas a la vez."""
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "net_arch", tuple(int(n) for n in self.net_arch))
@@ -125,10 +129,29 @@ def _read_toml(path: Path, chain: tuple[Path, ...] = ()) -> dict[str, dict[str, 
     return merged
 
 
-def load_config(path: str | Path | None = None) -> ProjectConfig:
-    """Carga una configuración; sin ruta usa ``configs/base.toml``."""
+def _parse_override(item: str) -> tuple[str, str, Any]:
+    """``"training.gamma=0.95"`` → ``("training", "gamma", 0.95)``; el valor se lee como TOML."""
+    key, sep, value = item.partition("=")
+    section, dot, name = key.strip().partition(".")
+    if not sep or not dot or not name:
+        raise ValueError(f"cambio inválido {item!r}; formato: seccion.clave=valor")
+    try:
+        parsed = tomllib.loads(f"v = {value.strip()}")["v"]
+    except tomllib.TOMLDecodeError:
+        parsed = value.strip()
+    return section, name, parsed
+
+
+def load_config(path: str | Path | None = None, overrides: list[str] | None = None) -> ProjectConfig:
+    """Carga una configuración; sin ruta usa ``configs/base.toml``.
+
+    ``overrides`` aplica cambios puntuales como ``["training.gamma=0.95"]``.
+    """
     path = Path(path) if path is not None else DEFAULT_CONFIG
     raw = _read_toml(path)
+    for item in overrides or []:
+        section, name, value = _parse_override(item)
+        raw.setdefault(section, {})[name] = value
     unknown_sections = set(raw) - set(_SECTIONS)
     if unknown_sections:
         raise ValueError(f"{path.name}: secciones desconocidas {sorted(unknown_sections)}")

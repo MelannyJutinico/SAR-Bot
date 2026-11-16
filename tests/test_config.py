@@ -29,6 +29,17 @@ def test_claves_desconocidas_producen_error(tmp_path):
         load_config(bad)
 
 
+def test_cambios_puntuales_por_linea_de_comandos():
+    config = load_config(overrides=["training.gamma=0.9", "reward.shaping=0", "training.net_arch=[64, 64]"])
+    assert config.training.gamma == 0.9
+    assert config.reward.shaping == 0
+    assert config.training.net_arch == (64, 64)
+    with pytest.raises(ValueError):
+        load_config(overrides=["gamma=0.9"])
+    with pytest.raises(ValueError, match="gama"):
+        load_config(overrides=["training.gama=0.9"])
+
+
 def test_semillas_de_validacion_y_prueba_no_se_solapan(tmp_path):
     bad = tmp_path / "solape.toml"
     bad.write_text("[scenarios]\nvalidation_seeds = [0, 10]\ntest_seeds = [5, 20]\n", encoding="utf-8")

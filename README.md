@@ -66,20 +66,26 @@ Evaluar estrategias en validación y exportar un CSV a `outputs/`:
 python scripts/evaluate.py --strategy referencia aleatoria
 ```
 
-Entrenar DQN por etapas (`configs/una_victima.toml`, `configs/sin_calor.toml`, `configs/base.toml`). El modelo se guarda en `models/<corrida>/`:
+Entrenar DQN por etapas. Primero dos víctimas sin calor; el modelo se guarda en `models/<corrida>/` (unos 15 minutos):
 
 ```bash
-python scripts/train.py --config configs/sin_calor.toml --timesteps 200000
+python scripts/train.py --config configs/sin_calor.toml --timesteps 250000 --name etapa2_s0
+```
+
+Después la etapa con calor, partiendo del modelo anterior (sin ese punto de partida no aprende bien):
+
+```bash
+python scripts/train.py --config configs/base.toml --timesteps 250000 --init-model models/etapa2_s0/final_model.zip --set training.exploration_initial_eps=0.3 --name etapa3_desde2_s0
 ```
 
 Comparar el modelo con la referencia y verlo en acción:
 
 ```bash
-python scripts/evaluate.py --config configs/sin_calor.toml --strategy referencia dqn --model models/sin_calor_s0/best_model.zip
+python scripts/evaluate.py --strategy referencia dqn --model models/etapa3_desde2_s0/best_model.zip
 ```
 
 ```bash
-python scripts/play.py --config configs/sin_calor.toml --strategy dqn --model models/sin_calor_s0/best_model.zip
+python scripts/play.py --strategy dqn --model models/etapa3_desde2_s0/best_model.zip
 ```
 
 Los detalles de observación, recompensa, particiones y referencia están en [docs/DISENO.md](docs/DISENO.md). Los cambios se trabajan en ramas `feature/…` y se integran sobre una versión ejecutable común.

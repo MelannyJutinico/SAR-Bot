@@ -68,6 +68,8 @@ def summarize(rows: Iterable[dict[str, object]]) -> dict[str, object]:
         "steps_mean_success": _mean([float(r["steps"]) for r in successes]),
         "damage_total_mean_success": _mean([float(r["damage_total"]) for r in successes]),
         "return_mean": _mean([float(r["return"]) for r in rows]),
+        # Sin la guía por potencial: comparable entre configuraciones de guía distintas.
+        "task_return_mean": _mean([float(r["task_return"]) for r in rows if "task_return" in r]),
     }
 
 
@@ -86,7 +88,7 @@ def format_summary(name: str, summary: dict[str, object]) -> str:
         f"daño={fmt(summary['damage_total_mean'])} "
         f"pasos(éxito)={fmt(summary['steps_mean_success'])} "
         f"daño(éxito)={fmt(summary['damage_total_mean_success'])} "
-        f"retorno={fmt(summary['return_mean'])}"
+        f"retorno_tarea={fmt(summary['task_return_mean'])}"
     )
 
 

@@ -73,19 +73,22 @@ def test_recompensa_y_metricas_de_una_mision_completa(config, train_env):
     obs, _ = train_env.reset(options={"scenario": _manual_scenario()})
     plan_0 = [R] * 5 + [L] * 5
     plan_1 = [D, D, R, R, L, L, U, U, W, W]
-    rewards, info, terminated, truncated = [], {}, False, False
+    rewards, task_rewards, info, terminated, truncated = [], [], {}, False, False
     for a0, a1 in zip(plan_0, plan_1):
         obs, reward, terminated, truncated, info = train_env.step(encode_joint(a0, a1))
         rewards.append(reward)
+        task_rewards.append(info["reward_task"])
+        assert reward == pytest.approx(info["reward_task"] + info["reward_shaping"])
     rw = config.reward
     expected = 10 * rw.step + 6 * rw.damage + 2 * rw.pickup + 2 * rw.delivery + rw.success
     assert terminated and not truncated
     assert info["is_success"] is True
-    assert sum(rewards) == pytest.approx(expected)
-    assert info["metrics"]["return"] == pytest.approx(expected)
+    assert sum(task_rewards) == pytest.approx(expected)
+    assert info["metrics"]["task_return"] == pytest.approx(expected)
+    assert info["metrics"]["return"] == pytest.approx(sum(rewards))
     assert info["metrics"]["damage_r0"] == 4.0 and info["metrics"]["damage_r1"] == 2.0
     # Paso 4: el robot 1 recoge en (2, 2) y ambos robots están en celdas a 55 °C (2 + 2 de daño).
-    assert rewards[3] == pytest.approx(rw.step + 4 * rw.damage + rw.pickup)
+    assert task_rewards[3] == pytest.approx(rw.step + 4 * rw.damage + rw.pickup)
 
 
 def test_componentes_de_recompensa(train_env):
@@ -105,7 +108,8 @@ def test_destruccion_termina_con_penalizacion(config, train_env):
     assert terminated and not truncated
     assert info["metrics"]["outcome"] == "robot_destruido"
     assert info["is_success"] is False
-    assert reward == pytest.approx(config.reward.step + 2 * config.reward.damage + config.reward.destruction)
+    rw = config.reward
+    assert info["reward_task"] == pytest.approx(rw.step + 2 * rw.damage + rw.destruction)
 
 
 def test_limite_de_pasos_trunca(train_env):
