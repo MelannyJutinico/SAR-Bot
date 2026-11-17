@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from sar_bot.core import Action as A, RescueSimulation, Scenario
+from sar_bot.agents import create_policy
+from sar_bot.evaluation import evaluate_episode
 
 
 class ScenarioV2Tests(unittest.TestCase):
@@ -52,6 +54,9 @@ class ScenarioV2Tests(unittest.TestCase):
             self.assertEqual(Scenario.load(path), scenario)
             with self.assertRaises(FileExistsError):
                 scenario.save(path)
+            changed = replace(scenario, name="sobrescrito")
+            changed.save(path, overwrite=True)
+            self.assertEqual(Scenario.load(path), changed)
 
     def test_custom_positions_do_not_mutate_template(self):
         scenario = self.scenario()
@@ -72,6 +77,69 @@ class ScenarioV2Tests(unittest.TestCase):
             data = {**scenario.to_dict(), **changes}
             with self.subTest(changes=changes), self.assertRaises(ValueError):
                 Scenario.from_dict(data)
+
+    def test_structural_validation_rejects_all_invalid_locations_and_types(self):
+        scenario = self.scenario()
+        invalid = (
+            dict(width=0), dict(height=0), dict(max_steps=0), dict(max_steps=-1),
+            dict(base=(10, 0)), dict(base=(4, 0)), dict(base=(True, 0)),
+            dict(base=(0, False)),
+            dict(walls=frozenset({(10, 0)})), dict(walls=frozenset({(0, 0)})),
+            dict(victims=((10, 0), (1, 8), (8, 8))),
+            dict(victims=((4, 0), (1, 8), (8, 8))),
+            dict(victims=((0, 0), (1, 8), (8, 8))),
+            dict(victims=((8, 1), (8, 1), (8, 8))),
+            dict(victims=((8, 1), (1.0, 8), (8, 8))),
+            dict(temperatures=((25.0,) * 10,) * 9),
+            dict(temperatures=((25.0,) * 9,) * 10),
+            dict(temperatures=tuple(
+                tuple(float("nan") if (x, y) == (1, 1) else 25.0 for x in range(10))
+                for y in range(10)
+            )),
+            dict(temperatures=tuple(
+                tuple(float("inf") if (x, y) == (1, 1) else 25.0 for x in range(10))
+                for y in range(10)
+            )),
+            dict(temperatures=tuple(
+                tuple(float("-inf") if (x, y) == (1, 1) else 25.0 for x in range(10))
+                for y in range(10)
+            )),
+            dict(heat_sources=(replace(scenario.heat_sources[0], focus=(10, 0)),)),
+        )
+        for changes in invalid:
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                replace(scenario, **changes)
+
+    def test_incomplete_json_invalid_types_and_stale_configuration_are_rejected(self):
+        scenario = self.scenario()
+        cases = (
+            {"schema_version": 2},
+            {**scenario.to_dict(), "walls": None},
+            {**scenario.to_dict(), "configuration_id": "stale"},
+            {**scenario.to_dict(), "temperatures": None},
+        )
+        for data in cases:
+            with self.subTest(data=data), self.assertRaises(ValueError):
+                Scenario.from_dict(data)
+
+    def test_save_load_preserves_deterministic_episode_result(self):
+        scenario = self.scenario()
+
+        def run(value):
+            simulation = RescueSimulation(value)
+            return evaluate_episode(simulation, create_policy(simulation, "thermal"), "thermal")
+
+        before = run(scenario)
+        directory = ROOT / "tmp/tests"
+        directory.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=directory) as temporary:
+            path = Path(temporary) / "functional-round-trip.json"
+            scenario.save(path)
+            loaded = Scenario.load(path)
+            after = run(loaded)
+        self.assertEqual(loaded, scenario)
+        self.assertEqual(loaded.to_dict(), scenario.to_dict())
+        self.assertEqual(after, before)
 
     def test_legacy_heat_files_keep_their_values(self):
         scenario = Scenario.load(ROOT / "scenarios/demo.json")

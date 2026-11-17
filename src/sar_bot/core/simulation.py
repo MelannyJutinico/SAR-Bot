@@ -84,18 +84,25 @@ class Scenario:
         if any(type(v) is not int or v < 1 for v in (self.width, self.height, self.max_steps)):
             raise ValueError("Dimensiones y límite de pasos deben ser positivos")
         object.__setattr__(self, "base", _position(self.base, "Base"))
-        object.__setattr__(self, "victims", tuple(_position(p, "Persona") for p in self.victims))
-        object.__setattr__(self, "walls", frozenset(_position(p, "Obstáculo") for p in self.walls))
-        object.__setattr__(self, "heat_sources", tuple(self.heat_sources))
+        try:
+            victims = tuple(_position(p, "Persona") for p in self.victims)
+            walls = frozenset(_position(p, "Obstáculo") for p in self.walls)
+            heat_sources = tuple(self.heat_sources)
+            temperatures = tuple(tuple(row) for row in self.temperatures)
+        except TypeError as error:
+            raise ValueError("Personas, obstáculos, temperaturas y focos deben ser colecciones") from error
+        object.__setattr__(self, "victims", victims)
+        object.__setattr__(self, "walls", walls)
+        object.__setattr__(self, "heat_sources", heat_sources)
         object.__setattr__(self, "ambient_temperature", _number(self.ambient_temperature, "Ambiente"))
         if not self.victims or len(set(self.victims)) != len(self.victims):
             raise ValueError("Se requiere al menos una persona y posiciones distintas")
-        if len(self.temperatures) != self.height or any(
-            len(row) != self.width for row in self.temperatures
+        if len(temperatures) != self.height or any(
+            len(row) != self.width for row in temperatures
         ):
             raise ValueError("La matriz térmica debe coincidir con el mapa")
         object.__setattr__(self, "temperatures", tuple(
-            tuple(_number(t, "Temperatura") for t in row) for row in self.temperatures))
+            tuple(_number(t, "Temperatura") for t in row) for row in temperatures))
         if any(not self.in_bounds(p) for p in (self.base, *self.victims, *self.walls)):
             raise ValueError("Hay posiciones fuera del mapa")
         if self.base in self.walls or any(v in self.walls for v in self.victims):

@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "name": "desvio_termico_12x12",
+  "width": 12,
+  "height": 12,
+  "base": [1, 6],
+  "victims": [[10, 5], [10, 9], [10, 1]],
+  "walls": [
+    [4, 0], [4, 1], [4, 3], [4, 4], [4, 5], [4, 7], [4, 8], [4, 9], [4, 11],
+    [8, 0], [8, 1], [8, 3], [8, 4], [8, 5], [8, 7], [8, 8], [8, 9], [8, 11]
+  ],
+  "heat": {
+    "ambient": 25,
+    "combine": "max",
+    "sources": [
+      {"focus": [6, 6], "peak": 90, "falloff": 18},
+      {"focus": [9, 6], "peak": 86, "falloff": 18}
+    ]
+  },
+  "max_steps": 300
+}

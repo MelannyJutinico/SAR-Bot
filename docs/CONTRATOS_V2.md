@@ -41,7 +41,17 @@ La firma física ignora nombre y orden de etiquetas de personas para detectar du
 
 Para invalidar episodios pendientes, usar **`configuration_id` junto con una generación de preparación**, no solo la firma física: intercambiar etiquetas mantiene el mismo caso físico, pero cambia el orden observado por DQN. Ambos identificadores se exportan y validan por separado.
 
-**Validez estructural no garantiza rescate térmicamente viable.** La certificación con trayectoria testigo, los casos no certificados y sus mensajes siguen asignados a persona 2. No validar posiciones usando el éxito de DQN.
+**Validez estructural no garantiza rescate térmicamente viable.** `certify_viability()` devuelve uno de tres estados explícitos: `structural_invalid`, `certified` o `not_certified`. Un resultado certificado incluye la estrategia, las acciones conjuntas, ambos identificadores, pasos, rescates, daño e integridades finales. `replay_certificate()` vuelve a ejecutar esas acciones mediante `RescueSimulation` y comprueba las métricas. `not_certified` solo indica que las referencias no encontraron un testigo dentro del presupuesto; no demuestra imposibilidad. DQN no participa en esta certificación.
+
+El certificador acepta un `Scenario` ya validado, un diccionario todavía no validado o una ruta JSON. Así la UI futura puede obtener `structural_invalid` desde datos de usuario sin duplicar las reglas de `Scenario`. El orden determinista predeterminado es `thermal` y después `shortest`; se detiene al encontrar el primer certificado. `action_budget` limita el total de acciones reales ejecutadas entre todos los intentos: cero ejecuta ninguna, los valores negativos o no enteros se rechazan y el agotamiento devuelve `not_certified`. Si se omite, el límite es `max_steps × número de estrategias`.
+
+```python
+from sar_bot.core import certify_viability, replay_certificate
+
+result = certify_viability(custom, action_budget=500)
+if result.certificate is not None:
+    final_state = replay_certificate(custom, result.certificate)
+```
 
 ## 2. Varios focos de calor
 
