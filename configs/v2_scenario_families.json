@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "purpose": "development_examples_not_experimental_partitions",
+  "families": {
+    "easy": "Tres personas cercanas, baja exposición y recorridos cortos desde la base.",
+    "intermediate": "Personas en más de un sector, cruces por puertas y distancias medias.",
+    "demanding": "Tres sectores o destinos lejanos, segundo viaje largo, corredores compartidos o exposición relevante."
+  },
+  "buildings": [
+    {
+      "template": "scenarios/v2/coordination_hub_12x12.json",
+      "examples": {
+        "easy": [[2, 1], [1, 2], [3, 2]],
+        "intermediate": [[10, 1], [1, 10], [6, 5]],
+        "demanding": [[10, 1], [1, 10], [10, 10]]
+      }
+    },
+    {
+      "template": "scenarios/v2/thermal_detour_12x12.json",
+      "examples": {
+        "easy": [[2, 5], [2, 7], [3, 6]],
+        "intermediate": [[6, 1], [6, 4], [6, 9]],
+        "demanding": [[10, 5], [10, 9], [10, 1]]
+      }
+    }
+  ]
+}

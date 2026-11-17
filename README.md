@@ -30,6 +30,7 @@ Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, eva
 - [Guía para los cuatro integrantes](README_EQUIPO.md)
 - [Backlog con responsables, dependencias y criterios de aceptación](BACKLOG.md)
 - [Contratos y punto de partida V2](docs/CONTRATOS_V2.md)
+- [Edificios 12 × 12, calibración y generación reproducible](docs/ESCENARIOS_V2.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
