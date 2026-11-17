@@ -160,7 +160,7 @@ Las particiones para el aprendizaje están en `configs/scenario_splits.json`. La
 
 `RescueSimulation.step(acción_conjunta)` avanza una unidad de tiempo para ambos robots. `snapshot()` expone datos JSON, y `reset()` reinicia el escenario estático. La acción conjunta es `5 * acción_robot_1 + acción_robot_2`, con acciones `UP=0`, `DOWN=1`, `LEFT=2`, `RIGHT=3`, `WAIT=4`.
 
-La validación actual comprueba estructura y conectividad del mapa. La misión del escenario de demostración se verifica con una trayectoria completa. Todavía no existe un validador general de viabilidad térmica y coordinación para escenarios arbitrarios.
+La validación comprueba estructura y conectividad del mapa. La comprobación acotada de viabilidad distingue entradas estructuralmente inválidas, casos certificados mediante una trayectoria real de `RescueSimulation` y casos no certificados dentro del presupuesto. Un fallo de las referencias no se presenta como prueba de imposibilidad y DQN no se usa para certificar.
 
 ### Próximo hito
 
