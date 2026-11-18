@@ -34,6 +34,11 @@ def main():
                     asynchronous=not args.headless)
     if args.headless:
         try:
+            if app.playback is None:
+                print(json.dumps({"error": app.error or "No hay un episodio preparado",
+                                  "scenario_id": app.scenario.scenario_id,
+                                  "configuration_id": app.scenario.configuration_id}), file=sys.stderr)
+                return 2
             for _ in range(args.steps):
                 app.playback.step()
             surface = app.render()
@@ -50,4 +55,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
