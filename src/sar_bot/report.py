@@ -438,7 +438,8 @@ def _context(episodes) -> str:
     first = episodes[0]
     parts = [PARTITION_NAMES.get(first.partition, first.partition)]
     if first.manifest_id:
-        parts.append(f"manifiesto {first.manifest_id}")
+        kind = "manifiesto" if first.partition in ("training", "validation", "test") else "conjunto"
+        parts.append(f"{kind} {first.manifest_id}")
     parts.append(f"perfil {first.width} × {first.height} con {first.victims} personas")
     parts.append(f"{len({e.configuration_id for e in episodes})} casos distintos")
     parts.append(f"{len(episodes)} episodios")

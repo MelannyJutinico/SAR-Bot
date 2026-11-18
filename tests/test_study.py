@@ -160,5 +160,47 @@ class StudyTablesTests(unittest.TestCase):
         self.assertTrue(counts)
 
 
+
+class CommittedStudyEvidenceTests(unittest.TestCase):
+    RECORD = ROOT / "configs/development/v2_10x10_dev.json"
+
+    def test_development_set_is_intact_and_balanced(self):
+        self.assertEqual(verify_development_set(self.RECORD, ROOT), [])
+        record = json.loads(self.RECORD.read_text(encoding="utf-8"))
+        self.assertEqual(record["purpose"], DEVELOPMENT_PURPOSE)
+        self.assertEqual(Counter(e["difficulty"] for e in record["entries"]),
+                         {"easy": 10, "intermediate": 10, "demanding": 10})
+        partitions = json.loads((ROOT / "configs/partitions/v2_12x12.json").read_text(
+            encoding="utf-8"))
+        frozen = {e["scenario_id"] for e in partitions["entries"]}
+        self.assertFalse(frozen & {e["scenario_id"] for e in record["entries"]})
+
+    def test_study_and_figures_match_their_sources(self):
+        from sar_bot.report import check_report
+
+        self.assertEqual(check_study(ROOT / "results/sarb031/estudio", ROOT), [])
+        for folder in ("figuras_10x10_desarrollo", "figuras_12x12_entrenamiento"):
+            with self.subTest(folder=folder):
+                self.assertEqual(check_report(ROOT / "results/sarb031" / folder, ROOT), [])
+
+    def test_study_never_reads_the_test_partition(self):
+        sources = json.loads((ROOT / "results/sarb031/estudio/fuentes.json").read_text(
+            encoding="utf-8"))
+        for source in sources["results"]:
+            with self.subTest(csv=source["path"]):
+                rows = read_results(ROOT / source["path"])
+                self.assertNotIn("test", {row["partition"] for row in rows})
+                profiles = {(row["width"], row["height"], row["victims_total"]) for row in rows}
+                self.assertEqual(len(profiles), 1)
+
+    def test_dqn_rows_use_models_of_their_own_profile(self):
+        expected = {"sensors_dqn": ("6", "6", "2"), "v2_pilot": ("10", "10", "3")}
+        for name in ("v2_6x6_desarrollo.csv", "v2_10x10_desarrollo.csv"):
+            for row in read_results(ROOT / "results/sarb031" / name):
+                if row["strategy"] == "dqn":
+                    self.assertEqual((row["width"], row["height"], row["victims_total"]),
+                                     expected[row["model_label"]])
+
+
 if __name__ == "__main__":
     unittest.main()

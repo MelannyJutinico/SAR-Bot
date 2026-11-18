@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-18T17:34:44+00:00",
+  "command": "scripts/evaluate_experiment.py --scenarios scenarios/demo.json scenarios/pasillo_compartido.json scenarios/ruta_caliente.json scenarios/curriculum/warmup.json scenarios/curriculum/navigation.json scenarios/curriculum/handoff.json scenarios/validation/corridor_targets.json scenarios/validation/heat_shift.json --model artifacts/sensors_dqn/model.zip --output results/sarb031/v2_6x6_desarrollo.csv",
+  "git": {
+    "commit": "8ccb90b5a889cdc01aa50a0b26985807ff1d891e",
+    "dirty": false
+  },
+  "python": "3.11.9",
+  "packages": {
+    "gymnasium": "1.4.0",
+    "stable_baselines3": "2.9.2",
+    "torch": "2.15.0+cpu"
+  },
+  "partition": "development",
+  "manifest": null,
+  "development_set": null,
+  "profile": {
+    "width": 6,
+    "height": 6,
+    "victims": 2
+  },
+  "scenarios": {
+    "scenarios/demo.json": "4727b14840395e0e4f9db64f956b34d9ba74e84890c4a270e058a8fd962bf35e",
+    "scenarios/pasillo_compartido.json": "321cda8e3dbdbec575265e37ab65fb991025a49d516db03d97ebdf8508ab9617",
+    "scenarios/ruta_caliente.json": "a47b1c38d986812863a11d70f5b0eaf7e15129b01e04474968cb47a0d5990bed",
+    "scenarios/curriculum/warmup.json": "3f38b085e51abead0ce597d1c24df5514a50ba0a0bdc5ed3dafc1bb80cb6aef1",
+    "scenarios/curriculum/navigation.json": "ea335dd06701337453151ac20ec2f0706341e344f5d475920940b99c2368ab0a",
+    "scenarios/curriculum/handoff.json": "2678129dfe75a2052431d93b671d68ef711b2531090f649d46324d4f07eafa96",
+    "scenarios/validation/corridor_targets.json": "3202c55ad77a339bc11010f09806e9ecce10fa2f03cdfb8c5aabfd47340d60c6",
+    "scenarios/validation/heat_shift.json": "d25481e268d1953e45e21d6a5c4f1507c9cc23829a678cdab1f5a8c7d6b0cdf3"
+  },
+  "strategies": [
+    "dqn",
+    "shortest",
+    "thermal",
+    "random"
+  ],
+  "models": [
+    {
+      "label": "sensors_dqn",
+      "path": "artifacts/sensors_dqn/model.zip",
+      "sha256": "897538a81faadc8449e0d6045afe073638ca090e2072389b93a8dcab055bdff0",
+      "training_seed": 0,
+      "reward_config_sha256": "624ef888787a17dfa6a6b0956c581c7095ab1c07841f8780765b339fbce5b2f8"
+    }
+  ],
+  "random_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "thermal_damage_weight": 2.0,
+  "reward_config": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99,
+    "potential_bound": 0.0
+  },
+  "reward_config_sha256": "0073ca9ba48f80513ab0b26ff287e9425f6682531be42f3245b544b499bec639",
+  "reward_config_source": "model_metadata",
+  "episodes_per_case": {
+    "dqn": 1,
+    "shortest": 1,
+    "thermal": 1,
+    "random": 5
+  },
+  "notes": [
+    "Las referencias deterministas se ejecutan una vez por caso.",
+    "El retorno solo es comparable entre filas con el mismo reward_config_sha256.",
+    "compute_seconds mide cómputo en esta máquina; no es tiempo simulado."
+  ],
+  "columns": [
+    "episode_id",
+    "partition",
+    "manifest_id",
+    "scenario_path",
+    "scenario_name",
+    "building",
+    "difficulty",
+    "scenario_id",
+    "configuration_id",
+    "scenario_sha256",
+    "width",
+    "height",
+    "generation_seed",
+    "strategy",
+    "model_label",
+    "model_sha256",
+    "training_seed",
+    "random_seed",
+    "thermal_damage_weight",
+    "victims_total",
+    "rescued",
+    "success",
+    "outcome",
+    "steps",
+    "max_steps",
+    "damage_robot_1",
+    "damage_robot_2",
+    "damage_total",
+    "integrity_robot_1",
+    "integrity_robot_2",
+    "deliveries_robot_1",
+    "deliveries_robot_2",
+    "wait_actions",
+    "blocked_moves",
+    "planning_failures",
+    "replans",
+    "expanded_states",
+    "return",
+    "reward_config_sha256",
+    "actions_sha256",
+    "compute_seconds"
+  ],
+  "episodes": 64,
+  "configurations": 8,
+  "csv": "v2_6x6_desarrollo.csv",
+  "csv_sha256": "b193e5cb3534517341282546b0364523e0e94eb917478f7d318f259285b02110",
+  "traces": "v2_6x6_desarrollo.traces.jsonl",
+  "traces_sha256": "f06ead22da6a34dded9a2c90cd8c9c05ec2f1cc96c0c02eec75182710252d6c5"
+}
