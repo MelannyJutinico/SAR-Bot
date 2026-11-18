@@ -41,7 +41,7 @@ def git_revision():
     try:
         commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True,
                                 text=True, check=True).stdout.strip()
-        dirty = bool(subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
+        dirty = bool(subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=ROOT,
                                     capture_output=True, text=True, check=True).stdout.strip())
         return {"commit": commit, "dirty": dirty}
     except (OSError, subprocess.CalledProcessError):
@@ -53,7 +53,7 @@ def resolve_rewards(args, models):
 
     if args.rewards:
         data = json.loads(args.rewards.read_text(encoding="utf-8"))
-        return RewardConfig(**data.get("rewards", data)), str(args.rewards)
+        return RewardConfig(**data.get("rewards", data)), args.rewards.as_posix()
     configs = {canonical_sha256(m.reward_config): m.reward_config for m in models if m.reward_config}
     if len(configs) > 1:
         raise SystemExit("Los modelos usan recompensas distintas; indicar --rewards para "
