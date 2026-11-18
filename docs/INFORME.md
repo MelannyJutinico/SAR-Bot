@@ -139,7 +139,11 @@ Como antecedente de desarrollo, el piloto DQN de 10 × 10 resolvió su escenario
 
 ## 8. Discusión
 
-[PENDIENTE SARB-021 y SARB-023: interpretar los resultados finales de DQN frente a las referencias y analizar con trazas al menos un rescate eficiente, un caso térmico y un fallo real, sin atribuir intenciones a la política.]
+[PENDIENTE SARB-021: interpretar los resultados finales de DQN frente a las referencias y agregar los fallos reales de la prueba, analizados sin reajustar los modelos.]
+
+Las trazas de desarrollo ya muestran dos mecanismos de fallo distintos. En un caso del desvío térmico, la ruta corta cruza una y otra vez un corredor que llega a 90 °C; el daño se acumula viaje a viaje hasta destruir, en el paso 45, al robot que traía a la última persona. La ruta térmica resuelve el mismo caso en 66 pasos sin daño, y entrega a las dos primeras personas solo cuatro pasos más tarde. El fallo del piloto DQN es de otra naturaleza: en un caso fácil con posiciones nuevas entrega a las dos personas cercanas en dos pasos y luego ambos robots permanecen en la base sin lograr moverse durante 238 pasos, mientras la tercera persona espera a tres celdas. Las trazas registran lo que ocurre, pero no explican por qué la red elige esas acciones.
+
+Fuente: `results/sarb023/trazas.md` y `docs/ANALISIS_FALLOS.md`.
 
 La validez de las conclusiones tiene límites que deben declararse. Los casos experimentales se aceptaron porque una referencia los resolvió, así que su tasa de éxito no describe cualquier ubicación transitable. Los dos edificios de 12 × 12 se usan en las tres particiones; lo que se mide es la generalización a ubicaciones nuevas dentro de edificios conocidos, no a edificios nuevos. El controlador conoce el mapa completo y los sensores se calculan con él. La exposición térmica es una regla de juego y no un modelo físico de un incendio. El traslado de personas es abstracto, y el control centralizado no representa a dos robots que se comunican con límites.
 

@@ -37,6 +37,7 @@ Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, eva
 - [Estudio de escala, reparto de rescates y dificultad](docs/ESTUDIO_ESCALA.md)
 - [Alcance y protocolo de entrega (borrador para el profesor)](docs/ALCANCE.md)
 - [Ejecución de la base en los cuatro equipos](docs/INSTALACION_EQUIPOS.md)
+- [Fallos y límites observados en trazas](docs/ANALISIS_FALLOS.md)
 - [Guion y respaldo de la demostración](docs/DEMO.md)
 - [Informe técnico (borrador)](docs/INFORME.md)
 
@@ -169,6 +170,8 @@ Las particiones experimentales del perfil 12 × 12 están congeladas en `configs
 | `scripts/evaluate_experiment.py` | Comparación unificada de DQN y referencias, con trazas verificables |
 | `scripts/report_figures.py` | Tablas y figuras SVG del informe desde un CSV conservado, con `--check` |
 | `scripts/scale_study.py` | Conjuntos de desarrollo generados y tablas de escala y dificultad |
+| `scripts/trace_story.py` | Descripción observable de episodios a partir de sus trazas |
+| `src/sar_bot/final_check.py` | Comprobación de modelos congelados antes de abrir la prueba final |
 | `configs/development/v2_10x10_dev.json` | Conjunto de desarrollo 10 × 10 con posiciones variables (no es partición) |
 | `artifacts/sensors_dqn/` | Modelo recomendado y comprobaciones de las tres particiones |
 | `scripts/ui.py` | Ventana interactiva y capturas sin ventana |
