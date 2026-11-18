@@ -11,7 +11,7 @@ Este documento describe cómo se comparan DQN y las tres referencias sobre los m
 - **Sin interfaz.** La evaluación no usa Pygame ni el reloj visual. La velocidad de reproducción no interviene en ninguna métrica.
 - **Métricas desde la traza.** Todas las métricas de resultado se calculan a partir de la secuencia de estados del motor. Las acciones de cada episodio se guardan, y `--verify` las reproduce en un motor nuevo y compara fila por fila.
 - **Un solo perfil por evaluación.** No se mezclan edificios de tamaños o cantidades de personas distintos, y un modelo incompatible con el perfil se rechaza antes de ejecutar.
-- **Prueba protegida.** La partición `test` solo se abre con `--final`, sin `--limit`, y debe hacerse con los modelos congelados de SARB-019.
+- **Prueba protegida.** La partición `test` solo se abre con `--final`, sin `--limit`, y con los modelos congelados de SARB-019. Antes de leer un solo caso de prueba, `sar_bot.final_check` exige al menos tres semillas distintas del perfil del manifiesto. También comprueba que ninguna etapa de entrenamiento usó validación o prueba, que el checkpoint se eligió solo con validación, que los escenarios de entrenamiento no cambiaron y que la prueba no se evaluó antes con esos modelos. Si algo falla, el evaluador se detiene sin escribir resultados.
 
 ## 2. Tres semillas que no se mezclan
 

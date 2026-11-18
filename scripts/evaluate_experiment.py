@@ -38,6 +38,7 @@ from sar_bot.experiment import (  # noqa: E402
     verify_results,
     write_results,
 )
+from sar_bot.final_check import check_final_models  # noqa: E402
 from sar_bot.partitions import canonical_sha256, file_sha256  # noqa: E402
 
 
@@ -119,6 +120,13 @@ def main():
             parser.error("La prueba final requiere --final y modelos congelados (SARB-019/021)")
         if args.split == "test" and args.limit:
             parser.error("La prueba final no admite --limit: se evalúan todos los casos")
+        if args.split == "test":
+            # Antes de leer un solo caso de prueba: modelos congelados y protocolo.
+            problems = check_final_models(args.manifest, args.model, ROOT)
+            if problems:
+                print("No se abre la prueba final; los modelos no cumplen el protocolo:")
+                print("\n".join(f"- {p}" for p in problems))
+                sys.exit(2)
         cases = cases_from_manifest(args.manifest, args.split, ROOT,
                                     allow_test=args.split == "test")
     elif args.scenarios:
@@ -167,6 +175,7 @@ def main():
                     "training_seed": m.training_seed,
                     "reward_config_sha256": (canonical_sha256(m.reward_config)
                                              if m.reward_config else None)} for m in models],
+        "final_check": "superada" if args.split == "test" else None,
         "random_seeds": args.random_seeds if "random" in strategies else [],
         "thermal_damage_weight": args.thermal_damage_weight,
         "reward_config": vars(rewards),
