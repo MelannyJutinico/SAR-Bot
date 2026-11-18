@@ -37,6 +37,8 @@ Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, eva
 - [Estudio de escala, reparto de rescates y dificultad](docs/ESTUDIO_ESCALA.md)
 - [Alcance y protocolo de entrega (borrador para el profesor)](docs/ALCANCE.md)
 - [Ejecución de la base en los cuatro equipos](docs/INSTALACION_EQUIPOS.md)
+- [Guion y respaldo de la demostración](docs/DEMO.md)
+- [Informe técnico (borrador)](docs/INFORME.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
