@@ -33,6 +33,7 @@ Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, eva
 - [Edificios 12 × 12, calibración y generación reproducible](docs/ESCENARIOS_V2.md)
 - [Particiones experimentales congeladas del perfil 12 × 12](docs/PARTICIONES_V2.md)
 - [Comparación unificada y diccionario de métricas](docs/METRICAS.md)
+- [Tablas y figuras del informe generadas desde los resultados](docs/FIGURAS.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
@@ -161,6 +162,7 @@ Las particiones experimentales del perfil 12 × 12 están congeladas en `configs
 | `configs/partitions/v2_12x12.json` | Particiones congeladas del perfil 12 × 12, con hashes y testigos |
 | `scripts/build_partitions.py` | Construcción, verificación y resumen de particiones |
 | `scripts/evaluate_experiment.py` | Comparación unificada de DQN y referencias, con trazas verificables |
+| `scripts/report_figures.py` | Tablas y figuras SVG del informe desde un CSV conservado, con `--check` |
 | `artifacts/sensors_dqn/` | Modelo recomendado y comprobaciones de las tres particiones |
 | `scripts/ui.py` | Ventana interactiva y capturas sin ventana |
 | `src/sar_bot/ui/app.py` | Presentación y controles Pygame |

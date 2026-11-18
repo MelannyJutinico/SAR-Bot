@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="477" viewBox="0 0 900 477" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Duración frente a daño en misiones exitosas</title>
+<desc id="descripcion">Pasos y daño de cada misión exitosa; las líneas unen el mismo caso entre las dos referencias deterministas.</desc>
+<rect width="900" height="477" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Duración frente a daño en misiones exitosas</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Validación · manifiesto v2_12x12_v1 · perfil 12 × 12 con 3 personas · 20 casos distintos · 140 episodios</text>
+<text x="24" y="69" font-size="12" fill="#52514e">La línea gris une el mismo caso resuelto por ruta corta y por ruta térmica: muestra cuántos pasos cuesta reducir el daño. En</text>
+<text x="24" y="86" font-size="12" fill="#52514e">los casos idénticos (mismos pasos y daño) los dos puntos se superponen.</text>
+<circle cx="29" cy="109" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="42" y="113" font-size="11" fill="#52514e">Ruta corta</text>
+<circle cx="126.6" cy="109" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<text x="139.6" y="113" font-size="11" fill="#52514e">Ruta térmica</text>
+<line x1="231.52" y1="109" x2="243.52" y2="109" stroke="#898781" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.8"/>
+<text x="249.52" y="113" font-size="11" fill="#52514e">Mismo caso: ruta corta → ruta térmica</text>
+<text x="24" y="145" font-size="12" fill="#0b0b0b" font-weight="600">Centro de coordinación (hub)</text>
+<text x="24" y="161" font-size="11" fill="#52514e">10 de 10 casos con éxito en ambas · 4 idénticos</text>
+<text x="24" y="176" font-size="11" fill="#52514e">Medias: 40,2 → 43,7 pasos · 30,5 → 18,8 de daño</text>
+<line x1="64" y1="201" x2="64" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="64" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="155.5" y1="201" x2="155.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="155.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">20</text>
+<line x1="247" y1="201" x2="247" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="247" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">40</text>
+<line x1="338.5" y1="201" x2="338.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="338.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">60</text>
+<line x1="430" y1="201" x2="430" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="430" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">80</text>
+<line x1="64" y1="421" x2="430" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="425" font-size="11" fill="#898781" text-anchor="end" class="tick">0</text>
+<line x1="64" y1="366" x2="430" y2="366" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="370" font-size="11" fill="#898781" text-anchor="end" class="tick">50</text>
+<line x1="64" y1="311" x2="430" y2="311" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="315" font-size="11" fill="#898781" text-anchor="end" class="tick">100</text>
+<line x1="64" y1="256" x2="430" y2="256" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="260" font-size="11" fill="#898781" text-anchor="end" class="tick">150</text>
+<line x1="64" y1="201" x2="430" y2="201" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="205" font-size="11" fill="#898781" text-anchor="end" class="tick">200</text>
+<text x="64" y="195" font-size="11" fill="#52514e">Daño térmico total</text>
+<text x="247" y="453" font-size="11" fill="#52514e" text-anchor="middle">Pasos hasta terminar</text>
+<line x1="146.35" y1="407.8" x2="146.35" y2="407.8" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="c0b793a5702b7749d58ef227e4cea83653192c393b63232415e700fc12f27a83"><title>hub_validation_01_easy: 18 → 18 pasos, 12 → 12 de daño</title></line>
+<line x1="146.35" y1="421" x2="146.35" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="a1fa5666dbc34ea35c88a6c7902d13122c590f069b96159a4528782958ef9a35"><title>hub_validation_02_easy: 18 → 18 pasos, 0 → 0 de daño</title></line>
+<line x1="146.35" y1="421" x2="146.35" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="5198ffd5ca9cf9180f2831fc6938ab6f1deebdd64fc208474b71e820a0193755"><title>hub_validation_03_easy: 18 → 18 pasos, 0 → 0 de daño</title></line>
+<line x1="146.35" y1="418.8" x2="146.35" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="094e738aafa7eb30599f321324dcd3a37704c741cfd824c14208295bb7c66700"><title>hub_validation_04_easy: 18 → 18 pasos, 2 → 0 de daño</title></line>
+<line x1="237.85" y1="393.5" x2="256.15" y2="403.4" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="8ee1a8d9995a8253a5b9908e83a3946effb051e32b61b3265f2a75d342e0d96f"><title>hub_validation_05_intermediate: 38 → 42 pasos, 25 → 16 de daño</title></line>
+<line x1="329.35" y1="366" x2="384.25" y2="385.8" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="3d2497aa94991052e0d6373d2f3264974d0ac48d78a93798079428b885c9bf06"><title>hub_validation_06_intermediate: 58 → 70 pasos, 50 → 32 de daño</title></line>
+<line x1="279.02" y1="414.4" x2="279.02" y2="414.4" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="006e3e056297d00feb55f47ceba22a47c5704a62031e737eb8cea276d433c1e2"><title>hub_validation_07_intermediate: 47 → 47 pasos, 6 → 6 de daño</title></line>
+<line x1="375.1" y1="330.8" x2="430" y2="370.4" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="6b264ad8420ca0b589d9fee836c601b0fe1da0e1702bfc568c6eaee21dfbb59f"><title>hub_validation_08_demanding: 68 → 80 pasos, 82 → 46 de daño</title></line>
+<line x1="315.62" y1="341.8" x2="388.82" y2="383.6" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="aa53f760c732ddd8f4fd94c77b72dc352b57c4922658afd7d125bd5eb3dd4bd6"><title>hub_validation_09_demanding: 55 → 71 pasos, 72 → 34 de daño</title></line>
+<line x1="356.8" y1="359.4" x2="315.62" y2="374.8" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="hub" data-configuration="acf9060960f768e1bd234888c9fbeea7cb062dd31cf92b369a289133d66743ef"><title>hub_validation_10_demanding: 64 → 55 pasos, 56 → 42 de daño</title></line>
+<circle cx="146.35" cy="421" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="18" data-damage="0"><title>hub_validation_02_easy · Ruta corta: 18 pasos, 0 de daño</title></circle>
+<circle cx="146.35" cy="418.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="18" data-damage="2"><title>hub_validation_04_easy · Ruta corta: 18 pasos, 2 de daño</title></circle>
+<circle cx="375.1" cy="330.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="68" data-damage="82"><title>hub_validation_08_demanding · Ruta corta: 68 pasos, 82 de daño</title></circle>
+<circle cx="356.8" cy="359.4" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="64" data-damage="56"><title>hub_validation_10_demanding · Ruta corta: 64 pasos, 56 de daño</title></circle>
+<circle cx="146.35" cy="407.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="18" data-damage="12"><title>hub_validation_01_easy · Ruta corta: 18 pasos, 12 de daño</title></circle>
+<circle cx="279.02" cy="414.4" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="47" data-damage="6"><title>hub_validation_07_intermediate · Ruta corta: 47 pasos, 6 de daño</title></circle>
+<circle cx="146.35" cy="421" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="18" data-damage="0"><title>hub_validation_03_easy · Ruta corta: 18 pasos, 0 de daño</title></circle>
+<circle cx="237.85" cy="393.5" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="38" data-damage="25"><title>hub_validation_05_intermediate · Ruta corta: 38 pasos, 25 de daño</title></circle>
+<circle cx="329.35" cy="366" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="58" data-damage="50"><title>hub_validation_06_intermediate · Ruta corta: 58 pasos, 50 de daño</title></circle>
+<circle cx="315.62" cy="341.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="shortest" data-steps="55" data-damage="72"><title>hub_validation_09_demanding · Ruta corta: 55 pasos, 72 de daño</title></circle>
+<circle cx="315.62" cy="374.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="55" data-damage="42"><title>hub_validation_10_demanding · Ruta térmica: 55 pasos, 42 de daño</title></circle>
+<circle cx="146.35" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="18" data-damage="0"><title>hub_validation_02_easy · Ruta térmica: 18 pasos, 0 de daño</title></circle>
+<circle cx="256.15" cy="403.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="42" data-damage="16"><title>hub_validation_05_intermediate · Ruta térmica: 42 pasos, 16 de daño</title></circle>
+<circle cx="384.25" cy="385.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="70" data-damage="32"><title>hub_validation_06_intermediate · Ruta térmica: 70 pasos, 32 de daño</title></circle>
+<circle cx="146.35" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="18" data-damage="0"><title>hub_validation_04_easy · Ruta térmica: 18 pasos, 0 de daño</title></circle>
+<circle cx="388.82" cy="383.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="71" data-damage="34"><title>hub_validation_09_demanding · Ruta térmica: 71 pasos, 34 de daño</title></circle>
+<circle cx="430" cy="370.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="80" data-damage="46"><title>hub_validation_08_demanding · Ruta térmica: 80 pasos, 46 de daño</title></circle>
+<circle cx="279.02" cy="414.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="47" data-damage="6"><title>hub_validation_07_intermediate · Ruta térmica: 47 pasos, 6 de daño</title></circle>
+<circle cx="146.35" cy="407.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="18" data-damage="12"><title>hub_validation_01_easy · Ruta térmica: 18 pasos, 12 de daño</title></circle>
+<circle cx="146.35" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="hub" data-series="thermal" data-steps="18" data-damage="0"><title>hub_validation_03_easy · Ruta térmica: 18 pasos, 0 de daño</title></circle>
+<text x="462" y="145" font-size="12" fill="#0b0b0b" font-weight="600">Desvío térmico (detour)</text>
+<text x="462" y="161" font-size="11" fill="#52514e">7 de 10 casos con éxito en ambas · 4 idénticos</text>
+<text x="462" y="176" font-size="11" fill="#52514e">Medias: 27,1 → 30,0 pasos · 48,7 → 1,6 de daño</text>
+<line x1="502" y1="201" x2="502" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="502" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="593.5" y1="201" x2="593.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="593.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">20</text>
+<line x1="685" y1="201" x2="685" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="685" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">40</text>
+<line x1="776.5" y1="201" x2="776.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="776.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">60</text>
+<line x1="868" y1="201" x2="868" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="868" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">80</text>
+<line x1="502" y1="421" x2="868" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="425" font-size="11" fill="#898781" text-anchor="end" class="tick">0</text>
+<line x1="502" y1="366" x2="868" y2="366" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="370" font-size="11" fill="#898781" text-anchor="end" class="tick">50</text>
+<line x1="502" y1="311" x2="868" y2="311" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="315" font-size="11" fill="#898781" text-anchor="end" class="tick">100</text>
+<line x1="502" y1="256" x2="868" y2="256" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="260" font-size="11" fill="#898781" text-anchor="end" class="tick">150</text>
+<line x1="502" y1="201" x2="868" y2="201" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="205" font-size="11" fill="#898781" text-anchor="end" class="tick">200</text>
+<text x="502" y="195" font-size="11" fill="#52514e">Daño térmico total</text>
+<text x="685" y="453" font-size="11" fill="#52514e" text-anchor="middle">Pasos hasta terminar</text>
+<line x1="584.35" y1="421" x2="584.35" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="detour" data-configuration="604fa24338b28f826e610e208680164074186ec5a453405094583738e35a2576"><title>detour_validation_01_easy: 18 → 18 pasos, 0 → 0 de daño</title></line>
+<line x1="575.2" y1="421" x2="575.2" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="detour" data-configuration="02a37d90347fc0b7bf18789fa0dfc0d832e45f885fd709c6a77a90a8f27681c5"><title>detour_validation_02_easy: 16 → 16 pasos, 0 → 0 de daño</title></line>
+<line x1="556.9" y1="421" x2="556.9" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="detour" data-configuration="7c518fe81ecdad5550830bc4247d9e2af7bb4f6a9f9c8a0317b0c361ad57dd94"><title>detour_validation_03_easy: 12 → 12 pasos, 0 → 0 de daño</title></line>
+<line x1="575.2" y1="421" x2="575.2" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="detour" data-configuration="d5f82fc1086eeff6b10e846d0b718e0a61b1f290dae3c20739f1a4bf02f62cbe"><title>detour_validation_04_easy: 16 → 16 pasos, 0 → 0 de daño</title></line>
+<line x1="721.6" y1="309.9" x2="758.2" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="detour" data-configuration="0f162ee7c7cd7029ce8d4703d24655f5a11b991c8d07a40dfac28cc639ac376c"><title>detour_validation_05_intermediate: 48 → 56 pasos, 101 → 0 de daño</title></line>
+<line x1="657.55" y1="350.6" x2="657.55" y2="408.9" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="detour" data-configuration="cd37d07fd38d7339dc755a130dee2fa74805f18f5050b820cce6a1cbd195c6eb"><title>detour_validation_06_intermediate: 34 → 34 pasos, 64 → 11 de daño</title></line>
+<line x1="712.45" y1="227.4" x2="767.35" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="detour" data-configuration="4032a1561a33bfd10a59799ba1150422863b7f608229724f46e6b30240cde296"><title>detour_validation_08_demanding: 46 → 58 pasos, 176 → 0 de daño</title></line>
+<circle cx="575.2" cy="421" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="shortest" data-steps="16" data-damage="0"><title>detour_validation_04_easy · Ruta corta: 16 pasos, 0 de daño</title></circle>
+<circle cx="575.2" cy="421" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="shortest" data-steps="16" data-damage="0"><title>detour_validation_02_easy · Ruta corta: 16 pasos, 0 de daño</title></circle>
+<circle cx="556.9" cy="421" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="shortest" data-steps="12" data-damage="0"><title>detour_validation_03_easy · Ruta corta: 12 pasos, 0 de daño</title></circle>
+<circle cx="712.45" cy="227.4" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="shortest" data-steps="46" data-damage="176"><title>detour_validation_08_demanding · Ruta corta: 46 pasos, 176 de daño</title></circle>
+<circle cx="584.35" cy="421" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="shortest" data-steps="18" data-damage="0"><title>detour_validation_01_easy · Ruta corta: 18 pasos, 0 de daño</title></circle>
+<circle cx="657.55" cy="350.6" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="shortest" data-steps="34" data-damage="64"><title>detour_validation_06_intermediate · Ruta corta: 34 pasos, 64 de daño</title></circle>
+<circle cx="721.6" cy="309.9" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="shortest" data-steps="48" data-damage="101"><title>detour_validation_05_intermediate · Ruta corta: 48 pasos, 101 de daño</title></circle>
+<circle cx="767.35" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="58" data-damage="0"><title>detour_validation_07_intermediate · Ruta térmica: 58 pasos, 0 de daño</title></circle>
+<circle cx="758.2" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="56" data-damage="0"><title>detour_validation_05_intermediate · Ruta térmica: 56 pasos, 0 de daño</title></circle>
+<circle cx="556.9" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="12" data-damage="0"><title>detour_validation_03_easy · Ruta térmica: 12 pasos, 0 de daño</title></circle>
+<circle cx="767.35" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="58" data-damage="0"><title>detour_validation_08_demanding · Ruta térmica: 58 pasos, 0 de daño</title></circle>
+<circle cx="575.2" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="16" data-damage="0"><title>detour_validation_04_easy · Ruta térmica: 16 pasos, 0 de daño</title></circle>
+<circle cx="575.2" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="16" data-damage="0"><title>detour_validation_02_easy · Ruta térmica: 16 pasos, 0 de daño</title></circle>
+<circle cx="758.2" cy="418.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="56" data-damage="2"><title>detour_validation_09_demanding · Ruta térmica: 56 pasos, 2 de daño</title></circle>
+<circle cx="657.55" cy="408.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="34" data-damage="11"><title>detour_validation_06_intermediate · Ruta térmica: 34 pasos, 11 de daño</title></circle>
+<circle cx="767.35" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="58" data-damage="0"><title>detour_validation_10_demanding · Ruta térmica: 58 pasos, 0 de daño</title></circle>
+<circle cx="584.35" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="detour" data-series="thermal" data-steps="18" data-damage="0"><title>detour_validation_01_easy · Ruta térmica: 18 pasos, 0 de daño</title></circle>
+</svg>
