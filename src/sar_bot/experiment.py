@@ -112,6 +112,23 @@ def cases_from_paths(paths, root: str | Path, partition: str = "development") ->
     return cases
 
 
+def cases_from_development_set(record_path: str | Path, root: str | Path) -> list[EvaluationCase]:
+    """Casos de un conjunto de desarrollo generado (SARB-031); nunca es la prueba final."""
+    from sar_bot.development import verify_development_set
+
+    root = Path(root)
+    problems = verify_development_set(record_path, root)
+    if problems:
+        raise ValueError("El conjunto de desarrollo no está íntegro: " + "; ".join(problems[:3]))
+    record = json.loads(Path(record_path).read_text(encoding="utf-8"))
+    seed = record["generation"]["seed"]
+    return [EvaluationCase(
+        scenario=Scenario.load(root / e["path"]), partition="development",
+        scenario_path=e["path"], scenario_sha256=e["sha256"], manifest_id=record["set_id"],
+        building=e["building"], difficulty=e["difficulty"], generation_seed=seed,
+    ) for e in record["entries"]]
+
+
 def load_model(path: str | Path, label: str | None = None,
                metadata_path: str | Path | None = None) -> LoadedModel:
     from stable_baselines3 import DQN

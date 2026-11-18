@@ -9,6 +9,9 @@ Ejemplos:
     python scripts/evaluate_experiment.py --scenarios scenarios/pasillo_compartido.json \
         --model artifacts/sensors_dqn/model.zip --output outputs/eval/dev.csv
 
+    # Referencias y modelo de desarrollo sobre un conjunto generado (SARB-031).
+    python scripts/evaluate_experiment.py --development-set configs/development/v2_10x10_dev.json         --model artifacts/v2_pilot/model.zip --output results/sarb031/v2_10x10_desarrollo.csv
+
     # Comprobar un CSV existente reproduciendo sus trazas.
     python scripts/evaluate_experiment.py --verify outputs/eval/validation.csv
 """
@@ -26,6 +29,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from sar_bot.experiment import (  # noqa: E402
     STRATEGIES,
+    cases_from_development_set,
     cases_from_manifest,
     cases_from_paths,
     evaluate_cases,
@@ -80,6 +84,8 @@ def main():
     source = parser.add_mutually_exclusive_group()
     source.add_argument("--manifest", type=Path, help="Manifiesto de particiones congelado")
     source.add_argument("--scenarios", nargs="+", type=Path, help="Lista libre de desarrollo")
+    source.add_argument("--development-set", type=Path,
+                        help="Conjunto de desarrollo generado (configs/development/*.json)")
     source.add_argument("--verify", type=Path, help="CSV ya escrito para reproducir y comprobar")
     parser.add_argument("--split", choices=("training", "validation", "test"))
     parser.add_argument("--partition", default="development",
@@ -117,8 +123,10 @@ def main():
                                     allow_test=args.split == "test")
     elif args.scenarios:
         cases = cases_from_paths(args.scenarios, ROOT, args.partition)
+    elif args.development_set:
+        cases = cases_from_development_set(args.development_set, ROOT)
     else:
-        parser.error("Indicar --manifest con --split, --scenarios o --verify")
+        parser.error("Indicar --manifest con --split, --scenarios, --development-set o --verify")
     if args.limit:
         cases = cases[:args.limit]
 
@@ -147,6 +155,10 @@ def main():
         "partition": cases[0].partition,
         "manifest": ({"path": args.manifest.as_posix(), "manifest_id": cases[0].manifest_id,
                       "sha256": file_sha256(args.manifest)} if args.manifest else None),
+        "development_set": ({"path": args.development_set.as_posix(),
+                             "set_id": cases[0].manifest_id,
+                             "sha256": file_sha256(args.development_set)}
+                            if args.development_set else None),
         "profile": {"width": scenario.width, "height": scenario.height,
                     "victims": scenario.victim_count},
         "scenarios": {c.scenario_path: c.scenario_sha256 for c in cases},

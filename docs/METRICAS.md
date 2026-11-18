@@ -31,10 +31,10 @@ El orden de las columnas es fijo (`sar_bot.experiment.COLUMNS`). Una prueba comp
 |---|---|
 | `episode_id` | Identificador del episodio: hash de configuración, estrategia, modelo, semilla aleatoria y peso térmico |
 | `partition` | `training`, `validation`, `test` o una etiqueta de desarrollo |
-| `manifest_id` | Manifiesto de particiones de origen; vacío en listas libres |
+| `manifest_id` | Manifiesto de particiones o conjunto de desarrollo de origen; vacío en listas libres |
 | `scenario_path` | Ruta del escenario relativa al repositorio |
 | `scenario_name` | Nombre interno del escenario |
-| `building` | Clave del edificio en el manifiesto (`hub`, `detour`) |
+| `building` | Clave del edificio en el manifiesto o conjunto (`hub`, `detour`, `building10`) |
 | `difficulty` | Familia de generación: `easy`, `intermediate` o `demanding` |
 | `scenario_id` | Firma física, independiente del orden de etiquetas de las personas |
 | `configuration_id` | Identidad exacta, incluido el orden de las personas |
