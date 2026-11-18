@@ -31,6 +31,7 @@ Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, eva
 - [Backlog con responsables, dependencias y criterios de aceptación](BACKLOG.md)
 - [Contratos y punto de partida V2](docs/CONTRATOS_V2.md)
 - [Edificios 12 × 12, calibración y generación reproducible](docs/ESCENARIOS_V2.md)
+- [Particiones experimentales congeladas del perfil 12 × 12](docs/PARTICIONES_V2.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
@@ -134,7 +135,9 @@ uv run --no-project --python 3.12 scripts/evaluate.py
 
 El CSV se guarda en `outputs/reference_results.csv`, excluido de Git porque puede regenerarse. Se pueden indicar `--scenarios`, `--strategy`, `--seed` y `--output`. Esta ejecución produce un episodio por escenario y estrategia; no es una evaluación estadística ni un conjunto de prueba reservado.
 
-Las particiones para el aprendizaje están en `configs/scenario_splits.json`. La comparación DQN admite `--split training`, `--split validation` o `--split test`, y genera metadatos con hashes. Los mapas nuevos se consultaron después de fijar el checkpoint; solo hay dos casos de prueba.
+Las particiones históricas del perfil 6 × 6 están en `configs/scenario_splits.json`. La comparación DQN admite `--split training`, `--split validation` o `--split test`, y genera metadatos con hashes. Esos mapas se consultaron después de fijar el checkpoint y solo hay dos casos de prueba, así que quedan como antecedentes de desarrollo.
+
+Las particiones experimentales del perfil 12 × 12 están congeladas en `configs/partitions/v2_12x12.json`: 60 casos de entrenamiento, 20 de validación y 40 de prueba en dos edificios. Se usan con `--manifest configs/partitions/v2_12x12.json --split ...` y se verifican con `python scripts/build_partitions.py verify --manifest configs/partitions/v2_12x12.json`. Ver [PARTICIONES_V2.md](docs/PARTICIONES_V2.md).
 
 ### Archivos para continuar
 
@@ -153,7 +156,9 @@ Las particiones para el aprendizaje están en `configs/scenario_splits.json`. La
 | `configs/dqn_initial.json` | Configuración reproducible del primer experimento |
 | `artifacts/initial_dqn/` | Modelo seleccionado, metadatos y resultados medidos |
 | `configs/dqn_sensors.json` | Experimento recomendado, con exploración por etapa y sensores |
-| `configs/scenario_splits.json` | Escenarios de entrenamiento, validación y prueba |
+| `configs/scenario_splits.json` | Particiones históricas del perfil 6 × 6 |
+| `configs/partitions/v2_12x12.json` | Particiones congeladas del perfil 12 × 12, con hashes y testigos |
+| `scripts/build_partitions.py` | Construcción, verificación y resumen de particiones |
 | `artifacts/sensors_dqn/` | Modelo recomendado y comprobaciones de las tres particiones |
 | `scripts/ui.py` | Ventana interactiva y capturas sin ventana |
 | `src/sar_bot/ui/app.py` | Presentación y controles Pygame |
