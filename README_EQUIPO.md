@@ -167,7 +167,9 @@ El entrenador recibe la semilla desde el JSON y permite sobrescribirla con `--se
 | Síntoma | Qué revisar |
 |---|---|
 | No existe `scripts/ui.py` o el modelo | Rama incorrecta o base todavía sin publicar |
-| `uv` no se reconoce | Instalación y terminal nueva |
+| `uv` no se reconoce | Instalación y terminal nueva. Si el instalador oficial no está disponible, `python -m pip install uv` también sirve |
+| Ya existía un `.venv` creado con pip u otra versión de Python | `uv sync --python 3.12` lo recrea; hacer la primera instalación en un clon nuevo (ver `docs/INSTALACION_EQUIPOS.md`) |
+| Las tildes aparecen como símbolos extraños en la consola | Solo es la consola (por ejemplo Git Bash); usar PowerShell o definir `PYTHONIOENCODING=utf-8` |
 | Falta Pygame o una dependencia de DQN | Sincronizar con los extras `ui` y `rl` |
 | Cambió el esquema de observaciones | Modelo y entorno deben ser compatibles; no modificar dimensiones sin versionar |
 | Falló un entrenamiento porque el directorio no está vacío | Usar un directorio nuevo; conservar el experimento anterior |
