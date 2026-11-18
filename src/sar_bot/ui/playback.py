@@ -1,11 +1,15 @@
 """Preparación de episodios y reloj visual, sin dependencia de Pygame."""
 
+from concurrent.futures import CancelledError
 from dataclasses import dataclass
 from math import isfinite
+from hashlib import sha256, file_digest
+import sys
 from pathlib import Path
 
 from sar_bot.agents import create_policy
 from sar_bot.core import MissionState, RescueSimulation, Scenario
+from .resources import validate_ui_scenario, MAX_EPISODE_STATES
 
 
 @dataclass(frozen=True)
@@ -13,6 +17,8 @@ class Episode:
     scenario: Scenario
     states: tuple[MissionState, ...]
     actions: tuple[int, ...]
+    checkpoint_sha256: str | None = None
+    engine_sha256: str | None = None
 
     @property
     def scenario_id(self):
@@ -24,17 +30,33 @@ class Episode:
 
 
 def prepare_episode(scenario_path: Scenario | str | Path, strategy: str, model_path: Path | None = None,
-                    seed: int = 0) -> Episode:
+                    seed: int = 0, *, cancel_event=None) -> Episode:
     """Calcula una misión real antes de reproducirla; no fabrica estados visuales."""
+    if cancel_event is not None and cancel_event.is_set():
+        raise CancelledError()
     scenario = scenario_path if isinstance(scenario_path, Scenario) else Scenario.load(scenario_path)
+    validate_ui_scenario(scenario)
+    engine_hash = sha256(Path(sys.modules[RescueSimulation.__module__].__file__).read_bytes()).hexdigest()
+    model_hash = None
+    if strategy == "dqn" and model_path is not None:
+        with Path(model_path).open("rb") as stream:
+            model_hash = file_digest(stream, "sha256").hexdigest()
     simulation = RescueSimulation(scenario)
     policy = create_policy(simulation, strategy, model_path=model_path, seed=seed)
     states, actions = [simulation.state], []
     while simulation.state.outcome == "running":
+        if len(states) >= MAX_EPISODE_STATES:
+            raise ValueError("La traza supera 5000 estados permitidos por la interfaz")
+        if cancel_event is not None and cancel_event.is_set():
+            raise CancelledError()
         action = policy.act(simulation.state)
         actions.append(action)
         states.append(simulation.step(action))
-    return Episode(simulation.scenario, tuple(states), tuple(actions))
+    if model_hash is not None:
+        with Path(model_path).open("rb") as stream:
+            if file_digest(stream, "sha256").hexdigest() != model_hash:
+                raise ValueError("El checkpoint cambio durante la preparacion")
+    return Episode(simulation.scenario, tuple(states), tuple(actions), model_hash, engine_hash)
 
 
 class Playback:
