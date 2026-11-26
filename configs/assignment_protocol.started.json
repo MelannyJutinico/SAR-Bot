@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "protocol_sha256": "6d7d20700da29cfdb50ebc68555a4b8984885a668b2e38f36a22ea5a6068103d",
+  "csv": "results/assignment/holdout.csv",
+  "csv_sha256": "e837fb1556391a53d635d6d377c3eab20cf938fe9fb118632f0ccf697d655871",
+  "completed_utc": "2026-11-26T19:14:32.016366+00:00",
+  "completion_note": "All 360 episodes and diagnostics finished before a marker relative-path formatting error; rows and traces verified without rerunning any policy before completing this marker."
+}

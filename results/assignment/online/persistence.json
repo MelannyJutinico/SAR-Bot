@@ -1,0 +1,112 @@
+{
+  "scope": "Snapshot of a completed local session; a separate validation comparison is descriptive, not a new final-model selection.",
+  "base_sha256": "499c8c17f383cdc9f72b29fa4da7fe7d2a4a68e2fd5fa69ee23d7d470ab599ae",
+  "after_sha256": "b3634c0e0b8a4aa02119342cebd264fa669bbca3288794f0fffeecce22b21571",
+  "base_parameters_sha256": "1cd9e07822916a4c9826ae2308c04a34ebe234b5ec97c7a0b475438bbb3bd9a3",
+  "after_parameters_sha256": "bcdee35d16e72070893e1be4cf76586f1da5ae9bb76a27fd21f411f16c1eb4cc",
+  "generations": [
+    {
+      "missions": 1,
+      "transitions": 12,
+      "updates": 64,
+      "buffer_size": 20,
+      "model_timesteps": null,
+      "model_sha256": "767cc1a58fe79b35e6c95e411fe39733b2c1a2a1f9a1fbbbbd6f4d7540e91ebb",
+      "last_mission": {
+        "scenario_id": "ce37638df933ca33b51884822d623ee2c2205cd0472d7f04437855d81ea60db0",
+        "outcome": "success",
+        "rescued": 3,
+        "policy_sha256": "499c8c17f383cdc9f72b29fa4da7fe7d2a4a68e2fd5fa69ee23d7d470ab599ae"
+      }
+    },
+    {
+      "missions": 2,
+      "transitions": 28,
+      "updates": 128,
+      "buffer_size": 40,
+      "model_timesteps": null,
+      "model_sha256": "b3634c0e0b8a4aa02119342cebd264fa669bbca3288794f0fffeecce22b21571",
+      "last_mission": {
+        "scenario_id": "621ff8575c846c7831019b672bd2f4e320e4729c73bf657aeae4ea570942d46a",
+        "outcome": "success",
+        "rescued": 3,
+        "policy_sha256": "767cc1a58fe79b35e6c95e411fe39733b2c1a2a1f9a1fbbbbd6f4d7540e91ebb"
+      }
+    }
+  ],
+  "session": {
+    "schema_version": 1,
+    "base_sha256": "499c8c17f383cdc9f72b29fa4da7fe7d2a4a68e2fd5fa69ee23d7d470ab599ae",
+    "settings": {
+      "capacity": 4096,
+      "learning_rate": 5e-05,
+      "exploration": 0.1,
+      "max_updates": 64
+    },
+    "rewards": {
+      "step": -1.0,
+      "pickup": 5.0,
+      "delivery": 50.0,
+      "success": 100.0,
+      "destruction": -100.0,
+      "timeout": -20.0,
+      "damage": -1.0,
+      "shaping": 2.0,
+      "gamma": 0.99,
+      "potential_bound": 0.0
+    },
+    "masked": false,
+    "missions": 2,
+    "transitions": 28,
+    "updates": 128,
+    "processed_ids": [
+      "41daaae1014b43c2b70a07c9a366074d",
+      "3638de16c33641dab862542114b92042"
+    ],
+    "buffer_size": 40,
+    "model_sha256": "b3634c0e0b8a4aa02119342cebd264fa669bbca3288794f0fffeecce22b21571",
+    "profile": {
+      "height": 12,
+      "victims": 3,
+      "width": 12
+    },
+    "controller": "neural_assignment",
+    "learning_method": "supervised assignment regression",
+    "attempted_updates": 128,
+    "last_guard": {
+      "accepted": true,
+      "before": [
+        6,
+        18,
+        -298
+      ],
+      "after": [
+        6,
+        18,
+        -298
+      ],
+      "reason": "no_regression_on_controls",
+      "control_ids": [
+        "621ff8575c846c7831019b672bd2f4e320e4729c73bf657aeae4ea570942d46a",
+        "6d5e0258e7b5270ef5f18e86085c548332c4c064548ec9682f5eca172570b8f6",
+        "b48bf545ec418d09c6386275a622372163f15b8b46ddc72d6b04d44e7ee22a75",
+        "ce37638df933ca33b51884822d623ee2c2205cd0472d7f04437855d81ea60db0",
+        "cea57468138c937b7c1e5b69b64519a86e03bfa7beeeec12ef9dd7d3433180fa",
+        "fda3050518adb2d850bef1b9160d7d9e25e4d7503545525c611fde61581c6ab0"
+      ],
+      "attempted_updates": 64
+    },
+    "last_mission": {
+      "scenario_id": "621ff8575c846c7831019b672bd2f4e320e4729c73bf657aeae4ea570942d46a",
+      "outcome": "success",
+      "rescued": 3,
+      "policy_sha256": "767cc1a58fe79b35e6c95e411fe39733b2c1a2a1f9a1fbbbbd6f4d7540e91ebb"
+    },
+    "file_hashes": {
+      "model.zip": "b3634c0e0b8a4aa02119342cebd264fa669bbca3288794f0fffeecce22b21571",
+      "replay.pkl": "460d911eb26591c80bcf9a59b0545b8502e4eecae02f01ef833c8116c2995f89",
+      "rng.pkl": "7f6bb8b0a46d2dc45f08553575f16edc4680290dfc64d9d89946bf51e5162e06"
+    }
+  },
+  "parameters_changed": true
+}

@@ -1,5 +1,9 @@
 # SAR-Bot — guía para incorporarse al equipo
 
+**Agente actual:** la aplicación usa una red supervisada de asignación y riesgo, con navegación A*. Completó 20/20 casos de validación y 40/40 posiciones reservadas nuevas. El DQN anterior de movimientos es un antecedente. Leer el [README vigente](README.md) y el [informe actual](docs/INFORME.md); las asignaciones y estados anteriores de este documento son históricos.
+
+---
+
 **Cierre del 26 de noviembre de 2026:** el equipo autorizó integrar el trabajo restante y terminar una versión con una semilla DQN y aprendizaje entre misiones. Ya están implementados simulador 12 × 12, editor, cuatro estrategias, persistencia y evaluación final. DQN obtuvo 3/20 en validación y 0/40 en prueba; la referencia térmica 40/40. Leer primero el [README vigente](README.md), el [informe final](docs/INFORME.md) y la [lista de cierre](docs/VERSION_FINAL.md). No hay tareas técnicas adicionales exigidas para este alcance final.
 
 El contenido siguiente describe la **distribución y expectativas históricas del equipo**. Sus pendientes y modelos de desarrollo no sustituyen el estado final anterior.

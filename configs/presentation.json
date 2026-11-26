@@ -1,15 +1,19 @@
 {
   "schema_version": 1,
   "default_scenario": "scenarios/v2/coordination_hub_12x12.json",
-  "default_strategy": "thermal",
-  "model": "artifacts/final/model.zip",
-  "known_demo": "scenarios/demo_final.json",
-  "known_demo_source": "scenarios/partitions/v2_12x12/validation/hub_validation_03_easy.json",
-  "known_demo_scope": "validation case used for checkpoint selection; not final test",
-  "known_demo_expected": {
+  "default_strategy": "neural",
+  "model": "artifacts/rescue_network/model.zip",
+  "architecture": [
+    16,
+    64,
+    32,
+    1
+  ],
+  "default_expected": {
     "rescued": 3,
-    "steps": 126,
-    "damage_total": 0
+    "steps": 62,
+    "damage_total": 42
   },
-  "note": "Use thermal reference for freely chosen positions; DQN is experimental and its failures are part of the reported results."
+  "learning_method": "Supervised assignment and route risk regression; programmed joint A* navigation",
+  "note": "Main interface centers the neural controller. Programmed strategies are comparison references. Old movement-DQN evidence remains preserved."
 }

@@ -1,5 +1,9 @@
 # Alcance y protocolo de entrega (SARB-002)
 
+**Ampliación autorizada durante el tiempo restante:** tras observar los bucles, el usuario priorizó un agente neuronal funcional y pidió continuar el trabajo. Se sustituyó el control de movimientos DQN como inicio por asignación y riesgo supervisados, con navegación A*. Se preservaron los resultados anteriores y se congeló un nuevo protocolo antes de cuarenta posiciones reservadas distintas. Es una decisión del equipo, no una exigencia atribuida al profesor.
+
+---
+
 ## Alcance de cierre acordado el 26 de noviembre de 2026
 
 El usuario autorizó cerrar una versión presentable antes de las 17:00 de Bogotá. Este acuerdo de equipo sustituye, para esta entrega, los objetivos anteriores de tres semillas y aprendizaje en cada movimiento; no constituye confirmación del profesor.

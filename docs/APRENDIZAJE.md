@@ -1,5 +1,9 @@
 # Entorno de aprendizaje
 
+**Método vigente:** red supervisada 16–64–32–1 de asignación y riesgo, con etiquetas de un estimador de coste y navegación A*. Ver [INFORME.md](INFORME.md) para datos, entrenamiento y evaluación nueva, y [INTERFAZ.md](INTERFAZ.md) para aprendizaje persistente. Las secciones siguientes conservan el historial DQN; sus recompensas, observaciones de 390 entradas y comandos de entrenamiento no describen la red actual.
+
+---
+
 **Mejora actual de sesión:** DQN ofrece **Solo ejecutar** y **Aprender**. Al aprender, una actualización candidata solo se conserva si no empeora la puntuación agregada sobre controles de entrenamiento respecto a la red previa. Si se rechaza, se recuperan pesos y optimizador, conservando memoria y contadores. El detalle, límites y comprobación real están en [INTERFAZ.md](INTERFAZ.md). La regresión histórica de dos misiones descrita abajo corresponde al mecanismo anterior sin protección.
 
 ## Estado final — 26 de noviembre de 2026

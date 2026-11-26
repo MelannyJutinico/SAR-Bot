@@ -1,5 +1,9 @@
 # Cierre técnico de SAR-Bot 1.0.0
 
+**Agente vigente en main:** red supervisada de asignación y riesgo, A* para movimientos, 20/20 validación y 40/40 casos nuevos reservados. **328 pruebas aprobadas.** El [informe actual](INFORME.md) y la [guía de uso](INTERFAZ.md) reemplazan el inicio DQN anterior. Se mantiene la misma rama y no se creó otra etiqueta de versión. Las cifras y distribución originales de abajo son históricas.
+
+---
+
 **Estado actual de main:** después del cierre se simplificaron los controles y se protegieron las actualizaciones de sesión contra regresiones detectadas. Se continúa en la misma rama, sin nuevas etiquetas de versión. [Guía actual de opciones](INTERFAZ.md). Los resultados congelados y las verificaciones de la primera entrega se conservan abajo.
 
 Versión del **26 de noviembre de 2026**, bajo el [alcance de cierre acordado](ALCANCE.md). La distribución se identifica con la etiqueta Git `v1.0.0`. El README contiene la instalación y `run.bat` inicia la aplicación.

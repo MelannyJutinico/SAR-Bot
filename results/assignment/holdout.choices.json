@@ -1,0 +1,40 @@
+{
+  "note": "Agreement with the programmed cost estimator, not proof of optimal rescue; identical synthetic questions per network.",
+  "metrics": {
+    "neural_assignment": {
+      "questions": 2400,
+      "teacher_best_fraction": 0.99625,
+      "mean_teacher_regret": 0.0001374999930461248
+    },
+    "untrained_s0": {
+      "questions": 2400,
+      "teacher_best_fraction": 0.28708333333333336,
+      "mean_teacher_regret": 0.29040624829009176
+    },
+    "untrained_s1": {
+      "questions": 2400,
+      "teacher_best_fraction": 0.38375,
+      "mean_teacher_regret": 0.09841666630779704
+    },
+    "untrained_s2": {
+      "questions": 2400,
+      "teacher_best_fraction": 0.29625,
+      "mean_teacher_regret": 0.31258541710364324
+    },
+    "untrained_s3": {
+      "questions": 2400,
+      "teacher_best_fraction": 0.33208333333333334,
+      "mean_teacher_regret": 0.5111708320584148
+    },
+    "untrained_s4": {
+      "questions": 2400,
+      "teacher_best_fraction": 0.37625,
+      "mean_teacher_regret": 0.41310624941873053
+    },
+    "untrained_s7": {
+      "questions": 2400,
+      "teacher_best_fraction": 0.37375,
+      "mean_teacher_regret": 0.07813541606999934
+    }
+  }
+}

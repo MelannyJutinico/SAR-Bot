@@ -47,10 +47,14 @@ def notice(app):
         return "Reproduccion de traza: sin decisiones, aprendizaje ni certificacion nueva."
     if app.future:
         return "Preparando y certificando en segundo plano..."
+    if app.playback and app.playback.finished:
+        return {"success":"Rescate completo: todas las personas fueron entregadas en la base.",
+                "destroyed":"Un robot quedó fuera de servicio. Consulta el resultado para revisar el recorrido.",
+                "time_limit":"Se agotaron los pasos de la misión. Consulta el resultado."}.get(app.state.outcome,"")
     if app.validation_status == "not_certified":
         return "No certificada: puedes explorar. No significa imposible."
     if app.validation_status == "certified":
-        return "Certificada por referencia; DQN puede fallar en posiciones nuevas."
+        return "Mapa verificado con una referencia. Puedes iniciar el rescate."
     return "Selecciona una configuracion y prepara la mision."
 
 
@@ -109,7 +113,8 @@ def draw_execution(app):
                      else "DQN de movimientos (anterior)")
         app.wrap(description,900,235,320,14)
     app.wrap("Recoger no es entregar. El contador aumenta al llegar a la base.",900,290,320,14)
-    label="Pausar" if app.playback and app.playback.playing else "Iniciar / continuar"
+    label=("Pausar" if app.playback and app.playback.playing else
+           "Reproducir de nuevo" if app.playback and app.playback.finished else "Iniciar / continuar")
     app.button("play",label,(900,388,328,48),primary=True,enabled=app.playback is not None)
     app.button("step","Un paso",(900,448,158,40),enabled=app.playback is not None)
     app.button("reset","Reiniciar",(1070,448,158,40),enabled=app.playback is not None)
@@ -181,5 +186,5 @@ def draw_models(app):
         app.button("models_next","Siguiente",(1070,660,158,30),enabled=(app.model_page+1)*4<len(entries))
     if hidden:
         app.wrap(f"{hidden} redes de otros tamaños o no válidas están ocultas.",900,705,320,12)
-    app.wrap("DQN es experimental: una red compatible también puede fallar en el rescate.",900,743,320,12)
+    app.wrap("Una red compatible puede fallar en posiciones que no se hayan comprobado.",900,743,320,12)
     app.button("models_close","Volver a preparar",(900,787,328,30))

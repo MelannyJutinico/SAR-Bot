@@ -2,7 +2,8 @@
   "model_sha256": "5ce9657f8560c18769adc660aafe78cadc21b500a9d9c5300d24aed6f8c77d41",
   "manifest_json_sha256": "206fb136b102a0d8f1a46ef393f8b0fdf05bf39c141839a5eb6f266d393d794d",
   "split": "validation",
-  "csv_sha256": "1c9e534be9dd8567072db40b0558e09e197bbd8aded31acd07adc863e909a307",
+  "csv_sha256": "78d263f21333acd66d6e361d8db6816f7c33acc1d22ed00ff36cc04277b09642",
   "traces_verified": true,
-  "note": "The learned component assigns targets; joint thermal A* supplies navigation. Untrained ablation has the identical planner."
+  "note": "The learned component assigns targets; joint thermal A* supplies navigation. Untrained ablation has the identical planner.",
+  "csv_hash_normalization": "LF"
 }

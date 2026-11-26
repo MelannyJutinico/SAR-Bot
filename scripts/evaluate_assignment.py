@@ -14,6 +14,7 @@ from sar_bot.agents.assignment import AssignmentPolicy,AssignmentNetwork
 from sar_bot.core import Scenario,RescueSimulation
 from sar_bot.experiment import metrics_from_trace,replay_actions
 from sar_bot.release import json_hash,file_hash
+from sar_bot.partitions import file_sha256
 
 
 def main():
@@ -62,7 +63,7 @@ def main():
         print(entry['path'],flush=True)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     with args.output.open('w',newline='',encoding='utf-8') as stream:
-        writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
+        writer=csv.DictWriter(stream,fieldnames=list(rows[0]),lineterminator='\n');writer.writeheader();writer.writerows(rows)
     args.output.with_suffix('.traces.jsonl').write_text('\n'.join(json.dumps(t) for t in traces)+'\n',encoding='utf-8')
     summary={}
     for label in policies:
@@ -88,10 +89,13 @@ def main():
                            'mean_teacher_regret':sum(regrets)/len(regrets)}
     args.output.with_suffix('.choices.json').write_text(json.dumps({'note':'Agreement with the programmed cost estimator, not proof of optimal rescue; identical synthetic questions per network.','metrics':diagnostic},indent=2),encoding='utf-8')
     args.output.with_suffix('.metadata.json').write_text(json.dumps({'model_sha256':file_hash(args.model),
-        'manifest_json_sha256':json_hash(args.manifest),'split':args.split,'csv_sha256':file_hash(args.output),
+        'manifest_json_sha256':json_hash(args.manifest),'split':args.split,'csv_sha256':file_sha256(args.output),
         'traces_verified':True,'note':'The learned component assigns targets; joint thermal A* supplies navigation. Untrained ablation has the identical planner.'},indent=2),encoding='utf-8')
-    if marker:marker.write_text(json.dumps({'status':'completed','csv':str(args.output.relative_to(ROOT)),
-                                           'csv_sha256':file_hash(args.output)},indent=2),encoding='utf-8')
+    if marker:
+        record=json.loads(marker.read_text(encoding='utf-8'))
+        record.update(status='completed',csv=args.output.resolve().relative_to(ROOT).as_posix(),
+                      csv_sha256=file_sha256(args.output))
+        marker.write_text(json.dumps(record,indent=2),encoding='utf-8')
     print(json.dumps(summary,indent=2))
 
 

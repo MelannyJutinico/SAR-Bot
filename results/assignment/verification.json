@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-26",
+  "timezone": "America/Bogota",
+  "full_suite": {
+    "tests": 328,
+    "seconds": 388.577,
+    "result": "OK"
+  },
+  "new_reserved_evaluation": {
+    "cases": 40,
+    "episodes": 360,
+    "neural_successes": 40,
+    "rescued": 120,
+    "traces_verified": 360,
+    "model_hash": "499c8c17f383cdc9f72b29fa4da7fe7d2a4a68e2fd5fa69ee23d7d470ab599ae"
+  },
+  "default_showcase": {
+    "rescued": 3,
+    "steps": 62,
+    "damage": 42
+  },
+  "two_process_learning": {
+    "missions": 2,
+    "observed_steps": 28,
+    "assignment_examples": 40,
+    "accepted_updates": 128,
+    "parameters_changed": true,
+    "base_unchanged": true
+  },
+  "model_frozen_before_test_commit": "c2bf859",
+  "software_release_tag_created": false,
+  "post_suite_edits": "Report formatting, completion-marker path handling and display text only; no inference or training-policy change.",
+  "ui_comparison": {
+    "dqn": [
+      3,
+      "success",
+      62,
+      42
+    ],
+    "shortest": [
+      3,
+      "success",
+      58,
+      63
+    ],
+    "thermal": [
+      3,
+      "success",
+      66,
+      42
+    ],
+    "random": [
+      0,
+      "destroyed",
+      160,
+      110
+    ]
+  }
+}

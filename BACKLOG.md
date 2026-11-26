@@ -1,5 +1,9 @@
 # SAR-Bot — backlog para una entrega completa
 
+**Actualización del agente:** se replanteó la tarea aprendida para resolver los bucles del DQN. El inicio actual usa red de asignación y riesgo, aprendizaje supervisado, navegación A* y persistencia. Se verificaron 40/40 posiciones nuevas reservadas. [Método y resultados actuales](docs/INFORME.md). Se sigue en `main`, sin nuevas etiquetas de versión.
+
+---
+
 ## Cierre del alcance final — 26 de noviembre de 2026
 
 Este backlog se conserva como historial de las 35 tareas originales. El [acuerdo de cierre](docs/ALCANCE.md) sustituyó sus criterios de tres semillas, actualización en cada paso e instalación en cuatro computadores. No se marcan esas actividades como realizadas. La revisión por roles fue reemplazada por la integración del trabajo restante en `main`.

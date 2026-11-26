@@ -89,5 +89,45 @@ class AssignmentTests(unittest.TestCase):
             self.assertEqual(len(memory['labels']),result['buffer_size'])
             self.assertTrue(resumed.learn_episode(episode)['duplicate'])
 
+    def test_accepted_session_updates_and_optimizer_continue_after_restart(self):
+        base=ROOT/'artifacts/rescue_network/model.zip'
+        scenario=Scenario.load(ROOT/'scenarios/partitions/v2_12x12/training/hub_training_01_easy.json')
+        with tempfile.TemporaryDirectory(dir=ROOT/'tmp/tests') as temp:
+            directory=Path(temp)/'session'
+            session=AssignmentLearningSession(directory,base,control_scenarios=(scenario,))
+            first=session.prepare_episode(scenario)
+            with patch('sar_bot.assignment_learning.assignment_score',side_effect=[(1,3,-100),(1,3,-90)]):
+                result=session.learn_episode(first)
+            self.assertTrue(result['last_guard']['accepted']);self.assertEqual(result['updates'],64)
+            resumed=AssignmentLearningSession(directory,base,control_scenarios=(scenario,))
+            _,_,optimizer,_=resumed._load(resumed.snapshot())
+            self.assertTrue(all(int(state['step'])==64 for state in optimizer.state.values()))
+            second=resumed.prepare_episode(scenario)
+            with patch('sar_bot.assignment_learning.assignment_score',side_effect=[(1,3,-100),(1,3,-90)]):
+                result=resumed.learn_episode(second)
+            self.assertEqual(result['missions'],2);self.assertEqual(result['updates'],128)
+            _,_,optimizer,_=resumed._load(resumed.snapshot())
+            self.assertTrue(all(int(state['step'])==128 for state in optimizer.state.values()))
+
+    def test_main_interface_centers_neural_agent_and_keeps_references_in_comparison(self):
+        import os
+        os.environ['SDL_VIDEODRIVER']='dummy'
+        import pygame
+        from sar_bot.ui.app import RescueApp
+        pygame.display.init();pygame.font.init()
+        app=RescueApp(ROOT,ROOT/'scenarios/v2/coordination_hub_12x12.json','dqn',
+                      ROOT/'artifacts/rescue_network/model.zip',asynchronous=False)
+        try:
+            app.neural_focus=True;app.render()
+            self.assertNotIn('strategy',app.controls)
+            self.assertNotIn('models',app.controls)
+            self.assertIn('mode_evaluate',app.controls);self.assertIn('mode_learn',app.controls)
+            self.assertIn('compare',app.controls)
+            app.action('scenario');app.render()
+            for index,_ in app.dropdown_rows:
+                scenario=app.options[index][1]
+                self.assertEqual((scenario.width,scenario.height,scenario.victim_count),(12,12,3))
+        finally:app.close();pygame.quit()
+
 
 if __name__=='__main__':unittest.main()

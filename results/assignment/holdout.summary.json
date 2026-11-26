@@ -1,0 +1,65 @@
+{
+  "neural_assignment": {
+    "episodes": 40,
+    "successes": 40,
+    "rescued": 120,
+    "mean_success_steps": 41.2,
+    "mean_success_damage": 13.825
+  },
+  "untrained_s0": {
+    "episodes": 40,
+    "successes": 39,
+    "rescued": 119,
+    "mean_success_steps": 42.94871794871795,
+    "mean_success_damage": 23.05128205128205
+  },
+  "untrained_s1": {
+    "episodes": 40,
+    "successes": 40,
+    "rescued": 120,
+    "mean_success_steps": 43.35,
+    "mean_success_damage": 14.5
+  },
+  "untrained_s2": {
+    "episodes": 40,
+    "successes": 40,
+    "rescued": 120,
+    "mean_success_steps": 42.9,
+    "mean_success_damage": 24.325
+  },
+  "untrained_s3": {
+    "episodes": 40,
+    "successes": 37,
+    "rescued": 116,
+    "mean_success_steps": 38.32432432432432,
+    "mean_success_damage": 27.08108108108108
+  },
+  "untrained_s4": {
+    "episodes": 40,
+    "successes": 38,
+    "rescued": 118,
+    "mean_success_steps": 40.3421052631579,
+    "mean_success_damage": 26.657894736842106
+  },
+  "untrained_s7": {
+    "episodes": 40,
+    "successes": 40,
+    "rescued": 120,
+    "mean_success_steps": 43.625,
+    "mean_success_damage": 15.625
+  },
+  "thermal": {
+    "episodes": 40,
+    "successes": 40,
+    "rescued": 120,
+    "mean_success_steps": 44.275,
+    "mean_success_damage": 13.8
+  },
+  "shortest": {
+    "episodes": 40,
+    "successes": 33,
+    "rescued": 109,
+    "mean_success_steps": 37.27272727272727,
+    "mean_success_damage": 44.18181818181818
+  }
+}
