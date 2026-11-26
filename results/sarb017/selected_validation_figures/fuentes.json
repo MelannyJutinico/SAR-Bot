@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "generator": "sar_bot.report",
+  "results": {
+    "path": "results/sarb017/selected_validation.csv",
+    "sha256": "d3255b28f803e4c25cebc1bc8cd05609d724ad72f3d90db39255836f855e7aad",
+    "metadata_sha256": "f205a2b629c63cc042827ee2c9e6ae9d015995f5efacc4d97a5606e6db118465",
+    "traces": "results/sarb017/selected_validation.traces.jsonl",
+    "traces_sha256": "ba54692649dc49507e0c60bc00118bb4a46edc65a0b9c6e36b3e9edadd0a6e21",
+    "replayed": true
+  },
+  "training": [
+    {
+      "path": "artifacts/v2_12x12",
+      "label": "v2_12x12",
+      "seed": 0,
+      "files": {
+        "evaluations.jsonl": "aa2059a7658ddce53b95e586ada8474eedf104653db96cd262fdcb5a7947c9a6",
+        "metadata.json": "c1fd67b76603ce880aa9ae0a3b41fe151321d269cbfdddaec63905892e036f9a",
+        "model.zip": "1fc205d8369c7fd6c2ea38bf41d563d31dad0a4f16d0226bd20b9daa0df3302a"
+      }
+    }
+  ],
+  "output_dir": "results/sarb017/selected_validation_figures",
+  "command": "uv run python scripts/report_figures.py --results results/sarb017/selected_validation.csv --training artifacts/v2_12x12 --output-dir results/sarb017/selected_validation_figures",
+  "outputs": {
+    "curvas_entrenamiento.svg": "e43d0c148323ba7fd574758bdf1a8be4bdc13c429aa929f73da4ec235856adff",
+    "duracion_vs_danio.svg": "095a7d960e7aa1b48cf905b1e6861d4fa8dcaa05ba862c13006df57c2f55bb8e",
+    "exito_y_rescates.svg": "e0c736dad129b8aebc494b21f25a7257741543dd368f79f1b9846aa5f1e04c3a",
+    "pasos_y_danio_exitos.svg": "baedd61d009fdd4fc36c764a36ff7b3d0f819295a5805484cfd16cc966052f8b",
+    "tablas.md": "5265d5d8d6b8749ec6521bbc0adb89ecfd7fe3143cebc03082c8a710d3602841"
+  }
+}

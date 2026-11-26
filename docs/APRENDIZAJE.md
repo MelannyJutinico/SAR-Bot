@@ -239,6 +239,12 @@ Para continuar entrenando una política restringida se debe usar `MaskedDQN` a t
 
 Verificación posterior: se ejecutaron 295 pruebas. Pasaron 293 en la primera ejecución; se ajustaron dos pruebas de catálogo para distinguir modelo incompatible de modelo ausente y abrir el selector antes de elegir el nuevo modelo. Las dos pruebas ajustadas se repitieron y pasaron, incluyendo carga real del checkpoint publicado. La suite se ejecutó fuera de la restricción de enlaces de archivos temporales.
 
+La comparación unificada del checkpoint publicado conserva 160 episodios con trazas reproducidas en [selected_validation.csv](../results/sarb017/selected_validation.csv): DQN 2/20 misiones, ruta corta 17/20, térmica 20/20 y aleatoria 0/100 (cinco semillas de acciones por caso). Son resultados de validación usada para selección. Las [tablas y figuras](../results/sarb017/selected_validation_figures/tablas.md) se generaron desde ese CSV y las evaluaciones del entrenamiento. El bajo daño de los dos éxitos DQN no prueba superioridad térmica sobre referencias que completan muchos más casos. En ambos éxitos del modelo, el robot 1 entrega dos personas y el robot 2 una.
+
+El punto de entrada de la interfaz se ejecutó con el modelo publicado y el caso `hub_validation_04_easy`: tres rescates, 39 pasos, daño 2. La captura siguiente muestra ese caso real conocido de validación, no una misión de prueba final ni una secuencia de acciones programada.
+
+![Rescate real del DQN 12 × 12 en un caso de validación](images/dqn-12x12-validation.png)
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)
