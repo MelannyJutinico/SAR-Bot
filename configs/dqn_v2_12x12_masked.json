@@ -1,0 +1,87 @@
+{
+  "seed": 0,
+  "torch_threads": 1,
+  "evaluation_interval": 10000,
+  "partition_manifest": "configs/partitions/v2_12x12.json",
+  "observation_mode": "sensors",
+  "rewards": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 1.0,
+    "potential_bound": 0.0
+  },
+  "dqn": {
+    "learning_rate": 0.0005,
+    "buffer_size": 50000,
+    "learning_starts": 500,
+    "batch_size": 64,
+    "gamma": 1.0,
+    "train_freq": 4,
+    "gradient_steps": 1,
+    "target_update_interval": 500,
+    "exploration_fraction": 0.8,
+    "exploration_initial_eps": 1.0,
+    "exploration_final_eps": 0.05,
+    "policy_kwargs": {
+      "net_arch": [
+        128,
+        128
+      ]
+    }
+  },
+  "stages": [
+    {
+      "name": "easy_subset",
+      "steps": 20000,
+      "training_filter": {
+        "difficulties": [
+          "easy"
+        ],
+        "limit_per_building": 4
+      },
+      "exploration": {
+        "initial": 1.0,
+        "final": 0.1,
+        "fraction": 0.8
+      }
+    },
+    {
+      "name": "easy_all",
+      "steps": 40000,
+      "training_filter": {
+        "difficulties": [
+          "easy"
+        ]
+      },
+      "exploration": {
+        "initial": 0.6,
+        "final": 0.05,
+        "fraction": 0.8
+      }
+    },
+    {
+      "name": "mixed",
+      "steps": 60000,
+      "training_filter": {
+        "difficulties": [
+          "easy",
+          "intermediate",
+          "demanding"
+        ]
+      },
+      "exploration": {
+        "initial": 0.6,
+        "final": 0.05,
+        "fraction": 0.8
+      }
+    }
+  ],
+  "experiment_note": "Variante de guia densa con mascara de movimientos invalidos en exploracion, inferencia y objetivo DQN. La mascara no elige rutas ni personas; no atribuirle al aprendizaje evitar colisiones.",
+  "mask_invalid_actions": true
+}

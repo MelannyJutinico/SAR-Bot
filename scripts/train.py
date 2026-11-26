@@ -89,6 +89,13 @@ def main():
     checked_env = RescueEnv([s for stage in scenarios_by_stage for s in stage] + evaluation,
                            rewards, observation_mode=observation_mode)
     check_env(checked_env)
+    model_class, policy_class = DQN, "MlpPolicy"
+    if config.get("mask_invalid_actions", False):
+        if observation_mode != "sensors":
+            parser.error("La restricción de movimientos requiere observation_mode=sensors")
+        from sar_bot.agents.masked_dqn import MaskedDQN, MaskedDQNPolicy
+        model_class, policy_class = MaskedDQN, MaskedDQNPolicy
+        config["dqn"].setdefault("policy_kwargs", {})["rescue_profile"] = checked_env.profile
     print(f"Perfil {checked_env.profile}; etapas: " + ", ".join(
         f"{s['name']}={len(s['scenarios'])} casos/{s['steps']} pasos" for s in config["stages"]), flush=True)
     for stage in config["stages"]:
@@ -138,10 +145,10 @@ def main():
             env.reset(seed=config["seed"])
             if model is None:
                 if initial_model is None:
-                    model = DQN("MlpPolicy", env, seed=config["seed"], device="cpu", verbose=0,
+                    model = model_class(policy_class, env, seed=config["seed"], device="cpu", verbose=0,
                                 **config["dqn"])
                 else:
-                    model = DQN.load(initial_model, env=env, seed=config["seed"],
+                    model = model_class.load(initial_model, env=env, seed=config["seed"],
                                      device="cpu", verbose=0, **config["dqn"])
                     observation_mode_for_model(model, scenarios[0])
                     metadata["initial_model"]["previous_training_steps"] = model.num_timesteps
