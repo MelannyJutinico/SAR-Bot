@@ -39,6 +39,7 @@ from sar_bot.experiment import (  # noqa: E402
     write_results,
 )
 from sar_bot.final_check import check_final_models  # noqa: E402
+from sar_bot.release import check_release_protocol,begin_final_test,complete_final_test,json_hash
 from sar_bot.partitions import canonical_sha256, file_sha256  # noqa: E402
 
 
@@ -96,6 +97,7 @@ def main():
                         help="Etiqueta de partición para --scenarios (no puede ser test)")
     parser.add_argument("--final", action="store_true",
                         help="Confirma que se abre la prueba con modelos congelados (SARB-021)")
+    parser.add_argument("--protocol",type=Path,help="Protocolo de alcance reducido congelado antes de prueba")
     parser.add_argument("--model", type=Path, action="append", default=[],
                         help="Modelo DQN; repetir para varias semillas")
     parser.add_argument("--strategies", nargs="+", choices=STRATEGIES, default=list(STRATEGIES))
@@ -106,6 +108,10 @@ def main():
     parser.add_argument("--limit", type=int, help="Solo los primeros N casos (no en prueba)")
     parser.add_argument("--output", type=Path, default=ROOT / "outputs/eval/comparison.csv")
     args = parser.parse_args()
+    release_protocol=None
+    final_opening=None
+    if args.protocol and (args.split!="test" or not args.final):
+        parser.error("--protocol requiere --split test --final")
 
     if args.verify:
         problems = verify_results(args.verify, ROOT)
@@ -125,7 +131,18 @@ def main():
             parser.error("La prueba final no admite --limit: se evalúan todos los casos")
         if args.split == "test":
             # Antes de leer un solo caso de prueba: modelos congelados y protocolo.
-            problems = check_final_models(args.manifest, args.model, ROOT)
+            if args.protocol:
+                problems=check_release_protocol(args.protocol,args.manifest,args.model,ROOT)
+                release_protocol=json.loads(args.protocol.read_text(encoding="utf-8"))
+                if set(args.strategies)!=set(release_protocol.get("strategies",[])):
+                    problems.append("Ejecutar todas las estrategias congeladas")
+                if args.random_seeds!=release_protocol.get("random_seeds"):
+                    problems.append("Las semillas aleatorias no coinciden con el protocolo")
+                minimum=release_protocol.get("minimum_training_seeds")
+                if type(minimum) is int and minimum>=1:
+                    problems+=check_final_models(args.manifest,args.model,ROOT,min_seeds=minimum)
+            else:
+                problems = check_final_models(args.manifest, args.model, ROOT)
             if problems:
                 print("No se abre la prueba final; los modelos no cumplen el protocolo:")
                 print("\n".join(f"- {p}" for p in problems))
@@ -147,6 +164,8 @@ def main():
         print("Sin --model: se evalúan solo las referencias")
     models = [load_model(path) for path in args.model] if "dqn" in strategies else []
     rewards, reward_source = resolve_rewards(args, models)
+    if args.protocol:
+        final_opening=begin_final_test(args.protocol,args.output)
     rows, traces = evaluate_cases(cases, models=models, strategies=strategies,
                                   random_seeds=tuple(args.random_seeds), rewards=rewards,
                                   thermal_damage_weight=args.thermal_damage_weight)
@@ -179,6 +198,8 @@ def main():
                     "reward_config_sha256": (canonical_sha256(m.reward_config)
                                              if m.reward_config else None)} for m in models],
         "final_check": "superada" if args.split == "test" else None,
+        "release_protocol": ({"path":args.protocol.as_posix(),"json_sha256":json_hash(args.protocol),
+                              "scope":release_protocol["scope_note"]} if args.protocol else None),
         "random_seeds": args.random_seeds if "random" in strategies else [],
         "thermal_damage_weight": args.thermal_damage_weight,
         "reward_config": vars(rewards),
@@ -201,6 +222,7 @@ def main():
         print("\n".join(problems[:20]))
         sys.exit(1)
     print("Trazas reproducidas: las métricas coinciden con el motor.")
+    if final_opening:complete_final_test(final_opening,args.output)
 
 
 if __name__ == "__main__":

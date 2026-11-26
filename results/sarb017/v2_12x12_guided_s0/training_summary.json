@@ -1,0 +1,14 @@
+{
+  "scope": "guided training",
+  "training_method": "imitation pretraining plus DQN reinforcement",
+  "training_steps": 20000,
+  "training_seed": 0,
+  "selected_steps": 20000,
+  "selection_split": "validation",
+  "validation_cases": 20,
+  "successes": 1,
+  "rescued": 14,
+  "elapsed_seconds": 286.73,
+  "test_evaluated": false,
+  "model_sha256": "5d95334833c01ee09f82bc640827ae9c57500464b233a7ec2ec71bf8942f668d"
+}
