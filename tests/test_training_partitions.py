@@ -76,6 +76,24 @@ class TrainingPartitionTests(unittest.TestCase):
         selected = [env.reset(seed=23)[1]["configuration_id"] for _ in range(2)]
         self.assertEqual(selected[0], selected[1])
 
+    def test_dense_variant_rewards_progress_without_rewarding_waiting(self):
+        from sar_bot.env import RescueEnv, RewardConfig
+        config = json.loads((ROOT / "configs/dqn_v2_12x12_dense.json").read_text(encoding="utf-8"))
+        effective, _ = resolve_training_config(config, ROOT)
+        self.assertEqual(effective["dqn"]["gamma"], effective["rewards"]["gamma"])
+        scenarios = [Scenario.load(ROOT / p) for p in effective["stages"][-1]["scenarios"]]
+        env = RescueEnv(scenarios, RewardConfig(**effective["rewards"]), observation_mode="sensors")
+        for index in range(len(scenarios)):
+            env.reset(options={"scenario_index": index})
+            _, reward, _, _, info = env.step(24)
+            self.assertEqual(info["reward_terms"]["shaping"], 0)
+            self.assertEqual(reward, -1)
+        rewards = []
+        for action in range(25):
+            env.reset(options={"scenario_index": 0})
+            rewards.append(env.step(action)[1])
+        self.assertGreater(max(rewards), 0)
+
     def test_cli_trains_saves_reloads_with_validation_metadata(self):
         temporary_root = ROOT / "tmp/tests"
         temporary_root.mkdir(parents=True, exist_ok=True)
