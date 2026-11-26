@@ -92,6 +92,7 @@ class StabilizationTests(unittest.TestCase):
   record=make_record(self.app.playback.episode,'shortest',None,0)
   self.app.action('play');self.app.update(100);individual=self.app.last_result
   saved=self.completed()
+  self.app.models=tuple(m for m in self.app.models if m.dimensions!=(12,12,3))
   self.app.scenario_index=next(i for i,(p,_) in enumerate(self.app.options) if p.name=='coordination_hub_12x12.json')
   self.app.strategy_index=0;self.app._select();self.assertIn('12x12',self.app.error)
   future=Future();future.set_running_or_notify_cancel();self.app.future=future
@@ -133,7 +134,10 @@ class StabilizationTests(unittest.TestCase):
  def test_headless_incompatible_exits_two_without_secondary_exception(self):
   with tempfile.TemporaryDirectory() as directory:
    target=Path(directory)/'capture.png'
-   p=subprocess.run([sys.executable,str(ROOT/'scripts/ui.py'),'--headless','--scenario',str(ROOT/'scenarios/v2/coordination_hub_12x12.json'),'--strategy','dqn','--steps','1','--screenshot',str(target)],capture_output=True,text=True,cwd=ROOT,timeout=20)
+   original=Scenario.load(ROOT/'scenarios/v2/coordination_hub_12x12.json')
+   unsupported=replace(original,width=13,temperatures=tuple(row+(25.0,) for row in original.temperatures))
+   scenario=Path(directory)/'unsupported.json';unsupported.save(scenario)
+   p=subprocess.run([sys.executable,str(ROOT/'scripts/ui.py'),'--headless','--scenario',str(scenario),'--strategy','dqn','--steps','1','--screenshot',str(target)],capture_output=True,text=True,cwd=ROOT,timeout=20)
    self.assertEqual(p.returncode,2);self.assertIn('DQN no disponible',p.stderr);self.assertNotIn('AttributeError',p.stderr);self.assertFalse(target.exists())
  def test_headless_valid_episode_still_produces_capture_and_metrics(self):
   with tempfile.TemporaryDirectory() as directory:
@@ -240,6 +244,8 @@ class StabilizationTests(unittest.TestCase):
    self.assertIn('6x6',self.app.error);self.assertIsNone(self.app.playback)
    self.assertTrue({'play','step','reset'}.issubset(self.app.disabled_controls))
    self.app.scenario_index=next(i for i,(p,_) in enumerate(self.app.options) if p.name=='coordination_hub_12x12.json')
+   self.app._select();self.assertEqual(self.app._status()[0],'MODELO INCOMPATIBLE')
+   self.app.models=tuple(m for m in self.app.models if m.dimensions!=(12,12,3))
    self.app._select();self.assertEqual(self.app._status()[0],'DQN NO DISPONIBLE')
   self.app.strategy_index=1;self.app._select()
   self.assertIsNone(self.app.error);self.assertIsNone(self.app.error_kind);self.assertIsNotNone(self.app.playback)

@@ -347,6 +347,8 @@ Avance del 26 de noviembre: entrenador conectado al manifiesto, configuración e
 
 Piloto acotado ejecutado el 26 de noviembre: 6000 pasos, semilla 0, selección sobre veinte casos de validación. Inicial: 0/20 misiones y ninguna persona entregada. Checkpoint a los 6000: 0/20 misiones y una persona entregada de sesenta. Evidencia en `results/sarb017/v2_12x12_pilot_s0/`; no se abrió la prueba final. Sigue pendiente diagnosticar trayectorias y completar el experimento de aprendizaje antes de declarar esta tarea cerrada.
 
+Continuación del mismo día: cuatro configuraciones ejecutaron 120000 pasos cada una, todas con semilla 0. Se inspeccionaron bloqueos y entregas incompletas, y se compararon guía densa, restricciones de movimientos y representación compacta. El mejor checkpoint, a los 40000 pasos de la variante restringida, completa 2/20 misiones y entrega 10/60 personas en validación. Se publica como desarrollo en `artifacts/v2_12x12/`; `results/sarb017/experiments.json` resume la evidencia. El presupuesto de estas comparaciones fue de 480000 pasos; no son cuatro semillas finales. Decisión: consolidar aprendizaje y currículo antes de repetir semillas o abrir prueba. Las reglas físicas no cambiaron y no se declara final un modelo con este rendimiento.
+
 **Aceptación:**
 - Se ejecuta un piloto con posiciones variables, empezando por casos sencillos y aumentando dificultad.
 - Se comparan modelo sin entrenar y checkpoint seleccionado sobre validación, registrando rescates reales además del retorno.

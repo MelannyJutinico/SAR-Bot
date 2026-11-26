@@ -75,6 +75,7 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(self.app.comparison.request.model,str(self.app.model_path.resolve()))
 
     def test_incompatible_twelve_by_twelve_dqn_not_substituted(self):
+        self.app.models=tuple(m for m in self.app.models if m.dimensions!=(12,12,3))
         self.app.scenario_index = next(i for i,(p,_) in enumerate(self.app.options) if p.name=="coordination_hub_12x12.json")
         self.app._select();self.app.action("compare");self.finish()
         row=self.app.comparison.rows["dqn"]

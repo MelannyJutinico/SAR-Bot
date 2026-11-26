@@ -189,6 +189,56 @@ El próximo experimento es la corrida de 120000 pasos de la configuración, revi
 
 Verificación de la integración: 53 pruebas focalizadas aprobadas y suite completa de 289 pruebas aprobadas (161,99 s). La suite completa se ejecutó fuera de la restricción que deniega los enlaces de archivos temporales usados por las exportaciones de la interfaz. Incluye el entrenamiento real breve, guardado/recarga, actualizaciones de pesos, perfiles, compatibilidad histórica y controles contra fuga de particiones.
 
+## Experimentos de aprendizaje 12 × 12 posteriores al piloto
+
+Se conservan configuraciones independientes y directorios nuevos, todas con semilla 0, 120000 pasos, currículo 8/20/60 y selección sobre los mismos veinte casos de validación. La prueba final permanece reservada. Son comparaciones de desarrollo para elegir configuración; no son cuatro semillas independientes ni una estimación del rendimiento final.
+
+- `dqn_v2_12x12.json`: control con descuento 0,99 y potencial acotado a 40.
+- `dqn_v2_12x12_dense.json`: descuento 1 en DQN y en la guía, sin cota de potencial. Una espera segura aporta −1; acercarse reduce la distancia pendiente con una señal más marcada. Cambian conjuntamente descuento y escala efectiva, por lo que no se atribuye el resultado a un único hiperparámetro.
+- `dqn_v2_12x12_masked.json`: añade al anterior restricciones para intentos contra paredes, coincidencias fuera de base e intercambios de posiciones. Se aplican en exploración, inferencia y máximo de Bellman de la red objetivo. La máscara usa posiciones y sensores existentes; no decide objetivos, rutas ni protección térmica. Evitar esas colisiones es una restricción programada y no una habilidad aprendida.
+- `dqn_v2_12x12_compact.json`: añade una representación de los 102 valores de estado y sensores que ya están en la observación de 390. Excluye las matrices estáticas de la entrada de la MLP y reescala las distancias al lado del edificio. El vector público y el perfil de guardado siguen siendo de 390 entradas; la representación interna y las restricciones quedan serializadas con la política.
+
+Las políticas nuevas se guardan como clases del proyecto y se cargan con el controlador DQN existente. Las pruebas contrastan las 25 acciones contra el motor en ambos edificios, base compartida y posiciones aleatorias; comprueban exploración válida, red objetivo, actualizaciones y guardado/recarga con ambas representaciones.
+
+La observación ahora conserva paredes y temperaturas normalizadas mientras no cambie el `Scenario` inmutable. Una comparación local contra la implementación anterior produjo vectores idénticos y redujo el tiempo de 500 observaciones de 0,715 a 0,092 segundos. Es una medición local de esa operación; los tiempos de las corridas no son directamente comparables porque hubo ejecuciones concurrentes y versiones con/sin esa optimización.
+
+El diagnóstico del checkpoint de control de 20000 pasos inspeccionó sus ocho casos de entrenamiento y dos de validación: no completó ninguno. En varios casos de entrenamiento hubo 558–591 intentos bloqueados entre 560–600 movimientos individuales; el estado más repetido apareció hasta 294 veces. La guía densa completó uno de los ocho casos de entrenamiento a ese presupuesto. Los diagnósticos se conservan junto con cada experimento en `results/sarb017/`.
+
+Los checkpoints pueden tener el mismo número de pasos y políticas diferentes: la evaluación del callback ocurre antes de la última actualización de gradiente de ese bloque, y la de cierre de etapa después. Las nuevas evaluaciones registran también `gradient_updates`; los hashes y las métricas del modelo recargado identifican el checkpoint efectivamente conservado. El último modelo puede perder tareas que un checkpoint anterior ya completaba.
+
+Para repetir una variante, usar su configuración y un directorio nuevo, por ejemplo:
+
+```powershell
+uv run --locked --extra rl python scripts/train.py --config configs/dqn_v2_12x12_masked.json --run-dir outputs/v2-12x12-masked-s1 --seed 1
+```
+
+Antes de multiplicar semillas se revisará que la configuración elegida tenga comportamiento útil. Estos experimentos no implementan aprendizaje persistente ni convierten el entrenamiento en una misión visual en vivo.
+
+### Resultado de las cuatro corridas
+
+Cada corrida terminó 120000 pasos. La tabla corresponde al checkpoint seleccionado y recargado, no necesariamente al último. Todas usaron semilla 0; los veinte casos de validación se consultaron para elegir configuración y checkpoint.
+
+| Configuración | Paso seleccionado | Misiones completas | Personas entregadas |
+|---|---:|---:|---:|
+| Control, guía acotada | 120000 | 0/20 | 1/60 |
+| Guía densa | 120000 | 0/20 | 5/60 |
+| Guía densa y movimientos restringidos | 40000 | 2/20 | 10/60 |
+| Sensores compactos y movimientos restringidos | 110000 | 1/20 | 6/60 |
+
+Las métricas y hashes están en [experiments.json](../results/sarb017/experiments.json), y cada directorio de evidencia conserva configuración, evaluaciones, resultados y registros por episodio. No se comparan retornos entre funciones de recompensa distintas. Se elige la variante restringida por misiones completas y después personas entregadas; no se afirma una mejora causal general con una sola semilla. Las dos misiones completas fueron `detour_validation_04_easy` (140 pasos, daño 0) y `hub_validation_04_easy` (39 pasos, daño 2).
+
+El checkpoint elegido se publica en [artifacts/v2_12x12](../artifacts/v2_12x12), con perfil 12 × 12/3 personas/390 entradas. Es un modelo de desarrollo: 2/20 en la validación usada para selección es insuficiente para considerarlo final. No se lanzaron otras semillas ni se evaluaron los cuarenta casos de prueba. La prioridad siguiente es consolidar recogida, retorno y rescates sucesivos con un currículo más gradual y controlar regresiones antes de congelar la configuración.
+
+Para verlo completar un caso conocido de validación:
+
+```powershell
+uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/partitions/v2_12x12/validation/hub_validation_04_easy.json --strategy dqn --model artifacts/v2_12x12/model.zip
+```
+
+Para continuar entrenando una política restringida se debe usar `MaskedDQN` a través del entrenador con `mask_invalid_actions=true`. El cargador estándar `DQN.load` mantiene su política y máscara al inferir de forma determinista; no restituye por sí solo la exploración restringida del algoritmo. Este contrato también deberá respetarse al implementar las sesiones persistentes.
+
+Verificación posterior: se ejecutaron 295 pruebas. Pasaron 293 en la primera ejecución; se ajustaron dos pruebas de catálogo para distinguir modelo incompatible de modelo ausente y abrir el selector antes de elegir el nuevo modelo. Las dos pruebas ajustadas se repitieron y pasaron, incluyendo carga real del checkpoint publicado. La suite se ejecutó fuera de la restricción de enlaces de archivos temporales.
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)

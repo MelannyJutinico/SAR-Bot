@@ -1,0 +1,6566 @@
+{
+  "checkpoint": "outputs\\v2-12x12-s0\\easy_subset_model.zip",
+  "model_sha256": "2cec587d340da327cc130a832ff7f4f98b9614a008223a48b115c0f27100bfe9",
+  "records": [
+    {
+      "scenario": "detour_training_01_easy",
+      "partition": "training",
+      "victims": [
+        [
+          3,
+          7
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 300,
+      "blocked_moves": 559,
+      "wait_actions": 0,
+      "most_repeated_state_count": 277,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                4
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                3
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                2
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "detour_training_02_easy",
+      "partition": "training",
+      "victims": [
+        [
+          1,
+          11
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 300,
+      "blocked_moves": 317,
+      "wait_actions": 0,
+      "most_repeated_state_count": 80,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                8
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                9
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                10
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                11
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "detour_training_03_easy",
+      "partition": "training",
+      "victims": [
+        [
+          0,
+          9
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 300,
+      "blocked_moves": 591,
+      "wait_actions": 0,
+      "most_repeated_state_count": 294,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                8
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                9
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                8
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 10,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "detour_training_04_easy",
+      "partition": "training",
+      "victims": [
+        [
+          1,
+          11
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 300,
+      "blocked_moves": 383,
+      "wait_actions": 0,
+      "most_repeated_state_count": 189,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 11,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 8,
+          "robots": [
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 2,
+          "robots": [
+            [
+              [
+                0,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                7
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "hub_training_01_easy",
+      "partition": "training",
+      "victims": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 280,
+      "blocked_moves": 558,
+      "wait_actions": 0,
+      "most_repeated_state_count": 280,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "hub_training_02_easy",
+      "partition": "training",
+      "victims": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 280,
+      "blocked_moves": 558,
+      "wait_actions": 0,
+      "most_repeated_state_count": 280,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              0
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "hub_training_03_easy",
+      "partition": "training",
+      "victims": [
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 280,
+      "blocked_moves": 558,
+      "wait_actions": 0,
+      "most_repeated_state_count": 280,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              1
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "hub_training_04_easy",
+      "partition": "training",
+      "victims": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 280,
+      "blocked_moves": 558,
+      "wait_actions": 0,
+      "most_repeated_state_count": 280,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "detour_validation_01_easy",
+      "partition": "validation",
+      "victims": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 300,
+      "blocked_moves": 301,
+      "wait_actions": 0,
+      "most_repeated_state_count": 149,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                5
+              ],
+              null
+            ],
+            [
+              [
+                0,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 8,
+          "robots": [
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ],
+            [
+              [
+                1,
+                6
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    },
+    {
+      "scenario": "hub_validation_01_easy",
+      "partition": "validation",
+      "victims": [
+        [
+          0,
+          2
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "outcome": "time_limit",
+      "rescued": 0,
+      "steps": 280,
+      "blocked_moves": 558,
+      "wait_actions": 0,
+      "most_repeated_state_count": 280,
+      "prefix": [
+        {
+          "step": 1,
+          "action": 2,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 2,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 3,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 4,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 5,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 6,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 7,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 8,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 9,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 10,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 11,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 12,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 13,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 14,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 15,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 16,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 17,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 18,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 19,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 20,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 21,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 22,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 23,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 24,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 25,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 26,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 27,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 28,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 29,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        },
+        {
+          "step": 30,
+          "action": 10,
+          "robots": [
+            [
+              [
+                1,
+                0
+              ],
+              2
+            ],
+            [
+              [
+                0,
+                1
+              ],
+              null
+            ]
+          ],
+          "rescued": []
+        }
+      ]
+    }
+  ]
+}

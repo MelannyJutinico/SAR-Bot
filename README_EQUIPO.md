@@ -8,7 +8,7 @@ Este documento permite continuar el proyecto sin haber participado en las conver
 
 Una aplicación de rescate en un edificio 2D donde **dos robots controlados por una política aprendida** recogen a tres sobrevivientes y los llevan a una base, considerando obstáculos, coordinación y exposición al calor. La ampliación V2 comienza con un hito de 10 × 10 y tiene como objetivo edificios de 12 × 12.
 
-El editor ya permite **colocar a las tres personas con clics antes de iniciar la misión**, dentro de un edificio preparado por el equipo. Luego se puede observar el rescate y comparar las estrategias disponibles, manteniendo exactamente el mismo escenario. DQN solo está disponible cuando existe un modelo compatible con ese perfil; todavía falta el de 12 × 12. Como cada robot carga una persona, hacen falta viajes adicionales y decisiones sobre el reparto del trabajo.
+El editor ya permite **colocar a las tres personas con clics antes de iniciar la misión**, dentro de un edificio preparado por el equipo. Luego se puede observar el rescate y comparar las estrategias disponibles, manteniendo exactamente el mismo escenario. DQN requiere seleccionar un modelo compatible; ya existe un modelo de desarrollo 12 × 12, cuyo resultado es 2/20 misiones de validación y todavía necesita mejorar. Como cada robot carga una persona, hacen falta viajes adicionales y decisiones sobre el reparto del trabajo.
 
 La pregunta del trabajo es: **¿qué tan bien responde un controlador aprendido a distintas ubicaciones de sobrevivientes y cómo equilibra rescates, pasos y daño térmico frente a referencias clásicas?**
 
@@ -31,13 +31,13 @@ La simulación es académica. Las temperaturas y daños son reglas de juego, no 
 | Referencias aleatoria, geométrica y térmica | Implementadas |
 | Gymnasium, recompensas, entrenamiento y checkpoints DQN | Implementados |
 | Modelo con sensores V1 guardado y cargable | Disponible para 6 × 6 y dos personas |
-| Modelo V2 | Piloto de integración; aún no resuelve el edificio grande |
+| Modelo V2 | Piloto 10 × 10 y modelo de desarrollo 12 × 12, 2/20 misiones de validación |
 | Interfaz Pygame con controles, calor, rutas e indicadores | Integrada con editor, comparación, biblioteca, catálogo e historial |
 | Pruebas de motor, aprendizaje, reproducción y controles | Ampliadas para V2; conservar la suite completa al integrar |
 | Editor para colocar sobrevivientes con clics | Implementado; pendientes revisiones compartidas |
 | Dos edificios 12 × 12 y generación reproducible de ubicaciones | Implementados |
 | Particiones y evaluación unificada | Implementadas; 60/20/40 casos de entrenamiento/validación/prueba |
-| Entrenamiento con muchas combinaciones de ubicaciones | Pendiente |
+| Entrenamiento con muchas combinaciones de ubicaciones | Conectado a particiones; cuatro corridas de 120000 pasos ejecutadas, rendimiento aún insuficiente |
 | Aprendizaje continuo con memoria y modelo persistentes entre ejecuciones | Solicitado; pendiente en SARB-033 a SARB-035 |
 | Certificación positiva de viabilidad térmica de posiciones nuevas | Implementada y acotada; no certificar no demuestra imposibilidad |
 | Selección final sobre validación y evaluación con varias semillas | Pendientes |
@@ -227,7 +227,7 @@ La entrega contendrá código reproducible, interfaz, modelo guardado, escenario
 ### Orden de cierre desde la versión integrada en main
 
 1. **Todo el equipo, coordina persona 4:** confirmar alcance y entregables con el profesor, registrar las cuatro instalaciones y revisar las entregas ya implementadas (SARB-001 a 004). No reconstruir el editor ni los escenarios por seguir viendo casillas abiertas.
-2. **Persona 1:** completar la configuración de entrenamiento V2 sobre las particiones, seleccionar con validación separada y ejecutar un piloto con ubicaciones variables y un presupuesto documentado (SARB-015 a 018). Evaluar rescates reales; no exigir una superioridad que los datos no demuestren.
+2. **Aprendizaje:** la conexión a particiones, selección con validación y primeras corridas V2 ya están implementadas. Se conserva un modelo 12 × 12 que completa 2/20 misiones. El siguiente trabajo es consolidar recogida, retorno y rescates sucesivos con un currículo más gradual y revisar regresiones (SARB-015 a 018). Evaluar rescates reales; no exigir una superioridad que los datos no demuestren.
 3. **Personas 1 y 4:** entrenar tres semillas de la misma configuración final, congelar checkpoints con hashes y comprobar que cargan en el perfil acordado (SARB-019). El modelo 6 × 6 alternativo no cumple el objetivo V2 de 12 × 12/3 personas.
 4. **Persona 1 → persona 3 → persona 4:** implementar sesiones persistentes de modelo y memoria, integrarlas en misiones reales de la UI y medir adaptación/regresiones sin entrenar durante evaluación ni reproducción (SARB-033 a 035). Este frente puede avanzar junto al entrenamiento final; sus sesiones usan copias separadas de los modelos congelados.
 5. **Persona 4, revisan personas 1 y 3:** ejecutar la prueba reservada con los tres checkpoints y referencias, regenerar gráficas, complementar análisis e informe con esos resultados (SARB-021 a 023, 025 y actualización de 031). Las herramientas ya están implementadas; faltan los resultados finales.

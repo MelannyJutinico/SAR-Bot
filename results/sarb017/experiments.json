@@ -1,0 +1,68 @@
+{
+  "scope": "configuration and checkpoint selection on validation; not four independent seeds",
+  "selected_run": "v2-12x12-masked-s0",
+  "selection_rule": "completed missions, then delivered victims; no cross-reward return comparison",
+  "test_evaluated": false,
+  "experiments": [
+    {
+      "run": "v2-12x12-s0",
+      "evidence": "results/sarb017/v2_12x12_s0",
+      "scope": "training",
+      "training_steps": 120000,
+      "training_seed": 0,
+      "selected_steps": 120000,
+      "selection_split": "validation",
+      "validation_cases": 20,
+      "successes": 0,
+      "rescued": 1,
+      "elapsed_seconds": 693.92,
+      "model_sha256": "b97905c89c72f6ea687a12aedcaad05f727b2b8a9fc6769be154e12c19b452a7",
+      "test_evaluated": false
+    },
+    {
+      "run": "v2-12x12-dense-s0",
+      "evidence": "results/sarb017/v2_12x12_dense_s0",
+      "scope": "training",
+      "training_steps": 120000,
+      "training_seed": 0,
+      "selected_steps": 120000,
+      "selection_split": "validation",
+      "validation_cases": 20,
+      "successes": 0,
+      "rescued": 5,
+      "elapsed_seconds": 413.78,
+      "model_sha256": "5de4dfa6bffc20be2a6e586a5473f972823a5b94405a24ef5538dbb4cf67cafb",
+      "test_evaluated": false
+    },
+    {
+      "run": "v2-12x12-masked-s0",
+      "evidence": "results/sarb017/v2_12x12_masked_s0",
+      "scope": "training",
+      "training_steps": 120000,
+      "training_seed": 0,
+      "selected_steps": 40000,
+      "selection_split": "validation",
+      "validation_cases": 20,
+      "successes": 2,
+      "rescued": 10,
+      "elapsed_seconds": 559.11,
+      "model_sha256": "1fc205d8369c7fd6c2ea38bf41d563d31dad0a4f16d0226bd20b9daa0df3302a",
+      "test_evaluated": false
+    },
+    {
+      "run": "v2-12x12-compact-s0",
+      "evidence": "results/sarb017/v2_12x12_compact_s0",
+      "scope": "training",
+      "training_steps": 120000,
+      "training_seed": 0,
+      "selected_steps": 110000,
+      "selection_split": "validation",
+      "validation_cases": 20,
+      "successes": 1,
+      "rescued": 6,
+      "elapsed_seconds": 503.97,
+      "model_sha256": "abbdc2c1f7a8359ac336bfd9763f7d377f19080abe9088f9c7f777db150efc88",
+      "test_evaluated": false
+    }
+  ]
+}

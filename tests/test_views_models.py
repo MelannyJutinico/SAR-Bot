@@ -93,6 +93,8 @@ class ViewsModelsTests(unittest.TestCase):
   self.assertEqual(self.app.request.strategy,'dqn')
 
  def test_twelve_by_twelve_unavailable_without_loading_model(self):
+  # Ausencia explícita: publicar un modelo nuevo no cambia esta precondición.
+  self.app.models=tuple(m for m in self.app.models if m.dimensions!=(12,12,3))
   self.app.scenario_index=next(i for i,(p,_) in enumerate(self.app.options) if p.name=='coordination_hub_12x12.json')
   self.app.strategy_index=0
   with patch('sar_bot.ui.app.prepare_mission') as prepare:
@@ -100,6 +102,18 @@ class ViewsModelsTests(unittest.TestCase):
   self.assertIn('DQN no disponible',self.app.error)
   self.assertIsNone(self.app.playback)
   self.app.action('models');self.app.render()
+
+ def test_published_twelve_by_twelve_model_can_be_selected_and_loaded(self):
+  self.app.scenario_index=next(i for i,(p,_) in enumerate(self.app.options) if p.name=='coordination_hub_12x12.json')
+  self.app._select()
+  index=next(i for i,m in enumerate(self.app.models) if m.path.parent.name=='v2_12x12')
+  self.assertIsNone(self.app.models[index].reason(self.app.scenario))
+  self.app.action('models')
+  self.app.action(f'model_{index}')
+  self.app.strategy_index=0;self.app._select()
+  self.assertIsNotNone(self.app.playback,self.app.error)
+  self.assertEqual(self.app.request.strategy,'dqn')
+  self.assertEqual(self.app.playback.episode.scenario.victim_count,3)
 
  def test_unknown_or_missing_metadata_rejected(self):
   with tempfile.TemporaryDirectory() as tmp:

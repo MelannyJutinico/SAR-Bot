@@ -1,5 +1,13 @@
 # Interfaz de SAR-Bot - Persona 3
 
+**Actualización del 26 de noviembre de 2026:** ya se publica `artifacts/v2_12x12/model.zip`, compatible con 12 × 12 y tres personas. Debe seleccionarse explícitamente en el catálogo o mediante `--model`. Es un DQN de desarrollo con movimientos restringidos y 2/20 misiones completas de validación; no es el modelo final. Las auditorías fechadas el 18 de noviembre que describen ausencia de checkpoint 12 × 12 documentan el estado histórico.
+
+Ejemplo real de validación usado para seleccionar el checkpoint (39 pasos, tres entregas y daño 2):
+
+```powershell
+uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/partitions/v2_12x12/validation/hub_validation_04_easy.json --strategy dqn --model artifacts/v2_12x12/model.zip
+```
+
 Estado de estabilizacion: 2026-11-18. Alcance: SARB-010, SARB-011, SARB-012,
 SARB-030, SARB-014, SARB-013 y SARB-032. Implementacion local lista para revision
 tecnica cuando pasen las verificaciones indicadas al final. No equivale a cerrar

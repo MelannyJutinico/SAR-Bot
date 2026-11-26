@@ -18,7 +18,9 @@ uv run --extra ui --extra rl python scripts/ui.py --scenario scenarios/v2/buildi
 
 ![Base V2 de 10 × 10 con tres personas y dos focos](docs/images/ui-v2.png)
 
-Las referencias completan sus tres rescates. DQN V2 es todavía un piloto: aprende el rescate cercano, pero no completa el edificio grande en la evaluación realizada. Ya están integrados el editor, dos edificios 12 × 12, generación reproducible, certificación positiva, historial, evaluador, particiones y gráficas de desarrollo. Siguen pendientes el entrenamiento final para ubicaciones variables, los tres modelos V2 congelados, el aprendizaje continuo y la evaluación/entrega final. El resto de resultados de esta sección corresponde a la **base V1**.
+Las referencias completan sus tres rescates. El piloto DQN 10 × 10 aprende el rescate cercano y falla en su edificio grande. Ya están integrados el editor, dos edificios 12 × 12, generación reproducible, certificación positiva, historial, evaluador, particiones y gráficas de desarrollo. Siguen pendientes consolidar el aprendizaje, los tres modelos V2 congelados, el aprendizaje continuo y la evaluación/entrega final.
+
+**Nuevo modelo de desarrollo 12 × 12:** [artifacts/v2_12x12](artifacts/v2_12x12) contiene un DQN con restricciones de movimiento que completa **2/20 misiones de validación**. Se seleccionó entre cuatro configuraciones con una semilla; todavía no es un modelo final ni se evaluó en prueba. La guía, límites y un comando para mostrar un rescate real están en [APRENDIZAJE.md](docs/APRENDIZAJE.md#resultado-de-las-cuatro-corridas). El resto de resultados de esta sección corresponde a la **base V1**.
 
 Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. El modelo recomendado usa sensores locales y completa los seis controles de entrenamiento, dos casos de validación y dos de prueba. Resuelve el pasillo compartido que fallaba antes; todavía no demuestra mejor gestión térmica ni generalización amplia.
 

@@ -1,0 +1,13 @@
+{
+  "scope": "training",
+  "training_steps": 120000,
+  "training_seed": 0,
+  "selected_steps": 110000,
+  "selection_split": "validation",
+  "validation_cases": 20,
+  "successes": 1,
+  "rescued": 6,
+  "elapsed_seconds": 503.97,
+  "model_sha256": "abbdc2c1f7a8359ac336bfd9763f7d377f19080abe9088f9c7f777db150efc88",
+  "test_evaluated": false
+}
