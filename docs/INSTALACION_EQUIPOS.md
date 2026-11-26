@@ -22,6 +22,7 @@ Valores esperados: el pasillo compartido con `artifacts/sensors_dqn/model.zip` d
 - **Versiones instaladas por el lockfile:** gymnasium 1.4.0, stable-baselines3 2.9.2, torch 2.15.0+cpu, numpy 2.5.4 y pygame 2.6.1. `uv` resolvió 38 paquetes y descargó CPython 3.12.16 (21 MiB) y torch (121 MiB).
 - **Interfaz:** `scripts/ui.py --headless --steps 22 --screenshot ...` terminó con `"outcome": "success", "rescued": 2`. La captura muestra «Rescate completo», 2/2 personas, 22/100 pasos y daño 0 con «DQN entrenado».
 - **Rama de la persona 4:** en el mismo entorno limpio, el commit `8ccb90b` de `feature/persona4-evaluacion` pasa sus 262 pruebas. La copia de trabajo previa, creada con pip y Python 3.11.9, pasa las 266 pruebas de `5b05b8d`. Python 3.11, declarado en `pyproject.toml`, también funciona.
+- **Revisión del 25 de noviembre de 2026:** un clon nuevo de `feature/persona4-evaluacion` desde GitHub (`aabc47a`), instalado con `uv 0.13.10` y el lockfile, pasa las 282 pruebas. Además, un recorrido por la interfaz real en modo asíncrono se completó sin errores: colocar tres personas con el editor, validar, ejecutar la misión, comparar estrategias y abrir el historial. Sus cifras coinciden con el motor: ruta corta 44 pasos y daño 47, térmica 48 y 40, aleatoria destruida en el paso 160.
 
 ## 2. Incidencias encontradas y correcciones
 
@@ -30,6 +31,8 @@ Valores esperados: el pasillo compartido con `artifacts/sensors_dqn/model.zip` d
 | `uv` no estaba instalado en el equipo de la persona 4 | `uv sync` no se podía ejecutar | Se instaló con `python -m pip install uv`, que la documentación de `uv` admite junto al instalador oficial. Se agregó a la guía del equipo. |
 | La copia de trabajo ya tenía un `.venv` creado con pip y Python 3.11 | `uv sync --python 3.12` habría recreado ese entorno, quitando lo instalado a mano | La comprobación se hizo en un clon limpio. En la guía: hacer la primera instalación en un clon nuevo o aceptar que `uv` recree `.venv`. |
 | En Git Bash, la salida con tildes aparece con símbolos extraños («est� �ntegro») | Solo estético; los archivos se escriben en UTF-8 | Usar PowerShell o Windows Terminal, o definir `PYTHONIOENCODING=utf-8`. |
+| `test_comparison.test_compatible_dqn_uses_selected_checkpoint` falló una vez por «Comparison timeout» mientras corrían dos suites a la vez | Prueba sensible a la carga: espera unos 10 s fijos a que termine la comparación con DQN | Sola pasó 3 de 3 veces, y la suite limpia sin competencia pasó completa. Se sugiere a la persona 3 una espera con límite de tiempo más amplio. |
+| `scripts/report_figures.py` fallaba al imprimir la lista cuando `--output-dir` estaba fuera del repositorio | Los archivos se escribían, pero el script terminaba con error | Corregido y cubierto por una prueba. |
 
 ## 3. Pasos para completar una fila
 

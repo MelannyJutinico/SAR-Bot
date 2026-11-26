@@ -69,7 +69,7 @@ def main():
     except ValueError as error:
         raise SystemExit(f"No se generó nada: {error}")
     for path in write_report(files, ROOT / output_dir):
-        print(f"- {path.relative_to(ROOT).as_posix()}")
+        print(f"- {relative(path)}")
     print("Para comprobarlo después: python scripts/report_figures.py --check " + output_dir)
 
 

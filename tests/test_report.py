@@ -275,6 +275,20 @@ class CommittedEvidenceTests(unittest.TestCase):
             written = write_report(files, folder)
             self.assertEqual(written[0].read_bytes(), b"<svg/>\n")
 
+    def test_cli_can_write_outside_the_repository(self):
+        import os
+        import subprocess
+
+        with tempfile.TemporaryDirectory() as folder:
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "scripts/report_figures.py"), "--results", VALIDATION,
+                 "--skip-replay", "--output-dir", folder],
+                cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertTrue((Path(folder) / TABLES_FILE).is_file())
+            self.assertEqual(check_report(folder, ROOT), [])
+
 
 if __name__ == "__main__":
     unittest.main()

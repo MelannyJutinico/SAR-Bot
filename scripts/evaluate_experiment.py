@@ -72,11 +72,14 @@ def print_summary(rows):
     print("| estrategia | modelo | episodios | casos | éxitos | rescates | pasos (éxitos) "
           "| daño (éxitos) | destruidos | límite |")
     print("|---|---|---|---|---|---|---|---|---|---|")
+    def shown(value):
+        return "—" if value is None else value
+
     for s in summarize(rows):
         print(f"| {s['strategy']} | {s['model_label'] or '-'} | {s['episodes']} | "
               f"{s['configurations']} | {s['successes']}/{s['episodes']} | "
-              f"{s['rescued']}/{s['victims']} | {s['mean_steps_success']} | "
-              f"{s['mean_damage_success']} | {s['destroyed']} | {s['time_limit']} |")
+              f"{s['rescued']}/{s['victims']} | {shown(s['mean_steps_success'])} | "
+              f"{shown(s['mean_damage_success'])} | {s['destroyed']} | {s['time_limit']} |")
 
 
 def main():
