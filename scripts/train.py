@@ -1,6 +1,7 @@
 """Entrena DQN por etapas y registra evaluaciones de desarrollo, no prueba final."""
 
 import argparse
+from copy import deepcopy
 from dataclasses import asdict
 import hashlib
 import importlib.metadata
@@ -38,6 +39,7 @@ class DevelopmentEvaluation(BaseCallback):
         results = evaluate_model(self.model, self.scenarios, self.rewards)
         score = model_score(results)
         record = {"steps": self.model.num_timesteps, "stage": self.stage,
+                  "gradient_updates": self.model._n_updates,
                   "exploration_rate": self.model.exploration_rate,
                   "elapsed_seconds": round(time.monotonic() - self.started, 2),
                   "results": results, "score": score}
@@ -46,10 +48,11 @@ class DevelopmentEvaluation(BaseCallback):
         if self.best_score is None or score > self.best_score:
             self.best_score = score
             self.model.save(self.run_dir / "best_model")
-        status = "; ".join(f"{r['scenario']}: {r['rescued']}/{r['victims_total']}, {r['outcome']}, "
-                           f"pasos={r['steps']}, daño={r['damage_total']}" for r in results)
         print(f"[{self.stage} | {self.model.num_timesteps} pasos] "
-              f"Exitos: {score[0]}/{len(results)}, rescatados: {score[1]} | {status}", flush=True)
+              f"Exitos: {score[0]}/{len(results)}, rescatados: {score[1]}/"
+              f"{sum(r['victims_total'] for r in results)}, "
+              f"destruidos: {sum(r['outcome'] == 'destroyed' for r in results)}, "
+              f"limite: {sum(r['outcome'] == 'time_limit' for r in results)}", flush=True)
         return results
 
     def _on_step(self):
@@ -96,6 +99,14 @@ def main():
         from sar_bot.agents.masked_dqn import MaskedDQN, MaskedDQNPolicy
         model_class, policy_class = MaskedDQN, MaskedDQNPolicy
         config["dqn"].setdefault("policy_kwargs", {})["rescue_profile"] = checked_env.profile
+    dqn_kwargs = deepcopy(config["dqn"])
+    if config.get("compact_features", False):
+        if observation_mode != "sensors":
+            parser.error("La representación compacta requiere sensores")
+        from sar_bot.agents.masked_dqn import RescueFeaturesExtractor
+        policy_kwargs = dqn_kwargs.setdefault("policy_kwargs", {})
+        policy_kwargs["features_extractor_class"] = RescueFeaturesExtractor
+        policy_kwargs["features_extractor_kwargs"] = {"rescue_profile": checked_env.profile}
     print(f"Perfil {checked_env.profile}; etapas: " + ", ".join(
         f"{s['name']}={len(s['scenarios'])} casos/{s['steps']} pasos" for s in config["stages"]), flush=True)
     for stage in config["stages"]:
@@ -146,10 +157,10 @@ def main():
             if model is None:
                 if initial_model is None:
                     model = model_class(policy_class, env, seed=config["seed"], device="cpu", verbose=0,
-                                **config["dqn"])
+                                **dqn_kwargs)
                 else:
                     model = model_class.load(initial_model, env=env, seed=config["seed"],
-                                     device="cpu", verbose=0, **config["dqn"])
+                                     device="cpu", verbose=0, **dqn_kwargs)
                     observation_mode_for_model(model, scenarios[0])
                     metadata["initial_model"]["previous_training_steps"] = model.num_timesteps
                     (args.run_dir / "metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")

@@ -12,7 +12,8 @@ sys.path.insert(0, str(ROOT / "src"))
 import numpy as np
 import torch
 from stable_baselines3 import DQN
-from sar_bot.agents.masked_dqn import MaskedDQN, MaskedDQNPolicy, joint_action_mask
+from sar_bot.agents.masked_dqn import (MaskedDQN, MaskedDQNPolicy, joint_action_mask,
+                                      RescueFeaturesExtractor)
 from sar_bot.core import MissionState, Robot, Scenario
 from sar_bot.core.simulation import OFFSETS
 from sar_bot.env import RescueEnv
@@ -27,7 +28,10 @@ class MaskedDQNTests(unittest.TestCase):
             env.reset()
             walkable = [(x,y) for y in range(scenario.height) for x in range(scenario.width)
                         if scenario.walkable((x,y))]
-            positions = [(scenario.base, scenario.base)] + [tuple(rng.sample(walkable, 2)) for _ in range(40)]
+            neighbor = next((scenario.base[0]+dx, scenario.base[1]+dy) for dx,dy in OFFSETS[:4]
+                            if scenario.walkable((scenario.base[0]+dx, scenario.base[1]+dy)))
+            positions = [(scenario.base, scenario.base), (scenario.base, neighbor)]
+            positions += [tuple(rng.sample(walkable, 2)) for _ in range(40)]
             for pair in positions:
                 env.simulation.state = MissionState(tuple(Robot(p) for p in pair))
                 mask = joint_action_mask(torch.as_tensor(env.observation()), env.profile)[0].numpy()
@@ -72,6 +76,33 @@ class MaskedDQNTests(unittest.TestCase):
             self.assertTrue(all(valid[int(model.predict(obs)[0])] for _ in range(100)))
             model.learn(total_timesteps=8, reset_num_timesteps=False)
             self.assertEqual(model.num_timesteps, 40)
+
+    def test_compact_policy_uses_sensors_and_survives_standard_model_loader(self):
+        torch.set_num_threads(1)
+        scenario = Scenario.load(ROOT / "scenarios/v2/coordination_hub_12x12.json")
+        env = RescueEnv([scenario], observation_mode="sensors")
+        model = MaskedDQN(MaskedDQNPolicy, env, seed=0, device="cpu", learning_starts=4,
+                          batch_size=8, buffer_size=100,
+                          policy_kwargs={"net_arch": [16,16], "rescue_profile": env.profile,
+                                         "features_extractor_class": RescueFeaturesExtractor,
+                                         "features_extractor_kwargs": {"rescue_profile": env.profile}})
+        model.sar_bot_profile = env.profile
+        model.learn(total_timesteps=16)
+        self.assertEqual(model.policy.q_net.features_dim, 102)
+        obs, _ = env.reset()
+        temporary_root = ROOT / "tmp/tests"
+        temporary_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=temporary_root) as directory:
+            path = Path(directory) / "compact.zip"
+            model.save(path)
+            loaded = DQN.load(path, device="cpu")
+            self.assertEqual(int(model.predict(obs, deterministic=True)[0]),
+                             int(loaded.predict(obs, deterministic=True)[0]))
+            from sar_bot.agents.dqn import DQNPolicy as RescuePolicy
+            from sar_bot.core import RescueSimulation
+            controller = RescuePolicy(RescueSimulation(scenario), path)
+            self.assertEqual(controller.act(controller.env.simulation.state),
+                             int(loaded.predict(obs, deterministic=True)[0]))
 
 
 if __name__ == "__main__":

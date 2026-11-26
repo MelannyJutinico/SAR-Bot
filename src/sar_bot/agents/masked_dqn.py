@@ -8,8 +8,31 @@ import numpy as np
 import torch
 from stable_baselines3 import DQN
 from stable_baselines3.dqn.policies import DQNPolicy, QNetwork
+from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 
 from sar_bot.core.simulation import OFFSETS
+
+
+class RescueFeaturesExtractor(BaseFeaturesExtractor):
+    """Prioriza estado y sensores existentes; no calcula acciones ni objetivos.
+
+    Las matrices estáticas ya están resumidas por sensores de transitabilidad,
+    temperatura y distancias. Las distancias se expresan en escala del lado.
+    """
+    def __init__(self, observation_space, rescue_profile):
+        if rescue_profile["mode"] != "sensors":
+            raise ValueError("La representación compacta requiere sensores")
+        self.map_size = 2 * rescue_profile["width"] * rescue_profile["height"]
+        self.state_size = 11 + 7 * rescue_profile["victims"]
+        self.sensor_width = 4 + rescue_profile["victims"]
+        self.distance_scale = max(rescue_profile["width"], rescue_profile["height"])
+        super().__init__(observation_space, observation_space.shape[0] - self.map_size)
+
+    def forward(self, observations):
+        dynamic = observations[:, self.map_size:self.map_size+self.state_size]
+        local = observations[:, self.map_size+self.state_size:].reshape(-1, 2, 5, self.sensor_width)
+        sensors = torch.cat((local[..., :3], local[..., 3:] * self.distance_scale), dim=-1)
+        return torch.cat((dynamic, sensors.flatten(1)), dim=1)
 
 
 def joint_action_mask(observations, profile):
