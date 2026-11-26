@@ -129,6 +129,10 @@ La ejecución muestra rescates, pasos, temperatura, integridad, carga, recorrido
 
 El guion vigente está en [DEMO.md](DEMO.md). Se debe explicar qué aprende la red, qué está programado y qué demuestran las comparaciones; no presentar A* como navegación aprendida.
 
+## Corrección posterior de espera en base
+
+Tras el experimento congelado se corrigió un empate del planificador que permitía mover sin tarea a un robot por celdas frías. El agente actual espera cuando está en la base, sin carga y sin otro objetivo. En los veinte casos de validación se conservaron rescates, pasos y daño y se eliminaron 88 salidas innecesarias. La red no se reentrenó. Los resultados reservados anteriores conservan su configuración y trazas originales. [Caso comunicado y evidencia](../results/navigation_wait/README.md).
+
 ## 8. Límites y reproducibilidad
 
 - Una semilla entrenada; las seis redes sin entrenar no sustituyen réplicas de entrenamiento.
@@ -138,7 +142,7 @@ El guion vigente está en [DEMO.md](DEMO.md). Se debe explicar qué aprende la r
 - Los ejemplos sintéticos y misiones están relacionados por geometría. Se informan conteos y pares sin intervalos que supongan independencia.
 - El control de regresiones de sesión solo cubre casos de entrenamiento. Una actualización aceptada puede empeorar otros casos.
 
-Se aprobaron **328 pruebas automatizadas**, además de verificar los 360 episodios y comprobar dos procesos reales de aprendizaje. Las dependencias están fijadas en `uv.lock`; la red se ejecuta en CPU. Las cifras anteriores pertenecen al modelo congelado, no a una sesión posteriormente adaptada.
+Se aprobaron **330 pruebas automatizadas**, además de verificar los 360 episodios y comprobar dos procesos reales de aprendizaje. Las dependencias están fijadas en `uv.lock`; la red se ejecuta en CPU. Las cifras anteriores pertenecen al modelo congelado, no a una sesión posteriormente adaptada.
 
 ```powershell
 uv sync --locked --extra ui --extra rl --python 3.12

@@ -1130,8 +1130,12 @@ class RescueApp:
             if self.view!="analysis" and self.playback and self.playback.episode.decisions and robot.integrity>0:
                 decisions=[d for d in self.playback.episode.decisions if d["step"]<=self.display_state.steps]
                 target=decisions[-1]["assignments"].get(i) if decisions else None
+                pending=set(range(self.display_scenario.victim_count))-set(self.display_state.rescued)-{
+                    r.carrying for r in self.display_state.robots if r.carrying is not None}
                 if robot.carrying is not None:status="Volviendo a base"
-                elif target is not None and target not in self.display_state.rescued:status=f"Hacia persona {target+1}"
+                elif target is not None and target in pending:status=f"Hacia persona {target+1}"
+                elif self.display_state.outcome=="running":
+                    status="Esperando en base" if robot.position==self.display_scenario.base else "Volviendo a base"
             self.text(status, (x + 133, y + 16), 12, MUTED)
             self.text(f"{robot.integrity}%", (x + 334, y + 10), 21, color, bold=True)
             pygame.draw.rect(self.canvas, INSET, (x + 20, y + 47, 364, 6), border_radius=3)

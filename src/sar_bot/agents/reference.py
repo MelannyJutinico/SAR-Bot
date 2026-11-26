@@ -54,6 +54,8 @@ class ShortestPathPolicy:
         self._distances = {}
         self._legal_cache = {}
         self.damage_weight = 0.0
+        self.idle_at_base = False
+        self._planned_waiters = None
         self.replans = 0
         self.total_expanded = 0
 
@@ -88,6 +90,13 @@ class ShortestPathPolicy:
         if state.outcome != "running":
             raise RuntimeError("No se puede decidir después de finalizar la misión")
         goals = self.targets(state)
+        # La base admite ambos robots: esperar allí no obstruye una entrega.
+        waiters = tuple(self.idle_at_base and robot.position == self.simulation.scenario.base
+                        and robot.carrying is None and goals[i] == self.simulation.scenario.base
+                        for i,robot in enumerate(state.robots))
+        if waiters != self._planned_waiters:
+            self._plan.clear()
+            self._planned_waiters = waiters
         start = tuple(r.position for r in state.robots)
         if self._planned_goals == goals and self._plan and self._plan[0][0] == start:
             self.last_plan_found = True
@@ -120,7 +129,8 @@ class ShortestPathPolicy:
                 self._plan = deque(reversed(plan))
                 self.last_plan_found = True
                 return self._plan.popleft()[1] if self._plan else 24
-            for actions in product(*(self._legal_actions(p) for p in positions)):
+            for actions in product(*([Action.WAIT] if waiters[i] else self._legal_actions(p)
+                                     for i,p in enumerate(positions))):
                 joint = self.simulation.encode_actions(*actions)
                 destination = self.simulation.resolve_movement(positions, joint)
                 exposure = (sum(damage_rate(self.simulation.scenario.temperature_at(p))

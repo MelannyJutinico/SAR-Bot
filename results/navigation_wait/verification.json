@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-26",
+  "full_suite": {
+    "tests": 330,
+    "seconds": 319.888,
+    "result": "OK"
+  },
+  "user_case": {
+    "victims": [
+      [
+        11,
+        2
+      ],
+      [
+        8,
+        10
+      ],
+      [
+        11,
+        10
+      ]
+    ],
+    "rescued": 3,
+    "steps_before": 74,
+    "steps_after": 74,
+    "damage_before": 61,
+    "damage_after": 61,
+    "idle_departures_before": 20,
+    "idle_departures_after": 0,
+    "individual_moves_before": 144,
+    "individual_moves_after": 104
+  },
+  "validation": {
+    "cases": 20,
+    "successes_after": 20,
+    "idle_departures_before": 88,
+    "idle_departures_after": 0,
+    "costs_unchanged_cases": 20,
+    "model_sha256": "499c8c17f383cdc9f72b29fa4da7fe7d2a4a68e2fd5fa69ee23d7d470ab599ae"
+  },
+  "neural_model_unchanged": true,
+  "shared_base_test": "Both idle-robot orders permit the loaded companion to deliver in four steps."
+}

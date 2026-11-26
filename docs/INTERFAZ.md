@@ -23,7 +23,7 @@ Hay una única red de rescate recomendada, por lo que no se muestra un selector 
 
 ## Ejecución
 
-La pantalla muestra entregas, pasos, daño, temperatura y estado de cada persona. Cada tarjeta de robot indica carga, integridad y objetivo: hacia una persona o volviendo a la base. La velocidad modifica la reproducción; no cambia el daño por paso.
+La pantalla muestra entregas, pasos, daño, temperatura y estado de cada persona. Cada tarjeta de robot indica carga, integridad y objetivo: hacia una persona o volviendo a la base. La velocidad modifica la reproducción; no cambia el daño por paso. Cuando un robot queda libre en la base aparece **Esperando en base** y permanece allí; la base compartida permite que el otro entregue.
 
 Recoger no equivale a entregar. Un robot transporta una persona y el contador aumenta al llegar a la base. La misión termina al entregar a las tres personas manteniendo ambos robots vivos, por destrucción de un robot o al agotar los pasos.
 

@@ -19,7 +19,7 @@ Después basta abrir **run.bat**. La aplicación inicia con el **agente neuronal
 
 Es una red pequeña **16 → 64 → 32 → 1**, compartida por los dos robots. Puntúa alternativas de reparto y de exposición al calor. Sus entradas describen distancias de ruta, daño previsto, carga, integridad y trabajo pendiente. Se entrenó por **aprendizaje supervisado** con etiquetas de un estimador de coste programado. El entrenamiento y su evaluación están conservados en el repositorio.
 
-El agente mantiene cada objetivo hasta recoger a la persona; vuelve a la base para entregarla. **A* se encarga de los caminos y las colisiones**. La red aprende las preferencias de reparto y riesgo; no se atribuye a la red una locomoción aprendida de extremo a extremo. Una sola red controla a dos agentes físicos.
+El agente mantiene cada objetivo hasta recoger a la persona; vuelve a la base para entregarla. Cuando queda sin carga ni tarea, espera en la base mientras su compañero termina. **A* se encarga de los caminos y las colisiones**. La red aprende las preferencias de reparto y riesgo; no se atribuye a la red una locomoción aprendida de extremo a extremo. Una sola red controla a dos agentes físicos.
 
 El DQN anterior, que elegía movimientos individuales y se quedaba dando vueltas, se conserva como antecedente experimental. **El modelo usado ahora es `artifacts/rescue_network/model.zip`.**
 
@@ -67,7 +67,7 @@ Las dos redes comparten arquitectura, inicialización de semilla 7 y planificado
 
 Se compara con redes sin entrenar que usan el mismo planificador para distinguir el aporte del aprendizaje del aporte de A*. Solo hay una semilla entrenada. Los edificios son conocidos y las posiciones reservadas son nuevas; los escenarios se certificaron mediante referencias, lo que favorece sus resultados. No se promete resolver cualquier colocación posible.
 
-**328 pruebas automatizadas aprobadas**, además de reproducir las trazas de los 360 episodios de la evaluación nueva.
+**330 pruebas automatizadas aprobadas**, además de reproducir las trazas de los 360 episodios de la evaluación nueva.
 
 ## Comprobar y reproducir
 

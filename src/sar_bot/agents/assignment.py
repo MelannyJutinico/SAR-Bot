@@ -130,8 +130,9 @@ class AssignmentFeatures:
 
 class AssignmentPolicy(ThermalPathPolicy):
     """La asignación sale de la red. A* solo conduce a los objetivos elegidos."""
-    def __init__(self,simulation,model_path=None,*,network=None,record=False):
+    def __init__(self,simulation,model_path=None,*,network=None,record=False,idle_at_base=True):
         super().__init__(simulation,damage_weight=2.)
+        self.idle_at_base = idle_at_base
         if network is None:
             self.network,header=load_network(model_path)
             profile=header["profile"]

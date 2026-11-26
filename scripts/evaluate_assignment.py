@@ -28,9 +28,12 @@ def main():
     torch.set_num_threads(1)
     manifest=json.loads(args.manifest.read_text())
     marker=None
+    idle_at_base=True
     if args.split=='test':
         protocol_path=ROOT/'configs/assignment_protocol.json'
         protocol=json.loads(protocol_path.read_text())
+        # Los protocolos anteriores conservan su regla de navegación original.
+        idle_at_base=protocol.get('idle_at_base',False)
         assert protocol['model_sha256']==file_hash(args.model)
         assert protocol['manifest_json_sha256']==json_hash(args.manifest)
         assert args.untrained_seeds==protocol['untrained_seeds']
@@ -44,10 +47,10 @@ def main():
         scenario=Scenario.load(ROOT/entry['path'])
         for label in policies:
             simulation=RescueSimulation(scenario)
-            if label=='neural_assignment':policy=AssignmentPolicy(simulation,args.model,record=True)
+            if label=='neural_assignment':policy=AssignmentPolicy(simulation,args.model,record=True,idle_at_base=idle_at_base)
             elif label.startswith('untrained_s'):
                 torch.manual_seed(int(label.removeprefix('untrained_s')))
-                policy=AssignmentPolicy(simulation,network=AssignmentNetwork().eval(),record=True)
+                policy=AssignmentPolicy(simulation,network=AssignmentNetwork().eval(),record=True,idle_at_base=idle_at_base)
             else:policy=create_policy(simulation,label)
             states=[simulation.state];actions=[]
             while simulation.state.outcome=='running':

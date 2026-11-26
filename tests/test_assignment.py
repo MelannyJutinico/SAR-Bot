@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 import numpy as np
 import torch
-from sar_bot.core import Scenario,RescueSimulation
+from sar_bot.core import Scenario,RescueSimulation,Robot,MissionState
 from sar_bot.agents.assignment import AssignmentPolicy,AssignmentFeatures,AssignmentNetwork,save_network,load_network
 from sar_bot.agents import create_policy
 from sar_bot.online import LearningSession
@@ -128,6 +128,44 @@ class AssignmentTests(unittest.TestCase):
                 scenario=app.options[index][1]
                 self.assertEqual((scenario.width,scenario.height,scenario.victim_count),(12,12,3))
         finally:app.close();pygame.quit()
+
+    def test_user_layout_stops_idle_oscillations_without_delaying_rescue(self):
+        scenario=self.scenario.with_victims(((11,2),(8,10),(11,10)))
+        records=[]
+        for waiting in (False,True):
+            simulation=RescueSimulation(scenario)
+            policy=AssignmentPolicy(simulation,ROOT/'artifacts/rescue_network/model.zip',idle_at_base=waiting)
+            departures=moves=0
+            while simulation.state.outcome=='running':
+                before=simulation.state;action=policy.act(before);assigned=dict(policy.assignments)
+                after=simulation.step(action)
+                for i,robot in enumerate(before.robots):
+                    moved=after.robots[i].position!=robot.position
+                    moves+=moved
+                    departures+=int(moved and robot.position==scenario.base and robot.carrying is None and i not in assigned)
+            records.append((simulation.state,departures,moves))
+        before,after=records
+        self.assertGreater(before[1],0);self.assertEqual(after[1],0)
+        self.assertEqual(after[0].outcome,'success');self.assertEqual(len(after[0].rescued),3)
+        self.assertEqual(after[0].steps,before[0].steps)
+        self.assertEqual(sum(r.damage for r in after[0].robots),sum(r.damage for r in before[0].robots))
+        self.assertLess(after[2],before[2])
+
+    def test_waiting_robot_does_not_block_shared_base_in_either_robot_order(self):
+        scenario=Scenario(name='shared_base',width=5,height=1,base=(0,0),victims=((4,0),),
+                          walls=frozenset(),temperatures=((25.,)*5,),max_steps=10)
+        for idle in (0,1):
+            with self.subTest(idle_robot=idle):
+                simulation=RescueSimulation(scenario)
+                robots=[Robot((4,0),carrying=0),Robot((4,0),carrying=0)]
+                robots[idle]=Robot(scenario.base)
+                simulation.state=MissionState(tuple(robots))
+                policy=AssignmentPolicy(simulation,network=AssignmentNetwork().eval())
+                while simulation.state.outcome=='running':
+                    simulation.step(policy.act(simulation.state))
+                    self.assertEqual(simulation.state.robots[idle].position,scenario.base)
+                self.assertEqual(simulation.state.outcome,'success')
+                self.assertEqual(simulation.state.steps,4)
 
 
 if __name__=='__main__':unittest.main()
