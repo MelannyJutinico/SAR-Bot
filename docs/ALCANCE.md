@@ -1,5 +1,19 @@
 # Alcance y protocolo de entrega (SARB-002)
 
+## Alcance de cierre acordado el 26 de noviembre de 2026
+
+El usuario autorizó cerrar una versión presentable antes de las 17:00 de Bogotá. Este acuerdo de equipo sustituye, para esta entrega, los objetivos anteriores de tres semillas y aprendizaje en cada movimiento; no constituye confirmación del profesor.
+
+- Conservar simulador, editor, dos robots, tres personas, mapas 12 × 12 y cuatro estrategias.
+- Limitar la nueva investigación de aprendizaje hasta las 13:10 y elegir el modelo con validación; admitir resultados parciales y fallos medidos.
+- Publicar un modelo de una semilla de entrenamiento. Declarar esta limitación, sin calcular variabilidad entre semillas ni presentar configuraciones distintas como réplicas independientes.
+- Implementar aprendizaje adicional al finalizar cada misión nueva del modo de aprendizaje, con modelo, memoria y progreso persistentes entre ejecuciones. Evaluación y comparación usan checkpoints fijos; reproducir una traza no entrena.
+- Congelar configuración, modelo y hashes antes de evaluar los cuarenta casos reservados; ejecutar las referencias con cinco semillas aleatorias por caso. Registrar un protocolo explícito de una semilla antes de abrir resultados.
+- Completar resultados, gráficas, informe técnico, guion, ejemplos de respaldo, comprobación en el computador disponible y publicación reproducible.
+- Cerrar funcionalidades y pruebas hacia las 16:30, conservando treinta minutos de margen. No exigir instalación documentada en cuatro computadores para cerrar esta versión.
+
+Los requisitos del profesor de las secciones siguientes siguen sin confirmación registrada. El backlog original se conserva como historial; sus criterios de tres semillas y aprendizaje en cada paso no se usan para afirmar que esta versión incumple el alcance reducido acordado.
+
 **Responsable:** persona 4 con todo el equipo. **Revisa:** persona 1. **Preparado el:** 18 de noviembre de 2026.
 
 **Estado:** borrador para la reunión con el profesor. Hasta que el profesor responda, ninguna fila de la sección 1 está confirmada. Las secciones 2 y 3 son decisiones del equipo y no se presentan como requisitos del curso.

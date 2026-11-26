@@ -22,6 +22,7 @@ from stable_baselines3.common.monitor import Monitor
 
 from sar_bot.core import Scenario
 from sar_bot.env import RescueEnv, RewardConfig
+from sar_bot.env.curriculum import CurriculumRescueEnv
 from sar_bot.learning import evaluate_model, model_score, observation_mode_for_model
 from sar_bot.training import StageExploration, resolve_training_config
 
@@ -110,6 +111,9 @@ def main():
     print(f"Perfil {checked_env.profile}; etapas: " + ", ".join(
         f"{s['name']}={len(s['scenarios'])} casos/{s['steps']} pasos" for s in config["stages"]), flush=True)
     for stage in config["stages"]:
+        pending = stage.get("pending_victims", checked_env.victim_count)
+        if type(pending) is not int or not 1 <= pending <= checked_env.victim_count:
+            parser.error("pending_victims fuera del perfil")
         if "exploration" in stage:
             StageExploration(0, stage["steps"], **stage["exploration"])
     initial_model = ROOT / config["initial_model"] if config.get("initial_model") else None
@@ -151,7 +155,8 @@ def main():
     model = None
     try:
         for stage, scenarios in zip(config["stages"], scenarios_by_stage):
-            env = Monitor(RescueEnv(scenarios, rewards, observation_mode=observation_mode),
+            env = Monitor(CurriculumRescueEnv(scenarios, rewards, observation_mode=observation_mode,
+                                             pending_victims=stage.get("pending_victims")),
                           str(args.run_dir / f"{stage['name']}.monitor.csv"))
             env.reset(seed=config["seed"])
             if model is None:
