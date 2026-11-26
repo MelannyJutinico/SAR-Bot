@@ -55,35 +55,47 @@ def notice(app):
 
 
 def draw_preparation(app):
-    app.text("PREPARACION", (900,137),18,bold=True)
-    app.text("Plantilla de desarrollo",(900,174),12)
-    app.button("scenario",app.scenario.name.replace("_"," ")[:32],(900,194,328,42))
-    from .app import STRATEGIES
-    app.text("Estrategia",(900,257),12)
-    app.button("strategy",STRATEGIES[app.strategy_index][1],(900,277,328,42))
-    app.button("models","Seleccionar modelo DQN",(900,335,328,38))
-    entry=app.selected_model()
-    if entry:
-        app.wrap(f"{entry.path.parent.name}: {entry.status}",900,385,320,14)
-    app.button("learning_mode","Modo: Aprender y guardar" if app.learning_active else "Modo: Evaluar sin aprender",
-               (900,435,328,36),enabled=STRATEGIES[app.strategy_index][0]=="dqn" and not app.learning_future)
-    if STRATEGIES[app.strategy_index][0]=="dqn":
-        app.wrap(app.model_problem() or "Modelo de desarrollo; puede fallar en posiciones nuevas.",900,482,320,12)
-    app.button("edit","Editar personas",(900,535,328,36),enabled=app.scenario.victim_count==3 and not app.learning_future)
-    app.button("save_file","Guardar",(900,583,155,32))
-    app.button("load_file","Cargar personal",(1070,583,158,32),enabled=not app.learning_future)
-    app.button("prepare","Nueva mision / preparar",(900,632,328,40),primary=True,enabled=not app.learning_future)
-    app.button("view_execution","Ver ejecucion",(900,680,328,38))
-    app.button("compare","Comparar estrategias",(900,730,328,36),enabled=not app.learning_future)
-    app.wrap(notice(app),900,775,320,12)
+    from .app import STRATEGIES, scenario_label
+    app.text("PREPARAR RESCATE", (900,137),18,bold=True)
+    app.text("Mapa del edificio",(900,174),12)
+    app.button("scenario",scenario_label(app.scenario)[:35],(900,194,328,42))
+    app.text("Elige el edificio y coloca a las personas.",(900,245),12)
+    strategy, label, explanation = STRATEGIES[app.strategy_index]
+    app.text("Cómo decidirán los robots",(900,274),12)
+    app.button("strategy",label,(900,294,328,42))
+    app.wrap(explanation,900,345,320,13)
+    if strategy == "dqn":
+        app.button("models","Elegir red neuronal",(900,405,328,34),enabled=not app.learning_future)
+        app.button("mode_evaluate","Solo ejecutar",(900,456,158,34),
+                   primary=not app.learning_active,enabled=not app.learning_future)
+        app.button("mode_learn","Aprender",(1070,456,158,34),
+                   primary=app.learning_active,enabled=not app.learning_future)
+        detail = ("Guarda experiencias. Conserva nuevos pesos si no empeoran en los controles."
+                  if app.learning_active else "Usa el modelo guardado sin modificarlo.")
+        app.wrap(app.model_problem() or detail,900,502,320,12)
+    else:
+        app.wrap("Esta estrategia sigue reglas programadas. No necesita una red ni entrenamiento.",
+                 900,414,320,13)
+        app.wrap("Para entrenar, elige Red neuronal (DQN) en el selector de arriba.",
+                 900,476,320,12)
+    app.button("edit","Colocar personas",(900,551,328,36),enabled=app.scenario.victim_count==3 and not app.learning_future)
+    app.button("save_file","Guardar mapa",(900,597,155,32))
+    app.button("load_file","Mis mapas",(1070,597,158,32),enabled=not app.learning_future)
+    app.button("prepare","Preparar nueva misión",(900,642,328,40),primary=True,enabled=not app.learning_future)
+    app.button("view_execution","Ver misión y controles",(900,691,328,36))
+    app.button("compare","Comparar las 4 estrategias",(900,737,328,36),enabled=not app.learning_future)
+    app.wrap(notice(app),900,783,320,12)
 
 
 def draw_execution(app):
     app.text("EJECUCION",(900,137),18,bold=True)
-    app.text("Aprender y guardar al finalizar" if app.request and app.request.learning
-             else "Evaluacion / reproduccion: sin aprendizaje",(900,165),12)
+    mode = ("Aprender y guardar al finalizar" if app.request and app.request.learning
+            else "Red guardada · sin actualizar pesos" if app.request and app.request.strategy == "dqn"
+            else "Estrategia programada · sin entrenamiento")
+    app.text(mode,(900,165),12)
     from .app import STRATEGIES
-    app.wrap("Estrategia: "+(app.request.strategy if app.comparison_replaying and app.request else STRATEGIES[app.strategy_index][1]),900,185,320)
+    labels = {key:label for key,label,_ in STRATEGIES}
+    app.wrap("Estrategia: "+(labels[app.request.strategy] if app.comparison_replaying and app.request else STRATEGIES[app.strategy_index][1]),900,185,320)
     if app.request and app.request.model:
         from pathlib import Path
         app.wrap("Modelo base: "+Path(app.request.model).parent.name,900,235,320,14)
@@ -102,6 +114,7 @@ def draw_execution(app):
 
 
 def draw_analysis(app):
+    from .app import STRATEGIES
     app.text("ANALISIS",(900,137),18,bold=True)
     result=app.last_result
     if result is None:
@@ -113,17 +126,17 @@ def draw_analysis(app):
         lines=[f"Entregadas: {result.rescued}/{result.total}",f"Pasos globales: {result.steps}",
                f"Dano R1 / R2: {result.damage[0]} / {result.damage[1]}",
                f"Temperatura final: {result.temperatures[0]:g} / {result.temperatures[1]:g} C",
-               "Estrategia: "+result.strategy,"Semilla aleatoria: "+(str(result.seed) if result.strategy=="random" else "No aplica"),
-               "Certificacion: "+str(result.certification)]
+               "Estrategia: "+dict((key,label) for key,label,_ in STRATEGIES)[result.strategy],
+               "Azar reproducible: "+(str(result.seed) if result.strategy=="random" else "No aplica"),
+               "Mapa: "+{"certified":"resoluble por una referencia", "not_certified":"sin rescate certificado"}.get(result.certification,"sin comprobar")]
         for i,line in enumerate(lines):app.text(line,(900,255+i*28),14)
         from pathlib import Path
         model=Path(result.model).parent.name if result.model else "No aplica"
         app.wrap("Modelo: "+model,900,470,320,14)
         app.wrap("Escenario: "+result.scenario_name.replace("_"," "),900,520,320,13)
-        app.text("ID fisico:",(900,575),12)
-        app.text(result.scenario_id[:32],(900,597),12);app.text(result.scenario_id[32:],(900,615),12)
-        app.text("ID configuracion exacta:",(900,647),12)
-        app.text(result.configuration_id[:32],(900,669),12);app.text(result.configuration_id[32:],(900,687),12)
+        app.text("CÓMO LEER EL RESULTADO",(900,575),13,bold=True)
+        app.wrap("Rescatar exige entregar en la base. Los pasos miden tiempo simulado; el daño suma la integridad perdida de ambos robots.",900,605,320,13)
+        app.wrap("Un fracaso con poco daño no significa un mejor rescate.",900,674,320,12)
     app.button("history","Historial y trazas",(900,706,328,34))
     app.button("view_preparation","Volver a preparacion",(900,750,328,40))
     if app.comparison_for_display:
@@ -133,19 +146,30 @@ def draw_analysis(app):
 
 
 def draw_models(app):
-    app.text("MODELOS DQN",(900,137),18,bold=True)
-    app.wrap(f"Perfil actual: {app.scenario.width}x{app.scenario.height}, {app.scenario.victim_count} personas",900,177,320,14)
-    for local,entry in enumerate(app.models[app.model_page*4:app.model_page*4+4]):
-        i=app.model_page*4+local
-        y=225+local*108
-        reason=entry.reason(app.scenario)
-        suffix=" · fijo" if entry.status.startswith("congelado") else " · desarrollo"
-        app.button(f"model_{i}",entry.path.parent.name+(suffix if not entry.error else " · invalido"),
-                   (900,y,328,36),enabled=reason is None)
-        description=reason or f"{entry.dimensions[0]}x{entry.dimensions[1]} / {entry.dimensions[2]} personas / {entry.mode} / {entry.observation_size}"
-        app.wrap(description,900,y+39,320,12)
-        if not reason:app.text(entry.architecture+" / "+entry.schema,(900,y+75),11)
-    app.button("models_prev","Anterior",(900,660,155,30),enabled=app.model_page>0)
-    app.button("models_next","Siguiente",(1070,660,158,30),enabled=(app.model_page+1)*4<len(app.models))
-    app.wrap(app.model_problem() or "Compatible no equivale a validado.",900,695,320,13)
-    app.button("models_close","Volver",(900,770,328,38))
+    from pathlib import Path
+    app.text("ELEGIR RED NEURONAL",(900,137),18,bold=True)
+    app.text(f"Mapa: {app.scenario.width} × {app.scenario.height} · {app.scenario.victim_count} personas",
+             (900,177),14)
+    app.text("Solo aparecen redes compatibles.",(900,205),12)
+    entries = app.compatible_models()
+    selected = Path(app.model_path).resolve() if app.model_path else None
+    for local,(index,entry) in enumerate(entries[app.model_page*4:app.model_page*4+4]):
+        y=245+local*100
+        active = entry.path == selected
+        name = "Red principal" if entry.status.startswith("congelado") else "Red experimental: " + entry.path.parent.name
+        app.button(f"model_{index}",("En uso: " if active else "Usar: ")+name,
+                   (900,y,328,36),primary=active)
+        description = ("Modelo guardado para la presentación."
+                       if entry.status.startswith("congelado") else "Experimento previo; puede rendir peor.")
+        app.wrap(description,900,y+44,320,12)
+    if not entries:
+        app.wrap("No hay una red compatible. Elige Ruta corta o Ruta segura para ejecutar este mapa.",900,250,320,14)
+        app.wrap(app.model_problem() or "",900,350,320,12)
+    hidden=len(app.models)-len(entries)
+    if len(entries)>4:
+        app.button("models_prev","Anterior",(900,660,155,30),enabled=app.model_page>0)
+        app.button("models_next","Siguiente",(1070,660,158,30),enabled=(app.model_page+1)*4<len(entries))
+    if hidden:
+        app.wrap(f"{hidden} redes de otros tamaños o no válidas están ocultas.",900,705,320,12)
+    app.wrap("DQN es experimental: una red compatible también puede fallar en el rescate.",900,743,320,12)
+    app.button("models_close","Volver a preparar",(900,787,328,30))

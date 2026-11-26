@@ -261,9 +261,13 @@ class StabilizationTests(unittest.TestCase):
   self.app.set_view('preparation');self.app.render()
   with patch.object(self.app,'action',wraps=self.app.action) as action:
    self.app.click(self.app.controls['edit'].center);action.assert_not_called()
+  models=self.app.models
+  compatible=next(m for m in models if m.reason(self.app.scenario) is None)
+  self.app.models=tuple(replace(compatible,path=ROOT/f'tmp/catalog_{i}/model.zip') for i in range(5))
   self.app.action('models');self.app.render()
   with patch.object(self.app,'action',wraps=self.app.action) as action:
    self.app.click(self.app.controls['models_prev'].center);action.assert_not_called()
+  self.app.models=models
   self.app.action('models_close');self.app.scenario_index=next(i for i,(p,_) in enumerate(self.app.options) if p.name=='warmup_10x10.json');self.app._select()
   self.app.action('edit');self.app.action('editor_clear');self.app.render()
   with patch.object(self.app,'action',wraps=self.app.action) as action:

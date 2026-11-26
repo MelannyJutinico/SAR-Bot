@@ -2,7 +2,7 @@
 from pathlib import Path
 
 OUTCOMES = {"success": "Exito", "destroyed": "Destruccion", "time_limit": "Limite temporal"}
-STRATEGIES = {"shortest": "Ruta corta", "thermal": "Ruta termica", "random": "Aleatoria", "dqn": "DQN piloto"}
+STRATEGIES = {"shortest": "Ruta corta", "thermal": "Ruta segura (calor)", "random": "Movimientos al azar", "dqn": "Red neuronal (DQN)"}
 
 def draw_history(app):
     app.card((28,112,1224,718))

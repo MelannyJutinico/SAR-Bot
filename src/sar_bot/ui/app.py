@@ -35,10 +35,10 @@ RED = (255, 119, 111)
 ROBOT_COLORS = (CYAN, PURPLE)
 
 STRATEGIES = [
-    ("dqn", "DQN entrenado", "Control aprendido mediante recompensas."),
-    ("shortest", "Ruta más corta", "Coordina recorridos sin considerar el calor."),
-    ("thermal", "Ruta con riesgo térmico", "Equilibra pasos y exposición al calor."),
-    ("random", "Movimientos aleatorios", "Selecciona acciones al azar, con semilla fija."),
+    ("dqn", "Red neuronal (DQN)", "Usa lo aprendido con recompensas. Puede fallar en posiciones nuevas."),
+    ("shortest", "Ruta corta", "Planifica recorridos cortos. No tiene en cuenta el daño por calor."),
+    ("thermal", "Ruta segura (calor)", "Planifica rutas considerando distancia y calor. Puede dar un rodeo para reducir daño."),
+    ("random", "Movimientos al azar", "Mueve los robots al azar. Sirve como referencia para comparar resultados."),
 ]
 SCENARIO_NAMES = {
     "rescate_inicial": "Rescate inicial",
@@ -53,7 +53,14 @@ SCENARIO_NAMES = {
     "prueba_obstaculos_pasillo": "Pasillo con otros obstáculos",
     "edificio_10x10_tres_personas": "Edificio 10 × 10 · Tres personas",
     "v2_rescate_cercano_tres_personas": "V2 · Rescate cercano",
+    "centro_coordinacion_12x12": "Centro de coordinación",
+    "desvio_termico_12x12": "Desvío con calor",
+    "demo_conocida_12x12": "Ejemplo aprendido (caso conocido)",
 }
+
+
+def scenario_label(scenario):
+    return SCENARIO_NAMES.get(scenario.name, scenario.name.replace("_", " "))
 
 
 def heat_color(temperature):
@@ -168,7 +175,7 @@ class RescueApp:
                 or episode.learning_id in self.learning_submitted):
             return
         self.learning_submitted.add(episode.learning_id)
-        self.learning_message = "Aprendiendo de la mision y guardando memoria..."
+        self.learning_message = "Aprendiendo y comprobando la nueva red antes de guardarla..."
         from .preparation import learn_completed_episode
         if self.learning_executor is None:
             self.learning_executor = ThreadPoolExecutor(max_workers=1)
@@ -180,8 +187,15 @@ class RescueApp:
             try:
                 self.learning_stats = future.result()
                 result = self.learning_stats
-                self.learning_message = (f"Guardado: {result['missions']} misiones, {result['buffer_size']} recuerdos, "
-                                         f"{result['updates']} actualizaciones.")
+                guard = result.get("last_guard")
+                if guard and not guard["accepted"]:
+                    self.learning_message = ("Memoria guardada. Se mantiene la red anterior: "
+                                             + ("la actualización empeoró en los controles."
+                                                if guard["reason"] == "regression_on_controls"
+                                                else "no se pudo comprobar la actualización."))
+                else:
+                    self.learning_message = (f"Guardado: {result['missions']} misiones, {result['buffer_size']} recuerdos, "
+                                             f"{result['updates']} actualizaciones.")
                 if result.get("recovered"):
                     self.learning_message += " Se recupero un checkpoint anterior."
             except Exception as error:
@@ -657,6 +671,10 @@ class RescueApp:
             pygame.draw.rect(self.canvas, BORDER, rect, 1, border_radius=9)
         self.text(label, rect.center, 16, BG if primary and enabled else TEXT if enabled else MUTED,
                   bold=primary, center=True)
+        if key in ("scenario", "strategy"):
+            pygame.draw.lines(self.canvas, CYAN if enabled else MUTED, False,
+                              [(rect.right-21,rect.centery-3),(rect.right-16,rect.centery+2),
+                               (rect.right-11,rect.centery-3)],2)
 
     def switch(self, key, label, value, y):
         self.text(label, (900, y + 3), 16)
@@ -666,7 +684,19 @@ class RescueApp:
         pygame.draw.circle(self.canvas, BG if value else MUTED,
                            (rect.x + (26 if value else 12), rect.centery), 8)
 
+    def compatible_models(self):
+        """Índices originales para conservar la identidad al filtrar el catálogo."""
+        return sorted(((i, entry) for i, entry in enumerate(self.models)
+                       if entry.reason(self.scenario) is None),
+                      key=lambda pair: (not pair[1].status.startswith("congelado"),
+                                        pair[1].path.parent.name))
+
     def action(self, key):
+        if key in ("mode_evaluate", "mode_learn"):
+            if STRATEGIES[self.strategy_index][0] == "dqn" and not self.learning_future:
+                if self.learning_enabled != (key == "mode_learn"):
+                    self.action("learning_mode")
+            return
         if self.learning_future and (key in {"scenario","strategy","models","edit","prepare","load_file"}
                                      or key.startswith("model_")):
             self.learning_message = "Guardando aprendizaje; espera antes de cambiar la mision."
@@ -746,7 +776,7 @@ class RescueApp:
                 self.models_open = False
             elif key == "models_prev":
                 self.model_page = max(0, self.model_page - 1)
-            elif key == "models_next" and (self.model_page + 1) * 4 < len(self.models):
+            elif key == "models_next" and (self.model_page + 1) * 4 < len(self.compatible_models()):
                 self.model_page += 1
             elif key.startswith("model_"):
                 entry = self.models[int(key.split("_")[1])]
@@ -902,7 +932,7 @@ class RescueApp:
         if self.view == "analysis" and self.history_visible:
             return "HISTORIAL / TRAZAS", CYAN
         if self.view == "analysis" and self.comparison_for_display and self.comparison_visible:
-            return ("COMPARANDO" if self.comparison_for_display.futures else "COMPARACION CONSERVADA"), CYAN
+            return ("COMPARANDO" if self.comparison_for_display.futures else "COMPARACIÓN LISTA"), CYAN
         if self.view == "analysis" and self.last_result is not None:
             return "RESULTADO CONSERVADO", CYAN
         if self.editor is not None:
@@ -1129,16 +1159,23 @@ class RescueApp:
     def _dropdown(self):
         self.dropdown_rows = []
         is_scenario = self.dropdown == "scenario"
-        values = [SCENARIO_NAMES.get(s.name, s.name) for _, s in self.options] if is_scenario else [s[1] for s in STRATEGIES]
+        values = [scenario_label(s) for _, s in self.options] if is_scenario else [s[1] for s in STRATEGIES]
         selected = self.scenario_index if is_scenario else self.strategy_index
-        y = 240 if is_scenario else 323
-        self.card((894, y, 340, 36 * len(values) + 12), (24, 39, 57), 10)
+        y = 240 if is_scenario else 337
+        height = 50 if is_scenario else 92
+        self.card((894, y, 340, height * len(values) + 12), (24, 39, 57), 10)
         for index, label in enumerate(values):
-            rect = pygame.Rect(900, y + 6 + 36 * index, 328, 36)
+            rect = pygame.Rect(900, y + 6 + height * index, 328, height)
             self.dropdown_rows.append((index, rect))
             if index == selected or rect.collidepoint(self.mouse):
                 pygame.draw.rect(self.canvas, (38, 61, 79), rect, border_radius=6)
-            self.text(label, (rect.x + 10, rect.y + 7), 14, CYAN if index == selected else TEXT)
+            self.text(label[:39], (rect.x + 10, rect.y + 6), 14, CYAN if index == selected else TEXT)
+            if is_scenario:
+                scenario = self.options[index][1]
+                self.text(f"{scenario.width} × {scenario.height} · {scenario.victim_count} personas",
+                          (rect.x + 10, rect.y + 27), 12, MUTED)
+            else:
+                self.wrap(STRATEGIES[index][2], rect.x + 10, rect.y + 30, 305, 12)
 
 
 def run_app(app: RescueApp):

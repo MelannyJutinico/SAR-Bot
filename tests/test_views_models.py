@@ -43,8 +43,38 @@ class ViewsModelsTests(unittest.TestCase):
    self.assertNotIn('models_prev',self.app.controls)
    self.assertNotIn('models_next',self.app.controls)
   self.app.action('models');self.app.render()
-  self.assertIn('models_prev',self.app.controls)
-  self.assertIn('models_next',self.app.controls)
+  self.assertNotIn('models_prev',self.app.controls)
+  self.assertNotIn('models_next',self.app.controls)
+
+ def test_catalog_only_offers_compatible_models_and_marks_current_one(self):
+  self.app.action('models');self.app.render()
+  offered=[int(key.split('_')[1]) for key in self.app.controls if key.startswith('model_')]
+  self.assertTrue(offered)
+  for index in offered:
+   self.assertIsNone(self.app.models[index].reason(self.app.scenario))
+   self.assertNotIn(f'model_{index}',self.app.disabled_controls)
+  target=offered[0]
+  self.app.click(self.app.controls[f'model_{target}'].center)
+  self.assertEqual(self.app.model_path,self.app.models[target].path)
+  self.assertFalse(self.app.models_open)
+
+ def test_programmed_strategies_hide_model_and_learning_controls(self):
+  for strategy in (1,2,3):
+   self.app.strategy_index=strategy;self.app.render()
+   for key in ('models','mode_evaluate','mode_learn','learning_mode'):
+    self.assertNotIn(key,self.app.controls)
+
+ def test_explicit_learning_choices_do_not_toggle_when_already_selected(self):
+  self.app.strategy_index=0
+  with patch.object(self.app,'_prepare') as prepare:
+   self.app.render()
+   self.app.click(self.app.controls['mode_learn'].center)
+   self.assertTrue(self.app.learning_enabled)
+   self.app.click(self.app.controls['mode_learn'].center)
+   self.assertEqual(prepare.call_count,1)
+   self.app.click(self.app.controls['mode_evaluate'].center)
+   self.assertFalse(self.app.learning_enabled)
+   self.assertEqual(prepare.call_count,2)
 
  def test_tabs_close_selectors_without_late_import_or_rerun(self):
   self.app.models_open=True
