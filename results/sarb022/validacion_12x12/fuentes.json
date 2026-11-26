@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "generator": "sar_bot.report",
+  "results": {
+    "path": "results/sarb020/v2_12x12_validation_referencias.csv",
+    "sha256": "d648b305482dd822d4cd8ccaaa15a05f65e17016c8fb24d1568dd956b6f8cc47",
+    "metadata_sha256": "08257a5585da4202193205566a1766015d39a942bb71d00b93b710d7935c54e0",
+    "traces": "results/sarb020/v2_12x12_validation_referencias.traces.jsonl",
+    "traces_sha256": "cc84382a02be7e98f3791f5bcda0a9dcca11704bfbb333ad3cea6ccd83618d5f",
+    "replayed": true
+  },
+  "training": [],
+  "output_dir": "results/sarb022/validacion_12x12",
+  "command": "uv run python scripts/report_figures.py --results results/sarb020/v2_12x12_validation_referencias.csv --output-dir results/sarb022/validacion_12x12",
+  "outputs": {
+    "duracion_vs_danio.svg": "b3ce2c7e585b5b424b433527762210bb6a2bc4ee0a5e82dbad1ed2d50ef253e1",
+    "exito_y_rescates.svg": "17bec413327c9277386210dbffb7b39998ca24290d994a0f4fbf5da4c2e6fd6a",
+    "pasos_y_danio_exitos.svg": "7dd131cc0ea2feef41eae95958b2c8fa34169e2df1f340013ced3a5d77e389dc",
+    "tablas.md": "c8d3d2a144a0a13078b392c1eb7df3dcafd1a9212ee53f34ab1569184bcbf723"
+  }
+}

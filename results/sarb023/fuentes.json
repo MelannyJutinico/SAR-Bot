@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "generator": "sar_bot.trace_analysis",
+  "config": {
+    "path": "configs/analysis/sarb023_casos.json",
+    "sha256": "f2a3288bf9221ecefea957986f4d34d1dddb9e8292f9496c01b64e543e1cc2d6"
+  },
+  "results": {
+    "results/sarb031/v2_10x10_desarrollo.csv": "53da24ca5fa6db9321bf3055ee234a70144a7b813ec0104d8baec5a8451eed87",
+    "results/sarb031/v2_12x12_training_referencias.csv": "f212324ce77c9189119d0243199a002d6c663504a9cb00feccdf0d62cd41da6e",
+    "results/sarb031/v2_6x6_desarrollo.csv": "b193e5cb3534517341282546b0364523e0e94eb917478f7d318f259285b02110"
+  },
+  "command": "uv run python scripts/trace_story.py --cases configs/analysis/sarb023_casos.json --output-dir results/sarb023",
+  "outputs": {
+    "trazas.md": "1b66279a64cebd0cf18d0e2cd9ac501cdfa4b4b2705ed90d9dd7dfeef401e625"
+  }
+}

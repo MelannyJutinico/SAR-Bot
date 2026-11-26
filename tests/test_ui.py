@@ -32,6 +32,9 @@ class UITests(unittest.TestCase):
         pygame.quit()
 
     def click(self, key):
+        if key not in self.app.controls:
+            self.app.set_view("execution" if key in ("play","step","reset","heat","paths","faster","slower") else "preparation")
+            self.app.render()
         self.app.click(self.app.controls[key].center)
         self.app.render()
 
@@ -101,6 +104,7 @@ class UITests(unittest.TestCase):
         app = RescueApp(ROOT, ROOT / "scenarios/v2/building_10x10.json", "shortest", asynchronous=False)
         try:
             app.render()
+            app.set_view("execution"); app.render()
             app.click(app.controls["play"].center)
             app.update(100)
             self.assertEqual(app.scenario.victim_count, 3)

@@ -1,0 +1,877 @@
+{
+  "schema_version": 1,
+  "set_id": "v2_10x10_dev_v1",
+  "purpose": "development_study_not_experimental_partition",
+  "created_on": "2026-11-18",
+  "profile": {
+    "width": 10,
+    "height": 10,
+    "victims": 3
+  },
+  "template": {
+    "path": "scenarios/v2/building_10x10.json",
+    "sha256": "44e0953649a3d89abb05a77840f411e4c14f0b6ad67290b3e40e0354ea6b0748"
+  },
+  "building": "building10",
+  "generation": {
+    "seed": 1010001,
+    "requested": 30,
+    "max_attempts": 3000,
+    "attempts": 66,
+    "certified": 31,
+    "not_certified": 0,
+    "duplicates": 0,
+    "structural_invalid": 0
+  },
+  "excluded_scenario_ids": [
+    "39c0ecebd429a79da144d13c604fed2dedc306c5dd4f62cfbe2ca0b885e7edeb"
+  ],
+  "entries": [
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_01_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 0,
+      "victims": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "scenario_id": "470b42103b56d4294e0df194fca563a2316b39197cbed9fa459712f34753dd6d",
+      "configuration_id": "2165bc9e0a6484615a8e30a03f870900816e7f0897eb2d43fbd5879411786b90",
+      "sha256": "7f8e9bb9c4384757162f8155fd53fb31267d33de1c4bdd713c0bb9cc54b816ca",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 12,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_02_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 1,
+      "victims": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "scenario_id": "7d52d55af0b56b8636293a96da111dc8889fd367cbde29139d9696a669c2915e",
+      "configuration_id": "3febfca97cedbbcec6fea3776bb13bc734ac3204a04fd12cd1d42608999a777e",
+      "sha256": "9f046cb63c76e1c41d9e0844073ab7b3d0292b78ffd14bcc3b850faeb0b003c4",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 44,
+        "damage_total": 34
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_03_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 2,
+      "victims": [
+        [
+          9,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          8,
+          0
+        ]
+      ],
+      "scenario_id": "e2a5068314fa19520f28c668f6c4db8a781cec172b9dfde685dd2c3deb98f5c0",
+      "configuration_id": "4ff0241cea33fdb379a6f2df5a827f36bd841c44543167c2ce3c3d780fd4bce9",
+      "sha256": "597337372fcb1d4d64657137b6f3feb791bad3252df735a8a62d18f8f14c23bb",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 60,
+        "damage_total": 58
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_04_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 3,
+      "victims": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "scenario_id": "0f205283d86896fd19bba3088729d264809c825607840736f8cef915bfb6382c",
+      "configuration_id": "e8a8d6185744597427dd1fa2c34ba37ca5e191cefcdf48712a45c651c8ea3c3f",
+      "sha256": "c7bb40e9a5b2b8cdda39b78a7c4cc4b176f476cefcf9704055d4f60ed5956319",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 10,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_05_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 4,
+      "victims": [
+        [
+          9,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "scenario_id": "7f4fee1445822f76bcf8df68f486175bbac84cd55f91ea72384501c5b2292576",
+      "configuration_id": "bbb5d231016f95cac99b6101abb7a8413e7e4c5946bd06f0d7dcc5854c0a0f8c",
+      "sha256": "fe9a94beaa2054c0c2076dd4fd2982bd384e39f8aa37799a2f65bc7f70ce843e",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 50,
+        "damage_total": 46
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_06_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 5,
+      "victims": [
+        [
+          7,
+          3
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          9,
+          4
+        ]
+      ],
+      "scenario_id": "bad2dca32222bd4eb205a0509c09e34747212db07209a9484f8574ae0b11a129",
+      "configuration_id": "60a81d825b541906a7c005b9c370108a64ddf4922b5b39b13b9e81c8efeff635",
+      "sha256": "246d413948be760ee0f7982e27100e4c86df166e34e0359608d2afefe6a24f68",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 61,
+        "damage_total": 116
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_07_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 6,
+      "victims": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "scenario_id": "7771309537af1039a861d33f905429c606329826870373271871f5316448a0a7",
+      "configuration_id": "c000626f05482ec9f510fa5faf8273ca42cbb629c4aa2f74a989dbdab5da53c0",
+      "sha256": "1c88deca7e20b04ec1864e46dfc5229afaf2e891d7696e2b8213736f172a27f5",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 12,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_08_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 7,
+      "victims": [
+        [
+          8,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          9,
+          3
+        ]
+      ],
+      "scenario_id": "c46bc6cb496875aeae9747820361fdaa58396f5ac6b94ab06e0dad9d21b7933a",
+      "configuration_id": "d89f86db2ad5e82c42f13859776e6ff1b39d2b1dcca47f51c28ce3041d7ed276",
+      "sha256": "0c4928dd0d1ce1ce9a71cb4519c1ef63c4c437d6a50f0906eba56519ece501a0",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 49,
+        "damage_total": 46
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_09_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 8,
+      "victims": [
+        [
+          9,
+          2
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          9,
+          6
+        ]
+      ],
+      "scenario_id": "927a0e4920b0d6b80dc96f291bdb8d5ff87056958ab3b984b0285aeccceff98b",
+      "configuration_id": "c133d36c4343cdac1ac2e5c84c92c3a8655998c0edaf105b89746f6773bffac7",
+      "sha256": "e55d880d80d73d79ea5ca7b02b27dc8996a5ccc549e319465affb83dbd005fbe",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 70,
+        "damage_total": 40
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_10_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 9,
+      "victims": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "scenario_id": "dcb2887f7bf544087621ac69f6a0f0fb20d111adff58e834a1d361e503a4c0c3",
+      "configuration_id": "212917d8bdaf6dda1037c9fc8aa90219a67283ec62cba586536bbffe6dc4db00",
+      "sha256": "85d3198667eb3228c22ade86bce91f2255c1bc174f617036b5a915d2a1963204",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 24,
+        "damage_total": 18
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_11_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 10,
+      "victims": [
+        [
+          0,
+          6
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "scenario_id": "94673d58e760877ef909faa615cd7db87c13020f4e860fc6336950e88bb9eb83",
+      "configuration_id": "05d364e1f705e1495aeae366ecfd44d6ace4d665a8e2a14eda0ad91591a3d2f5",
+      "sha256": "477f5f8621efefc225fabacd497df43c6d94fece43880920d57755641c57c3ea",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 48,
+        "damage_total": 36
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_12_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 11,
+      "victims": [
+        [
+          9,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          2
+        ]
+      ],
+      "scenario_id": "90742a772dfe7e57f7815821a433726647d27621194878030d035712ff7593a8",
+      "configuration_id": "071e7571695308c75dd25f7741f55f44295dda9fe05617e78c7cfbdb03d735bf",
+      "sha256": "14b27e41691e2de0650b01a896dee376a59202d0c2d5485b32f670d4c2f209cd",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 62,
+        "damage_total": 60
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_13_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 12,
+      "victims": [
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "scenario_id": "0b3287414221d4d1674f3138a89484f507b5761c32e0b4142d2c33a6814d4dc7",
+      "configuration_id": "c5fc746c50d86927987c59ada1a0f57b1437d6b239cd9422bfc8bd1a64f6dadd",
+      "sha256": "13a4761908241902dc0f35aef1badf9fbc8296882b88b3703cb846d13d328129",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 10,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_14_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 13,
+      "victims": [
+        [
+          5,
+          0
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "scenario_id": "c663cd8a443360b4b9a55301cebc7116e91f20a0592a253949e4225647e65f2f",
+      "configuration_id": "3aa2c6d7b3ea035b26bbf03c97b6e5e1fd1fc3e04f4013fdec357e285ef72d9c",
+      "sha256": "20ff4fde9e1e1830a1deb4e79e8bbc2ff851377d9cb64f5acdfb2c36a826948e",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 36,
+        "damage_total": 41
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_15_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 14,
+      "victims": [
+        [
+          3,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          8,
+          6
+        ]
+      ],
+      "scenario_id": "04cbbee54c2d32abffbbca1b837b59b02dd78cf2551981091b81c875c4841fbd",
+      "configuration_id": "5bf0ceca6448ca3c3910ae20bb1b99b7e8c9ef2dc97b75c1739e79abf2e29d05",
+      "sha256": "4943a7cd3e75c64868b532800c64133d810ffb804cd95cf7ab1fae27bc88ffe9",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 63,
+        "damage_total": 54
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_16_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 15,
+      "victims": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "scenario_id": "f004a5c185dd38660428295640edd8a7dadd9f48f70534e3d886e77c823f6476",
+      "configuration_id": "f2715afd90228683d0737bf7250a08c415674633e14f2508f08ed77ffa5f1d1c",
+      "sha256": "0f07b45b07939896885a41039669a21cb64da5f904cb0d76acd0d808c3fe3ea9",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 8,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_17_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 16,
+      "victims": [
+        [
+          3,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "scenario_id": "d1a86b38aa2707a79afd08e664fb5ec7e0374ebde57cabe823c35647d2a649fd",
+      "configuration_id": "79dddac20dd37fa9a08142ef7df6e6d4687452331c7ab8fedbcb729c95534a0c",
+      "sha256": "0d67eec5ea7e51291aae7237d9e9e460d63e8bd51cb5a196dff2534360d98fb2",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 43,
+        "damage_total": 20
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_18_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 17,
+      "victims": [
+        [
+          6,
+          4
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "scenario_id": "be5ee268913a13e0369e723a1279072f730788864d9592aac7e70afa5bafab4e",
+      "configuration_id": "6d025cec22948669303dcc27d834cc625354e98988b5b671a3860fbf74c314e1",
+      "sha256": "e267d72a97c99aeff1cf192d934ac0ac1655a76b80c6775de40c247e4ef4776b",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 61,
+        "damage_total": 88
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_19_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 18,
+      "victims": [
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "scenario_id": "ff87a0e076ce7c71d235d5ec0044125d4b1246ae6e0984a5bc044f85e68776c5",
+      "configuration_id": "f289872b3cf7b0a007a3f0d3d444681d65789976f6a22beed6e8ac86aa1f1d7b",
+      "sha256": "652739e119872b2516e69003a75b6067606dfb5350728ad63558660121dd796f",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 12,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_20_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 19,
+      "victims": [
+        [
+          3,
+          0
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "scenario_id": "c9b121b1b80352e6888203b09a3f96623fe283d72805e27eb831304c37c5cbb5",
+      "configuration_id": "50465cd3a2b4eb3dda769d095b00cb18a3d15efea724b8f0df78ecdf52a30190",
+      "sha256": "18f8bb2e5eea550add3e2734df5580c514db96ba822db144a0aa128198505197",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 36,
+        "damage_total": 42
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_21_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 20,
+      "victims": [
+        [
+          9,
+          1
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "scenario_id": "488672c9e23e72b0253508df0608ec9e2cd8f007f37a0ebe06683e75602a2298",
+      "configuration_id": "9c78d3f3969c681c796ef7252ceef66f07eb847a67fa2f7c6550c8dc984cefcb",
+      "sha256": "1c7605dbf056ba32e1ad9d83f626eb860d4f2f58cb853388cfd3d1ff7317d4fc",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 66,
+        "damage_total": 57
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_22_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 21,
+      "victims": [
+        [
+          1,
+          3
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "scenario_id": "a86d7b2b989f6346da3d632819bdc4e7bfb9844f0024377449d6665de67ec550",
+      "configuration_id": "09677eb21a89669965d91adfa4b8bf9e87ce6dbf8af9553745fcf7fa8c519620",
+      "sha256": "9037075021bd1fcf083943cdf9c5cbb19f3ec37ff3bcf926258f680ff9f973d5",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 10,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_23_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 22,
+      "victims": [
+        [
+          7,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "scenario_id": "bb56d35e845eabfaccff22ca82e2138ba2cbb8de99d40b3f29457bc9e2f06892",
+      "configuration_id": "a1eab580b7375800b79cb2fb072cf95eeafea70bd985390be4b34ae677008ed6",
+      "sha256": "f61b1797ea0dec69394acc57b8f6ec0b7c1e9cd8b8c48b64f41deb9da5d84f6d",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 26,
+        "damage_total": 24
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_24_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 23,
+      "victims": [
+        [
+          6,
+          8
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          8,
+          2
+        ]
+      ],
+      "scenario_id": "481951e3ecb28e1e244b1345dcbb83b2c57d96e00a57cf20056531cbd36673a4",
+      "configuration_id": "0623f71e085df49f780585d68aa0acd63df79e00be78d36104e130b060078360",
+      "sha256": "0a36dc37efba799f168dad7e1dd918fdfe4b5e9e32d48f0a9d2e04042dc62ec3",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 56,
+        "damage_total": 66
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_25_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 24,
+      "victims": [
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "scenario_id": "ca4a44c0850b5bbb8ff20e2b646899f7580ff33dba3efcb69a2bbf07bd091a20",
+      "configuration_id": "7e19619f8cbaf4b066dc3c2d9befb9354ecac9a5a2747ce3b576aae92f4ff85b",
+      "sha256": "fd6d883ee4ab5d074b224012e867779fdf4cc85d23be97b479aae6c50bdcb0d1",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 12,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_26_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 25,
+      "victims": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          8,
+          8
+        ]
+      ],
+      "scenario_id": "a02157fb02462779ad9a9742be438f98ade050003203c947303a44bdb932fe45",
+      "configuration_id": "d243024a71e45e9cab7a736353e2eaf7a6f94a3dbee495037736ed1bc737f206",
+      "sha256": "7fcf9ae3a89cbb6d788a3cd79fe49f4641888b08015c1395c83b0a0b201b5a81",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 40,
+        "damage_total": 18
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_27_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 26,
+      "victims": [
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          0,
+          7
+        ]
+      ],
+      "scenario_id": "7f46b4d46db13a929656e3f187de205b0d9401b20194d2db3d7e471e75baa84d",
+      "configuration_id": "fccb1910ee0a89972ef60ac2a79e3e4afa8788f62e22d2d7a167d272fa533bec",
+      "sha256": "031597d51275d0acd91c72532c268eaca5f9c5f813c1dc98f78e570edc4ce290",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 66,
+        "damage_total": 62
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_28_easy.json",
+      "building": "building10",
+      "difficulty": "easy",
+      "generation_index": 27,
+      "victims": [
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "scenario_id": "37f7f64db1a44d7a86b49e3a56b6ecd91ccef5e29e76c1c9d05713dd2cbeb24c",
+      "configuration_id": "2ca022b5ead44c2685c2a5f7f2fcbf5e83919b508bb8bb8bfe7759984a273472",
+      "sha256": "8fa243356f4730e265f039f42f82bbb9d91ca20ed5c0e34484d1c304763c00af",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 14,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_29_intermediate.json",
+      "building": "building10",
+      "difficulty": "intermediate",
+      "generation_index": 28,
+      "victims": [
+        [
+          6,
+          0
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "scenario_id": "8a36022afc0e84882cb3cc0bf5e1fd3802fd55ea10a89a93d2f328726e1e9fa7",
+      "configuration_id": "050024354ad1288a874b330f6a5bf7959e6db4ca4f5cefc6e21fa0815e2fb19f",
+      "sha256": "6d9efab8531378707f1d08f9a6bcb3c13cff786bac8b4d47ca5f0e039d582cb0",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 32,
+        "damage_total": 36
+      }
+    },
+    {
+      "path": "scenarios/development/v2_10x10/building10_dev_30_demanding.json",
+      "building": "building10",
+      "difficulty": "demanding",
+      "generation_index": 29,
+      "victims": [
+        [
+          5,
+          6
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          9,
+          7
+        ]
+      ],
+      "scenario_id": "2b1d34d3899da84cc2e833c5fdfb98a7b9439bd7a677a8c66c3b2a3dd7f995a7",
+      "configuration_id": "a2b21031b3d04308d8124c6644f3e84d88bb09a6eefa65ecd04b55c13c693238",
+      "sha256": "962c151387f6fa4a917ae4835a3fb25542f19caba166caa3dd9a9b2082359ba1",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 61,
+        "damage_total": 56
+      }
+    }
+  ],
+  "notes": [
+    "Conjunto de desarrollo: no se usa para entrenar, elegir checkpoints ni afirmar generalización.",
+    "Los casos entraron porque una referencia los resolvió al certificarlos.",
+    "Se excluye la configuración de la plantilla."
+  ],
+  "content_sha256": "404e6d5e1413ac30c230eeba24ae949bd7f7796ef4df04f0fbc5961fcb6bdef7"
+}

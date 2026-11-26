@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "generator": "sar_bot.study",
+  "results": [
+    {
+      "path": "results/sarb031/v2_6x6_desarrollo.csv",
+      "csv_sha256": "b193e5cb3534517341282546b0364523e0e94eb917478f7d318f259285b02110",
+      "traces_sha256": "f06ead22da6a34dded9a2c90cd8c9c05ec2f1cc96c0c02eec75182710252d6c5",
+      "metadata_sha256": "4c981f947379774d61b073c7e572eb4207788549b2cae84b99d25b1a38798e59",
+      "replayed": true
+    },
+    {
+      "path": "results/sarb020/v2_10x10_piloto_desarrollo.csv",
+      "csv_sha256": "acd79efd73256bbdab5dcc1f8d72b3212266b812ae1a51499872e0dd18a993e3",
+      "traces_sha256": "0b9bae3612aa4bac7dfe7b0a6bbf2b0aee648a11ffb57c5a226193bcc137aa1c",
+      "metadata_sha256": "2fb9ba1812a7722cc45159d2e97899f07c00b01bed070a5969ceced9c9a1451a",
+      "replayed": true
+    },
+    {
+      "path": "results/sarb031/v2_10x10_desarrollo.csv",
+      "csv_sha256": "53da24ca5fa6db9321bf3055ee234a70144a7b813ec0104d8baec5a8451eed87",
+      "traces_sha256": "de361a678f0a3bf9dcdbfd8fe02e424f6261c95eefaab45c989809368b6467f6",
+      "metadata_sha256": "bb702d4b6bb3f9024cdf017eb212535b81cd95b3e8b0d0f95761293f9c303010",
+      "replayed": true
+    },
+    {
+      "path": "results/sarb031/v2_12x12_training_referencias.csv",
+      "csv_sha256": "f212324ce77c9189119d0243199a002d6c663504a9cb00feccdf0d62cd41da6e",
+      "traces_sha256": "22d4ddc1acfa7933e3296cac2f76cf96c4ed35c6f9373b0565e284e40d7968e7",
+      "metadata_sha256": "78793e50edeac067857dd0cd983e1d9d7aa42b51bce6d7ea14174615cf8ad85c",
+      "replayed": true
+    },
+    {
+      "path": "results/sarb020/v2_12x12_validation_referencias.csv",
+      "csv_sha256": "d648b305482dd822d4cd8ccaaa15a05f65e17016c8fb24d1568dd956b6f8cc47",
+      "traces_sha256": "cc84382a02be7e98f3791f5bcda0a9dcca11704bfbb333ad3cea6ccd83618d5f",
+      "metadata_sha256": "08257a5585da4202193205566a1766015d39a942bb71d00b93b710d7935c54e0",
+      "replayed": true
+    }
+  ],
+  "output_dir": "results/sarb031/estudio",
+  "command": "uv run python scripts/scale_study.py analyze --results results/sarb031/v2_6x6_desarrollo.csv results/sarb020/v2_10x10_piloto_desarrollo.csv results/sarb031/v2_10x10_desarrollo.csv results/sarb031/v2_12x12_training_referencias.csv results/sarb020/v2_12x12_validation_referencias.csv --output-dir results/sarb031/estudio",
+  "outputs": {
+    "tablas.md": "dc38e28fe8ded876c78af63737b777ee08d83fd1c7ecda5d3c05d6c328bcfc62"
+  }
+}

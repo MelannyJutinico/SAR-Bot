@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="305" viewBox="0 0 920 305" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Éxito y personas entregadas por estrategia</title>
+<desc id="descripcion">Todos los casos, DQN v2_pilot · semilla 0: 0/30 éxitos, 9/90 personas; Todos los casos, Ruta corta: 26/30 éxitos, 84/90 personas; Todos los casos, Ruta térmica: 30/30 éxitos, 90/90 personas; Todos los casos, Aleatoria: 3/150 éxitos, 91/450 personas</desc>
+<rect width="920" height="305" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Éxito y personas entregadas por estrategia</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Desarrollo · conjunto v2_10x10_dev_v1 · perfil 10 × 10 con 3 personas · 30 casos distintos · 240 episodios</text>
+<text x="24" y="69" font-size="12" fill="#52514e">Cada barra lleva su conteo: éxitos/episodios y personas entregadas/personas totales. Todas las estrategias resuelven los mismos</text>
+<text x="24" y="86" font-size="12" fill="#52514e">30 casos (datos emparejados); en una estrategia determinista cada caso vale 3,3 puntos de su tasa.</text>
+<text x="300" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Misiones exitosas</text>
+<text x="620" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Personas entregadas</text>
+<line x1="300" y1="129" x2="300" y2="253" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="300" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">0 %</text>
+<line x1="360" y1="129" x2="360" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="360" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">25 %</text>
+<line x1="420" y1="129" x2="420" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="420" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">50 %</text>
+<line x1="480" y1="129" x2="480" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="480" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">75 %</text>
+<line x1="540" y1="129" x2="540" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="540" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">100 %</text>
+<text x="420" y="285" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">% de episodios</text>
+<line x1="620" y1="129" x2="620" y2="253" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="620" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">0 %</text>
+<line x1="680" y1="129" x2="680" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="680" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">25 %</text>
+<line x1="740" y1="129" x2="740" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="740" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">50 %</text>
+<line x1="800" y1="129" x2="800" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="800" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">75 %</text>
+<line x1="860" y1="129" x2="860" y2="253" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="860" y="268" font-size="11" fill="#898781" text-anchor="middle" class="tick">100 %</text>
+<text x="740" y="285" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">% de personas</text>
+<text x="24" y="145" font-size="12" fill="#0b0b0b" font-weight="600">Todos los casos</text>
+<text x="52" y="169" font-size="12" fill="#0b0b0b">DQN v2_pilot · semilla 0</text>
+<rect x="36" y="160" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="306" y="169" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="dqn:v2_pilot" data-metric="success" data-k="0" data-n="30">0/30</text>
+<path d="M620,159h20a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-20z" fill="#2a78d6" class="bar" data-group="all" data-series="dqn:v2_pilot" data-metric="rescued" data-k="9" data-n="90"><title>Todos los casos · DQN v2_pilot · semilla 0: 9/90</title></path>
+<text x="650" y="169" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="dqn:v2_pilot" data-metric="rescued" data-k="9" data-n="90">9/90</text>
+<text x="52" y="193" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<rect x="36" y="184" width="10" height="10" rx="2" fill="#eb6834"/>
+<path d="M300,183h204a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-204z" fill="#eb6834" class="bar" data-group="all" data-series="shortest" data-metric="success" data-k="26" data-n="30"><title>Todos los casos · Ruta corta: 26/30</title></path>
+<text x="514" y="193" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="shortest" data-metric="success" data-k="26" data-n="30">26/30</text>
+<path d="M620,183h220a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-220z" fill="#eb6834" class="bar" data-group="all" data-series="shortest" data-metric="rescued" data-k="84" data-n="90"><title>Todos los casos · Ruta corta: 84/90</title></path>
+<text x="850" y="193" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="shortest" data-metric="rescued" data-k="84" data-n="90">84/90</text>
+<text x="52" y="217" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<rect x="36" y="208" width="10" height="10" rx="2" fill="#1baf7a"/>
+<path d="M300,207h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="all" data-series="thermal" data-metric="success" data-k="30" data-n="30"><title>Todos los casos · Ruta térmica: 30/30</title></path>
+<text x="546" y="217" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="thermal" data-metric="success" data-k="30" data-n="30">30/30</text>
+<path d="M620,207h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="all" data-series="thermal" data-metric="rescued" data-k="90" data-n="90"><title>Todos los casos · Ruta térmica: 90/90</title></path>
+<text x="866" y="217" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="thermal" data-metric="rescued" data-k="90" data-n="90">90/90</text>
+<text x="52" y="241" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<rect x="36" y="232" width="10" height="10" rx="2" fill="#898781"/>
+<path d="M300,231h0.8a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-0.8z" fill="#898781" class="bar" data-group="all" data-series="random" data-metric="success" data-k="3" data-n="150"><title>Todos los casos · Aleatoria: 3/150</title></path>
+<text x="310.8" y="241" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="random" data-metric="success" data-k="3" data-n="150">3/150</text>
+<path d="M620,231h44.53a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-44.53z" fill="#898781" class="bar" data-group="all" data-series="random" data-metric="rescued" data-k="91" data-n="450"><title>Todos los casos · Aleatoria: 91/450</title></path>
+<text x="674.53" y="241" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="random" data-metric="rescued" data-k="91" data-n="450">91/450</text>
+</svg>
