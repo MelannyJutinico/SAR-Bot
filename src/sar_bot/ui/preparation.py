@@ -15,6 +15,9 @@ class PreparationRequest:
     strategy: str
     model: str | None
     seed: int
+    learning: bool = False
+    session_dir: str | None = None
+    project_root: str | None = None
 
 
 @dataclass(frozen=True)
@@ -23,6 +26,7 @@ class PreparedMission:
     viability: ViabilityResult
     episode: Episode | None
     error: str | None = None
+    learning_stats: dict | None = None
 
 
 def prepare_mission(request: PreparationRequest, scenario: Scenario, cancelled: Event) -> PreparedMission:
@@ -39,12 +43,36 @@ def prepare_mission(request: PreparationRequest, scenario: Scenario, cancelled: 
     if viability.status is ViabilityStatus.STRUCTURAL_INVALID:
         return PreparedMission(request, viability, None, viability.message)
     try:
-        episode = prepare_episode(scenario, request.strategy, request.model, request.seed,
-                                  cancel_event=cancelled)
+        if request.learning:
+            if request.strategy != "dqn" or not request.model or not request.session_dir:
+                raise ValueError("La sesion de aprendizaje requiere DQN y un modelo base")
+            from sar_bot.online import LearningSession
+            if not request.project_root:
+                raise ValueError("Falta la raiz de la sesion")
+            session = LearningSession.for_project(request.project_root, request.model, scenario)
+            if str(session.directory) != request.session_dir:
+                raise ValueError("La identidad de la sesion cambio")
+            episode = session.prepare_episode(scenario, request.seed, cancelled)
+            snapshot = session.snapshot()
+            stats = {key:snapshot.metadata[key] for key in ("missions","transitions","updates","buffer_size")}
+            stats["recovered"] = snapshot.recovered
+        else:
+            episode = prepare_episode(scenario, request.strategy, request.model, request.seed,
+                                      cancel_event=cancelled)
+            stats = None
     except CancelledError:
         raise
     except Exception as error:
         return PreparedMission(request, viability, None, str(error))
     if cancelled.is_set():
         raise CancelledError()
-    return PreparedMission(request, viability, episode)
+    return PreparedMission(request, viability, episode, learning_stats=stats)
+
+
+def learn_completed_episode(request, episode):
+    """Transacción en un trabajador; no toca controles ni superficies Pygame."""
+    from sar_bot.online import LearningSession
+    session = LearningSession.for_project(request.project_root, request.model, episode.scenario)
+    if str(session.directory) != request.session_dir:
+        raise ValueError("La identidad de la sesion cambio")
+    return session.learn_episode(episode)

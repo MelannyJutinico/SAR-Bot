@@ -37,6 +37,8 @@ def person_status(state, victim):
 
 
 def notice(app):
+    if app.learning_future or app.learning_active:
+        return app.error or app.learning_message
     if app.file_message:
         return app.file_message
     if app.error:
@@ -63,19 +65,23 @@ def draw_preparation(app):
     entry=app.selected_model()
     if entry:
         app.wrap(f"{entry.path.parent.name}: {entry.status}",900,385,320,14)
+    app.button("learning_mode","Modo: Aprender y guardar" if app.learning_active else "Modo: Evaluar sin aprender",
+               (900,435,328,36),enabled=STRATEGIES[app.strategy_index][0]=="dqn" and not app.learning_future)
     if STRATEGIES[app.strategy_index][0]=="dqn":
-        app.wrap(app.model_problem() or "Perfil compatible; modelo piloto, sin garantia de rescate.",900,437,320,14)
-    app.button("edit","Editar personas",(900,505,328,40),enabled=app.scenario.victim_count==3)
-    app.button("save_file","Guardar",(900,565,155,36))
-    app.button("load_file","Cargar personal",(1070,565,158,36))
-    app.button("prepare","Validar y preparar",(900,625,328,40),primary=True)
+        app.wrap(app.model_problem() or "Modelo de desarrollo; puede fallar en posiciones nuevas.",900,482,320,12)
+    app.button("edit","Editar personas",(900,535,328,36),enabled=app.scenario.victim_count==3 and not app.learning_future)
+    app.button("save_file","Guardar",(900,583,155,32))
+    app.button("load_file","Cargar personal",(1070,583,158,32),enabled=not app.learning_future)
+    app.button("prepare","Nueva mision / preparar",(900,632,328,40),primary=True,enabled=not app.learning_future)
     app.button("view_execution","Ver ejecucion",(900,680,328,38))
-    app.button("compare","Comparar estrategias",(900,730,328,36))
+    app.button("compare","Comparar estrategias",(900,730,328,36),enabled=not app.learning_future)
     app.wrap(notice(app),900,775,320,12)
 
 
 def draw_execution(app):
     app.text("EJECUCION",(900,137),18,bold=True)
+    app.text("Aprender y guardar al finalizar" if app.request and app.request.learning
+             else "Evaluacion / reproduccion: sin aprendizaje",(900,165),12)
     from .app import STRATEGIES
     app.wrap("Estrategia: "+(app.request.strategy if app.comparison_replaying and app.request else STRATEGIES[app.strategy_index][1]),900,185,320)
     if app.request and app.request.model:

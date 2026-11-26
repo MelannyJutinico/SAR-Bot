@@ -38,4 +38,4 @@ def draw_comparison(app):
     app.button("comparison_individual","Resultado individual",(330,751,250,38))
     app.button("history","Historial",(620,751,240,38))
     app.button("view_preparation","Volver a preparacion",(900,751,328,38))
-    app.text(app.comparison_message or "Mismas condiciones iniciales. Reproducir usa la traza calculada, desde el paso cero.",(52,802),12)
+    app.text(app.comparison_message or "Modelo base fijo; comparar y reproducir no entrenan. Mismas condiciones iniciales.",(52,802),12)

@@ -17,11 +17,14 @@ def main():
     parser.add_argument("--model", type=Path, default=ROOT / "artifacts/sensors_dqn/model.zip")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--headless", action="store_true")
+    parser.add_argument("--learn", action="store_true", help="Actualizar y guardar la sesion al finalizar cada mision DQN")
     parser.add_argument("--steps", type=int, default=0, help="Pasos de la captura en modo headless")
     parser.add_argument("--screenshot", type=Path, default=ROOT / "outputs/ui-preview.png")
     args = parser.parse_args()
     if args.steps < 0:
         parser.error("--steps debe ser no negativo")
+    if args.learn and args.strategy != "dqn":
+        parser.error("--learn requiere --strategy dqn")
     if args.headless:
         os.environ["SDL_VIDEODRIVER"] = "dummy"
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
@@ -32,6 +35,8 @@ def main():
     pygame.font.init()
     app = RescueApp(ROOT, args.scenario, args.strategy, args.model, args.seed,
                     asynchronous=not args.headless)
+    if args.learn:
+        app.action("learning_mode")
     if args.headless:
         try:
             if app.playback is None:
@@ -41,12 +46,23 @@ def main():
                 return 2
             for _ in range(args.steps):
                 app.playback.step()
+            app.update(0)
+            if args.learn and app.playback.finished:
+                try:
+                    app.wait_for_learning()
+                except Exception as error:
+                    print(json.dumps({"error":"No se guardo aprendizaje: "+str(error)}),file=sys.stderr)
+                    return 2
             surface = app.render()
             args.screenshot.parent.mkdir(parents=True, exist_ok=True)
             pygame.image.save(surface, str(args.screenshot))
-            print(json.dumps({"steps": app.state.steps, "outcome": app.state.outcome,
+            result = {"steps": app.state.steps, "outcome": app.state.outcome,
                               "rescued": len(app.state.rescued), "victims_total": app.scenario.victim_count,
-                              "screenshot": str(args.screenshot)}))
+                              "screenshot": str(args.screenshot)}
+            if args.learn:
+                result["learning"] = app.learning_stats
+                result["session_dir"] = str(app.learning_directory)
+            print(json.dumps(result))
         finally:
             app.close()
             pygame.quit()

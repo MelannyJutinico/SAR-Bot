@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 import traceback
 from threading import Event
+from hashlib import file_digest
 
 import pygame
 
@@ -69,6 +70,7 @@ class RescueApp:
     def __init__(self, root: Path, scenario_path: Path, strategy="dqn", model_path=None,
                  seed=0, asynchronous=True):
         self.root, self.model_path, self.seed = root, model_path, seed
+        self._closed = False
         # Solo plantillas de desarrollo, no curriculum/validation/test.
         paths = sorted([*(root / "scenarios").glob("*.json"),
                         *(root / "scenarios" / "v2").glob("*.json")])
@@ -79,6 +81,14 @@ class RescueApp:
                                    if p.resolve() == scenario_path.resolve())
         self.strategy_index = next(i for i, s in enumerate(STRATEGIES) if s[0] == strategy)
         self.view = "preparation"
+        self.learning_enabled = False
+        self.learning_executor = None
+        self.learning_future = None
+        self.learning_message = "Evaluacion: el modelo permanece fijo."
+        self.learning_stats = None
+        self.learning_submitted = set()
+        self.learning_directory = None
+        self._session_paths = {}
         self.history = History()
         self.history_visible = False
         self.history_selected = None
@@ -146,6 +156,44 @@ class RescueApp:
     @property
     def scenario(self):
         return self.configured or self.options[self.scenario_index][1]
+
+    @property
+    def learning_active(self):
+        return self.learning_enabled and STRATEGIES[self.strategy_index][0] == "dqn"
+
+    def _start_learning(self):
+        episode = self.playback.episode
+        request = self.request
+        if (self._closed or self.learning_future or not request.learning or not episode.learning_id
+                or episode.learning_id in self.learning_submitted):
+            return
+        self.learning_submitted.add(episode.learning_id)
+        self.learning_message = "Aprendiendo de la mision y guardando memoria..."
+        from .preparation import learn_completed_episode
+        if self.learning_executor is None:
+            self.learning_executor = ThreadPoolExecutor(max_workers=1)
+        self.learning_future = self.learning_executor.submit(learn_completed_episode, request, episode)
+
+    def _poll_learning(self):
+        if self.learning_future and self.learning_future.done():
+            future, self.learning_future = self.learning_future, None
+            try:
+                self.learning_stats = future.result()
+                result = self.learning_stats
+                self.learning_message = (f"Guardado: {result['missions']} misiones, {result['buffer_size']} recuerdos, "
+                                         f"{result['updates']} actualizaciones.")
+                if result.get("recovered"):
+                    self.learning_message += " Se recupero un checkpoint anterior."
+            except Exception as error:
+                self.learning_message = "No se guardo aprendizaje: " + str(error)[:150]
+
+    def wait_for_learning(self):
+        if self.learning_future:
+            try:
+                self.learning_future.result()
+            finally:
+                self._poll_learning()
+        return self.learning_stats
 
     @property
     def state(self):
@@ -217,6 +265,9 @@ class RescueApp:
         self.comparison_message = ""
 
     def _compare(self):
+        if self.learning_future:
+            self.learning_message = "Espera a que se guarde el aprendizaje antes de comparar."
+            return
         self.history.invalidate_io()
         try:
             # Public Scenario construction validates the full snapshot, including imports.
@@ -260,8 +311,24 @@ class RescueApp:
     def _identity(self):
         strategy = STRATEGIES[self.strategy_index][0]
         model = str(Path(self.model_path).resolve()) if strategy == "dqn" and self.model_path else None
+        learning = self.learning_active
+        session_dir = None
+        if learning and model:
+            key = (model, self.scenario.width, self.scenario.height, self.scenario.victim_count)
+            if key not in self._session_paths:
+                try:
+                    with Path(model).open("rb") as stream:
+                        checksum = file_digest(stream,"sha256").hexdigest()[:12]
+                    name = f"{key[1]}x{key[2]}-{key[3]}-{checksum}"
+                    self._session_paths[key] = (self.root/"outputs/learning_sessions"/name).resolve()
+                except OSError:
+                    pass
+            if key in self._session_paths:
+                self.learning_directory = self._session_paths[key]
+                session_dir = str(self.learning_directory)
         return PreparationRequest(self.generation, self.scenario.configuration_id,
-                                  strategy, model, self.seed)
+                                  strategy, model, self.seed, learning, session_dir,
+                                  str(self.root.resolve()) if learning else None)
 
     def _select(self):
         self.editor = None
@@ -309,6 +376,9 @@ class RescueApp:
         self.view = view
 
     def _prepare(self):
+        if self.learning_future:
+            self.learning_message = "Espera al guardado antes de preparar la siguiente mision."
+            return
         self._invalidate()
         self.dropdown = None
         self.preview = RescueSimulation(self.scenario).state
@@ -329,6 +399,13 @@ class RescueApp:
             return
         if result.request != self.request or self.request != self._identity():
             return
+        if result.request.learning and result.learning_stats is not None:
+            self.learning_stats = result.learning_stats
+            self.learning_message = (f"Sesion: {self.learning_stats['missions']} misiones, "
+                                     f"{self.learning_stats['buffer_size']} recuerdos. "
+                                     "Se aprende y guarda al finalizar.")
+            if result.learning_stats.get("recovered"):
+                self.learning_message += " Recuperada copia anterior."
         if result.viability.status is not ViabilityStatus.STRUCTURAL_INVALID and (
                 result.viability.configuration_id != self.request.configuration_id):
             self.error = "La certificacion no coincide con la configuracion actual"
@@ -431,6 +508,9 @@ class RescueApp:
         self._start_file("save", scenario)
 
     def update(self, seconds):
+        if self._closed:
+            return
+        self._poll_learning()
         if self.export_context is not None and self.export_context != self._export_context():
             self.comparison_message = ""
         if self.export_future and self.export_future.done():
@@ -495,8 +575,18 @@ class RescueApp:
             self.last_result = MissionResult.capture(self)
             self.last_episode, self.last_state = self.playback.episode, self.state
             self.history.record(self.last_episode, self.request.strategy, self.request.model, self.request.seed)
+        if (self.playback and self.playback.finished and self.request
+                and self.request.learning and not self.comparison_replaying):
+            self._start_learning()
 
     def close(self):
+        if self._closed:
+            return
+        self._closed = True
+        if self.learning_executor:
+            # El cierre espera el guardado acotado de una misión ya finalizada.
+            self.learning_executor.shutdown(wait=True, cancel_futures=False)
+            self._poll_learning()
         if self.export_executor:
             self.export_executor.shutdown(wait=False, cancel_futures=True)
         self.history.close()
@@ -577,6 +667,19 @@ class RescueApp:
                            (rect.x + (26 if value else 12), rect.centery), 8)
 
     def action(self, key):
+        if self.learning_future and (key in {"scenario","strategy","models","edit","prepare","load_file"}
+                                     or key.startswith("model_")):
+            self.learning_message = "Guardando aprendizaje; espera antes de cambiar la mision."
+            return
+        if key == "learning_mode":
+            if self.learning_future or STRATEGIES[self.strategy_index][0] != "dqn":
+                self.learning_message = "Espera al guardado y selecciona DQN para cambiar el modo."
+                return
+            self.learning_enabled = not self.learning_enabled
+            self.learning_message = ("Aprender: explora y guarda al finalizar cada mision nueva."
+                                     if self.learning_active else "Evaluacion: el modelo permanece fijo.")
+            self._prepare()
+            return
         if key == "history":
             self.set_view("analysis")
             self.history_visible = True
@@ -654,6 +757,7 @@ class RescueApp:
                 else:
                     self._invalidate_comparison()
                     self.model_path = entry.path
+                    self._session_paths.clear()
                     if self.error_kind in ("model_invalid", "model_incompatible", "model_selection"):
                         self.error = self.error_kind = None
                     self.models_open = False
@@ -731,6 +835,9 @@ class RescueApp:
                 self.playback.reset()
 
     def click(self, position):
+        if self.learning_future and self.dropdown:
+            self.dropdown = None
+            return
         if self.models_open:
             for key, rect in self.controls.items():
                 if rect.collidepoint(position):

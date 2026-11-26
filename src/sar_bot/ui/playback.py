@@ -19,6 +19,7 @@ class Episode:
     actions: tuple[int, ...]
     checkpoint_sha256: str | None = None
     engine_sha256: str | None = None
+    learning_id: str | None = None
 
     @property
     def scenario_id(self):
