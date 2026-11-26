@@ -145,5 +145,81 @@ class OnlineTests(unittest.TestCase):
         self.assertEqual(max(optimizer_steps),loaded._n_updates)
 
 
+
+    def test_guard_rejects_worse_weights_but_saves_experience_and_restart(self):
+        from unittest.mock import patch
+        self.session.control_scenarios = (self.scenario,)
+        episode = self.session.prepare_episode(self.scenario)
+        original, env = self.session._model(self.session.snapshot(), self.scenario)
+        weights = {k:v.detach().clone() for k,v in original.q_net.state_dict().items()}
+        old_updates = original._n_updates
+        old_optimizer = original.policy.optimizer.state_dict()
+        env.close()
+        before = [{"success":True,"rescued":2,"return":100.0}]
+        worse = [{"success":False,"rescued":0,"return":-100.0}]
+        with patch('sar_bot.online.evaluate_model',side_effect=[before,worse]):
+            result = self.session.learn_episode(episode)
+        self.assertFalse(result['last_guard']['accepted'])
+        self.assertEqual(result['updates'],0)
+        self.assertGreater(result['rejected_updates'],0)
+        self.assertEqual(result['missions'],1)
+        self.assertEqual(result['buffer_size'],len(episode.actions))
+        resumed = LearningSession(self.directory,self.base,settings=self.settings,
+                                  control_scenarios=(self.scenario,))
+        model, env = resumed._model(resumed.snapshot(),self.scenario,replay=True)
+        try:
+            for key,value in model.q_net.state_dict().items():
+                self.assertTrue(torch.equal(value,weights[key]))
+            self.assertEqual(model._n_updates,old_updates)
+            def same(a,b):
+                if isinstance(a,torch.Tensor): self.assertTrue(torch.equal(a,b))
+                elif isinstance(a,dict):
+                    self.assertEqual(a.keys(),b.keys())
+                    for key in a: same(a[key],b[key])
+                elif isinstance(a,(list,tuple)):
+                    self.assertEqual(len(a),len(b))
+                    for left,right in zip(a,b): same(left,right)
+                else: self.assertEqual(a,b)
+            same(old_optimizer,model.policy.optimizer.state_dict())
+        finally: env.close()
+        self.assertTrue(resumed.learn_episode(episode)['duplicate'])
+
+    def test_guard_accepts_improvement_and_reverts_on_control_error(self):
+        from unittest.mock import patch
+        self.session.control_scenarios = (self.scenario,)
+        episode = self.session.prepare_episode(self.scenario)
+        before=[{"success":False,"rescued":0,"return":-10.0}]
+        better=[{"success":True,"rescued":2,"return":10.0}]
+        with patch('sar_bot.online.evaluate_model',side_effect=[before,better]):
+            result=self.session.learn_episode(episode)
+        self.assertTrue(result['last_guard']['accepted'])
+        self.assertGreater(result['updates'],0)
+        accepted_updates=result['updates']
+        snapshot=self.session.snapshot()
+        model,env=self.session._model(snapshot,self.scenario)
+        weights={k:v.detach().clone() for k,v in model.q_net.state_dict().items()}
+        env.close()
+        episode=self.session.prepare_episode(self.scenario)
+        with patch('sar_bot.online.evaluate_model',side_effect=[before,RuntimeError('control interrumpido')]):
+            result=self.session.learn_episode(episode)
+        self.assertFalse(result['last_guard']['accepted'])
+        self.assertEqual(result['last_guard']['reason'],'control_or_update_error')
+        self.assertEqual(result['updates'],accepted_updates)
+        self.assertEqual(result['missions'],2)
+        model,env=self.session._model(self.session.snapshot(),self.scenario)
+        try:
+            for key,value in model.q_net.state_dict().items():
+                self.assertTrue(torch.equal(value,weights[key]))
+        finally: env.close()
+
+    def test_project_guard_uses_training_controls_and_excludes_reserved_cases(self):
+        scenario=Scenario.load(ROOT/'scenarios/v2/coordination_hub_12x12.json')
+        session=LearningSession.for_project(ROOT,ROOT/'artifacts/final/model.zip',scenario)
+        self.assertEqual(len(session.control_scenarios),6)
+        self.assertTrue(all(s.scenario_id not in session.protected_ids for s in session.control_scenarios))
+        manifest=json.loads((ROOT/'configs/partitions/v2_12x12.json').read_text())
+        training={e['scenario_id'] for e in manifest['entries'] if e['partition']=='training'}
+        self.assertTrue(all(s.scenario_id in training for s in session.control_scenarios))
+
 if __name__ == "__main__":
     unittest.main()

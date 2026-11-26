@@ -1,0 +1,87 @@
+{
+  "scope": "One new training mission; only training controls plus that mission; no test evaluation",
+  "base_sha256": "0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5",
+  "base_unchanged": true,
+  "q_before": "7dfd7a5f0e68db7dcab97e86e9218f046c33410f6878efd37cd7d5edde627346",
+  "q_after": "7dfd7a5f0e68db7dcab97e86e9218f046c33410f6878efd37cd7d5edde627346",
+  "result": {
+    "schema_version": 1,
+    "base_sha256": "0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5",
+    "settings": {
+      "capacity": 4096,
+      "learning_rate": 5e-05,
+      "exploration": 0.1,
+      "max_updates": 64
+    },
+    "rewards": {
+      "step": -1.0,
+      "pickup": 5.0,
+      "delivery": 50.0,
+      "success": 100.0,
+      "destruction": -100.0,
+      "timeout": -20.0,
+      "damage": -2.0,
+      "shaping": 2.0,
+      "gamma": 1.0,
+      "potential_bound": 0.0
+    },
+    "masked": true,
+    "missions": 1,
+    "transitions": 280,
+    "updates": 0,
+    "processed_ids": [
+      "4021e244729d4d88aefd5340bb5224ce"
+    ],
+    "buffer_size": 280,
+    "model_sha256": "5aa8482ecae706b2bd46b341037051f9f72ea6b9dc2ec50e71f79607285fea03",
+    "profile": {
+      "schema_version": 2,
+      "width": 12,
+      "height": 12,
+      "victims": 3,
+      "mode": "sensors",
+      "observation_size": 390,
+      "actions": 25
+    },
+    "model_timesteps": 100280,
+    "last_mission": {
+      "scenario_id": "ce37638df933ca33b51884822d623ee2c2205cd0472d7f04437855d81ea60db0",
+      "policy_sha256": "0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5",
+      "outcome": "time_limit",
+      "rescued": 1
+    },
+    "last_guard": {
+      "accepted": false,
+      "before": [
+        0,
+        5,
+        -1442.0
+      ],
+      "after": [
+        0,
+        0,
+        -1760.0
+      ],
+      "control_ids": [
+        "621ff8575c846c7831019b672bd2f4e320e4729c73bf657aeae4ea570942d46a",
+        "6d5e0258e7b5270ef5f18e86085c548332c4c064548ec9682f5eca172570b8f6",
+        "b48bf545ec418d09c6386275a622372163f15b8b46ddc72d6b04d44e7ee22a75",
+        "ce37638df933ca33b51884822d623ee2c2205cd0472d7f04437855d81ea60db0",
+        "cea57468138c937b7c1e5b69b64519a86e03bfa7beeeec12ef9dd7d3433180fa",
+        "fda3050518adb2d850bef1b9160d7d9e25e4d7503545525c611fde61581c6ab0"
+      ],
+      "reason": "regression_on_controls",
+      "attempted_updates": 64
+    },
+    "attempted_updates": 64,
+    "rejected_updates": 64,
+    "guard_rejections": 1,
+    "file_hashes": {
+      "model.zip": "5aa8482ecae706b2bd46b341037051f9f72ea6b9dc2ec50e71f79607285fea03",
+      "replay.pkl": "ff329e93e54a3932ba720c8b1b21b5882ded03f59889d18d6bfb5e00da323b32",
+      "rng.pkl": "74bdfa205ab077550d78e15f9bd5e136e340b60bdbf74c8a482049983708a39a"
+    },
+    "duplicate": false,
+    "recovered": false
+  }
+}

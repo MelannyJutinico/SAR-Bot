@@ -59,10 +59,11 @@ def main():
         "session": snapshot.metadata,
     }
     assert sha256(args.base.read_bytes()).hexdigest() == session.base_hash
-    assert evidence["base_q_parameters_sha256"] != evidence["after_q_parameters_sha256"]
+    changed = evidence["base_q_parameters_sha256"] != evidence["after_q_parameters_sha256"]
+    evidence["parameters_changed"] = changed
     (args.output / "persistence.json").write_text(json.dumps(evidence, indent=2), encoding="utf-8")
     print(json.dumps({"missions": snapshot.metadata["missions"], "transitions": snapshot.metadata["transitions"],
-                      "updates": snapshot.metadata["updates"], "parameters_changed": True,
+                      "updates": snapshot.metadata["updates"], "parameters_changed": changed,
                       "base_unchanged": True}))
 
 

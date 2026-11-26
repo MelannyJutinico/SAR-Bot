@@ -5,6 +5,7 @@ se publica después de escribir y verificar modelo, replay, RNG y metadatos.
 """
 
 from contextlib import contextmanager
+from copy import deepcopy
 from dataclasses import asdict, dataclass
 from hashlib import sha256
 import json
@@ -22,9 +23,36 @@ import torch
 from stable_baselines3 import DQN
 from stable_baselines3.common.logger import Logger
 
-from sar_bot.core import RescueSimulation
+from sar_bot.core import RescueSimulation, Scenario
 from sar_bot.env import RescueEnv, RewardConfig
-from sar_bot.learning import observation_mode_for_model
+from sar_bot.learning import observation_mode_for_model, evaluate_model, model_score
+
+
+def guarded_update(model, scenarios, rewards, *, gradient_steps, batch_size):
+    """Compara sobre controles de entrenamiento; nunca usa prueba ni garantiza generalización."""
+    policy = deepcopy(model.policy.state_dict())
+    optimizer = deepcopy(model.policy.optimizer.state_dict())
+    updates = model._n_updates
+    attempted = 0
+    try:
+        before = model_score(evaluate_model(model, scenarios, rewards))
+        model.train(gradient_steps=gradient_steps, batch_size=batch_size)
+        attempted = model._n_updates - updates
+        after = model_score(evaluate_model(model, scenarios, rewards))
+        accepted = (*after[:2], round(after[2], 6)) >= (*before[:2], round(before[2], 6))
+        audit = {"accepted": accepted, "before": list(before), "after": list(after),
+                 "control_ids": [s.scenario_id for s in scenarios],
+                 "reason": "no_regression_on_controls" if accepted else "regression_on_controls"}
+    except Exception as error:
+        attempted = model._n_updates - updates
+        accepted = False
+        audit = {"accepted": False, "reason": "control_or_update_error", "error": str(error)[:180],
+                 "control_ids": [s.scenario_id for s in scenarios]}
+    if not accepted:
+        model.policy.load_state_dict(policy)
+        model.policy.optimizer.load_state_dict(optimizer)
+        model._n_updates = updates
+    return {**audit, "attempted_updates": attempted}
 
 
 def digest(path):
@@ -111,11 +139,14 @@ class SessionSnapshot:
 class LearningSession:
     """Una sesión por perfil/modelo base. Los archivos base nunca se modifican."""
 
-    def __init__(self, directory, base_model, *, settings=None, protected_ids=()):
+    def __init__(self, directory, base_model, *, settings=None, protected_ids=(), control_scenarios=()):
         self.directory = Path(directory).resolve()
         self.base_model = Path(base_model).resolve()
         self.settings = settings or SessionSettings()
         self.protected_ids = frozenset(protected_ids)
+        self.control_scenarios = tuple(control_scenarios)
+        if any(s.scenario_id in self.protected_ids for s in self.control_scenarios):
+            raise ValueError("Una prueba reservada no puede ser control de aprendizaje")
         self.base_hash = digest(self.base_model)
         data = json.loads((self.base_model.parent / "metadata.json").read_text(encoding="utf-8"))
         self.rewards = RewardConfig(**data.get("rewards", {}))
@@ -125,12 +156,29 @@ class LearningSession:
     def for_project(cls, root, base_model, scenario, *, settings=None):
         root, base_model = Path(root), Path(base_model)
         protected = set()
+        controls = {}
         for path in (root / "configs/partitions").glob("*.json"):
             data = json.loads(path.read_text(encoding="utf-8"))
             protected.update(e["scenario_id"] for e in data.get("entries", []) if e["partition"] == "test")
+            for entry in data.get("entries", []):
+                if entry["partition"] != "training":
+                    continue
+                key = (entry.get("building"), entry.get("difficulty"))
+                if key in controls:
+                    continue
+                source = (root / entry["path"]).resolve()
+                if not source.is_relative_to(root.resolve()):
+                    raise ValueError("Control de aprendizaje fuera del proyecto")
+                candidate = Scenario.load(source)
+                if candidate.scenario_id != entry["scenario_id"]:
+                    raise ValueError("Control de aprendizaje alterado")
+                if (candidate.width, candidate.height, candidate.victim_count) == (
+                        scenario.width, scenario.height, scenario.victim_count):
+                    controls[key] = candidate
         name = f"{scenario.width}x{scenario.height}-{scenario.victim_count}-{digest(base_model)[:12]}"
         return cls(root / "outputs/learning_sessions" / name, base_model,
-                   settings=settings, protected_ids=protected)
+                   settings=settings, protected_ids=protected,
+                   control_scenarios=tuple(controls.values())[:6] or (scenario,))
 
     def _initial(self):
         return SessionSnapshot(self.base_model, {
@@ -335,9 +383,15 @@ class LearningSession:
                     model._on_step()
                     observation = next_observation
                 size = model.replay_buffer.size()
+                guard = None
                 if size >= 8:
-                    model.train(gradient_steps=min(self.settings.max_updates, max(1, len(episode.actions)//4)),
-                                batch_size=min(64, size))
+                    steps = min(self.settings.max_updates, max(1, len(episode.actions)//4))
+                    if self.control_scenarios:
+                        controls = {s.scenario_id:s for s in (*self.control_scenarios, episode.scenario)}
+                        guard = guarded_update(model, tuple(controls.values()), self.rewards,
+                                               gradient_steps=steps, batch_size=min(64, size))
+                    else:
+                        model.train(gradient_steps=steps, batch_size=min(64, size))
                 metadata = {**previous.metadata, "profile": env.profile,
                             "missions": previous.metadata["missions"] + 1,
                             "transitions": previous.metadata["transitions"] + len(episode.actions),
@@ -348,6 +402,14 @@ class LearningSession:
                                              "policy_sha256": episode.checkpoint_sha256,
                                              "outcome": episode.states[-1].outcome,
                                              "rescued": len(episode.states[-1].rescued)}}
+                if guard:
+                    metadata.update(last_guard=guard,
+                                    attempted_updates=previous.metadata.get("attempted_updates", previous.metadata["updates"])
+                                        + guard["attempted_updates"],
+                                    rejected_updates=previous.metadata.get("rejected_updates", 0)
+                                        + (0 if guard["accepted"] else guard["attempted_updates"]),
+                                    guard_rejections=previous.metadata.get("guard_rejections", 0)
+                                        + int(not guard["accepted"]))
                 saved = self._save(model, metadata, previous)
                 return {**saved.metadata, "duplicate": False, "recovered": previous.recovered}
             finally:
