@@ -2,7 +2,7 @@
 
 **Para incorporarse al equipo:** empezar por [README_EQUIPO.md](README_EQUIPO.md) y continuar con el [backlog de entrega](BACKLOG.md). Esta página conserva la referencia técnica de la base implementada.
 
-Simulación académica de rescate cooperativo con dos robots, sobrevivientes configurables y exposición térmica. La base V2 integrada usa **10 × 10, tres personas y dos focos**; el equipo continuará hacia edificios de **12 × 12**. La versión histórica de 6 × 6 permanece disponible.
+Simulación académica de rescate cooperativo con dos robots, sobrevivientes configurables y exposición térmica. La V2 integrada en `main` incluye edificios de **10 × 10 y 12 × 12, tres personas y varios focos**, editor y comparación de estrategias. La versión histórica de 6 × 6 permanece disponible.
 
 **Asignatura:** Sistemas Inteligentes. **Equipo:** cuatro personas. **Plazo objetivo:** una semana.
 
@@ -18,7 +18,7 @@ uv run --extra ui --extra rl python scripts/ui.py --scenario scenarios/v2/buildi
 
 ![Base V2 de 10 × 10 con tres personas y dos focos](docs/images/ui-v2.png)
 
-Las referencias completan sus tres rescates. DQN V2 es todavía un piloto: aprende el rescate cercano, pero no completa el edificio grande en la evaluación realizada. El editor, nuevos edificios, generación variada y evaluación final siguen pendientes. El resto de resultados de esta sección corresponde a la **base V1**.
+Las referencias completan sus tres rescates. DQN V2 es todavía un piloto: aprende el rescate cercano, pero no completa el edificio grande en la evaluación realizada. Ya están integrados el editor, dos edificios 12 × 12, generación reproducible, certificación positiva, historial, evaluador, particiones y gráficas de desarrollo. Siguen pendientes el entrenamiento final para ubicaciones variables, los tres modelos V2 congelados, el aprendizaje continuo y la evaluación/entrega final. El resto de resultados de esta sección corresponde a la **base V1**.
 
 Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. El modelo recomendado usa sensores locales y completa los seis controles de entrenamiento, dos casos de validación y dos de prueba. Resuelve el pasillo compartido que fallaba antes; todavía no demuestra mejor gestión térmica ni generalización amplia.
 

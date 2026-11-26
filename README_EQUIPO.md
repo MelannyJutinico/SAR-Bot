@@ -1,6 +1,6 @@
 # SAR-Bot — guía para incorporarse al equipo
 
-**Asignatura:** Sistemas Inteligentes · **Equipo:** cuatro personas · **Actualización:** 13 de noviembre de 2026.
+**Asignatura:** Sistemas Inteligentes · **Equipo:** cuatro personas · **Actualización:** 26 de noviembre de 2026.
 
 Este documento permite continuar el proyecto sin haber participado en las conversaciones iniciales. Explica el propósito, la base entregada, las limitaciones y cómo repartir el trabajo. Las tareas ejecutables y sus criterios de aceptación están en [BACKLOG.md](BACKLOG.md).
 
@@ -8,7 +8,7 @@ Este documento permite continuar el proyecto sin haber participado en las conver
 
 Una aplicación de rescate en un edificio 2D donde **dos robots controlados por una política aprendida** recogen a tres sobrevivientes y los llevan a una base, considerando obstáculos, coordinación y exposición al calor. La ampliación V2 comienza con un hito de 10 × 10 y tiene como objetivo edificios de 12 × 12.
 
-La ampliación principal será que **el profesor pueda colocar a las tres personas con clics antes de iniciar la misión**, dentro de un edificio preparado por el equipo. Luego podrá observar el rescate y comparar DQN con estrategias programadas, manteniendo exactamente el mismo escenario. Como cada robot carga una persona, hacen falta viajes adicionales y decisiones sobre el reparto del trabajo.
+El editor ya permite **colocar a las tres personas con clics antes de iniciar la misión**, dentro de un edificio preparado por el equipo. Luego se puede observar el rescate y comparar las estrategias disponibles, manteniendo exactamente el mismo escenario. DQN solo está disponible cuando existe un modelo compatible con ese perfil; todavía falta el de 12 × 12. Como cada robot carga una persona, hacen falta viajes adicionales y decisiones sobre el reparto del trabajo.
 
 La pregunta del trabajo es: **¿qué tan bien responde un controlador aprendido a distintas ubicaciones de sobrevivientes y cómo equilibra rescates, pasos y daño térmico frente a referencias clásicas?**
 
@@ -32,16 +32,18 @@ La simulación es académica. Las temperaturas y daños son reglas de juego, no 
 | Gymnasium, recompensas, entrenamiento y checkpoints DQN | Implementados |
 | Modelo con sensores V1 guardado y cargable | Disponible para 6 × 6 y dos personas |
 | Modelo V2 | Piloto de integración; aún no resuelve el edificio grande |
-| Interfaz Pygame con controles, calor, rutas e indicadores | Implementada como primera versión |
+| Interfaz Pygame con controles, calor, rutas e indicadores | Integrada con editor, comparación, biblioteca, catálogo e historial |
 | Pruebas de motor, aprendizaje, reproducción y controles | Ampliadas para V2; conservar la suite completa al integrar |
-| Editor para colocar sobrevivientes con clics | Pendiente |
+| Editor para colocar sobrevivientes con clics | Implementado; pendientes revisiones compartidas |
+| Dos edificios 12 × 12 y generación reproducible de ubicaciones | Implementados |
+| Particiones y evaluación unificada | Implementadas; 60/20/40 casos de entrenamiento/validación/prueba |
 | Entrenamiento con muchas combinaciones de ubicaciones | Pendiente |
 | Aprendizaje continuo con memoria y modelo persistentes entre ejecuciones | Solicitado; pendiente en SARB-033 a SARB-035 |
-| Certificación general de viabilidad térmica de posiciones nuevas | Pendiente |
+| Certificación positiva de viabilidad térmica de posiciones nuevas | Implementada y acotada; no certificar no demuestra imposibilidad |
 | Selección final sobre validación y evaluación con varias semillas | Pendientes |
 | Gráficas finales, informe, presentación y versión de entrega | Pendientes |
 
-**Base publicada:** el 13 de noviembre de 2026 se subieron los commits de la base V2 a `feature/simulation-core` y se verificó la rama en GitHub. Usar esa rama para obtener motor, interfaz y modelos; no asumir que `main` contiene la misma versión. SARB-001 conserva la revisión del equipo y SARB-003 la comprobación de instalación en los otros computadores.
+**Base integrada:** el 26 de noviembre de 2026 se incorporó la V2 a `main`, incluyendo los cambios de personas 2, 3 y 4 y el cierre documentado de SARB-009/020. Usar `main` como base común para nuevas ramas. `feature/base` conserva una implementación alternativa 6 × 6 con dos víctimas y observación distinta: sus tres semillas existen, pero sus modelos no se trasladan directamente a V2. SARB-001 conserva la revisión del equipo y SARB-003 la comprobación de instalación en los otros computadores.
 
 ## 4. Qué demuestran los modelos disponibles
 
@@ -126,7 +128,7 @@ Para obtener la base publicada:
 ```powershell
 git clone https://github.com/MelannyJutinico/SAR-Bot.git
 cd SAR-Bot
-git switch feature/simulation-core
+git switch main
 uv sync --locked --extra ui --extra rl --python 3.12
 uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/v2/building_10x10.json --strategy thermal
 ```
@@ -222,7 +224,16 @@ El profesor podrá elegir un edificio, ubicar personas, ejecutar el rescate y co
 
 La entrega contendrá código reproducible, interfaz, modelo guardado, escenarios exportados, resultados y gráficas medidos, informe técnico, presentación y un respaldo de la demostración. Las mejoras que no se logren se reportarán como límites; no se ocultarán casos ni se inventarán métricas.
 
-**Comenzar por SARB-001 a SARB-004.** Después, personas 2 y 3 pueden construir validación y editor en paralelo, persona 1 adaptar el aprendizaje y persona 4 fijar el protocolo experimental. Cerrar todo el backlog P0 y P1 define la meta de entrega del equipo, no una garantía de calificación del profesor.
+### Orden de cierre desde la versión integrada en main
+
+1. **Todo el equipo, coordina persona 4:** confirmar alcance y entregables con el profesor, registrar las cuatro instalaciones y revisar las entregas ya implementadas (SARB-001 a 004). No reconstruir el editor ni los escenarios por seguir viendo casillas abiertas.
+2. **Persona 1:** completar la configuración de entrenamiento V2 sobre las particiones, seleccionar con validación separada y ejecutar un piloto con ubicaciones variables y un presupuesto documentado (SARB-015 a 018). Evaluar rescates reales; no exigir una superioridad que los datos no demuestren.
+3. **Personas 1 y 4:** entrenar tres semillas de la misma configuración final, congelar checkpoints con hashes y comprobar que cargan en el perfil acordado (SARB-019). El modelo 6 × 6 alternativo no cumple el objetivo V2 de 12 × 12/3 personas.
+4. **Persona 1 → persona 3 → persona 4:** implementar sesiones persistentes de modelo y memoria, integrarlas en misiones reales de la UI y medir adaptación/regresiones sin entrenar durante evaluación ni reproducción (SARB-033 a 035). Este frente puede avanzar junto al entrenamiento final; sus sesiones usan copias separadas de los modelos congelados.
+5. **Persona 4, revisan personas 1 y 3:** ejecutar la prueba reservada con los tres checkpoints y referencias, regenerar gráficas, complementar análisis e informe con esos resultados (SARB-021 a 023, 025 y actualización de 031). Las herramientas ya están implementadas; faltan los resultados finales.
+6. **Personas 2 y 3, con todo el equipo:** comprobar el flujo completo, intercambio de archivos, correspondencia de exportaciones y modo continuo; ensayar en el computador de presentación y publicar una versión reproducible con modelo, resultados, informe y respaldo (SARB-012/013/014/024/026/027/030/032).
+
+La revisión del 26 de noviembre comprobó 283 pruebas: 266 pasaron en el entorno restringido y las otras 17 pasaron al repetirlas fuera de la restricción que denegaba enlaces de archivos temporales. Se verificaron el manifiesto 60/20/40 y la consistencia de las figuras de validación y del estudio de escala. Esto no sustituye las revisiones humanas ni prueba que el aprendizaje pendiente esté implementado. Cerrar todo el backlog P0 y P1 define la meta de entrega del equipo, no una garantía de calificación del profesor.
 
 ## 12. Lectura de apoyo
 

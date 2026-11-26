@@ -97,7 +97,7 @@ No usar este calendario para dar por aprobados hitos que no se cumplieron. Si el
 
 **P0 · Responsable:** persona 1 · **Revisa:** persona 4 · **Depende de:** ninguna · **Esfuerzo:** 1 h.
 
-Publicación realizada el 13 de noviembre de 2026: la base V2 está en `feature/simulation-core` y se verificó el remoto. Falta completar la revisión del equipo y confirmar el mismo commit en otro clon para cerrar esta tarea. No asumir que `main` tiene el modelo o la interfaz.
+Publicación inicial realizada el 13 de noviembre de 2026 en `feature/simulation-core`. El 26 de noviembre se integró la V2 en `main`, junto con los cambios de personas 2, 3 y 4 y el commit pendiente de cierre de SARB-009/020. `main` pasa a ser la base común; falta completar la revisión compartida y registrar las instalaciones del mismo commit en los cuatro equipos. El orden de cierre actualizado está en `README_EQUIPO.md`, sección 11.
 
 **Aceptación:**
 - El remoto contiene README, interfaz, checkpoint recomendado y evidencia; el commit comunicado coincide con el obtenido por otro integrante.
@@ -158,7 +158,7 @@ Revisar con los consumidores el contrato V2 ya construido: edificio fijo, tres p
 **P0 · Responsable:** persona 2 · **Revisa:** persona 1 · **Depende de:** SARB-004 · **Esfuerzo:** 2 h.
 
 **Aceptación:**
-- Rechaza personas fuera del mapa, sobre paredes, en la base o en la misma celda; exige exactamente dos.
+- Rechaza personas fuera del mapa, sobre paredes, en la base o en la misma celda; el editor V2 exige exactamente tres. El motor conserva conteo configurable y compatibilidad histórica con dos.
 - Rechaza coordenadas con tipos inválidos, dimensiones/límites inválidos, temperaturas no finitas y JSON incompleto con mensajes comprensibles.
 - Comprueba conexión entre base y personas; no presenta conectividad como garantía térmica.
 - UI, importación y generador reutilizan el mismo validador.
