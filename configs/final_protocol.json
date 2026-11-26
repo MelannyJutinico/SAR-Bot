@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "frozen_utc": "2026-11-26T17:41:28.898748+00:00",
+  "scope_note": "Alcance reducido acordado el 26 de noviembre: una semilla de entrenamiento; sin estimar variabilidad entre semillas. Aprendizaje entre misiones separado del modelo congelado.",
+  "scope_document": "docs/ALCANCE.md",
+  "minimum_training_seeds": 1,
+  "manifest": "configs/partitions/v2_12x12.json",
+  "manifest_json_sha256": "206fb136b102a0d8f1a46ef393f8b0fdf05bf39c141839a5eb6f266d393d794d",
+  "random_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "strategies": [
+    "dqn",
+    "shortest",
+    "thermal",
+    "random"
+  ],
+  "models": [
+    {
+      "path": "artifacts/final/model.zip",
+      "sha256": "0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5",
+      "metadata_json_sha256": "09aa0a1d4cb833fab84d96f9eb00c2bb6b1fb263d51d99412e7bfc287cd7299f",
+      "training_seed": 0,
+      "validation_successes": 3,
+      "validation_cases": 20
+    }
+  ]
+}
