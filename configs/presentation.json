@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "default_scenario": "scenarios/v2/coordination_hub_12x12.json",
+  "default_strategy": "thermal",
+  "model": "artifacts/final/model.zip",
+  "known_demo": "scenarios/demo_final.json",
+  "known_demo_source": "scenarios/partitions/v2_12x12/validation/hub_validation_03_easy.json",
+  "known_demo_scope": "validation case used for checkpoint selection; not final test",
+  "known_demo_expected": {
+    "rescued": 3,
+    "steps": 126,
+    "damage_total": 0
+  },
+  "note": "Use thermal reference for freely chosen positions; DQN is experimental and its failures are part of the reported results."
+}

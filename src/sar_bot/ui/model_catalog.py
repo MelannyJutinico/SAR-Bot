@@ -86,7 +86,9 @@ def inspect_model(root, path):
         if shape[0] != RescueEnv.observation_size(*dimensions, mode):
             raise ValueError("El vector no coincide con el perfil declarado")
         architecture = "MLP " + str(config["dqn"]["policy_kwargs"]["net_arch"])
-        return ModelEntry(path, dimensions, mode, shape[0], schema, architecture)
+        status=("congelado / una semilla" if metadata.get("release_status")=="final - una semilla"
+                else "piloto / desarrollo")
+        return ModelEntry(path, dimensions, mode, shape[0], schema, architecture,status=status)
     except (OSError, ValueError, TypeError, KeyError, IndexError, AttributeError, BadZipFile, zlib.error, EOFError, ImportError) as error:
         if isinstance(error, FileNotFoundError):
             message = "Falta model.zip o metadata.json en la carpeta seleccionada"

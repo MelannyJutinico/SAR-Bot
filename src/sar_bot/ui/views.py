@@ -86,7 +86,7 @@ def draw_execution(app):
     app.wrap("Estrategia: "+(app.request.strategy if app.comparison_replaying and app.request else STRATEGIES[app.strategy_index][1]),900,185,320)
     if app.request and app.request.model:
         from pathlib import Path
-        app.wrap("Modelo: "+Path(app.request.model).parent.name+" (piloto)",900,235,320,14)
+        app.wrap("Modelo base: "+Path(app.request.model).parent.name,900,235,320,14)
     app.wrap("Recoger no es entregar. El contador aumenta al llegar a la base.",900,290,320,14)
     label="Pausar" if app.playback and app.playback.playing else "Iniciar / continuar"
     app.button("play",label,(900,388,328,48),primary=True,enabled=app.playback is not None)
@@ -117,7 +117,7 @@ def draw_analysis(app):
                "Certificacion: "+str(result.certification)]
         for i,line in enumerate(lines):app.text(line,(900,255+i*28),14)
         from pathlib import Path
-        model=Path(result.model).parent.name+" (piloto)" if result.model else "No aplica"
+        model=Path(result.model).parent.name if result.model else "No aplica"
         app.wrap("Modelo: "+model,900,470,320,14)
         app.wrap("Escenario: "+result.scenario_name.replace("_"," "),900,520,320,13)
         app.text("ID fisico:",(900,575),12)
@@ -139,7 +139,8 @@ def draw_models(app):
         i=app.model_page*4+local
         y=225+local*108
         reason=entry.reason(app.scenario)
-        app.button(f"model_{i}",entry.path.parent.name+(" · piloto" if not entry.error else " · invalido"),
+        suffix=" · fijo" if entry.status.startswith("congelado") else " · desarrollo"
+        app.button(f"model_{i}",entry.path.parent.name+(suffix if not entry.error else " · invalido"),
                    (900,y,328,36),enabled=reason is None)
         description=reason or f"{entry.dimensions[0]}x{entry.dimensions[1]} / {entry.dimensions[2]} personas / {entry.mode} / {entry.observation_size}"
         app.wrap(description,900,y+39,320,12)

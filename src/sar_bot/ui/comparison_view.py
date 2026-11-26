@@ -19,7 +19,7 @@ def draw_comparison(app):
     labels=("Estrategia / estado", "Rescates", "Finalizacion", "Pasos", "Dano total")
     xs=(52,330,450,660,770)
     for x,label in zip(xs,labels): app.text(label,(x,310),15,bold=True)
-    names={"dqn":"DQN (piloto)","shortest":"Ruta corta","thermal":"Ruta termica","random":"Aleatoria"}
+    names={"dqn":"DQN aprendido","shortest":"Ruta corta","thermal":"Ruta termica","random":"Aleatoria"}
     statuses={"pending":"Pendiente","completed":"Completada","failed":"Error de ejecucion","incompatible":"No disponible"}
     outcomes={"success":"Exito","destroyed":"Destruccion","time_limit":"Limite temporal"}
     for i,row in enumerate(comparison.rows.values()):
@@ -32,7 +32,7 @@ def draw_comparison(app):
             app.button("replay_"+row.strategy,"Reproducir",(1040,y-5,185,34))
         if row.error: app.wrap(row.error,52,y+28,1120,12)
         elif row.strategy=="dqn" and request.model:
-            app.text("Modelo piloto: "+Path(request.model).parent.name,(52,y+29),12)
+            app.text("Modelo fijo: "+Path(request.model).parent.name,(52,y+29),12)
     app.text("Pasos = tiempo simulado. Menos dano en un fracaso no implica una estrategia mejor.",(52,713),14)
     app.button("comparison_export","Exportar CSV",(52,751,240,38),enabled=not comparison.futures and app.export_future is None)
     app.button("comparison_individual","Resultado individual",(330,751,250,38))
