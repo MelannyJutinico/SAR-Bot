@@ -1,5 +1,7 @@
 # SAR-Bot: rescate cooperativo con exposición térmica
 
+**Nota de mantenimiento:** este informe conserva los resultados experimentales de la entrega congelada. Posteriormente se simplificó la interfaz y se añadió una comprobación de regresiones al aprendizaje de sesión; sus nombres y comportamiento vigentes se describen en [INTERFAZ.md](INTERFAZ.md). No se volvió a evaluar ni ajustar el modelo final con prueba.
+
 Informe técnico final del alcance acordado el **26 de noviembre de 2026**. Asignatura: Sistemas Inteligentes. Equipo: cuatro integrantes. Código, configuraciones, modelos, trazas y resultados acompañan este documento en el repositorio.
 
 ## 1. Objetivo y resultado principal
@@ -142,7 +144,7 @@ La preparación y el aprendizaje ocurren fuera del hilo de dibujo; las operacion
 - **Aprendizaje local:** las actualizaciones pueden causar regresiones; el mecanismo de guardado no garantiza calidad. El checkpoint base y la separación de modos permiten volver al comportamiento reproducible.
 - **Reproducibilidad:** las trazas permiten verificar reglas y métricas. Hardware y versiones pueden afectar tiempos de cómputo y trayectoria de un entrenamiento nuevo.
 
-Una siguiente versión debería dedicar un nuevo presupuesto a varias semillas, una validación menos reutilizada, tareas más graduales, mejores representaciones y control de regresiones antes de promover una sesión aprendida. Esa investigación requeriría una nueva prueba reservada. No se agrega funcionalidad a esta entrega tras observar los resultados finales.
+Una siguiente versión debería dedicar un nuevo presupuesto a varias semillas, una validación menos reutilizada, tareas más graduales, mejores representaciones y control de regresiones antes de promover una sesión aprendida. Esa investigación requeriría una nueva prueba reservada. Los resultados y el checkpoint de esta evaluación permanecen congelados; las mejoras posteriores de interfaz y control de actualizaciones se documentan por separado y no se presentan como mejoras de esos resultados.
 
 ## 9. Entrega y reproducción
 

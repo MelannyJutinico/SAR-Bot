@@ -1,5 +1,37 @@
 # Interfaz de SAR-Bot
 
+## Simplificación de uso y protección de aprendizaje
+
+Comprobación final: **321 pruebas aprobadas** en 247,237 segundos. [Registro](../results/online_guard/verification.json).
+
+La interfaz actual de `main` reemplaza las etiquetas técnicas de la primera entrega:
+
+| Opción | Para qué sirve |
+|---|---|
+| Mapa del edificio | Elegir un mapa preparado; no significa mapa de entrenamiento. Muestra su tamaño y cantidad de personas. |
+| Colocar personas | Editar las tres posiciones antes de preparar la misión. |
+| Red neuronal (DQN) | Decisiones aprendidas con recompensas; es experimental y puede fallar. |
+| Ruta corta | Planificar priorizando distancia, sin considerar daño por calor. |
+| Ruta segura (calor) | Planificar considerando distancia y daño térmico; no garantiza resolver cualquier caso. |
+| Movimientos al azar | Control básico sin planificación ni entrenamiento. |
+| Solo ejecutar / Aprender | Opciones exclusivas de DQN. La primera usa el modelo base; la segunda recupera la sesión y aprende de nuevas misiones. |
+| Elegir red neuronal | Mostrar únicamente redes compatibles. La red en uso aparece resaltada. Los modelos de otros tamaños se ocultan. |
+| Comparar las 4 estrategias | Ejecutar todas sobre el mismo mapa y posiciones iniciales. Comparar primero entregas y finalización. |
+| Ver recorrido | Reproducir el resultado de una fila; no entrena ni cambia la estrategia seleccionada para una misión nueva. |
+
+[Captura de las opciones DQN](images/interface-dqn.png) · [Captura de la comparación](images/interface-comparison.png).
+
+Las dos opciones de DQN están visibles simultáneamente, con la activa resaltada. No se muestran controles de redes ni de entrenamiento para las estrategias programadas. Los selectores tienen flecha y explicaciones; la navegación de modelos aparece únicamente si hay más de una página.
+
+Al terminar una misión de aprendizaje se comprueba una actualización candidata sobre seis casos fijos de **entrenamiento**, uno por edificio y dificultad, y sobre la misión recién terminada si no está ya incluida. Se comparan misiones completas, entregas y retorno en ese orden. Si la puntuación agregada cae, se recuperan red, red objetivo y optimizador anteriores. La experiencia, identidad de misión, memoria y contadores de intentos se conservan. Un error al comprobar también conserva los pesos anteriores.
+
+Esto reduce regresiones detectables en esos controles; no garantiza generalización ni que cada caso individual mejore. No usa validación o prueba reservada para esta decisión. La comprobación ocurre en segundo plano y se explica en el aviso de guardado. Los controles no se usan para calcular gradientes.
+
+Prueba real: 64 actualizaciones candidatas redujeron las entregas de 5 a 0 en los controles. Se rechazaron; los parámetros Q finales fueron idénticos a los originales, se guardaron 280 experiencias y el modelo congelado permaneció intacto. [Evidencia](../results/online_guard/check.json).
+
+Las secciones siguientes describen el estado de la primera entrega y el historial. Donde usen etiquetas anteriores, prevalecen los nombres de esta tabla.
+
+
 ## Versión final — 26 de noviembre de 2026
 
 `run.bat` abre el edificio de coordinación 12 × 12 con la referencia térmica, en pausa. El modelo predeterminado es `artifacts/final/model.zip` y el catálogo lo identifica como **congelado / una semilla**. DQN es experimental: 3/20 misiones completas en validación y 0/40 en prueba.

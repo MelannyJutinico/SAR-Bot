@@ -1,6 +1,6 @@
 # SAR-Bot
 
-Simulador académico de rescate con **dos robots, tres personas y edificios de 12 × 12**, editor visual, riesgo térmico y cuatro estrategias comparables. Versión final del alcance acordado el **26 de noviembre de 2026**.
+Simulador académico de rescate con **dos robots, tres personas y edificios de 12 × 12**, editor visual, riesgo térmico y cuatro estrategias comparables. Alcance acordado el **26 de noviembre de 2026**. Las mejoras actuales continúan en `main`, sin crear otra etiqueta de versión.
 
 ## Abrir el proyecto
 
@@ -13,7 +13,7 @@ uv sync --locked --extra ui --extra rl --python 3.12
 
 Después de instalar, basta hacer doble clic en **run.bat**. Abre el edificio grande con la referencia térmica. La preparación comienza pausada: pulsa **Ver ejecución** y luego iniciar. Puede ejecutarse sin Internet una vez instaladas las dependencias.
 
-![Rescate en el edificio 12 × 12](docs/images/final-default.png)
+![Rescate en el edificio 12 × 12](docs/images/interface-preparation.png)
 
 ## Qué incluye
 
@@ -22,7 +22,13 @@ Después de instalar, basta hacer doble clic en **run.bat**. Abre el edificio gr
 - Editor para colocar tres personas en edificios preparados, validación y guardado de escenarios personalizados. La certificación por referencia no garantiza que DQN resuelva el caso.
 - Pausa, avance por pasos, velocidad visual, trayectorias, integridad, historial, reproducción, exportación y comparación sobre el mismo escenario.
 - Controlador DQN entrenado, rutas corta y térmica, y acciones aleatorias. Una política centralizada elige entre 25 movimientos conjuntos para los dos robots.
-- Modo **Aprender y guardar**: al terminar una misión DQN nueva, actualiza la red y conserva modelo, optimizador, memoria y contadores entre ejecuciones. Evaluar, comparar y reproducir no actualizan pesos.
+- Opción **Aprender** de DQN: al terminar una misión nueva, guarda experiencias, comprueba la actualización y conserva los pesos nuevos si no empeoran en los controles de entrenamiento. Persiste modelo, optimizador, memoria y contadores entre ejecuciones. Evaluar, comparar y reproducir no actualizan pesos.
+
+## Qué significa cada opción
+
+**Mapa del edificio** elige un mapa preparado, con paredes y calor definidos. **Colocar personas** permite cambiar las tres ubicaciones antes de preparar la misión. El selector de estrategias explica las cuatro alternativas: red neuronal aprendida, ruta corta que ignora calor, ruta segura que considera calor y movimientos al azar como referencia básica.
+
+La selección de redes solo muestra modelos compatibles con el tamaño y la cantidad de personas del mapa, y marca la red en uso. Los controles de entrenamiento aparecen únicamente con DQN. **Comparar las 4 estrategias** ejecuta cada una desde el mismo estado inicial y muestra entregas, finalización, pasos y daño. **Ver recorrido** reproduce las acciones de esa fila sin entrenar de nuevo.
 
 ## Resultado real del aprendizaje
 
@@ -45,7 +51,7 @@ Caso conocido de validación, usado durante la selección; entrega tres personas
 .\run.bat --scenario scenarios/demo_final.json --strategy dqn
 ```
 
-Para aprender, selecciona DQN y cambia **Modo: Evaluar sin aprender** a **Modo: Aprender y guardar**. Finaliza una misión y espera el aviso de guardado antes de preparar otra. Al reiniciar el programa, activa de nuevo ese modo para recuperar la sesión. Se guarda en `outputs/learning_sessions/`, separada por perfil y hash del modelo base. El modelo final permanece intacto. La actualización puede mejorar o empeorar la política.
+Para aprender, selecciona **Red neuronal (DQN)** y pulsa **Aprender**. **Solo ejecutar** utiliza la red base sin modificarla. Finaliza una misión y espera el aviso de guardado antes de preparar otra. Al reiniciar el programa, activa de nuevo ese modo para recuperar la sesión. Se guarda en `outputs/learning_sessions/`, separada por perfil y hash del modelo base. El modelo final permanece intacto. Una actualización que empeora en los controles conserva los pesos anteriores y guarda la memoria. Esta comprobación no garantiza mejora en posiciones nuevas. [Comprobación real](results/online_guard/check.json).
 
 ```powershell
 .\run.bat --strategy dqn --learn --scenario scenarios/partitions/v2_12x12/training/hub_training_01_easy.json

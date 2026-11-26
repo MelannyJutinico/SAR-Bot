@@ -1,5 +1,7 @@
 # Cierre técnico de SAR-Bot 1.0.0
 
+**Estado actual de main:** después del cierre se simplificaron los controles y se protegieron las actualizaciones de sesión contra regresiones detectadas. Se continúa en la misma rama, sin nuevas etiquetas de versión. [Guía actual de opciones](INTERFAZ.md). Los resultados congelados y las verificaciones de la primera entrega se conservan abajo.
+
 Versión del **26 de noviembre de 2026**, bajo el [alcance de cierre acordado](ALCANCE.md). La distribución se identifica con la etiqueta Git `v1.0.0`. El README contiene la instalación y `run.bat` inicia la aplicación.
 
 ## Qué se considera terminado

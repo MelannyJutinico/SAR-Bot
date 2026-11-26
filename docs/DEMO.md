@@ -17,7 +17,7 @@ Versión del 26 de noviembre de 2026. Preparada para una exposición de 5–10 m
 | Motor y agente | 60 s | Temperatura × tiempo de exposición; un paso aplica daño a ambos robots. Una red DQN centralizada recibe 390 valores y decide una de 25 acciones conjuntas. |
 | Editor y rescate fiable | 2 min | Con la referencia térmica, editar las tres posiciones en el edificio preparado, validar, preparar y reproducir. Mostrar pausa, un paso, temperatura e integridad. Si no hay certificado, explicar el aviso y elegir posiciones verificables. |
 | Política aprendida | 90 s | Abrir el ejemplo conocido DQN. Mostrar sus tres entregas y aclarar que este caso se usó en validación; no representa posiciones nuevas. |
-| Aprendizaje persistente | 90 s | En DQN, activar «Aprender y guardar», completar una misión y esperar el mensaje de guardado. Mostrar misiones, recuerdos y actualizaciones; abrir otra ejecución y recuperar los contadores. Puede fallar el rescate y aun así aportar experiencia. |
+| Aprendizaje persistente | 90 s | En DQN, activar «Aprender», completar una misión y esperar el mensaje de guardado. Mostrar misiones, recuerdos y actualizaciones; abrir otra ejecución y recuperar los contadores. Puede fallar el rescate y aun así aportar experiencia. |
 | Comparación y resultados | 2 min | Comparar las cuatro estrategias sobre exactamente el mismo caso. Mostrar la tabla de prueba: DQN 0/40, corta 33/40, térmica 40/40; explicar límites y mejoras futuras. |
 
 Para cinco minutos, reducir el editor a una posición, mostrar la persistencia ya comprobada y dar prioridad a las diferencias entre estrategia programada, red entrenada y resultado medido. Los integrantes pueden repartirse problema, motor/aprendizaje, interfaz y resultados; ya no hay trabajo técnico pendiente por roles para esta versión.
@@ -39,9 +39,15 @@ Desde la raíz del repositorio:
 
 La velocidad inicial es de seis pasos visuales por segundo, modificable en la interfaz; no cambia la temperatura, las recompensas ni el daño por turno. Las cifras de respaldo corresponden a **Evaluar sin aprender**, usando `artifacts/final/model.zip`. Una sesión aprendida puede comportarse de otra manera.
 
+## Mejora de uso posterior a la entrega congelada
+
+En `main`, los selectores muestran **Mapa del edificio** y las cuatro estrategias con sus explicaciones. DQN ofrece dos botones: **Solo ejecutar** y **Aprender**. Las otras estrategias ocultan las opciones de entrenamiento. La comparación usa **Ver recorrido** para reproducir cada fila.
+
+La actualización candidata se comprueba contra los pesos anteriores sobre controles de entrenamiento. Si empeora, se conservan esos pesos y se guarda la memoria. Las cifras históricas de regresión de la sección siguiente corresponden al mecanismo anterior, sin esta protección; se conservan como evidencia de por qué se añadió. [Comprobación de la protección](../results/online_guard/check.json).
+
 ## Qué ocurre al aprender
 
-La misión se prepara en segundo plano con la política de sesión y exploración del 10 %. Reproducirla muestra decisiones reales ya calculadas; al llegar a su final se verifican sus transiciones, se añaden a la memoria y se actualiza la red. El trabajo y el guardado ocurren fuera del hilo de dibujo. No aprende en cada fotograma ni al rebobinar. «Nueva misión / preparar» crea una misión nueva; reiniciar reproduce la existente y evita duplicar su aprendizaje.
+La misión se prepara en segundo plano con la política de sesión y exploración del 10 %. Reproducirla muestra decisiones reales ya calculadas; al llegar a su final se verifican sus transiciones, se añaden a la memoria y se actualiza la red. El trabajo y el guardado ocurren fuera del hilo de dibujo. No aprende en cada fotograma ni al rebobinar. «Preparar nueva misión» crea una misión nueva; reiniciar reproduce la existente y evita duplicar su aprendizaje.
 
 Se conserva una sesión por perfil y modelo base en `outputs/learning_sessions/`. Incluye replay de hasta 4096 transiciones, pesos, optimizador, estados aleatorios y contadores. Al cerrar durante el guardado, la aplicación espera a que termine. Una copia anterior permite recuperar un guardado dañado. Cambiar a evaluación o comparar utiliza el **modelo base congelado**, para mantener las cifras reproducibles.
 

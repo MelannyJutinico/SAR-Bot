@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-26",
+  "timezone": "America/Bogota",
+  "full_suite": {
+    "tests": 321,
+    "seconds": 247.237,
+    "result": "OK",
+    "command": ".venv/Scripts/python.exe -m unittest discover -s tests"
+  },
+  "code_commits": [
+    "56dcfd8",
+    "08b0c05"
+  ],
+  "features_checked": [
+    "explicit DQN mode choices",
+    "programmed strategies hide irrelevant controls",
+    "compatible model selection and real pagination",
+    "comparison, history and replay",
+    "candidate regression restores policy and optimizer but persists experiences",
+    "update evaluation errors preserve previous weights",
+    "training controls exclude reserved cases"
+  ],
+  "real_guard_check": "results/online_guard/check.json",
+  "frozen_model_unchanged": true,
+  "new_release_tag_created": false
+}

@@ -1,5 +1,7 @@
 # Entorno de aprendizaje
 
+**Mejora actual de sesión:** DQN ofrece **Solo ejecutar** y **Aprender**. Al aprender, una actualización candidata solo se conserva si no empeora la puntuación agregada sobre controles de entrenamiento respecto a la red previa. Si se rechaza, se recuperan pesos y optimizador, conservando memoria y contadores. El detalle, límites y comprobación real están en [INTERFAZ.md](INTERFAZ.md). La regresión histórica de dos misiones descrita abajo corresponde al mecanismo anterior sin protección.
+
 ## Estado final — 26 de noviembre de 2026
 
 El modelo vigente es `artifacts/final/model.zip`: DQN centralizado con máscara, observación de 390 valores, dos capas de 128 unidades y una semilla. Fue seleccionado por validación (3/20 misiones completas, 18/60 entregas) y congelado antes de prueba (0/40, 16/120). El informe distingue las seis configuraciones de desarrollo de réplicas independientes: [INFORME.md](INFORME.md).

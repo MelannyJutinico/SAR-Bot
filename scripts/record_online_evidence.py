@@ -50,7 +50,7 @@ def main():
             "missions", "transitions", "updates", "buffer_size", "model_timesteps",
             "model_sha256", "last_mission")})
     evidence = {
-        "scope": "Two missions launched in separate CLI processes, training cases only; validation comparison is descriptive, not a new model selection.",
+        "scope": "Snapshot of a completed local session; a separate validation comparison is descriptive, not a new final-model selection.",
         "base_sha256": session.base_hash,
         "after_sha256": snapshot.metadata["model_sha256"],
         "base_q_parameters_sha256": parameter_hash(args.base),
