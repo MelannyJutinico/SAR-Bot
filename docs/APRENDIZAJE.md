@@ -179,6 +179,16 @@ El entorno comparte tablas de distancias entre configuraciones con las mismas pa
 
 Este entrenamiento sigue siendo por ejecuciones independientes. La persistencia de memoria y el aprendizaje en vivo continúan en SARB-033/034; aquí no se implementan.
 
+### Piloto ejecutado el 26 de noviembre de 2026
+
+Se ejecutó el comando de 2000 pasos por etapa, semilla 0: 6000 pasos en total, usando 8/20/60 casos de entrenamiento y los veinte de validación sin solapamiento. El modelo inicial no entregaba personas; el checkpoint elegido a los 6000 pasos entregó una de las sesenta personas de validación, con cero misiones completas de veinte. Se guardó y recargó el modelo seleccionado; el resultado no demuestra todavía una política útil de rescate.
+
+El piloto tardó 73,58 segundos desde la creación del callback, incluyendo evaluaciones. Ese tiempo no es una predicción lineal de convergencia ni incluye todo el arranque del proceso. La evidencia está en [results/sarb017/v2_12x12_pilot_s0](../results/sarb017/v2_12x12_pilot_s0): configuración efectiva, hashes, evaluaciones por checkpoint, resumen, resultados seleccionados y registros por episodio. Los pesos de este piloto permanecen localmente en `outputs/v2-12x12-pilot-s0/best_model.zip`; no se publica como modelo recomendado.
+
+El próximo experimento es la corrida de 120000 pasos de la configuración, revisando primero el rescate en los casos fáciles. Si no aparece aprendizaje útil, se debe diagnosticar y simplificar el currículo antes de multiplicar semillas. La prueba final sigue sin evaluarse.
+
+Verificación de la integración: 53 pruebas focalizadas aprobadas y suite completa de 289 pruebas aprobadas (161,99 s). La suite completa se ejecutó fuera de la restricción que deniega los enlaces de archivos temporales usados por las exportaciones de la interfaz. Incluye el entrenamiento real breve, guardado/recarga, actualizaciones de pesos, perfiles, compatibilidad histórica y controles contra fuga de particiones.
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)

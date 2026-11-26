@@ -311,6 +311,8 @@ Cerrada el 25 de noviembre de 2026, integrada en `feature/simulation-core` con e
 
 **P0 · Responsable:** persona 1 · **Revisa:** persona 2 · **Depende de:** SARB-004, SARB-008 · **Esfuerzo:** 4 h.
 
+Avance del 26 de noviembre: `configs/dqn_v2_12x12.json` expande el manifiesto 12 × 12 en un currículo de 8/20/60 casos de entrenamiento; la evaluación usa los veinte de validación. Hay pruebas de selección, observaciones y rechazo de fuga por firma física. El entorno comparte distancias por geometría sin alterar las ubicaciones. Pendiente revisión compartida para cierre.
+
 **Aceptación:**
 - `reset` selecciona configuraciones solo de la partición solicitada y se reproduce con semilla. La opción `victim_positions` ya está construida; completar su uso con el generador y las particiones.
 - La observación refleja las tres posiciones reales y actualiza sensores/distancias para el escenario elegido.
@@ -326,6 +328,8 @@ Cerrada el 25 de noviembre de 2026, integrada en `feature/simulation-core` con e
 
 **P0 · Responsable:** persona 1 · **Revisa:** persona 4 · **Depende de:** SARB-009, SARB-015 · **Esfuerzo:** 2 h.
 
+Avance del 26 de noviembre: entrenador conectado al manifiesto, configuración efectiva con rutas explícitas, selección separada, manifiesto/hashes y resumen guardados. La prueba de integración entrena, guarda y recarga un modelo de 390 entradas con actualizaciones reales. El piloto semilla 0 y su evidencia están en `results/sarb017/v2_12x12_pilot_s0/`. Pendiente revisión de persona 4; esto no sustituye las tres semillas finales de SARB-019.
+
 **Aceptación:**
 - `--seed` ya permite configurar cada semilla sin editar el motor; preparar su uso reproducible en ejecuciones independientes y pruebas de metadatos.
 - La evaluación periódica para elegir checkpoint usa validación separada; los controles de entrenamiento se identifican como tales.
@@ -340,6 +344,8 @@ Cerrada el 25 de noviembre de 2026, integrada en `feature/simulation-core` con e
 ### SARB-017 — Ejecutar un piloto y diagnosticar aprendizaje
 
 **P0 · Responsable:** persona 1 · **Revisa:** persona 4 · **Depende de:** SARB-015, SARB-016 · **Esfuerzo:** 3 h activas más cómputo.
+
+Piloto acotado ejecutado el 26 de noviembre: 6000 pasos, semilla 0, selección sobre veinte casos de validación. Inicial: 0/20 misiones y ninguna persona entregada. Checkpoint a los 6000: 0/20 misiones y una persona entregada de sesenta. Evidencia en `results/sarb017/v2_12x12_pilot_s0/`; no se abrió la prueba final. Sigue pendiente diagnosticar trayectorias y completar el experimento de aprendizaje antes de declarar esta tarea cerrada.
 
 **Aceptación:**
 - Se ejecuta un piloto con posiciones variables, empezando por casos sencillos y aumentando dificultad.
