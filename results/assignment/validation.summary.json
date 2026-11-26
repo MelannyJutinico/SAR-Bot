@@ -1,0 +1,30 @@
+{
+  "neural_assignment": {
+    "episodes": 20,
+    "successes": 20,
+    "rescued": 60,
+    "mean_success_steps": 38.4,
+    "mean_success_damage": 10.15
+  },
+  "untrained_assignment": {
+    "episodes": 20,
+    "successes": 20,
+    "rescued": 60,
+    "mean_success_steps": 39.25,
+    "mean_success_damage": 10.05
+  },
+  "thermal": {
+    "episodes": 20,
+    "successes": 20,
+    "rescued": 60,
+    "mean_success_steps": 40.95,
+    "mean_success_damage": 10.05
+  },
+  "shortest": {
+    "episodes": 20,
+    "successes": 17,
+    "rescued": 57,
+    "mean_success_steps": 34.8235294117647,
+    "mean_success_damage": 38.0
+  }
+}

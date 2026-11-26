@@ -17,6 +17,7 @@ class ModelEntry:
     architecture: str = "desconocida"
     status: str = "piloto / desarrollo"
     error: str | None = None
+    controller: str = "legacy_dqn"
 
     def reason(self, scenario):
         if self.error:
@@ -31,6 +32,22 @@ def inspect_model(root, path):
     path = Path(path).resolve()
     try:
         metadata = json.loads((path.parent / "metadata.json").read_text(encoding="utf-8"))
+        if metadata.get("controller")=="neural_assignment":
+            profile=metadata["profile"]
+            dimensions=tuple(profile[key] for key in ("width","height","victims"))
+            if any(type(v) is not int or v<1 for v in dimensions):
+                raise ValueError("Perfil de asignación inválido")
+            with ZipFile(path) as archive:
+                if archive.getinfo("assignment.json").file_size>64000 or archive.getinfo("weights.pt").file_size>5_000_000:
+                    raise ValueError("Archivo de asignación demasiado grande")
+                header=json.loads(archive.read("assignment.json"))
+            if (header.get("controller")!="neural_assignment" or header.get("schema_version")!=1
+                    or header.get("features")!=16 or header.get("profile")!=profile
+                    or header.get("architecture")!=[16,64,32,1]
+                    or header.get("route_weights")!=[.05,2.]):
+                raise ValueError("Cabecera y perfil de asignación incompatibles")
+            return ModelEntry(path,dimensions,"assignment",16,"asignación v1","MLP [16, 64, 32, 1]",
+                              status="asignación neuronal",controller="neural_assignment")
         config = metadata["config"]
         profile = metadata.get("observation_profile")
         if profile is not None:

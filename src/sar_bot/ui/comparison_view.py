@@ -20,7 +20,7 @@ def draw_comparison(app):
     labels=("Estrategia / estado", "Rescates", "Finalizacion", "Pasos", "Dano total")
     xs=(52,330,450,660,770)
     for x,label in zip(xs,labels): app.text(label,(x,310),15,bold=True)
-    names={"dqn":"Red neuronal (DQN)","shortest":"Ruta corta","thermal":"Ruta segura (calor)","random":"Movimientos al azar"}
+    names={"dqn":"Red neuronal","shortest":"Ruta corta","thermal":"Ruta segura (calor)","random":"Movimientos al azar"}
     statuses={"pending":"Calculando","completed":"Lista","failed":"Error al ejecutar","incompatible":"No disponible"}
     outcomes={"success":"Rescate completo","destroyed":"Robot destruido","time_limit":"Tiempo agotado"}
     for i,row in enumerate(comparison.rows.values()):

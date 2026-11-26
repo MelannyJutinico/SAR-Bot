@@ -13,8 +13,8 @@ sys.path.insert(0, str(ROOT / "src"))
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scenario", type=Path, default=ROOT / "scenarios/v2/coordination_hub_12x12.json")
-    parser.add_argument("--strategy", choices=("dqn", "shortest", "thermal", "random"), default="thermal")
-    parser.add_argument("--model", type=Path, default=ROOT / "artifacts/final/model.zip")
+    parser.add_argument("--strategy", choices=("neural", "dqn", "shortest", "thermal", "random"), default="neural")
+    parser.add_argument("--model", type=Path, default=ROOT / "artifacts/rescue_network/model.zip")
     parser.add_argument("--speed",type=int,default=6,help="Velocidad visual, de 1 a 12 pasos por segundo")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--headless", action="store_true")
@@ -25,8 +25,9 @@ def main():
     if args.steps < 0:
         parser.error("--steps debe ser no negativo")
     if not 1<=args.speed<=12:parser.error("--speed debe estar entre 1 y 12")
-    if args.learn and args.strategy != "dqn":
-        parser.error("--learn requiere --strategy dqn")
+    if args.learn and args.strategy not in ("neural","dqn"):
+        parser.error("--learn requiere el agente neuronal")
+    strategy="dqn" if args.strategy=="neural" else args.strategy
     if args.headless:
         os.environ["SDL_VIDEODRIVER"] = "dummy"
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
@@ -35,8 +36,10 @@ def main():
     # No inicializar audio: esta interfaz no lo necesita.
     pygame.display.init()
     pygame.font.init()
-    app = RescueApp(ROOT, args.scenario, args.strategy, args.model, args.seed,
+    app = RescueApp(ROOT, args.scenario, strategy, args.model, args.seed,
                     asynchronous=not args.headless)
+    entry=app.selected_model()
+    app.neural_focus=strategy=="dqn" and entry is not None and entry.controller=="neural_assignment"
     app.speed=args.speed
     if app.playback:app.playback.set_speed(args.speed)
     if args.learn:

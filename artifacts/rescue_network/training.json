@@ -1,0 +1,158 @@
+[
+  {
+    "epoch": 1,
+    "validation_regret": 0.011800001375377178,
+    "validation_best_choice": 0.7291666666666666,
+    "validation_mae": 0.27827519178390503
+  },
+  {
+    "epoch": 10,
+    "validation_regret": 0.00035416678292676806,
+    "validation_best_choice": 0.9675,
+    "validation_mae": 0.07601676136255264
+  },
+  {
+    "epoch": 20,
+    "validation_regret": 0.00015416668611578643,
+    "validation_best_choice": 0.9791666666666666,
+    "validation_mae": 0.07279113680124283
+  },
+  {
+    "epoch": 30,
+    "validation_regret": 0.0002583332534413785,
+    "validation_best_choice": 0.9775,
+    "validation_mae": 0.0856432095170021
+  },
+  {
+    "epoch": 40,
+    "validation_regret": 0.00023750016407575458,
+    "validation_best_choice": 0.9766666666666667,
+    "validation_mae": 0.050140853971242905
+  },
+  {
+    "epoch": 50,
+    "validation_regret": 7.4999981734436e-05,
+    "validation_best_choice": 0.9908333333333333,
+    "validation_mae": 0.038242608308792114
+  },
+  {
+    "epoch": 60,
+    "validation_regret": 0.00011249995441175997,
+    "validation_best_choice": 0.9875,
+    "validation_mae": 0.04124666377902031
+  },
+  {
+    "epoch": 70,
+    "validation_regret": 8.749993867240846e-05,
+    "validation_best_choice": 0.99,
+    "validation_mae": 0.038351625204086304
+  },
+  {
+    "epoch": 80,
+    "validation_regret": 5.0000027840724215e-05,
+    "validation_best_choice": 0.9925,
+    "validation_mae": 0.02716425061225891
+  },
+  {
+    "epoch": 90,
+    "validation_regret": 4.1666677134344354e-05,
+    "validation_best_choice": 0.9958333333333333,
+    "validation_mae": 0.026778824627399445
+  },
+  {
+    "epoch": 100,
+    "validation_regret": 1.666667594690807e-05,
+    "validation_best_choice": 0.9975,
+    "validation_mae": 0.027523331344127655
+  },
+  {
+    "epoch": 110,
+    "validation_regret": 8.333349796885159e-06,
+    "validation_best_choice": 0.9991666666666666,
+    "validation_mae": 0.02595233917236328
+  },
+  {
+    "epoch": 120,
+    "validation_regret": 3.7499990867218e-05,
+    "validation_best_choice": 0.995,
+    "validation_mae": 0.04019378870725632
+  },
+  {
+    "epoch": 130,
+    "validation_regret": 9.166671225102618e-05,
+    "validation_best_choice": 0.9883333333333333,
+    "validation_mae": 0.025100814178586006
+  },
+  {
+    "epoch": 140,
+    "validation_regret": 1.6666650481056422e-05,
+    "validation_best_choice": 0.9983333333333333,
+    "validation_mae": 0.032469745725393295
+  },
+  {
+    "epoch": 150,
+    "validation_regret": 4.5833301555830985e-05,
+    "validation_best_choice": 0.995,
+    "validation_mae": 0.04195087403059006
+  },
+  {
+    "epoch": 160,
+    "validation_regret": 2.9166651074774563e-05,
+    "validation_best_choice": 0.995,
+    "validation_mae": 0.021731698885560036
+  },
+  {
+    "epoch": 170,
+    "validation_regret": 4.1666626202641055e-05,
+    "validation_best_choice": 0.995,
+    "validation_mae": 0.03212802857160568
+  },
+  {
+    "epoch": 180,
+    "validation_regret": 1.6666650481056422e-05,
+    "validation_best_choice": 0.9966666666666667,
+    "validation_mae": 0.021272797137498856
+  },
+  {
+    "epoch": 190,
+    "validation_regret": 1.2499987860792316e-05,
+    "validation_best_choice": 0.9975,
+    "validation_mae": 0.026405541226267815
+  },
+  {
+    "epoch": 200,
+    "validation_regret": 2.9166689273552038e-05,
+    "validation_best_choice": 0.9958333333333333,
+    "validation_mae": 0.03167290613055229
+  },
+  {
+    "epoch": 210,
+    "validation_regret": 3.3333326427964494e-05,
+    "validation_best_choice": 0.9958333333333333,
+    "validation_mae": 0.020079877227544785
+  },
+  {
+    "epoch": 220,
+    "validation_regret": 0.00012500003504101187,
+    "validation_best_choice": 0.9858333333333333,
+    "validation_mae": 0.03624926507472992
+  },
+  {
+    "epoch": 230,
+    "validation_regret": 6.249996658880264e-05,
+    "validation_best_choice": 0.9925,
+    "validation_mae": 0.04483848065137863
+  },
+  {
+    "epoch": 240,
+    "validation_regret": 1.6666650481056422e-05,
+    "validation_best_choice": 0.9966666666666667,
+    "validation_mae": 0.02312379516661167
+  },
+  {
+    "epoch": 250,
+    "validation_regret": 8.749991684453562e-05,
+    "validation_best_choice": 0.9916666666666667,
+    "validation_mae": 0.02109307423233986
+  }
+]

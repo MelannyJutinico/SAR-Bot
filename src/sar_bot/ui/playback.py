@@ -20,6 +20,7 @@ class Episode:
     checkpoint_sha256: str | None = None
     engine_sha256: str | None = None
     learning_id: str | None = None
+    decisions: tuple = ()
 
     @property
     def scenario_id(self):
@@ -57,7 +58,8 @@ def prepare_episode(scenario_path: Scenario | str | Path, strategy: str, model_p
         with Path(model_path).open("rb") as stream:
             if file_digest(stream, "sha256").hexdigest() != model_hash:
                 raise ValueError("El checkpoint cambio durante la preparacion")
-    return Episode(simulation.scenario, tuple(states), tuple(actions), model_hash, engine_hash)
+    return Episode(simulation.scenario, tuple(states), tuple(actions), model_hash, engine_hash,
+                   decisions=tuple(getattr(policy,"decisions",())))
 
 
 class Playback:

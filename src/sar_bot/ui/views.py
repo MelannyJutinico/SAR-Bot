@@ -61,11 +61,17 @@ def draw_preparation(app):
     app.button("scenario",scenario_label(app.scenario)[:35],(900,194,328,42))
     app.text("Elige el edificio y coloca a las personas.",(900,245),12)
     strategy, label, explanation = STRATEGIES[app.strategy_index]
-    app.text("Cómo decidirán los robots",(900,274),12)
-    app.button("strategy",label,(900,294,328,42))
+    if strategy=="dqn" and app.selected_model() and app.selected_model().controller=="neural_assignment":
+        explanation="La red reparte rescates y elige rapidez o menor exposición. A* calcula los movimientos."
+    app.text("Agente activo" if app.neural_focus else "Cómo decidirán los robots",(900,274),12)
+    if app.neural_focus:
+        app.text("Red neuronal de rescate",(900,303),18,bold=True)
+    else:app.button("strategy",label,(900,294,328,42))
     app.wrap(explanation,900,345,320,13)
     if strategy == "dqn":
-        app.button("models","Elegir red neuronal",(900,405,328,34),enabled=not app.learning_future)
+        if app.neural_focus and len(app.compatible_models())==1 and not app.model_problem():
+            app.text("Red entrenada: asignación y riesgo",(900,412),14)
+        else:app.button("models","Elegir red neuronal",(900,405,328,34),enabled=not app.learning_future)
         app.button("mode_evaluate","Solo ejecutar",(900,456,158,34),
                    primary=not app.learning_active,enabled=not app.learning_future)
         app.button("mode_learn","Aprender",(1070,456,158,34),
@@ -98,7 +104,10 @@ def draw_execution(app):
     app.wrap("Estrategia: "+(labels[app.request.strategy] if app.comparison_replaying and app.request else STRATEGIES[app.strategy_index][1]),900,185,320)
     if app.request and app.request.model:
         from pathlib import Path
-        app.wrap("Modelo base: "+Path(app.request.model).parent.name,900,235,320,14)
+        entry=next((e for e in app.models if e.path==Path(app.request.model).resolve()),None)
+        description=("Red de asignación + rutas A*" if entry and entry.controller=="neural_assignment"
+                     else "DQN de movimientos (anterior)")
+        app.wrap(description,900,235,320,14)
     app.wrap("Recoger no es entregar. El contador aumenta al llegar a la base.",900,290,320,14)
     label="Pausar" if app.playback and app.playback.playing else "Iniciar / continuar"
     app.button("play",label,(900,388,328,48),primary=True,enabled=app.playback is not None)
@@ -156,11 +165,12 @@ def draw_models(app):
     for local,(index,entry) in enumerate(entries[app.model_page*4:app.model_page*4+4]):
         y=245+local*100
         active = entry.path == selected
-        name = "Red principal" if entry.status.startswith("congelado") else "Red experimental: " + entry.path.parent.name
+        name = ("Red de rescate" if entry.controller=="neural_assignment" else
+                "DQN anterior" if entry.status.startswith("congelado") else "Red anterior: " + entry.path.parent.name)
         app.button(f"model_{index}",("En uso: " if active else "Usar: ")+name,
                    (900,y,328,36),primary=active)
-        description = ("Modelo guardado para la presentación."
-                       if entry.status.startswith("congelado") else "Experimento previo; puede rendir peor.")
+        description = ("Aprende a asignar personas; A* calcula rutas." if entry.controller=="neural_assignment" else
+                       "Predice movimientos; puede quedarse dando vueltas.")
         app.wrap(description,900,y+44,320,12)
     if not entries:
         app.wrap("No hay una red compatible. Elige Ruta corta o Ruta segura para ejecutar este mapa.",900,250,320,14)

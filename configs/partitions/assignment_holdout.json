@@ -1,0 +1,1343 @@
+{
+  "schema_version": 1,
+  "manifest_id": "assignment_holdout_20261126",
+  "frozen_on": "2026-11-26",
+  "profile": {
+    "width": 12,
+    "height": 12,
+    "victims": 3
+  },
+  "config": {
+    "schema_version": 1,
+    "manifest_id": "assignment_holdout_20261126",
+    "frozen_on": "2026-11-26",
+    "profile": {
+      "width": 12,
+      "height": 12,
+      "victims": 3
+    },
+    "output_manifest": "configs/partitions/assignment_holdout.json",
+    "output_witnesses": "configs/partitions/assignment_holdout.witnesses.jsonl",
+    "scenario_dir": "scenarios/partitions/assignment_holdout",
+    "excluded_sources": [
+      "configs/v2_scenario_families.json"
+    ],
+    "legacy_manifests": [
+      "configs/scenario_splits.json",
+      "configs/partitions/v2_12x12.json"
+    ],
+    "min_test_total": 20,
+    "buildings": [
+      {
+        "key": "hub",
+        "template": "scenarios/v2/coordination_hub_12x12.json",
+        "generation_seed": 26112601,
+        "split_seed": 26112611,
+        "max_attempts": 5000,
+        "surplus_per_difficulty": 2,
+        "quotas": {
+          "training": {
+            "easy": 0,
+            "intermediate": 0,
+            "demanding": 0
+          },
+          "validation": {
+            "easy": 0,
+            "intermediate": 0,
+            "demanding": 0
+          },
+          "test": {
+            "easy": 6,
+            "intermediate": 7,
+            "demanding": 7
+          }
+        }
+      },
+      {
+        "key": "detour",
+        "template": "scenarios/v2/thermal_detour_12x12.json",
+        "generation_seed": 26112602,
+        "split_seed": 26112612,
+        "max_attempts": 5000,
+        "surplus_per_difficulty": 2,
+        "quotas": {
+          "training": {
+            "easy": 0,
+            "intermediate": 0,
+            "demanding": 0
+          },
+          "validation": {
+            "easy": 0,
+            "intermediate": 0,
+            "demanding": 0
+          },
+          "test": {
+            "easy": 6,
+            "intermediate": 7,
+            "demanding": 7
+          }
+        }
+      }
+    ]
+  },
+  "rules": [
+    "La prueba no se usa para entrenar, elegir checkpoints, ajustar recompensas ni decidir qué semilla mostrar.",
+    "La validación es la única partición para seleccionar checkpoints o configuraciones.",
+    "Solo se aceptan configuraciones con certificado positivo de una referencia; no representan todas las posiciones transitables.",
+    "Los ejemplos de desarrollo y las particiones históricas quedan excluidos."
+  ],
+  "training": [],
+  "validation": [],
+  "test": [
+    "scenarios/partitions/assignment_holdout/test/detour_test_01_easy.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_02_easy.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_03_easy.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_04_easy.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_05_easy.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_06_easy.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_07_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_08_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_09_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_10_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_11_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_12_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_13_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_14_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_15_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_16_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_17_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_18_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_19_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/detour_test_20_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_01_easy.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_02_easy.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_03_easy.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_04_easy.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_05_easy.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_06_easy.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_07_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_08_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_09_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_10_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_11_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_12_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_13_intermediate.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_14_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_15_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_16_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_17_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_18_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_19_demanding.json",
+    "scenarios/partitions/assignment_holdout/test/hub_test_20_demanding.json"
+  ],
+  "entries": [
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_01_easy.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "easy",
+      "generation_index": 0,
+      "victims": [
+        [
+          1,
+          10
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          6
+        ]
+      ],
+      "scenario_id": "65ea52a02c5e14cb743b1f499961235df413fab9b97dc724c04b11f879ff5139",
+      "configuration_id": "d1403f71da7ae0c2f944e9ba48e33a7bab2b8553f92c3eab3ab8b96a99cc22e7",
+      "sha256": "50234e79fcc3d772ee496b41b65ef4b151c5aa692022a32538f555538f2f5e97",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 16,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_02_easy.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "easy",
+      "generation_index": 3,
+      "victims": [
+        [
+          2,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          2,
+          11
+        ]
+      ],
+      "scenario_id": "583573bc47979b7c8bcb62c48a9ecf7857390cb95c06ff97ea433edd01c2f5b4",
+      "configuration_id": "ec1a7a334db64202374332c6295280c9e92e18632da8211d486da679e9ff2a20",
+      "sha256": "35b03bef8188264d4714859bc712a8174d6d2c36b3858d744e9798bfefadbcf4",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 18,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_03_easy.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "easy",
+      "generation_index": 6,
+      "victims": [
+        [
+          5,
+          4
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "scenario_id": "7a8d4db2c444c0a2afe9d98504ab1cb9a7189a3d7a46a266718175b44ec76724",
+      "configuration_id": "fbd75660d91d35587edf213c6c77910db2d5a5e0e00016cf66ecd7de11118923",
+      "sha256": "1948612568a1eee2345990b039c528d2d1c66c759ab892a951a6cf42cb20cc1c",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 30,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_04_easy.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "easy",
+      "generation_index": 9,
+      "victims": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "scenario_id": "ccb5f1d6ba6884bc6500911ee41128c38fdeb0e93de0c5cd5b8cdb1517c7d937",
+      "configuration_id": "e721fa6bbc94f0ae706a9670dc946f2bb1ad90b67f5bf252a83a1c880f575fd7",
+      "sha256": "94709df131a2b78d12f9555855689ab12e23ab9891b77f47f4191321519fa682",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 18,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_05_easy.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "easy",
+      "generation_index": 12,
+      "victims": [
+        [
+          1,
+          10
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "scenario_id": "422f73bdfe2f8333dc313af89bbb802a4a38a0b497209f68599d8e32d0e0c9bc",
+      "configuration_id": "7c2a76bb29283934354717d23ce3ebbe2a7b011e765e91bf6be8ec0c53507062",
+      "sha256": "dff427bc9128e870aff17b8adc83044ffaec6ad81fd4e1c11c94200610e69044",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 14,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_06_easy.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "easy",
+      "generation_index": 15,
+      "victims": [
+        [
+          1,
+          8
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "scenario_id": "8415459dd2c87a11dfbf4794eb126a51c079e34de52cfdcbaf071385caca810f",
+      "configuration_id": "8c2e9c670cc44c0239495fbb28ccfa3011bb05e370ad3c89ec6a298e1b8a16ce",
+      "sha256": "7fcbfc89c2d6b74b2e6d3c46d2e8a2461fc59b4b23d39eadf1e0d6cd22734e97",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 12,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_07_intermediate.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "intermediate",
+      "generation_index": 1,
+      "victims": [
+        [
+          1,
+          10
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          1,
+          11
+        ]
+      ],
+      "scenario_id": "777e424b961b0f553a856add1b9ddadae976ff977dc6bc3e2fe82f983a381a29",
+      "configuration_id": "155e7d4a03d74b2e14530c50f7b8579d5d55c2e4b52d9124d490016e981324d3",
+      "sha256": "4894a1bd5db85fb803deb50d43b744c53bf87b92a664a58ec1b02596615e3b6a",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 44,
+        "damage_total": 2
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_08_intermediate.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "intermediate",
+      "generation_index": 4,
+      "victims": [
+        [
+          11,
+          8
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "scenario_id": "435c3ba296df5f1ee6e2b97b93bd9bf019895128725790fcb3862671bc0f6e2f",
+      "configuration_id": "1d73de1a4861cdbcea151d79a7b7e52427c272662cf44f3b8a265c05cf7cabf5",
+      "sha256": "5d98fa49250126605136992bd4aa86f1499d6c5b6bbfc24e94fbfe4f8cf05851",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 67,
+        "damage_total": 2
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_09_intermediate.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "intermediate",
+      "generation_index": 7,
+      "victims": [
+        [
+          10,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "scenario_id": "df3af53b1bc3f69f30d6d84bed093e750ee5a8a20e720c748aac15b26999c08a",
+      "configuration_id": "2d755a53f056c584d4011f17d3b0f40e5a9eeaf2fd3e5cd49ace6595d177ab56",
+      "sha256": "756b76021e880c37b7ab4dcb32dd7ddcbcbd9ba58093833343dca2e0ab64038a",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 48,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_10_intermediate.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "intermediate",
+      "generation_index": 10,
+      "victims": [
+        [
+          11,
+          0
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "scenario_id": "3743908d5d02521b0356d8cc808ac078447d453cf03263cce9eb4f739fb00c01",
+      "configuration_id": "7668a9adaf061836b690d015cb051c9fd1001ee21e4e068196bfd9e0e9c07270",
+      "sha256": "1eb5b45c8101bf1240cf372370e038032fbea87eda85362e0e16c6af548a1688",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 40,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_11_intermediate.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "intermediate",
+      "generation_index": 13,
+      "victims": [
+        [
+          3,
+          3
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          9,
+          6
+        ]
+      ],
+      "scenario_id": "c8600e21c5144acc9472f7d450aa1fe4ddfa488eeeb49984dec9740383ed250e",
+      "configuration_id": "7840ef7051c1e0d2b80c0ad405fc1ed51ef47dea99985fe806c60713d160304c",
+      "sha256": "fd443ee331ffc95077ee5f90452cfc933b5b8ad1af213186afe6b86147080274",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 46,
+        "damage_total": 24
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_12_intermediate.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "intermediate",
+      "generation_index": 16,
+      "victims": [
+        [
+          0,
+          8
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "scenario_id": "871de7287904d00b99d37a07b2569193af896f5f8448d97b6c8d366c51709905",
+      "configuration_id": "90ca12742fb8cddf70eb6f852e3adbdb341781dc00394463cf62fc872980d011",
+      "sha256": "9c24f5ba4703d1195244e67ab7eb8117bc44439c41c42af0f79aa994747c8d6c",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 40,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_13_intermediate.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "intermediate",
+      "generation_index": 19,
+      "victims": [
+        [
+          11,
+          9
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "scenario_id": "21532271a6e5b6f639b864ba01deadd240f03d92d1aac5742ea968243d710e04",
+      "configuration_id": "4f7d009a0e8b7f58fe854125cb7946254ddf0c9ef11932b570964f250d22aaca",
+      "sha256": "d53960a340e16a1ffe2735206773f0a485b96890c9b8572065e14ec9cc928b52",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 43,
+        "damage_total": 9
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_14_demanding.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "demanding",
+      "generation_index": 2,
+      "victims": [
+        [
+          10,
+          10
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          11,
+          10
+        ]
+      ],
+      "scenario_id": "988ce4d21492f3a9af50247bd6b1b9868e4138d1f9d520fe5711f8b89238b3e9",
+      "configuration_id": "8a84db03680e9bec5e86013cb192fd0580228baafe56a55566dc824572309f87",
+      "sha256": "3bf5160e39023b7398ec2916125631709a78ee588e60e1d584700dd20155c179",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 62,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_15_demanding.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "demanding",
+      "generation_index": 5,
+      "victims": [
+        [
+          11,
+          10
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          11,
+          1
+        ]
+      ],
+      "scenario_id": "be66e7515aab3344f20f082e90a83c0d2440c74027ecaf43a14b1fdd7fd931cf",
+      "configuration_id": "4e12676829eb1174b58b52c6d248f849e7b4494a4112390f65124210752cfb24",
+      "sha256": "e6397ef4222f0a61550068d8e711d2f910fc847ac36a97dbe716cf1df3ebb8d7",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 57,
+        "damage_total": 2
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_16_demanding.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "demanding",
+      "generation_index": 8,
+      "victims": [
+        [
+          9,
+          8
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          11,
+          7
+        ]
+      ],
+      "scenario_id": "1cc2aa78dfce7b7103feaceccff7f86db31b88e894de0939edf2aefa07f4bfa2",
+      "configuration_id": "338680205bbdc01444f9f9be638bdf8ed659582e989727287bc392474a7a28d3",
+      "sha256": "bb2b377b357f61906d174f71c832284b4f156899503e27379afecab84b634970",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 61,
+        "damage_total": 26
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_17_demanding.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "demanding",
+      "generation_index": 11,
+      "victims": [
+        [
+          11,
+          2
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          10,
+          1
+        ]
+      ],
+      "scenario_id": "41fa55205b8dc1c1bd8eaa2604ad7f9b5c57ade41ad6ca714098ead251ddd766",
+      "configuration_id": "18cdb7ab9194ce0159c06fa49f95d48280a8fc48f08af585fa3c554ed7df0e97",
+      "sha256": "adb72a823cd6b80eecd03edfcc869436c6c5ea73ec6870249d816a89843ff27c",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 60,
+        "damage_total": 24
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_18_demanding.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "demanding",
+      "generation_index": 14,
+      "victims": [
+        [
+          11,
+          6
+        ],
+        [
+          11,
+          8
+        ],
+        [
+          11,
+          7
+        ]
+      ],
+      "scenario_id": "3e2e11d9989c8bd937b48eb462bf75dd4a2931a131933bd07695aac974b0db61",
+      "configuration_id": "c5957e05fa1c36b1e98c9618e0ef0b6e0466de74e8eb11821c563166225b0b2f",
+      "sha256": "624cce33c491bdb6e407c4c9aa3ff1e2f8d58825233eed33fcfa89a3348655bf",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 68,
+        "damage_total": 2
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_19_demanding.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "demanding",
+      "generation_index": 17,
+      "victims": [
+        [
+          10,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          0
+        ]
+      ],
+      "scenario_id": "9b1109be879a65d53086bc7a37e89d2d128550415ba0db9993b4615a1141c1c4",
+      "configuration_id": "b6b5287d4475787c3ae9b34138726a01b2b171de352f155c5059d0b490136687",
+      "sha256": "7bdf6acb63bb9f815a24f24598ae3391c05b01ed574fecf11a707c38734955ba",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 52,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/detour_test_20_demanding.json",
+      "partition": "test",
+      "building": "detour",
+      "difficulty": "demanding",
+      "generation_index": 20,
+      "victims": [
+        [
+          9,
+          11
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          10,
+          0
+        ]
+      ],
+      "scenario_id": "aec5b5ef5fec6202248a1af37b2ce00d91077e0371e85c572ca9f604051f1f4c",
+      "configuration_id": "e26015219d33125eeb3386287bebf9421ea073be9a1ce275497e08690fda7b77",
+      "sha256": "014ade7bc04ae8e065e67cc947adeb4fef714f667248f6c14b388553bc6238bf",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 62,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_01_easy.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "easy",
+      "generation_index": 0,
+      "victims": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          7
+        ]
+      ],
+      "scenario_id": "0e65819bd69e6b033cb5b0125d2d3507d5f80a15c09e558559e08eac795b8272",
+      "configuration_id": "b16bc2b0790b62f2c0930d621c88d6e3969cefb1c56e24f7315edad3a7c8dc88",
+      "sha256": "ba1b1d0752fd2823d28423c91dce94f6e9ce3fd88740c3de2cef2fa4dcab06ab",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 20,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_02_easy.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "easy",
+      "generation_index": 3,
+      "victims": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "scenario_id": "a438eb41e195dc14b974e30e8d9e1bad6910e2d3da2011648c1426baf5805206",
+      "configuration_id": "2a9a062d312edc7ca275f2813f97b6bbe5b62254001c05880654fdc38155c049",
+      "sha256": "9729118fd930da3019da74d942cbe9fad2c5c8ed20e477823c9dfb6a97ac9cf8",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 14,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_03_easy.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "easy",
+      "generation_index": 6,
+      "victims": [
+        [
+          2,
+          6
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "scenario_id": "92fd483275d8129ccfc18f3da3371422534de9ccc62cdc731ee58ce1bde2f122",
+      "configuration_id": "bdb59fba96ea83ca33e9edcec8e61a1f2f51294582b0b9c0d7064804e75f2cbf",
+      "sha256": "2959dedd4ab98c7410a2cc166a27edc14b0881b79e24ead1b6ccf82faae186f6",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 16,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_04_easy.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "easy",
+      "generation_index": 9,
+      "victims": [
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "scenario_id": "743a6eee5feaa326007199e6ec6dea88027c0d4715271f9de17d8b07f6fbc793",
+      "configuration_id": "5e800114c72d343122f94eef6062776a1c83475e9f72c500825061e0efc4e84f",
+      "sha256": "128fc516d0ff633225bece6901cf5e95c2f686ed18014ad54333d4dc3d6056d8",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 18,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_05_easy.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "easy",
+      "generation_index": 12,
+      "victims": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "scenario_id": "fe0ff252ffa475a32271c89ee3743049c95587b99a9051eb6c16727553419051",
+      "configuration_id": "48d938d04aaa823facf3d4088b4642c040cc823b720e326ed2eeaf7c76505e74",
+      "sha256": "3cea03b93ffe76704672cdb6884be0dabd29e8dd67d5d140a344f3fab43c66b0",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 8,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_06_easy.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "easy",
+      "generation_index": 15,
+      "victims": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "scenario_id": "93d859c295fabd4decf40067fa4eeb0e7b990812f0e77eeea04028c5c17a7ada",
+      "configuration_id": "5f8f298fc7c074acb7eff7c4a7880854f6993ea12ddb6a26e1577481c5bc479e",
+      "sha256": "7f26c7384ff965dbd24149cb845a54d5d6b27a21eb506d4042d893b6b37c2b67",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 20,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_07_intermediate.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "intermediate",
+      "generation_index": 1,
+      "victims": [
+        [
+          3,
+          11
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "scenario_id": "962e85f822125b1b3a8968c5c9a812522daecd6e45ad1386342313c8d4989af6",
+      "configuration_id": "ec6480dc1910cde073c07185ebe5c326289da243eac9fff8ba176555ce49c11b",
+      "sha256": "6e148873fa09f928554668c9237cf560c786026d4fdcda064bbeefd68b154bdb",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 46,
+        "damage_total": 0
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_08_intermediate.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "intermediate",
+      "generation_index": 4,
+      "victims": [
+        [
+          4,
+          5
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          11,
+          1
+        ]
+      ],
+      "scenario_id": "e9cdd35137d13181edc4238086e174ed3f683483675ef32e3152b7ca4e571047",
+      "configuration_id": "8915b1746ab582e72cbbfe955b49395448ab59f8f1d83d6423224d97d8f6ab8e",
+      "sha256": "c334025b9b8b59844b34f16d1ec6dbc2ba344437e35ad0831b01fac09111b35f",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 62,
+        "damage_total": 38
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_09_intermediate.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "intermediate",
+      "generation_index": 7,
+      "victims": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "scenario_id": "35567ced761dc6c7e74810bb1120f6b5fde85fd6f87893afde3f8228f03c530c",
+      "configuration_id": "880284910e6e8ba387c56e6dc0d58d9e5df89da1d9c631c60d004901a061b315",
+      "sha256": "9e0596682c1f5d11e3a58b1c6af6e294dee3357e2c8b0ccf4699a15c7a87db6f",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 28,
+        "damage_total": 13
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_10_intermediate.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "intermediate",
+      "generation_index": 10,
+      "victims": [
+        [
+          2,
+          2
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "scenario_id": "fde6dd72304121835d95f24f5c8a3e76fd7b43ea78ac43db8c068fe44e5fde3c",
+      "configuration_id": "b30af8cf42c085b75efb483d140e0022cb546321d63b26361d8f9180e83085b0",
+      "sha256": "258e4630275b671a037f92e0e334ef165fb352cd7a5c4d237a16ef6326c36786",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 60,
+        "damage_total": 24
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_11_intermediate.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "intermediate",
+      "generation_index": 13,
+      "victims": [
+        [
+          8,
+          9
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          8
+        ]
+      ],
+      "scenario_id": "001bffe468d178eec5b7fa0ea1ee3ba15e196bc5b35b5f70c1c2333c95157c38",
+      "configuration_id": "466a41ebcc2f6ae516f5b2615c3a34be2387ea098c25a27bcecdffebe7b38d32",
+      "sha256": "7fbca21ddcb8e9cd55580edce3c607c7cf18574d5f1d6589924a89838ae127d1",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 51,
+        "damage_total": 28
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_12_intermediate.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "intermediate",
+      "generation_index": 16,
+      "victims": [
+        [
+          2,
+          1
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "scenario_id": "568e0f67fc42631cdc1fbe5e145fbedefed6260d17d32ca0a653b610cd018d78",
+      "configuration_id": "996e0604465f8601ebaf59a6ce7494f37ede74340ae22b0f58696da0428cae64",
+      "sha256": "04163e9139c6cc0fd2a7b41d3970b495b473babbe90f5628afc3142016a58ec7",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 42,
+        "damage_total": 16
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_13_intermediate.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "intermediate",
+      "generation_index": 19,
+      "victims": [
+        [
+          8,
+          1
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      "scenario_id": "5a0c22bf6150c9c51d3a9f8164d34bd920a225c26c8033a24b9afd370fc715d2",
+      "configuration_id": "9d201598063244b722a5c2e6d141fd7eea5b16c71e3183c0575664347690e6a5",
+      "sha256": "b7e1bcb2b73369a425aa70b3b55d07246c8ace8daeaa01535de3804181019ae7",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 42,
+        "damage_total": 47
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_14_demanding.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "demanding",
+      "generation_index": 2,
+      "victims": [
+        [
+          11,
+          2
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "scenario_id": "a3c854a8177fc8e10b8e2bf625855838ae9240530d8b2a77a81c0b88067429f8",
+      "configuration_id": "be5ac5119dd5692103d5e3339ba283fc5c3e262a4e1ac2424f77b15b10cd6646",
+      "sha256": "bc2e0387d5cc9c63b6deae5688bb39fb34a5bb25799eaed8aa5d4f010fc250bb",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 77,
+        "damage_total": 65
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_15_demanding.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "demanding",
+      "generation_index": 5,
+      "victims": [
+        [
+          10,
+          8
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          6,
+          5
+        ]
+      ],
+      "scenario_id": "98a5de3cae79bade08f4fd4714278d35ff42be1c7fcbd5bfb1663b7d5018813a",
+      "configuration_id": "053cc9e433d4fd38b18aef08ac106e0be9bfc42f7ed1a77883d461aeaf5b970c",
+      "sha256": "3e8514a4bbd9198f775727c7cce65b539519893d2c5340737fa6a5329447cb99",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 86,
+        "damage_total": 66
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_16_demanding.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "demanding",
+      "generation_index": 8,
+      "victims": [
+        [
+          11,
+          2
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          6,
+          11
+        ]
+      ],
+      "scenario_id": "f53571910bf4c0e01d342e6c6637bec3518712884396f8c23302825b5e0036f2",
+      "configuration_id": "dc0c3dabd8910a6a9c71bf35f7395a82ccd6264064579551fc0d2f386de6dd7c",
+      "sha256": "4ba710fa0d1188b627613922c7403111c5a7f3ee4cd36299a2b93b37cf65e086",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 59,
+        "damage_total": 46
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_17_demanding.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "demanding",
+      "generation_index": 11,
+      "victims": [
+        [
+          3,
+          11
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "scenario_id": "d0a44f3e49cc1547798c87924a07682e2d6678f9b637367ac005534335e5cb32",
+      "configuration_id": "6068b3eb9f6aad9d852e22aafbcaed551fdd0cf43113b5ca13ed584b76e0da52",
+      "sha256": "f6bbe9fd26d7f0e0ef24a5468884f52047011c9e531922750384b356b64fba66",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 54,
+        "damage_total": 14
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_18_demanding.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "demanding",
+      "generation_index": 14,
+      "victims": [
+        [
+          4,
+          8
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          7,
+          7
+        ]
+      ],
+      "scenario_id": "16e70ff4e47a6c51cfe2a3b2dca53324fc5725028c8990b85f185d53d9f22b95",
+      "configuration_id": "d89840abd5ee8fe05dbcb2f35a74cf482732f3cd3b3550e2df26626c596b81d8",
+      "sha256": "188e8bebb6dd11315a50be6de83efe42cfa9c6b566b6d4790234ce9ddbb3c85c",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 66,
+        "damage_total": 42
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_19_demanding.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "demanding",
+      "generation_index": 17,
+      "victims": [
+        [
+          4,
+          8
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          11,
+          0
+        ]
+      ],
+      "scenario_id": "910e1578cda247ae66a371678663e2e6d27ae2db74704cf2839eb1c3df43d15e",
+      "configuration_id": "26574d8ee6011b463b153fdd78defddb4202f5a79512f33372994fd64311bb58",
+      "sha256": "97829b0fa75752770c41ca6392b019771aab8cd09ea0655c8bfc74e8b59f8fc4",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 78,
+        "damage_total": 38
+      }
+    },
+    {
+      "path": "scenarios/partitions/assignment_holdout/test/hub_test_20_demanding.json",
+      "partition": "test",
+      "building": "hub",
+      "difficulty": "demanding",
+      "generation_index": 20,
+      "victims": [
+        [
+          3,
+          8
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          10,
+          8
+        ]
+      ],
+      "scenario_id": "1ec04b70d20b1d1e310c601744485a22a3648b7357e01080ed58af3a25ebf882",
+      "configuration_id": "0f5e24073404960ef4c7a72c980c7aea483fb7166e322f79cb8de375b0b5a47a",
+      "sha256": "95b6569dbe1416f2949df4042da7f99d65c5544be81278de8734d2f04d9dcc1a",
+      "witness": {
+        "strategy": "thermal",
+        "steps": 66,
+        "damage_total": 24
+      }
+    }
+  ],
+  "generation": [
+    {
+      "building": "hub",
+      "template": "scenarios/v2/coordination_hub_12x12.json",
+      "template_sha256": "320a6b075a855a61a106aa4a06c5005fa92fa21b2d4338b3f5a4962f4ee9fd46",
+      "generation_seed": 26112601,
+      "split_seed": 26112611,
+      "requested": 27,
+      "max_attempts": 5000,
+      "attempts": 36,
+      "certified": 27,
+      "not_certified": 0,
+      "structural_invalid": 0,
+      "duplicates": 0,
+      "skipped": {},
+      "certified_unused": 7,
+      "action_budget": null
+    },
+    {
+      "building": "detour",
+      "template": "scenarios/v2/thermal_detour_12x12.json",
+      "template_sha256": "1325ccfda9b60cc7bca166b236648d6c932a9571f4c5c0e888468456ee6206d8",
+      "generation_seed": 26112602,
+      "split_seed": 26112612,
+      "requested": 27,
+      "max_attempts": 5000,
+      "attempts": 41,
+      "certified": 27,
+      "not_certified": 0,
+      "structural_invalid": 0,
+      "duplicates": 0,
+      "skipped": {},
+      "certified_unused": 7,
+      "action_budget": null
+    }
+  ],
+  "excluded_scenario_ids": {
+    "428f7674a74fcf0bfd014737eb3780b749333b1c36a2cb19cb30da944bb900d9": "configs/v2_scenario_families.json#scenarios/v2/coordination_hub_12x12.json#demanding",
+    "6fab87b8e12036b38a0d04fdcafc402fbc470443cd3a140af3e4ec4f6349e9f6": "configs/v2_scenario_families.json#scenarios/v2/coordination_hub_12x12.json#intermediate",
+    "aed81c32f5555c00a1716a2089c31e5f1abf3f864be6581219584a429fc291c2": "configs/v2_scenario_families.json#scenarios/v2/thermal_detour_12x12.json#easy",
+    "ed6dfcae10684ae255f18d9ea949a4320859f405c7d2a7e2d7f0e486fb7df4bd": "configs/v2_scenario_families.json#scenarios/v2/coordination_hub_12x12.json#easy",
+    "ef61cebc654a42e4fbc5715f889c8335b6fe244309b59318dd08f6d677c20235": "configs/v2_scenario_families.json#scenarios/v2/thermal_detour_12x12.json#intermediate",
+    "fb071f2e732be37e75502e34c627c798d7c56f79b206c3d1fb8b932fccc337be": "configs/v2_scenario_families.json#scenarios/v2/thermal_detour_12x12.json#demanding"
+  },
+  "diagnostic_not_certified": [],
+  "witnesses_file": "configs/partitions/assignment_holdout.witnesses.jsonl",
+  "witnesses_sha256": "fca1d5472652eb6870f41cfca8cce7e3fa5403aba0df63d050e01908aae120d8",
+  "content_sha256": "f91db3f6547a8a68ca87f619f50f1c35b50437bad914297be890c03d913b8915"
+}

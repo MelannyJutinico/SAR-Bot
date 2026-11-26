@@ -107,7 +107,7 @@ class ViewsModelsTests(unittest.TestCase):
   self.assertEqual(entries['v2_pilot'].observation_size,302)
   self.assertEqual(entries['final'].dimensions,(12,12,3))
   self.assertEqual(entries['final'].status,'congelado / una semilla')
-  self.assertTrue(all(m.status=='piloto / desarrollo' for name,m in entries.items() if name!='final'))
+  self.assertTrue(all(m.status=='piloto / desarrollo' for name,m in entries.items() if name!='final' and m.controller=='legacy_dqn'))
   self.assertIsNone(entries['v2_pilot'].reason(self.app.scenario))
   self.assertIsNotNone(entries['sensors_dqn'].reason(self.app.scenario))
 

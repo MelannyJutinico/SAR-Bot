@@ -176,6 +176,12 @@ class LearningSession:
                         scenario.width, scenario.height, scenario.victim_count):
                     controls[key] = candidate
         name = f"{scenario.width}x{scenario.height}-{scenario.victim_count}-{digest(base_model)[:12]}"
+        metadata=json.loads(base_model.with_name("metadata.json").read_text(encoding="utf-8"))
+        if metadata.get("controller")=="neural_assignment":
+            from .assignment_learning import AssignmentLearningSession
+            return AssignmentLearningSession(root / "outputs/learning_sessions" / name,base_model,
+                settings=settings,protected_ids=protected,
+                control_scenarios=tuple(controls.values())[:6] or (scenario,))
         return cls(root / "outputs/learning_sessions" / name, base_model,
                    settings=settings, protected_ids=protected,
                    control_scenarios=tuple(controls.values())[:6] or (scenario,))

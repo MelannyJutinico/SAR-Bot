@@ -35,7 +35,7 @@ RED = (255, 119, 111)
 ROBOT_COLORS = (CYAN, PURPLE)
 
 STRATEGIES = [
-    ("dqn", "Red neuronal (DQN)", "Usa lo aprendido con recompensas. Puede fallar en posiciones nuevas."),
+    ("dqn", "Red neuronal", "Usa una red entrenada. El modelo elegido determina qué decisiones aprende."),
     ("shortest", "Ruta corta", "Planifica recorridos cortos. No tiene en cuenta el daño por calor."),
     ("thermal", "Ruta segura (calor)", "Planifica rutas considerando distancia y calor. Puede dar un rodeo para reducir daño."),
     ("random", "Movimientos al azar", "Mueve los robots al azar. Sirve como referencia para comparar resultados."),
@@ -78,6 +78,7 @@ class RescueApp:
                  seed=0, asynchronous=True):
         self.root, self.model_path, self.seed = root, model_path, seed
         self._closed = False
+        self.neural_focus = False
         # Solo plantillas de desarrollo, no curriculum/validation/test.
         paths = sorted([*(root / "scenarios").glob("*.json"),
                         *(root / "scenarios" / "v2").glob("*.json")])
@@ -687,8 +688,9 @@ class RescueApp:
     def compatible_models(self):
         """Índices originales para conservar la identidad al filtrar el catálogo."""
         return sorted(((i, entry) for i, entry in enumerate(self.models)
-                       if entry.reason(self.scenario) is None),
-                      key=lambda pair: (not pair[1].status.startswith("congelado"),
+                       if entry.reason(self.scenario) is None
+                       and (not self.neural_focus or entry.controller=="neural_assignment")),
+                      key=lambda pair: (pair[1].controller!="neural_assignment",not pair[1].status.startswith("congelado"),
                                         pair[1].path.parent.name))
 
     def action(self, key):
@@ -706,7 +708,7 @@ class RescueApp:
                 self.learning_message = "Espera al guardado y selecciona DQN para cambiar el modo."
                 return
             self.learning_enabled = not self.learning_enabled
-            self.learning_message = ("Aprender: explora y guarda al finalizar cada mision nueva."
+            self.learning_message = ("Aprender: incorpora experiencia al finalizar cada misión nueva."
                                      if self.learning_active else "Evaluacion: el modelo permanece fijo.")
             self._prepare()
             return
@@ -1125,6 +1127,11 @@ class RescueApp:
             status = ("Fuera de servicio" if robot.integrity == 0 else
                       "En traslado" if robot.carrying is not None else
                       "En base" if robot.position == self.display_scenario.base else "Buscando")
+            if self.view!="analysis" and self.playback and self.playback.episode.decisions and robot.integrity>0:
+                decisions=[d for d in self.playback.episode.decisions if d["step"]<=self.display_state.steps]
+                target=decisions[-1]["assignments"].get(i) if decisions else None
+                if robot.carrying is not None:status="Volviendo a base"
+                elif target is not None and target not in self.display_state.rescued:status=f"Hacia persona {target+1}"
             self.text(status, (x + 133, y + 16), 12, MUTED)
             self.text(f"{robot.integrity}%", (x + 334, y + 10), 21, color, bold=True)
             pygame.draw.rect(self.canvas, INSET, (x + 20, y + 47, 364, 6), border_radius=3)
@@ -1159,13 +1166,17 @@ class RescueApp:
     def _dropdown(self):
         self.dropdown_rows = []
         is_scenario = self.dropdown == "scenario"
-        values = [scenario_label(s) for _, s in self.options] if is_scenario else [s[1] for s in STRATEGIES]
+        entry=self.selected_model()
+        choices = ([(i,scenario_label(s)) for i,(_,s) in enumerate(self.options)
+                    if not self.neural_focus or not entry or
+                    (s.width,s.height,s.victim_count)==entry.dimensions] if is_scenario
+                   else [(i,s[1]) for i,s in enumerate(STRATEGIES)])
         selected = self.scenario_index if is_scenario else self.strategy_index
         y = 240 if is_scenario else 337
         height = 50 if is_scenario else 92
-        self.card((894, y, 340, height * len(values) + 12), (24, 39, 57), 10)
-        for index, label in enumerate(values):
-            rect = pygame.Rect(900, y + 6 + height * index, 328, height)
+        self.card((894, y, 340, height * len(choices) + 12), (24, 39, 57), 10)
+        for local,(index,label) in enumerate(choices):
+            rect = pygame.Rect(900, y + 6 + height * local, 328, height)
             self.dropdown_rows.append((index, rect))
             if index == selected or rect.collidepoint(self.mouse):
                 pygame.draw.rect(self.canvas, (38, 61, 79), rect, border_radius=6)

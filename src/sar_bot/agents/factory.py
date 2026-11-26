@@ -23,6 +23,12 @@ def create_policy(simulation: RescueSimulation, strategy: str, *, model_path: st
     if strategy == "dqn":
         if model_path is None:
             raise ValueError("La estrategia DQN requiere un modelo guardado")
+        from zipfile import ZipFile
+        with ZipFile(model_path) as archive:
+            assignment = "assignment.json" in archive.namelist()
+        if assignment:
+            from .assignment import AssignmentPolicy
+            return AssignmentPolicy(simulation, model_path)
         from .dqn import DQNPolicy
         return DQNPolicy(simulation, model_path)
     raise ValueError(f"Estrategia desconocida: {strategy}")

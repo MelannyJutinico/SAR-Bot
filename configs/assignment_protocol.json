@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scope": "Supervised assignment and risk prediction + programmed A*; one trained seed 7; all variants share navigation; test frozen before new reserved evaluation.",
+  "model": "artifacts/rescue_network/model.zip",
+  "model_sha256": "499c8c17f383cdc9f72b29fa4da7fe7d2a4a68e2fd5fa69ee23d7d470ab599ae",
+  "metadata_json_sha256": "03b71f194010e49eb4bb1e007f394306cc54da63a57c3b841e9587d2e135eeb1",
+  "manifest": "configs/partitions/assignment_holdout.json",
+  "manifest_json_sha256": "29aff2e6e02245ea964e20cc576dea31836869e3b71d4e3babf6d0bd16dd642d",
+  "untrained_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    7
+  ],
+  "validation_results": "results/assignment/validation_risk.csv",
+  "selection": "Minimum supervised validation regret, first best epoch 110; no heldout rescue selection.",
+  "diagnostic": "Same 60 synthetic questions per reserved layout, generation seed 1126, teacher agreement and regret, never used for further training."
+}

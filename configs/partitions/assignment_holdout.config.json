@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "manifest_id": "assignment_holdout_20261126",
+  "frozen_on": "2026-11-26",
+  "profile": {
+    "width": 12,
+    "height": 12,
+    "victims": 3
+  },
+  "output_manifest": "configs/partitions/assignment_holdout.json",
+  "output_witnesses": "configs/partitions/assignment_holdout.witnesses.jsonl",
+  "scenario_dir": "scenarios/partitions/assignment_holdout",
+  "excluded_sources": [
+    "configs/v2_scenario_families.json"
+  ],
+  "legacy_manifests": [
+    "configs/scenario_splits.json",
+    "configs/partitions/v2_12x12.json"
+  ],
+  "min_test_total": 20,
+  "buildings": [
+    {
+      "key": "hub",
+      "template": "scenarios/v2/coordination_hub_12x12.json",
+      "generation_seed": 26112601,
+      "split_seed": 26112611,
+      "max_attempts": 5000,
+      "surplus_per_difficulty": 2,
+      "quotas": {
+        "training": {
+          "easy": 0,
+          "intermediate": 0,
+          "demanding": 0
+        },
+        "validation": {
+          "easy": 0,
+          "intermediate": 0,
+          "demanding": 0
+        },
+        "test": {
+          "easy": 6,
+          "intermediate": 7,
+          "demanding": 7
+        }
+      }
+    },
+    {
+      "key": "detour",
+      "template": "scenarios/v2/thermal_detour_12x12.json",
+      "generation_seed": 26112602,
+      "split_seed": 26112612,
+      "max_attempts": 5000,
+      "surplus_per_difficulty": 2,
+      "quotas": {
+        "training": {
+          "easy": 0,
+          "intermediate": 0,
+          "demanding": 0
+        },
+        "validation": {
+          "easy": 0,
+          "intermediate": 0,
+          "demanding": 0
+        },
+        "test": {
+          "easy": 6,
+          "intermediate": 7,
+          "demanding": 7
+        }
+      }
+    }
+  ]
+}
