@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "purpose": "Análisis posterior a prueba congelada; describe trazas existentes, no selecciona un modelo nuevo.",
+  "output_dir": "results/final/trace_analysis",
+  "cases": [
+    {
+      "key": "dqn_entregas_parciales",
+      "role": "Mismo caso reservado: entregas parciales frente a rescate completo",
+      "results": "results/final/test.csv",
+      "scenario": "scenarios/partitions/v2_12x12/test/detour_test_01_easy.json",
+      "strategy": "dqn",
+      "model_label": "final"
+    },
+    {
+      "key": "mismo_caso_corta",
+      "role": "Mismo caso reservado: entregas parciales frente a rescate completo",
+      "results": "results/final/test.csv",
+      "scenario": "scenarios/partitions/v2_12x12/test/detour_test_01_easy.json",
+      "strategy": "shortest"
+    },
+    {
+      "key": "mismo_caso_termica",
+      "role": "Mismo caso reservado: entregas parciales frente a rescate completo",
+      "results": "results/final/test.csv",
+      "scenario": "scenarios/partitions/v2_12x12/test/detour_test_01_easy.json",
+      "strategy": "thermal"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="608" height="433" viewBox="0 0 608 433" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Curvas de entrenamiento por semilla</title>
+<desc id="descripcion">Personas entregadas en las evaluaciones periódicas de cada entrenamiento y checkpoint elegido.</desc>
+<rect width="608" height="433" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Curvas de entrenamiento por semilla</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Personas entregadas en cada evaluación periódica (suma de los escenarios de</text>
+<text x="24" y="69" font-size="12" fill="#52514e">evaluación). El círculo marca el checkpoint que guardó el entrenamiento: el primero</text>
+<text x="24" y="86" font-size="12" fill="#52514e">con más misiones completas, después más personas y después más retorno.</text>
+<text x="24" y="121" font-size="12" fill="#0b0b0b" font-weight="600">final · semilla 0</text>
+<text x="24" y="137" font-size="11" fill="#52514e">Elegido: 100 mil pasos, 18/60 personas, 3/20 misiones completas</text>
+<text x="24" y="152" font-size="11" fill="#52514e">Evaluación: 20 escenarios, ninguno usado para entrenar</text>
+<text x="24" y="167" font-size="11" fill="#898781">Etapas: 1 one_remaining · 2 two_remaining · 3 full_mission</text>
+<line x1="56" y1="379" x2="576" y2="379" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="50" y="383" font-size="11" fill="#898781" text-anchor="end" class="tick">0</text>
+<line x1="56" y1="322.33" x2="576" y2="322.33" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="50" y="326.33" font-size="11" fill="#898781" text-anchor="end" class="tick">20</text>
+<line x1="56" y1="265.67" x2="576" y2="265.67" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="50" y="269.67" font-size="11" fill="#898781" text-anchor="end" class="tick">40</text>
+<line x1="56" y1="209" x2="576" y2="209" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="50" y="213" font-size="11" fill="#898781" text-anchor="end" class="tick">60</text>
+<text x="56" y="394" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<text x="186" y="394" font-size="11" fill="#898781" text-anchor="middle" class="tick">50</text>
+<text x="316" y="394" font-size="11" fill="#898781" text-anchor="middle" class="tick">100</text>
+<text x="446" y="394" font-size="11" fill="#898781" text-anchor="middle" class="tick">150</text>
+<text x="576" y="394" font-size="11" fill="#898781" text-anchor="middle" class="tick">200</text>
+<line x1="56" y1="209" x2="56" y2="379" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="59" y="205" font-size="10" fill="#898781">1</text>
+<line x1="134" y1="209" x2="134" y2="379" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="137" y="205" font-size="10" fill="#898781">2</text>
+<line x1="264" y1="209" x2="264" y2="379" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="267" y="205" font-size="10" fill="#898781">3</text>
+<text x="56" y="189" font-size="11" fill="#52514e">Personas entregadas (de 60)</text>
+<text x="316" y="411" font-size="11" fill="#52514e" text-anchor="middle">Pasos de entrenamiento (miles)</text>
+<path d="M56,350.67L82,367.67L108,362L134,356.33L134,356.33L160,353.5L186,359.17L212,347.83L238,350.67L264,353.5L264,350.67L290,350.67L316,328L342,356.33L368,353.5L394,330.83L420,345L446,342.17L472,347.83L472,342.17" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="curve" data-log="final" data-points="20"/>
+<circle cx="56" cy="350.67" r="8" fill="transparent" class="hit"><title>0 mil pasos (warm_start): 10/60 personas, 2/20 misiones completas</title></circle>
+<circle cx="82" cy="367.67" r="8" fill="transparent" class="hit"><title>10 mil pasos (one_remaining): 4/60 personas, 0/20 misiones completas</title></circle>
+<circle cx="108" cy="362" r="8" fill="transparent" class="hit"><title>20 mil pasos (one_remaining): 6/60 personas, 0/20 misiones completas</title></circle>
+<circle cx="134" cy="356.33" r="8" fill="transparent" class="hit"><title>30 mil pasos (one_remaining): 8/60 personas, 1/20 misiones completas</title></circle>
+<circle cx="134" cy="356.33" r="8" fill="transparent" class="hit"><title>30 mil pasos (one_remaining): 8/60 personas, 1/20 misiones completas</title></circle>
+<circle cx="160" cy="353.5" r="8" fill="transparent" class="hit"><title>40 mil pasos (two_remaining): 9/60 personas, 0/20 misiones completas</title></circle>
+<circle cx="186" cy="359.17" r="8" fill="transparent" class="hit"><title>50 mil pasos (two_remaining): 7/60 personas, 0/20 misiones completas</title></circle>
+<circle cx="212" cy="347.83" r="8" fill="transparent" class="hit"><title>60 mil pasos (two_remaining): 11/60 personas, 1/20 misiones completas</title></circle>
+<circle cx="238" cy="350.67" r="8" fill="transparent" class="hit"><title>70 mil pasos (two_remaining): 10/60 personas, 1/20 misiones completas</title></circle>
+<circle cx="264" cy="353.5" r="8" fill="transparent" class="hit"><title>80 mil pasos (two_remaining): 9/60 personas, 2/20 misiones completas</title></circle>
+<circle cx="264" cy="350.67" r="8" fill="transparent" class="hit"><title>80 mil pasos (two_remaining): 10/60 personas, 2/20 misiones completas</title></circle>
+<circle cx="290" cy="350.67" r="8" fill="transparent" class="hit"><title>90 mil pasos (full_mission): 10/60 personas, 1/20 misiones completas</title></circle>
+<circle cx="316" cy="328" r="8" fill="transparent" class="hit"><title>100 mil pasos (full_mission): 18/60 personas, 3/20 misiones completas</title></circle>
+<circle cx="342" cy="356.33" r="8" fill="transparent" class="hit"><title>110 mil pasos (full_mission): 8/60 personas, 1/20 misiones completas</title></circle>
+<circle cx="368" cy="353.5" r="8" fill="transparent" class="hit"><title>120 mil pasos (full_mission): 9/60 personas, 0/20 misiones completas</title></circle>
+<circle cx="394" cy="330.83" r="8" fill="transparent" class="hit"><title>130 mil pasos (full_mission): 17/60 personas, 2/20 misiones completas</title></circle>
+<circle cx="420" cy="345" r="8" fill="transparent" class="hit"><title>140 mil pasos (full_mission): 12/60 personas, 2/20 misiones completas</title></circle>
+<circle cx="446" cy="342.17" r="8" fill="transparent" class="hit"><title>150 mil pasos (full_mission): 13/60 personas, 1/20 misiones completas</title></circle>
+<circle cx="472" cy="347.83" r="8" fill="transparent" class="hit"><title>160 mil pasos (full_mission): 11/60 personas, 2/20 misiones completas</title></circle>
+<circle cx="472" cy="342.17" r="8" fill="transparent" class="hit"><title>160 mil pasos (full_mission): 13/60 personas, 3/20 misiones completas</title></circle>
+<circle cx="316" cy="328" r="6" fill="#fcfcfb" stroke="#0b0b0b" stroke-width="2" class="checkpoint" data-log="final" data-steps="100000" data-rescued="18"><title>Checkpoint elegido: 100 mil pasos, 18/60 personas</title></circle>
+</svg>

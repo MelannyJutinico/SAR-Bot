@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "started_utc": "2026-11-26T17:42:40.119167+00:00",
+  "protocol_json_sha256": "f543a43ff9d3a45f1754cd11dba4eb5cd58d0aa49f308cd1ca9fe28225f57f57",
+  "output": "results/final/test.csv",
+  "completed_utc": "2026-11-26T17:44:12.020010+00:00",
+  "csv_sha256": "938e462623c223bd471a6a4d6a0010a1b886a66babe23044110466245cedb66d"
+}

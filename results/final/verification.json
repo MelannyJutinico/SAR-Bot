@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-26",
+  "timezone": "America/Bogota",
+  "python": "3.12.15",
+  "platform": "Windows",
+  "unit_tests": {
+    "command": ".venv/Scripts/python.exe -m unittest discover -s tests",
+    "tests": 315,
+    "seconds": 221.304,
+    "result": "OK",
+    "code_commit": "7da1318"
+  },
+  "smoke_tests": {
+    "default_thermal": {
+      "rescued": 3,
+      "steps": 66,
+      "damage": 42
+    },
+    "known_validation_dqn": {
+      "rescued": 3,
+      "steps": 126,
+      "damage": 0
+    },
+    "persistent_session": {
+      "processes": 2,
+      "missions": 2,
+      "transitions": 580,
+      "updates": 128,
+      "base_unchanged": true,
+      "q_parameters_changed": true
+    }
+  },
+  "scope": "Automated checks on available presentation computer, not an oral rehearsal or four-computer verification."
+}

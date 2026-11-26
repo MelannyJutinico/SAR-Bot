@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "generator": "sar_bot.trace_analysis",
+  "config": {
+    "path": "configs/analysis/final_casos.json",
+    "sha256": "c3c910b95ca5c2fa242d3046a24de1932b08e0dfba04a940e275085ad5475f52"
+  },
+  "results": {
+    "results/final/test.csv": "938e462623c223bd471a6a4d6a0010a1b886a66babe23044110466245cedb66d"
+  },
+  "command": "uv run python scripts/trace_story.py --cases configs/analysis/final_casos.json --output-dir results/final/trace_analysis",
+  "outputs": {
+    "trazas.md": "1e950e0a02671dca7dea7cdfccef8fb7eca230570548109f88d59107abb94d32"
+  }
+}

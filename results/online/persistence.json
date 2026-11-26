@@ -1,0 +1,90 @@
+{
+  "scope": "Two missions launched in separate CLI processes, training cases only; validation comparison is descriptive, not a new model selection.",
+  "base_sha256": "0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5",
+  "after_sha256": "f36e1369047bcc75e5c313774688717cf9bb412e3167d27110c89a9109303334",
+  "base_q_parameters_sha256": "7dfd7a5f0e68db7dcab97e86e9218f046c33410f6878efd37cd7d5edde627346",
+  "after_q_parameters_sha256": "c01b991e4763d46d4605b03fdef23a27981489b75d190c6f5fd9fc28a527d21a",
+  "generations": [
+    {
+      "missions": 1,
+      "transitions": 280,
+      "updates": 64,
+      "buffer_size": 280,
+      "model_timesteps": 100280,
+      "model_sha256": "0bfde231e709cc7fbd44235cc860057d5909bb3932f1172257de6883f7a5edaa",
+      "last_mission": {
+        "scenario_id": "ce37638df933ca33b51884822d623ee2c2205cd0472d7f04437855d81ea60db0",
+        "policy_sha256": "0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5",
+        "outcome": "time_limit",
+        "rescued": 1
+      }
+    },
+    {
+      "missions": 2,
+      "transitions": 580,
+      "updates": 128,
+      "buffer_size": 580,
+      "model_timesteps": 100580,
+      "model_sha256": "f36e1369047bcc75e5c313774688717cf9bb412e3167d27110c89a9109303334",
+      "last_mission": {
+        "scenario_id": "621ff8575c846c7831019b672bd2f4e320e4729c73bf657aeae4ea570942d46a",
+        "policy_sha256": "0bfde231e709cc7fbd44235cc860057d5909bb3932f1172257de6883f7a5edaa",
+        "outcome": "time_limit",
+        "rescued": 0
+      }
+    }
+  ],
+  "session": {
+    "schema_version": 1,
+    "base_sha256": "0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5",
+    "settings": {
+      "capacity": 4096,
+      "learning_rate": 5e-05,
+      "exploration": 0.1,
+      "max_updates": 64
+    },
+    "rewards": {
+      "step": -1.0,
+      "pickup": 5.0,
+      "delivery": 50.0,
+      "success": 100.0,
+      "destruction": -100.0,
+      "timeout": -20.0,
+      "damage": -2.0,
+      "shaping": 2.0,
+      "gamma": 1.0,
+      "potential_bound": 0.0
+    },
+    "masked": true,
+    "missions": 2,
+    "transitions": 580,
+    "updates": 128,
+    "processed_ids": [
+      "359059ec4b634691a8ef215ef6edfd87",
+      "197e039e9baa4af382a2cad84be752cc"
+    ],
+    "buffer_size": 580,
+    "model_sha256": "f36e1369047bcc75e5c313774688717cf9bb412e3167d27110c89a9109303334",
+    "profile": {
+      "schema_version": 2,
+      "width": 12,
+      "height": 12,
+      "victims": 3,
+      "mode": "sensors",
+      "observation_size": 390,
+      "actions": 25
+    },
+    "model_timesteps": 100580,
+    "last_mission": {
+      "scenario_id": "621ff8575c846c7831019b672bd2f4e320e4729c73bf657aeae4ea570942d46a",
+      "policy_sha256": "0bfde231e709cc7fbd44235cc860057d5909bb3932f1172257de6883f7a5edaa",
+      "outcome": "time_limit",
+      "rescued": 0
+    },
+    "file_hashes": {
+      "model.zip": "f36e1369047bcc75e5c313774688717cf9bb412e3167d27110c89a9109303334",
+      "replay.pkl": "6141842cd7e7592dbfed4e679a17e0e7a4b704552f72fc0d791d0df806e8331d",
+      "rng.pkl": "df581b87cc37b1e76c142594712ba118658156d57754f85d494934b2d285ee24"
+    }
+  }
+}

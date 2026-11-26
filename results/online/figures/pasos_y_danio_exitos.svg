@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="489" viewBox="0 0 920 489" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Pasos y daño entre misiones exitosas</title>
+<desc id="descripcion">Distribución de pasos y daño de las misiones exitosas por estrategia, con medias y tamaños de muestra.</desc>
+<rect width="920" height="489" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Pasos y daño entre misiones exitosas</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Validación · manifiesto v2_12x12_v1 · perfil 12 × 12 con 3 personas · 20 casos distintos · 40 episodios</text>
+<text x="24" y="69" font-size="12" fill="#52514e">Cada punto es una misión exitosa y la línea negra su media. La cifra junto a cada estrategia es éxitos/episodios: los fracasos no</text>
+<text x="24" y="86" font-size="12" fill="#52514e">aportan puntos ni entran en la media, así que un fracaso temprano con poco daño no mejora el resultado.</text>
+<text x="340" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Pasos hasta terminar</text>
+<text x="560" y="119" font-size="11" fill="#898781">media</text>
+<text x="650" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Daño térmico total</text>
+<text x="870" y="119" font-size="11" fill="#898781">media</text>
+<text x="318" y="119" font-size="11" fill="#898781" text-anchor="end">éxitos</text>
+<line x1="340" y1="129" x2="340" y2="437" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="340" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="410" y1="129" x2="410" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="410" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">100</text>
+<line x1="480" y1="129" x2="480" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="480" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">200</text>
+<line x1="550" y1="129" x2="550" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="550" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">300</text>
+<text x="445" y="469" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">Pasos simulados</text>
+<line x1="650" y1="129" x2="650" y2="437" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="650" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="860" y1="129" x2="860" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="860" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">1</text>
+<text x="755" y="469" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">Puntos de daño (ambos robots)</text>
+<text x="24" y="149" font-size="12" fill="#0b0b0b" font-weight="600">Todos los casos</text>
+<rect x="36" y="172" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="181" font-size="12" fill="#0b0b0b">DQN final · semilla 0</text>
+<text x="318" y="181" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="dqn:final" data-k="3" data-n="20">3/20</text>
+<circle cx="428.2" cy="177" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:final" data-metric="steps" data-value="126"><title>hub_validation_03_easy · DQN final · semilla 0: 126 pasos</title></circle>
+<circle cx="498.2" cy="177" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:final" data-metric="steps" data-value="226"><title>detour_validation_02_easy · DQN final · semilla 0: 226 pasos</title></circle>
+<circle cx="538.1" cy="177" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:final" data-metric="steps" data-value="283"><title>detour_validation_01_easy · DQN final · semilla 0: 283 pasos</title></circle>
+<line x1="488.17" y1="164" x2="488.17" y2="190" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="dqn:final" data-metric="steps" data-value="211.67" data-n="3"><title>Todos los casos · DQN final · semilla 0: media 211,7 pasos en 3 éxitos</title></line>
+<text x="560" y="181" font-size="11" fill="#52514e">211,7</text>
+<circle cx="650" cy="177" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:final" data-metric="damage" data-value="0"><title>detour_validation_02_easy · DQN final · semilla 0: 0 de daño</title></circle>
+<circle cx="650" cy="171" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:final" data-metric="damage" data-value="0"><title>hub_validation_03_easy · DQN final · semilla 0: 0 de daño</title></circle>
+<circle cx="650" cy="183" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:final" data-metric="damage" data-value="0"><title>detour_validation_01_easy · DQN final · semilla 0: 0 de daño</title></circle>
+<line x1="650" y1="164" x2="650" y2="190" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="dqn:final" data-metric="damage" data-value="0" data-n="3"><title>Todos los casos · DQN final · semilla 0: media 0,0 de daño en 3 éxitos</title></line>
+<text x="870" y="181" font-size="11" fill="#52514e">0,0</text>
+<rect x="36" y="204" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="213" font-size="12" fill="#0b0b0b">DQN session_after · semilla 0</text>
+<text x="318" y="213" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="dqn:session_after" data-k="0" data-n="20">0/20</text>
+<text x="346" y="213" font-size="11" fill="#898781">sin éxitos</text>
+<text x="656" y="213" font-size="11" fill="#898781">sin éxitos</text>
+<text x="24" y="253" font-size="12" fill="#0b0b0b" font-weight="600">Centro de coordinación (hub)</text>
+<rect x="36" y="276" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="285" font-size="12" fill="#0b0b0b">DQN final · semilla 0</text>
+<text x="318" y="285" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="hub" data-series="dqn:final" data-k="1" data-n="10">1/10</text>
+<circle cx="428.2" cy="281" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="hub" data-series="dqn:final" data-metric="steps" data-value="126"><title>hub_validation_03_easy · DQN final · semilla 0: 126 pasos</title></circle>
+<line x1="428.2" y1="268" x2="428.2" y2="294" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="hub" data-series="dqn:final" data-metric="steps" data-value="126" data-n="1"><title>Centro de coordinación (hub) · DQN final · semilla 0: media 126,0 pasos en 1 éxitos</title></line>
+<text x="560" y="285" font-size="11" fill="#52514e">126,0</text>
+<circle cx="650" cy="281" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="hub" data-series="dqn:final" data-metric="damage" data-value="0"><title>hub_validation_03_easy · DQN final · semilla 0: 0 de daño</title></circle>
+<line x1="650" y1="268" x2="650" y2="294" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="hub" data-series="dqn:final" data-metric="damage" data-value="0" data-n="1"><title>Centro de coordinación (hub) · DQN final · semilla 0: media 0,0 de daño en 1 éxitos</title></line>
+<text x="870" y="285" font-size="11" fill="#52514e">0,0</text>
+<rect x="36" y="308" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="317" font-size="12" fill="#0b0b0b">DQN session_after · semilla 0</text>
+<text x="318" y="317" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="hub" data-series="dqn:session_after" data-k="0" data-n="10">0/10</text>
+<text x="346" y="317" font-size="11" fill="#898781">sin éxitos</text>
+<text x="656" y="317" font-size="11" fill="#898781">sin éxitos</text>
+<text x="24" y="357" font-size="12" fill="#0b0b0b" font-weight="600">Desvío térmico (detour)</text>
+<rect x="36" y="380" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="389" font-size="12" fill="#0b0b0b">DQN final · semilla 0</text>
+<text x="318" y="389" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="detour" data-series="dqn:final" data-k="2" data-n="10">2/10</text>
+<circle cx="498.2" cy="385" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="detour" data-series="dqn:final" data-metric="steps" data-value="226"><title>detour_validation_02_easy · DQN final · semilla 0: 226 pasos</title></circle>
+<circle cx="538.1" cy="385" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="detour" data-series="dqn:final" data-metric="steps" data-value="283"><title>detour_validation_01_easy · DQN final · semilla 0: 283 pasos</title></circle>
+<line x1="518.15" y1="372" x2="518.15" y2="398" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="detour" data-series="dqn:final" data-metric="steps" data-value="254.5" data-n="2"><title>Desvío térmico (detour) · DQN final · semilla 0: media 254,5 pasos en 2 éxitos</title></line>
+<text x="560" y="389" font-size="11" fill="#52514e">254,5</text>
+<circle cx="650" cy="385" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="detour" data-series="dqn:final" data-metric="damage" data-value="0"><title>detour_validation_02_easy · DQN final · semilla 0: 0 de daño</title></circle>
+<circle cx="650" cy="379" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="detour" data-series="dqn:final" data-metric="damage" data-value="0"><title>detour_validation_01_easy · DQN final · semilla 0: 0 de daño</title></circle>
+<line x1="650" y1="372" x2="650" y2="398" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="detour" data-series="dqn:final" data-metric="damage" data-value="0" data-n="2"><title>Desvío térmico (detour) · DQN final · semilla 0: media 0,0 de daño en 2 éxitos</title></line>
+<text x="870" y="389" font-size="11" fill="#52514e">0,0</text>
+<rect x="36" y="412" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="421" font-size="12" fill="#0b0b0b">DQN session_after · semilla 0</text>
+<text x="318" y="421" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="detour" data-series="dqn:session_after" data-k="0" data-n="10">0/10</text>
+<text x="346" y="421" font-size="11" fill="#898781">sin éxitos</text>
+<text x="656" y="421" font-size="11" fill="#898781">sin éxitos</text>
+</svg>

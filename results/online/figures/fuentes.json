@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "generator": "sar_bot.report",
+  "results": {
+    "path": "results/online/comparison.csv",
+    "sha256": "4213e7ad850fbc10c933b0f2ea00734ce14ce29534f4b17cdf4d53dbcfe0c7c9",
+    "metadata_sha256": "053cc7e4628ffa1634ccbe9ab50f1ab7becf657a71713f58f32345d028bd6704",
+    "traces": "results/online/comparison.traces.jsonl",
+    "traces_sha256": "af3bebf763f6154aa9ce157175259858b003945735317002176b4cb6ba07cb6b",
+    "replayed": true
+  },
+  "training": [],
+  "output_dir": "results/online/figures",
+  "command": "uv run python scripts/report_figures.py --results results/online/comparison.csv --output-dir results/online/figures",
+  "outputs": {
+    "duracion_vs_danio.svg": "744a0336f6f6aff2f63659d539e6f192591556d7f47ba97534cc9394c8db74b9",
+    "exito_y_rescates.svg": "2ded65a13260a09e63e80e517eb07f615cf4709111a23ea961f38132bd89beb5",
+    "pasos_y_danio_exitos.svg": "7f41c1108e321b59913d5b209be15a5d3e0ba050e09cedeaa995bc83f44c14ca",
+    "tablas.md": "f3c085c59d4450ebbd14d5fd314405f7a53a04ec638a1c97b02b492da1218f8b"
+  }
+}
