@@ -81,6 +81,8 @@ class RescueEnv(gym.Env):
             if self.rewards.potential_bound else 1.0 for s in scenarios]
         self.scenario_index = 0
         self.simulation = RescueSimulation(scenarios[0])
+        self._observation_scenario = None
+        self._observation_static = ()
         self._needs_reset = True
 
     @staticmethod
@@ -134,10 +136,13 @@ class RescueEnv(gym.Env):
     def observation(self):
         """Vector normalizado: paredes, calor, posiciones, salud, carga, víctimas, reloj."""
         scenario, state = self.simulation.scenario, self.simulation.state
-        values = [float((x, y) in scenario.walls)
-                  for y in range(self.height) for x in range(self.width)]
-        values.extend(float(np.clip(t, 0, 200)) / 200
-                      for row in scenario.temperatures for t in row)
+        if scenario is not self._observation_scenario:
+            fixed = [float((x, y) in scenario.walls)
+                     for y in range(self.height) for x in range(self.width)]
+            fixed.extend((np.clip(np.asarray(scenario.temperatures), 0, 200).ravel() / 200).tolist())
+            self._observation_static = tuple(fixed)
+            self._observation_scenario = scenario
+        values = list(self._observation_static)
         for x, y in (scenario.base, *scenario.victims, *(r.position for r in state.robots)):
             values.extend((x / max(1, self.width - 1), y / max(1, self.height - 1)))
         values.extend(r.integrity / 100 for r in state.robots)

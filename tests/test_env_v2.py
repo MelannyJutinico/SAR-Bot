@@ -18,6 +18,24 @@ else:
 
 @unittest.skipUnless(HAS_RL, "Instalar extra rl")
 class EnvV2Tests(unittest.TestCase):
+    def test_static_observations_follow_scenario_changes_and_do_not_alias_outputs(self):
+        from dataclasses import replace
+        from sar_bot.core import RescueSimulation
+        scenario = self.scenario()
+        changed = [list(row) for row in scenario.temperatures]
+        changed[0][1] = 250.0
+        other = replace(scenario, temperatures=tuple(tuple(row) for row in changed))
+        env = RescueEnv([scenario, other], observation_mode="sensors")
+        original, _ = env.reset(options={"scenario_index": 0})
+        original_value = original[scenario.width * scenario.height + 1]
+        updated, _ = env.reset(options={"scenario_index": 1})
+        self.assertEqual(updated[scenario.width * scenario.height + 1], 1.0)
+        updated[:] = 0
+        self.assertEqual(env.observation()[scenario.width * scenario.height + 1], 1.0)
+        # La política DQN también puede enlazar una simulación externa al entorno.
+        env.simulation = RescueSimulation(scenario)
+        self.assertEqual(env.observation()[scenario.width * scenario.height + 1], original_value)
+
     def scenario(self):
         return Scenario.load(ROOT / "scenarios/v2/warmup_10x10.json")
 
