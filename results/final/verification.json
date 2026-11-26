@@ -30,5 +30,15 @@
       "q_parameters_changed": true
     }
   },
-  "scope": "Automated checks on available presentation computer, not an oral rehearsal or four-computer verification."
+  "scope": "Automated checks on available presentation computer, not an oral rehearsal or four-computer verification.",
+  "fresh_archive_check": {
+    "source_commit": "1d53bc9",
+    "installation": "uv sync --locked --extra ui --extra rl --python 3.12 in extracted ZIP with a new .venv",
+    "installation_result": "OK",
+    "default_launcher": "run.bat --headless --steps 300",
+    "default_result": "success, 3 rescued, 66 steps",
+    "dqn_known_case": "success, 3 rescued, 126 steps",
+    "screenshots_identical_to_original": true,
+    "figures_check": "OK"
+  }
 }

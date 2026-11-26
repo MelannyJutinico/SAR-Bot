@@ -24,6 +24,7 @@ Entorno: Windows, Python 3.12.15, Pygame 2.6.1; dependencias fijadas en `uv.lock
 - Inicio predeterminado, térmica: **3 entregas, 66 pasos, daño 42**.
 - Ejemplo DQN conocido de validación: **3 entregas, 126 pasos, daño 0**.
 - Persistencia: primera ejecución 280 experiencias y 64 actualizaciones; segunda ejecución recuperó esa sesión y terminó con 580 y 128. Cambiaron los parámetros Q y se mantuvo intacto el modelo base.
+- ZIP extraído en una carpeta aparte, entorno virtual nuevo e instalación con lockfile: correctos. El lanzador y el ejemplo DQN reprodujeron las cifras anteriores; sus capturas resultaron idénticas a las originales. Las figuras del paquete también pasaron `--check`.
 - Las figuras y análisis se regeneraron desde CSV y trazas, comprobando las acciones contra un motor nuevo.
 
 Registro estructurado: [verification.json](../results/final/verification.json). Las capturas son de ejecuciones automatizadas en el computador disponible; no se atribuye un ensayo oral ni instalaciones en cuatro computadores.
