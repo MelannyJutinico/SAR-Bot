@@ -31,7 +31,7 @@ El éxito del proyecto se valorará con funcionamiento, formulación del problem
 - [ ] [SARB-006 — Comprobar viabilidad térmica sin falsas garantías](#sarb-006) · P0 · Persona 2
 - [ ] [SARB-007 — Guardar y cargar escenarios personalizados](#sarb-007) · P0 · Persona 2
 - [ ] [SARB-008 — Generar ubicaciones variables reproducibles](#sarb-008) · P0 · Persona 2
-- [ ] [SARB-009 — Reservar nuevas particiones experimentales](#sarb-009) · P0 · Persona 4
+- [x] [SARB-009 — Reservar nuevas particiones experimentales](#sarb-009) · P0 · Persona 4
 - [ ] [SARB-010 — Editor visual de tres sobrevivientes](#sarb-010) · P0 · Persona 3
 - [ ] [SARB-011 — Conectar editor, motor y reproducción](#sarb-011) · P0 · Persona 3 + persona 1
 - [ ] [SARB-012 — Importar y exportar desde la interfaz](#sarb-012) · P0 · Persona 3
@@ -42,7 +42,7 @@ El éxito del proyecto se valorará con funcionamiento, formulación del problem
 - [ ] [SARB-017 — Ejecutar un piloto y diagnosticar aprendizaje](#sarb-017) · P0 · Persona 1
 - [ ] [SARB-018 — Investigar la decisión entre distancia y calor](#sarb-018) · P1 · Persona 1
 - [ ] [SARB-019 — Entrenar tres semillas y congelar modelos](#sarb-019) · P0 · Personas 1 y 4
-- [ ] [SARB-020 — Unificar comparaciones y métricas](#sarb-020) · P0 · Persona 4
+- [x] [SARB-020 — Unificar comparaciones y métricas](#sarb-020) · P0 · Persona 4
 - [ ] [SARB-021 — Ejecutar la evaluación final reservada](#sarb-021) · P0 · Persona 4
 - [ ] [SARB-022 — Producir gráficas y tablas finales](#sarb-022) · P1 · Persona 4
 - [ ] [SARB-023 — Analizar fallos y límites con trazas](#sarb-023) · P1 · Persona 4 + persona 1
@@ -218,6 +218,8 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 
 **P0 · Responsable:** persona 4 con persona 2 · **Revisa:** persona 1 · **Depende de:** SARB-008, SARB-002 · **Esfuerzo:** 2 h.
 
+Cerrada el 25 de noviembre de 2026, integrada en `feature/simulation-core` con el PR #4. Manifiesto `configs/partitions/v2_12x12.json` (`v2_12x12_v1`): 60/20/40 casos en dos edificios. Distribución, criterios y reglas de uso en `docs/PARTICIONES_V2.md`; verificación con `scripts/build_partitions.py verify` y `tests/test_partitions.py`. Corresponde al objetivo 12 × 12. Si SARB-002 reduce el alcance, se crea otro manifiesto por perfil sin modificar este.
+
 **Aceptación:**
 - Objetivo de planificación por cada uno de dos edificios: 30 configuraciones de entrenamiento, 10 de validación y 20 de prueba; total orientativo 60/20/40.
 - Si la capacidad real obliga a reducirlo, se acuerdan y registran las cantidades antes de entrenar. El cierre requiere al menos 20 configuraciones viables nuevas de prueba en total; cualquier reducción adicional exige redefinir y declarar el alcance de evaluación.
@@ -383,6 +385,8 @@ Usar un procedimiento acotado que busque una misión completa con ambos robots, 
 ### SARB-020 — Unificar comparaciones y métricas
 
 **P0 · Responsable:** persona 4 · **Revisa:** persona 1 · **Depende de:** SARB-007, SARB-009 · **Esfuerzo:** 3 h.
+
+Cerrada el 25 de noviembre de 2026, integrada en `feature/simulation-core` con el PR #4. Evaluador unificado `scripts/evaluate_experiment.py`, con trazas por episodio y `--verify`. Diccionario de columnas y semillas en `docs/METRICAS.md`, comparación reproducible en `results/sarb020/` y pruebas en `tests/test_experiment.py`.
 
 **Aceptación:**
 - DQN y las tres referencias reciben el mismo escenario, posiciones, temperaturas, integridad y límite temporal.
