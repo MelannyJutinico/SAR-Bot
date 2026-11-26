@@ -1,5 +1,13 @@
 # Fallos y límites observados en trazas (SARB-023)
 
+## Análisis final — 26 de noviembre de 2026
+
+Las trazas reservadas ya están evaluadas: DQN termina 39/40 misiones por tiempo y una por destrucción, con 16/120 personas entregadas. En `detour_test_01_easy` entrega dos personas, pero agota 300 pasos sin recoger la restante; los robots registran 194 y 112 retornos a la celda de dos pasos antes. La ruta corta y la térmica completan ese mismo caso en 18 pasos, sin daño. Son movimientos observables, no una explicación causal del estado interno de la red.
+
+El [análisis final generado](../results/final/trace_analysis/trazas.md) reproduce las acciones conservadas y comprueba sus totales. El [informe](INFORME.md) explica el resultado de generalización y la regresión de la sesión adaptada. Las secciones siguientes conservan ejemplos de desarrollo anteriores, con sus perfiles y modelos originales.
+
+---
+
 **Responsable:** persona 4 con persona 1. **Revisa:** persona 2. **Actualización:** 18 de noviembre de 2026.
 
 **Estado:** analizados un rescate eficiente, un caso térmico y un fallo real, todos con datos de desarrollo y entrenamiento. Falta agregar los fallos de la evaluación final (SARB-021) cuando existan los modelos congelados, siguiendo la sección 4.

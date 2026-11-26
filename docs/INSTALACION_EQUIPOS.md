@@ -1,5 +1,15 @@
 # Ejecución de la base en los cuatro equipos (SARB-003)
 
+## Verificación de la entrega final — 26 de noviembre de 2026
+
+El acuerdo de cierre exige comprobación en el computador disponible, sin exigir cuatro instalaciones para esta versión. Entorno verificado: Windows, Python **3.12.15**, Pygame 2.6.1 y dependencias fijadas en `uv.lock`. Se aprobaron **315 pruebas** en 221,304 segundos. El inicio térmico completó 3/3 en 66 pasos y el ejemplo conocido DQN 3/3 en 126; se verificó además persistencia entre dos procesos.
+
+Instalar: `uv sync --locked --extra ui --extra rl --python 3.12`. Iniciar: doble clic en `run.bat`. [Instrucciones vigentes](../README.md), [evidencia](VERSION_FINAL.md).
+
+La tabla siguiente documenta la comprobación histórica de noviembre 18; sus tres instalaciones pendientes **no bloquean** el alcance reducido y no se presentan como ejecutadas.
+
+---
+
 **Coordina:** persona 4. **Revisa:** persona 1. **Actualización:** 18 de noviembre de 2026.
 
 Cada integrante instala la base desde el mismo commit con el lockfile, abre la interfaz sin entrenar y reproduce las cifras de referencia. Esta tabla reúne las cuatro comprobaciones. La de la persona 4 ya está hecha; las otras tres se completan con los mismos pasos (sección 3).

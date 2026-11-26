@@ -1,5 +1,25 @@
 # Entorno de aprendizaje
 
+## Estado final — 26 de noviembre de 2026
+
+El modelo vigente es `artifacts/final/model.zip`: DQN centralizado con máscara, observación de 390 valores, dos capas de 128 unidades y una semilla. Fue seleccionado por validación (3/20 misiones completas, 18/60 entregas) y congelado antes de prueba (0/40, 16/120). El informe distingue las seis configuraciones de desarrollo de réplicas independientes: [INFORME.md](INFORME.md).
+
+La selección final usa currículo de una, dos y tres personas pendientes, partiendo del checkpoint con máscara de 40000 pasos. La corrida añade 160000 pasos y selecciona el checkpoint de 100000 nuevos. Un experimento adicional con demostraciones térmicas y refinamiento DQN quedó descartado; **el modelo final no usa ese preentrenamiento supervisado**. Los detalles se conservan en `results/sarb017/experiments.json`.
+
+### Aprender entre misiones
+
+En la interfaz, elegir DQN y activar **Aprender y guardar**. Cada misión nueva terminada incorpora sus transiciones y ejecuta hasta 64 actualizaciones, con tasa 0,00005, exploración 0,1 y replay de 4096 transiciones. El guardado conserva red, optimizador, memoria, generadores aleatorios y contadores. Los archivos se encuentran en `outputs/learning_sessions/<ancho>x<alto>-<personas>-<hash base>/`. Al abrir otra ejecución y activar aprendizaje, se recupera esa sesión automáticamente.
+
+La generación se publica de forma atómica después de comprobar hashes, con copia anterior de recuperación y bloqueo de escritor. Una misma misión no aprende dos veces al reiniciar la reproducción. Evaluar, comparar e importar historial no entrenan; utilizan el checkpoint base. Las ubicaciones reservadas de prueba están protegidas contra entrenamiento. El artefacto final nunca se sobrescribe.
+
+Se comprobaron dos ejecuciones separadas: 2 misiones, 580 experiencias y 128 actualizaciones. Los pesos cambiaron; validación cayó de 3/20 a 0/20. Es evidencia de persistencia y de una **regresión**, no de mejora. [Datos](../results/online/persistence.json), [comparación](../results/online/figures/tablas.md). El guion explica cómo mostrar ambas cosas.
+
+### Referencia y experimentos históricos
+
+Las secciones siguientes conservan los contratos y los experimentos previos. Los modelos V1 y `artifacts/v2_12x12/` son antecedentes; las afirmaciones anteriores sobre falta de modelo final o de aprendizaje persistente quedan reemplazadas por esta sección.
+
+---
+
 **Base V2:** el entorno ahora admite perfiles de dimensiones y cantidad de sobrevivientes configurables. El detalle y las fórmulas están en [CONTRATOS_V2.md](CONTRATOS_V2.md). Las secciones de experimentos anteriores conservan sus resultados históricos de dos personas.
 
 ## Instalación

@@ -1,5 +1,9 @@
 # Tablas y figuras del informe (SARB-022)
 
+**Actualización final del 26 de noviembre:** ya se generaron y verificaron `results/final/figures/` desde los 320 episodios de prueba y el modelo congelado. [Tablas finales](../results/final/figures/tablas.md). La comparación descriptiva antes/después de aprendizaje se encuentra en `results/online/figures/`. Las instrucciones siguientes siguen vigentes; las referencias a una evaluación final futura son históricas.
+
+---
+
 **Responsable:** persona 4. **Revisa:** persona 3. **Actualización:** 18 de noviembre de 2026.
 
 Este documento explica cómo se producen las tablas y figuras del informe a partir de los resultados conservados. Ninguna cifra se copia a mano: todo sale de un CSV de `scripts/evaluate_experiment.py` (SARB-020) y de los registros de entrenamiento de cada modelo. La evaluación final (SARB-021) usará el mismo script sobre el CSV de prueba.

@@ -1,5 +1,11 @@
 # SAR-Bot — guía para incorporarse al equipo
 
+**Cierre del 26 de noviembre de 2026:** el equipo autorizó integrar el trabajo restante y terminar una versión con una semilla DQN y aprendizaje entre misiones. Ya están implementados simulador 12 × 12, editor, cuatro estrategias, persistencia y evaluación final. DQN obtuvo 3/20 en validación y 0/40 en prueba; la referencia térmica 40/40. Leer primero el [README vigente](README.md), el [informe final](docs/INFORME.md) y la [lista de cierre](docs/VERSION_FINAL.md). No hay tareas técnicas adicionales exigidas para este alcance final.
+
+El contenido siguiente describe la **distribución y expectativas históricas del equipo**. Sus pendientes y modelos de desarrollo no sustituyen el estado final anterior.
+
+---
+
 **Asignatura:** Sistemas Inteligentes · **Equipo:** cuatro personas · **Actualización:** 26 de noviembre de 2026.
 
 Este documento permite continuar el proyecto sin haber participado en las conversaciones iniciales. Explica el propósito, la base entregada, las limitaciones y cómo repartir el trabajo. Las tareas ejecutables y sus criterios de aceptación están en [BACKLOG.md](BACKLOG.md).

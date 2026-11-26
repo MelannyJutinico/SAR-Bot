@@ -1,12 +1,20 @@
-# Interfaz de SAR-Bot - Persona 3
+# Interfaz de SAR-Bot
 
-**Actualización del 26 de noviembre de 2026:** ya se publica `artifacts/v2_12x12/model.zip`, compatible con 12 × 12 y tres personas. Debe seleccionarse explícitamente en el catálogo o mediante `--model`. Es un DQN de desarrollo con movimientos restringidos y 2/20 misiones completas de validación; no es el modelo final. Las auditorías fechadas el 18 de noviembre que describen ausencia de checkpoint 12 × 12 documentan el estado histórico.
+## Versión final — 26 de noviembre de 2026
 
-Ejemplo real de validación usado para seleccionar el checkpoint (39 pasos, tres entregas y daño 2):
+`run.bat` abre el edificio de coordinación 12 × 12 con la referencia térmica, en pausa. El modelo predeterminado es `artifacts/final/model.zip` y el catálogo lo identifica como **congelado / una semilla**. DQN es experimental: 3/20 misiones completas en validación y 0/40 en prueba.
 
-```powershell
-uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/partitions/v2_12x12/validation/hub_validation_04_easy.json --strategy dqn --model artifacts/v2_12x12/model.zip
-```
+**Preparación:** elegir plantilla, estrategia y modelo compatible; editar tres personas, validar, guardar/cargar escenarios personalizados y preparar una misión. **Ejecución:** iniciar, pausar, avanzar un paso, reiniciar la reproducción y cambiar velocidad. **Análisis:** comparar estrategias en el mismo escenario, consultar historial, exportar y reproducir trazas.
+
+Con DQN se habilita **Modo: Aprender y guardar**. Al finalizar una misión nueva, se actualiza la red en segundo plano y aparece un aviso con misiones, recuerdos y actualizaciones. Esperar a ese aviso antes de preparar otra. Al reiniciar el programa y activar de nuevo aprendizaje se recupera la sesión. Reiniciar la reproducción o consultar historial no repite el entrenamiento. Evaluar y comparar usan el modelo base congelado.
+
+La sesión local conserva modelo, optimizador, replay y contadores en `outputs/learning_sessions/`; no altera el artefacto publicado. Las acciones que cambian la configuración quedan bloqueadas durante el guardado. Aprender puede empeorar el comportamiento: el informe registra la regresión observada. [Guion y respaldo](DEMO.md), [informe](INFORME.md).
+
+![Interfaz final](images/final-default.png)
+
+## Historial de implementación y auditorías
+
+Los estados fechados de las secciones siguientes documentan versiones anteriores; las ausencias de checkpoint 12 × 12 o de modo persistente ya están resueltas.
 
 Estado de estabilizacion: 2026-11-18. Alcance: SARB-010, SARB-011, SARB-012,
 SARB-030, SARB-014, SARB-013 y SARB-032. Implementacion local lista para revision

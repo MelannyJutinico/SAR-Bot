@@ -1,90 +1,62 @@
-# Guion y respaldo de la demostración (SARB-026)
+# Demostración de la versión final
 
-**Coordina:** persona 4; participan todos. **Revisa:** persona 1. **Versión:** borrador del 18 de noviembre de 2026.
+Versión del 26 de noviembre de 2026. Preparada para una exposición de 5–10 minutos; la duración es una elección del equipo. El guion utiliza resultados reales y un ejemplo conocido de validación.
 
-**Estado:** guion preparado y casos de respaldo listos. Falta confirmar la duración con el profesor (SARB-002), tener los modelos 12 × 12 congelados (SARB-019), el modo de aprendizaje continuo (SARB-033 y SARB-034) y hacer el ensayo en el equipo de presentación. Mientras tanto se usan 10 minutos como supuesto, con una versión corta de 5.
+## Antes de presentar
 
-## 1. Guion
+1. Instalar con `uv sync --locked --extra ui --extra rl --python 3.12` y abrir `run.bat`.
+2. Conservar localmente el repositorio completo, el modelo incluido y las figuras de `results/final/figures/`. No se necesita descargar un modelo ni entrenar durante la exposición.
+3. Probar los dos comandos de respaldo de abajo. Cerrar otras ventanas de SAR-Bot que estén usando la misma sesión de aprendizaje.
+4. Abrir `results/final/figures/tablas.md` y este guion. La prueba automatizada del equipo se documenta en [VERSION_FINAL.md](VERSION_FINAL.md); no sustituye un ensayo oral del grupo.
 
-| Bloque | 10 min | 5 min | Quién | Qué se muestra |
-|---|---:|---:|---|---|
-| Problema | 1:00 | 0:30 | Persona 4 | Dos robots, tres personas, un edificio con calor. El objetivo es rescatar a todos, con pocos pasos y poco daño. |
-| Agente y reglas | 1:30 | 1:00 | Persona 1 | Control centralizado de 25 acciones conjuntas, observación, daño por temperatura y tiempo, y recompensas (sección 4) |
-| Ubicación de personas | 1:30 | 0:45 | Persona 3 | Editor: elegir edificio, colocar las tres personas con clics y pulsar «Validar y preparar». Explicar «certificado» frente a «no certificado». |
-| Rescate | 2:00 | 1:00 | Persona 3 | Ejecutar la misión con pausa, un paso y velocidad. Señalar las recogidas, las entregas, el segundo viaje y el daño en las tarjetas de robots. |
-| Comparación | 2:00 | 1:00 | Persona 2 | «Comparar estrategias» sobre el mismo caso: DQN, ruta corta, térmica y aleatoria. Leer primero el éxito y después pasos y daño. |
-| Resultados y límites | 2:00 | 0:45 | Persona 4 | Figuras de `results/final/figuras` (SARB-021 y SARB-022) o, mientras no existan, las de validación. Sesgo de certificación, edificios conocidos, simplificación térmica y fallos reales. |
+## Guion sugerido
 
-Reglas del guion:
+| Bloque | Tiempo | Qué explicar y mostrar |
+|---|---:|---|
+| Problema | 45 s | Dos robots deben entregar tres personas; cada uno carga una. Paredes, coordinación y exposición al calor producen decisiones con consecuencias. |
+| Motor y agente | 60 s | Temperatura × tiempo de exposición; un paso aplica daño a ambos robots. Una red DQN centralizada recibe 390 valores y decide una de 25 acciones conjuntas. |
+| Editor y rescate fiable | 2 min | Con la referencia térmica, editar las tres posiciones en el edificio preparado, validar, preparar y reproducir. Mostrar pausa, un paso, temperatura e integridad. Si no hay certificado, explicar el aviso y elegir posiciones verificables. |
+| Política aprendida | 90 s | Abrir el ejemplo conocido DQN. Mostrar sus tres entregas y aclarar que este caso se usó en validación; no representa posiciones nuevas. |
+| Aprendizaje persistente | 90 s | En DQN, activar «Aprender y guardar», completar una misión y esperar el mensaje de guardado. Mostrar misiones, recuerdos y actualizaciones; abrir otra ejecución y recuperar los contadores. Puede fallar el rescate y aun así aportar experiencia. |
+| Comparación y resultados | 2 min | Comparar las cuatro estrategias sobre exactamente el mismo caso. Mostrar la tabla de prueba: DQN 0/40, corta 33/40, térmica 40/40; explicar límites y mejoras futuras. |
 
-- **El caso en vivo es real.** Si DQN falla en vivo, se muestra el fallo, se abre «Analisis» → «Historial» para ver lo que pasó y luego se comparan las referencias. No se sustituye por una secuencia programada sin decirlo.
-- **Primero el rescate completo.** Una misión fallida con poco daño no es mejor. La interfaz no elige ganador, y se explica así.
-- **No se usa la partición de prueba para elegir qué mostrar.** La semilla DQN de la demostración se elige con la validación (`docs/PARTICIONES_V2.md`). Si el profesor coloca personas en vivo, ese caso es nuevo para todos los modelos.
+Para cinco minutos, reducir el editor a una posición, mostrar la persistencia ya comprobada y dar prioridad a las diferencias entre estrategia programada, red entrenada y resultado medido. Los integrantes pueden repartirse problema, motor/aprendizaje, interfaz y resultados; ya no hay trabajo técnico pendiente por roles para esta versión.
 
-## 2. Casos de respaldo
+## Comandos de respaldo
 
-Se cargan desde la línea de comandos con `--scenario`, porque el selector solo lista `scenarios/` y `scenarios/v2/`. Las cifras esperadas salen de los CSV conservados y se reproducen en cualquier equipo con la instalación del lockfile.
-
-| Caso | Archivo | Qué muestra | Resultado esperado | Fuente |
-|---|---|---|---|---|
-| Rodeo térmico en 12 × 12 | `scenarios/partitions/v2_12x12/training/detour_training_14_intermediate.json` | La ruta corta cruza el corredor caliente y pierde un robot; la térmica rodea | Corta: robot destruido en el paso 45, 2/3 personas, daño 190. Térmica: 3/3 en 66 pasos, daño 0 | `results/sarb031/v2_12x12_training_referencias.csv` |
-| Caso exigente en 10 × 10 | `scenarios/development/v2_10x10/building10_dev_03_demanding.json` | Personas lejanas y calor en el camino | Corta: destruido en el paso 62, 2/3, daño 135. Térmica: 3/3 en 60 pasos, daño 58 | `results/sarb031/v2_10x10_desarrollo.csv` |
-| Distancia contra calor, ambas con éxito | `scenarios/v2/building_10x10.json` | La térmica tarda 4 pasos más y recibe 43 puntos menos | Térmica: 3/3, 62 pasos, daño 64. Corta: 3/3, 58 pasos, daño 107 | `docs/INSTALACION_EQUIPOS.md` |
-| DQN que sí resuelve | `scenarios/v2/warmup_10x10.json` con `artifacts/v2_pilot/model.zip` | Política aprendida en un caso de su entrenamiento | 3/3 en 6 pasos, daño 0 | `results/sarb020/v2_10x10_piloto_desarrollo.csv` |
-| DQN histórico 6 × 6 | `scenarios/pasillo_compartido.json` (inicio predeterminado) | Coordinación en un pasillo compartido | 2/2 en 22 pasos, daño 0 | `docs/INSTALACION_EQUIPOS.md` |
-| Límite del aprendizaje | Cualquier caso de `scenarios/development/v2_10x10/` con `v2_pilot` | Una política entrenada con posiciones fijas no resuelve posiciones nuevas | Límite de 240 pasos sin completar; muchos movimientos bloqueados | `docs/ESTUDIO_ESCALA.md`, sección 3 |
+Desde la raíz del repositorio:
 
 ```powershell
-uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/partitions/v2_12x12/training/detour_training_14_intermediate.json --strategy thermal
-uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/development/v2_10x10/building10_dev_03_demanding.json --strategy shortest
-uv run --locked --extra ui --extra rl python scripts/ui.py --scenario scenarios/v2/warmup_10x10.json --strategy dqn --model artifacts/v2_pilot/model.zip
+# Edificio grande con la referencia térmica: 3 entregas, 66 pasos, daño 42.
+.\run.bat
+
+# DQN: caso conocido de validación; 3 entregas, 126 pasos, daño 0.
+.\run.bat --scenario scenarios/demo_final.json --strategy dqn
+
+# Aprendizaje: caso de entrenamiento; no se garantiza completar el rescate.
+.\run.bat --scenario scenarios/partitions/v2_12x12/training/hub_training_01_easy.json --strategy dqn --learn
 ```
 
-El primer caso pertenece a la partición de entrenamiento. Sirve para mostrar las referencias, pero no para presentar a DQN como generalización, porque los modelos finales lo habrán visto al entrenar.
+La velocidad inicial es de seis pasos visuales por segundo, modificable en la interfaz; no cambia la temperatura, las recompensas ni el daño por turno. Las cifras de respaldo corresponden a **Evaluar sin aprender**, usando `artifacts/final/model.zip`. Una sesión aprendida puede comportarse de otra manera.
 
-### Capturas de la versión actual
+## Qué ocurre al aprender
 
-Las capturas de `docs/demo/` se generaron sin ventana con `scripts/ui.py --headless`, en el último paso de cada misión. Se vuelven a generar con la versión final.
+La misión se prepara en segundo plano con la política de sesión y exploración del 10 %. Reproducirla muestra decisiones reales ya calculadas; al llegar a su final se verifican sus transiciones, se añaden a la memoria y se actualiza la red. El trabajo y el guardado ocurren fuera del hilo de dibujo. No aprende en cada fotograma ni al rebobinar. «Nueva misión / preparar» crea una misión nueva; reiniciar reproduce la existente y evita duplicar su aprendizaje.
 
-| Captura | Estado |
-|---|---|
-| [`respaldo_12x12_desvio_corta.png`](demo/respaldo_12x12_desvio_corta.png) | Robot 1 destruido en el corredor de 72 °C cargando a la persona 3 |
-| [`respaldo_12x12_desvio_termica.png`](demo/respaldo_12x12_desvio_termica.png) | Rescate completo sin daño |
-| [`respaldo_10x10_exigente_corta.png`](demo/respaldo_10x10_exigente_corta.png) | Robot destruido, 2/3 personas |
-| [`respaldo_10x10_exigente_termica.png`](demo/respaldo_10x10_exigente_termica.png) | Rescate completo |
-| [`respaldo_10x10_plantilla_termica.png`](demo/respaldo_10x10_plantilla_termica.png) | Plantilla 10 × 10 con la térmica |
-| [`respaldo_10x10_calentamiento_dqn.png`](demo/respaldo_10x10_calentamiento_dqn.png) | DQN piloto en el calentamiento |
+Se conserva una sesión por perfil y modelo base en `outputs/learning_sessions/`. Incluye replay de hasta 4096 transiciones, pesos, optimizador, estados aleatorios y contadores. Al cerrar durante el guardado, la aplicación espera a que termine. Una copia anterior permite recuperar un guardado dañado. Cambiar a evaluación o comparar utiliza el **modelo base congelado**, para mantener las cifras reproducibles.
 
-Falta grabar un video corto con la versión final. Se graba durante el ensayo, con la misma secuencia del guion.
+Comprobación realizada: dos procesos separados acumularon dos misiones, 580 transiciones y 128 actualizaciones; cambiaron los parámetros Q y el archivo base conservó su hash. [Evidencia](../results/online/persistence.json). Esto demuestra persistencia y actualización, no mejora garantizada.
 
-## 3. Preparación del equipo de presentación
+## Resultados y explicación de límites
 
-1. Instalar desde la etiqueta final con `uv sync --locked --extra ui --extra rl --python 3.12`, siguiendo `docs/INSTALACION_EQUIPOS.md`. La primera vez se necesita red.
-2. Ejecutar la suite y los tres comandos de reproducción. Anotar el resultado en la tabla de SARB-003.
-3. Abrir la interfaz con el modelo congelado de la demostración y comprobar que el catálogo lo muestra compatible con 12 × 12.
-4. Tener abiertas las figuras finales y los CSV, y copiar los casos de respaldo a la biblioteca personal (`outputs/custom_scenarios`) si se prefiere cargarlos desde la interfaz.
-5. Cuando exista el modo continuo: preparar una sesión de aprendizaje y conservar aparte una copia del modelo congelado para comparar y como respaldo (SARB-035).
+- La referencia térmica resuelve los 40 casos de prueba. La ruta corta resuelve 33. En los **33 éxitos comunes**, la térmica añade 2,9 pasos y reduce 24 puntos de daño en promedio.
+- DQN completa 3/20 casos de validación y 0/40 de prueba: aprende comportamientos parciales y falla al cambiar las posiciones. No presentar el ejemplo elegido como rendimiento general.
+- Solo hay una semilla de entrenamiento DQN; las seis configuraciones probadas no son seis réplicas independientes. Los casos fueron certificados por referencias y favorecen esos planificadores.
+- La simulación conoce el mapa completo y usa calor estático. La máscara que impide ciertas colisiones es programada; la red aprende preferencias entre acciones permitidas.
+- Tras ver prueba no se cambió el checkpoint. El aprendizaje local está separado y su comparación posterior usa validación, nunca el conjunto reservado.
 
-## 4. Respuestas que todos deben poder dar
+## Si algo falla en vivo
 
-| Pregunta | Respuesta breve | Detalle |
-|---|---|---|
-| ¿Qué observa el agente? | Un vector con paredes, temperaturas normalizadas, posiciones de base, personas y robots, integridad, carga, estado de cada persona y fracción de pasos usados: `2WH + 11 + 7N` valores (320 en 12 × 12). El modo con sensores agrega `40 + 10N` distancias calculadas con el mapa completo (390 en total). Conoce el mapa; no busca a ciegas. | `docs/APRENDIZAJE.md`, `docs/CONTRATOS_V2.md` sección 6 |
-| ¿Qué acciones elige? | Una acción conjunta entre 25: `5 × acción_robot_1 + acción_robot_2`, con arriba, abajo, izquierda, derecha o esperar para cada robot. Un solo controlador maneja a ambos. | `docs/CONTEXTO.md` |
-| ¿Cómo se aplica el daño? | En cada paso, cada robot recibe daño según la temperatura de su celda: 0 bajo 40 °C, 2 entre 40 y 60, 5 entre 60 y 80 y 10 desde 80. Ocurre aunque espere o choque. La integridad empieza en 100, no se recupera, y llegar a 0 destruye al robot y hace fallar la misión. | `docs/CONTEXTO.md` sección 4 |
-| ¿Cómo se entrena? | DQN de stable-baselines3 con recompensas por recoger (+5), entregar (+50), completar (+100), y penalizaciones por paso (−1), daño, destrucción y límite de tiempo, más una guía de distancia acotada. Se entrena por etapas y se guarda el checkpoint con más misiones completas en la evaluación periódica. | `docs/APRENDIZAJE.md` |
-| ¿Cómo se evitó evaluar solo mapas memorizados? | Las particiones se congelaron antes de entrenar y separan los casos por firma física. Se elige con validación y la prueba se abre una sola vez con modelos congelados. El piloto 10 × 10 sirve de advertencia: resuelve sus posiciones de entrenamiento y falla en 30 de 30 posiciones nuevas. | `docs/PARTICIONES_V2.md`, `docs/ESTUDIO_ESCALA.md` |
-| ¿Por qué menor daño sin rescate no basta? | La misión es rescatar a todos. Un fracaso temprano puede tener poco daño porque el robot se detuvo o se destruyó pronto. Por eso pasos y daño se comparan solo entre misiones exitosas. | `docs/METRICAS.md` |
-| ¿Qué diferencia hay entre el modelo y las referencias? | Las referencias planifican con búsqueda sobre el mapa completo en cada misión. DQN aplica una política aprendida sin buscar. Las referencias certifican que un caso es viable; no garantizan que DQN lo resuelva. | `docs/EVALUACION.md`, `docs/INTERFAZ.md` |
-| ¿Qué es aprender de forma continua y qué es evaluar? | Continuar el aprendizaje actualiza pesos y memoria. Evaluar usa un modelo congelado sin actualizarlo. Reproducir solo muestra una traza guardada. | SARB-033 a SARB-035 (pendiente) |
+Mostrar el fallo y sus métricas. Para una ejecución fiable, volver a evaluar con la referencia térmica y posiciones certificadas. Si no abre la ventana, usar las capturas versionadas `docs/images/final-default.png`, `final-dqn-demo.png` y `learning-persistence.png`, aclarando que son respaldos de ejecuciones automatizadas. Las tablas y trazas originales permiten revisar los resultados sin la interfaz.
 
-## 5. Registro del ensayo
-
-| Campo | Valor |
-|---|---|
-| Fecha y equipo | Pendiente |
-| Versión o etiqueta | Pendiente |
-| Tiempo por bloque | Pendiente |
-| Problemas encontrados | Pendiente |
-| Cambios al guion | Pendiente |
-| Video o capturas finales | Pendiente |
+No se necesita volver a entrenar, ejecutar otra prueba final ni cambiar parámetros para presentar esta versión.

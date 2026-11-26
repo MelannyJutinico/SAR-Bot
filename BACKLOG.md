@@ -1,5 +1,26 @@
 # SAR-Bot — backlog para una entrega completa
 
+## Cierre del alcance final — 26 de noviembre de 2026
+
+Este backlog se conserva como historial de las 35 tareas originales. El [acuerdo de cierre](docs/ALCANCE.md) sustituyó sus criterios de tres semillas, actualización en cada paso e instalación en cuatro computadores. No se marcan esas actividades como realizadas. La revisión por roles fue reemplazada por la integración del trabajo restante en `main`.
+
+- [x] Simulador 12 × 12, dos robots, tres personas, calor y exposición por turno.
+- [x] Interfaz, editor validado, escenarios, comparación, historial y exportación.
+- [x] Investigación y selección por validación; modelo de una semilla congelado antes de prueba.
+- [x] Prueba final completa: 40 casos, cuatro estrategias, 320 episodios, trazas verificadas.
+- [x] Aprendizaje al finalizar misiones nuevas, replay y modelo persistentes; reinicio comprobado en dos procesos.
+- [x] Separación de evaluación y aprendizaje; sesión adaptada no reemplaza el modelo congelado.
+- [x] Gráficas, análisis de fallos, informe y guion con resultados negativos incluidos.
+- [x] 315 pruebas aprobadas, lanzador y ejemplos de presentación comprobados.
+
+Evidencia y distribución: [VERSION_FINAL.md](docs/VERSION_FINAL.md). **El controlador DQN no generalizó**: 0/40 misiones completas de prueba. La persistencia también registró una regresión real después de dos misiones. La entrega está cerrada como aplicación y experimento, sin afirmar una capacidad aprendida que los datos no muestran.
+
+## Backlog histórico
+
+Las casillas siguientes mantienen sus criterios originales; no representan una nueva lista de bloqueos de esta versión.
+
+---
+
 **Actualización:** 13 de noviembre de 2026. **Equipo:** cuatro personas. **Horizonte orientativo:** una semana de trabajo restante.
 
 Este backlog parte de una base funcional; no asigna como pendientes el motor, la primera interfaz o los checkpoints ya construidos. El contexto para nuevos integrantes está en [README_EQUIPO.md](README_EQUIPO.md).

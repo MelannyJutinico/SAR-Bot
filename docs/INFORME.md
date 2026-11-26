@@ -1,176 +1,162 @@
-# Informe técnico de SAR-Bot (borrador)
+# SAR-Bot: rescate cooperativo con exposición térmica
 
-**Coordina:** persona 4; aportan todos. **Revisa:** persona 1. **Versión:** borrador del 18 de noviembre de 2026.
+Informe técnico final del alcance acordado el **26 de noviembre de 2026**. Asignatura: Sistemas Inteligentes. Equipo: cuatro integrantes. Código, configuraciones, modelos, trazas y resultados acompañan este documento en el repositorio.
 
-## Estado del borrador
+## 1. Objetivo y resultado principal
 
-Este archivo es la fuente del informe final (SARB-025). Las secciones con evidencia ya están redactadas. Las marcas `[PENDIENTE]` señalan lo que depende de otras tareas y no deben quedar en la versión entregada.
+SAR-Bot representa un edificio como una cuadrícula con paredes, una base segura, focos de calor y tres personas inmóviles. Dos robots deben recogerlas y llevarlas a la base; cada robot transporta una persona por viaje. Se estudia si una política aprendida puede coordinar la evacuación y responder a distintas posiciones, frente a estrategias programadas que priorizan distancia o exposición térmica.
 
-- Formato y extensión: se definen con el profesor (SARB-002, `docs/ALCANCE.md`). Mientras tanto, el texto está escrito para pegarse en Word: tablas con «Tabla N.» encima y figuras con «Figura N.» debajo.
-- Resultados de DQN en 12 × 12, curvas de entrenamiento y selección de modelos: SARB-017, SARB-019 y SARB-021.
-- Análisis de fallos con trazas: SARB-023. Aprendizaje continuo: SARB-033 a SARB-035.
-- Contribución de cada integrante con nombres: la completa cada persona.
-- Si el curso lo exige, declarar el uso de herramientas de inteligencia artificial en la preparación del código y del texto.
+Se entregan un motor reproducible, un editor visual, cuatro estrategias, entrenamiento DQN, aprendizaje persistente entre misiones y un evaluador con trazas verificables. El controlador DQN final obtuvo **3/20 misiones completas en validación y 0/40 en prueba**, aunque entregó parcialmente 16 de 120 personas de prueba. La referencia térmica completó 40/40 y la ruta corta 33/40. La implementación del aprendizaje funciona, pero los resultados no demuestran generalización satisfactoria del controlador aprendido.
 
-Cada cifra de este borrador remite a un archivo versionado. Al actualizar resultados se regeneran las tablas con los scripts, en lugar de corregirlas a mano.
+## 2. Alcance y procedencia de los requisitos
 
-## 1. Introducción
+El alcance de cierre, acordado antes de la evaluación final, conserva edificios de 12 × 12, dos robots, tres personas, editor y cuatro estrategias. Permite una semilla de entrenamiento y aprendizaje al finalizar cada misión nueva, en lugar de tres semillas y actualización en cada movimiento. La verificación de instalación se realiza en el computador disponible. Este acuerdo sustituye esos criterios del backlog original para esta versión; está documentado en [ALCANCE.md](ALCANCE.md).
 
-SAR-Bot es un simulador académico de rescate en el que dos robots deben llevar a tres personas inmóviles hasta una base, dentro de un edificio bidimensional con paredes y focos de calor. Cada robot transporta a una persona por viaje, de modo que completar la misión exige repartir el trabajo y hacer al menos un segundo recorrido. El calor no impide el paso; desgasta a los robots según la temperatura y el tiempo de exposición, y un robot sin integridad queda fuera de servicio. La tarea combina, por tanto, navegación, coordinación entre dos agentes físicos y una decisión explícita entre llegar antes o exponerse menos.
+La propuesta original no es una rúbrica confirmada. DQN, Pygame, control centralizado y riesgo térmico son decisiones del equipo. No se atribuyen al profesor requisitos que no estén registrados. No se incluyen batería, propagación de fuego, exploración sin mapa, visión artificial, varios pisos ni dinámica física tridimensional. Las temperaturas y daños son reglas de una simulación académica, sin pretensión de modelar un incendio real.
 
-La pregunta del trabajo es qué tan bien responde un controlador aprendido a distintas ubicaciones de las personas y cómo equilibra rescates, pasos y daño frente a estrategias clásicas de planificación. El objetivo general es formular el problema como un proceso de decisión secuencial (Sutton y Barto, 2018), entrenar una política con aprendizaje por refuerzo profundo mediante DQN (Mnih et al., 2015), mostrarla funcionando en una interfaz y evaluarla con datos reproducibles. No se parte del supuesto de que la red supere a un planificador; un resultado negativo, bien medido y explicado, también responde la pregunta.
+## 3. Entorno y reglas
 
-## 2. Alcance
+El estado contiene posiciones, integridad y carga de los robots, estado de cada persona y pasos transcurridos. El escenario fija geometría, base, focos estáticos y límite de pasos. La temperatura de una celda es el máximo de las contribuciones de sus focos, calculadas con distancia Manhattan; las paredes no atenúan ese calor.
 
-El equipo adoptó un edificio preparado de antemano, en el que el usuario coloca a las tres personas con un editor visual antes de iniciar la misión. Los focos de calor son estáticos y el control es centralizado: una sola política decide a la vez el movimiento de ambos robots. El objetivo de escala es un edificio de 12 × 12 celdas, construido sobre un hito integrado de 10 × 10. Quedaron fuera la batería, los plazos de supervivencia, el fuego dinámico, la visión artificial, los varios pisos y la física tridimensional.
+Cada turno aplica simultáneamente una acción individual por robot: arriba, abajo, izquierda, derecha o esperar. La acción conjunta se codifica como `5 × a1 + a2`, con 25 posibilidades. El motor impide atravesar paredes, coincidir fuera de la base e intercambiar posiciones de frente; permite avanzar a una celda que el otro robot está desalojando. La base admite ambos robots. Recogida y entrega ocurren automáticamente al ocupar la celda correspondiente.
 
-Estas decisiones son del equipo. La Tabla 1 separa lo que el profesor confirmó de lo que decidió el grupo y de lo que queda como trabajo futuro; la versión completa, con fuentes y preguntas abiertas, está en la nota de alcance del proyecto.
+**Tabla 1. Daño por robot y paso global.**
 
-Tabla 1. Origen de los requisitos del proyecto.
-
-| Tipo | Contenido |
-|---|---|
-| Confirmado por el profesor | [PENDIENTE SARB-002: completar con las respuestas registradas en `docs/ALCANCE.md`, sección 1] |
-| Decisión del equipo | Dos robots, tres personas, control centralizado, edificios preparados, focos estáticos, objetivo 12 × 12, DQN, interfaz Pygame, aprendizaje continuo |
-| Trabajo futuro | Batería, fuego dinámico, exploración sin mapa, varios pisos, más robots, aplicación web |
-
-Fuente: `docs/ALCANCE.md`.
-
-## 3. Formulación del problema
-
-El estado de una misión contiene la posición, la integridad y la carga de cada robot, el estado de cada persona (pendiente, transportada o entregada) y el número de pasos transcurridos. El escenario fija el tamaño del edificio, las paredes, la base, la temperatura de cada celda y un límite de pasos; la temperatura se obtiene de varios focos y se combina con un máximo. Todo el mapa es conocido por el controlador. El problema estudiado es de navegación, reparto y evacuación, no de búsqueda a ciegas.
-
-En cada paso el controlador elige una acción conjunta entre 25, que codifica la acción de cada robot como `5 × acción_robot_1 + acción_robot_2`; las acciones individuales son arriba, abajo, izquierda, derecha y esperar. El motor resuelve ambos movimientos en simultáneo, impide atravesar paredes, ocupar la misma celda o intercambiar posiciones de frente, y aplica la recogida y la entrega de forma automática. Después cada robot recibe daño según la temperatura de su celda final, aunque haya esperado o chocado: 0 puntos por debajo de 40 °C, 2 entre 40 y 60, 5 entre 60 y 80 y 10 desde 80. La integridad parte de 100 y no se recupera.
-
-La misión termina con éxito cuando las tres personas están en la base y ambos robots siguen operativos. Fracasa si un robot llega a integridad cero, y se trunca al alcanzar el límite de pasos. Para el aprendizaje, el entorno Gymnasium entrega una observación con paredes, temperaturas normalizadas, coordenadas, integridad, carga, estado de las personas y fracción del tiempo usado; son `2WH + 11 + 7N` valores, 320 en el perfil de 12 × 12. El modo con sensores añade 70 valores de vecindad y distancias de camino calculadas con el mapa completo.
-
-La recompensa del piloto de 10 × 10 se resume en la Tabla 2. Incluye una guía de distancia con la forma basada en potencial que describen Ng, Harada y Russell (1999), pensada para no alterar la política óptima; usa el mismo descuento que DQN y se anula en los estados terminales reales. Mejorar el retorno no se toma como prueba de una mejor política: la métrica principal sigue siendo el rescate completo.
-
-Tabla 2. Recompensa del piloto V2.
-
-| Componente | Valor |
+| Temperatura | Daño |
 |---|---:|
-| Paso global | −1 |
-| Recogida | +5 |
-| Entrega | +50 |
-| Misión completa | +100 |
-| Robot destruido | −100 |
+| Menos de 40 °C | 0 |
+| Desde 40 y menos de 60 °C | 2 |
+| Desde 60 y menos de 80 °C | 5 |
+| Desde 80 °C | 10 |
+
+Cada robot empieza con integridad 100 y no se repara. Ambos reciben daño en su posición final en **todos** los pasos, incluso al esperar o intentar un movimiento bloqueado. Permanecer tres turnos a 70 °C produce 15 puntos de daño. La velocidad de la interfaz solo cambia la reproducción, no la exposición simulada. La destrucción se resuelve antes de recoger o entregar.
+
+La misión tiene éxito al entregar las tres personas con ambos robots operativos; no es obligatorio que el robot sin carga termine en la base. Si un robot pierde toda su integridad, la misión falla. Alcanzar el máximo de pasos produce truncamiento. Se informa primero el éxito, después las entregas parciales y, entre éxitos, pasos y daño.
+
+## 4. Agente aprendido
+
+### Observación, política y restricciones
+
+Se usa una **política centralizada** que controla dos agentes físicos. No son dos redes independientes. El perfil final tiene 390 entradas: `2WH + 11 + 7N = 320` valores del mapa y estado, más 70 sensores de vecindad y distancias. Para W=H=12 y N=3, incluye paredes, temperaturas normalizadas, posiciones, integridad, carga, personas entregadas y tiempo usado. El controlador conoce todo el mapa; las distancias de camino se calculan con esa información. La tarea es navegación y reparto, no búsqueda a ciegas.
+
+La red Q tiene dos capas ocultas de 128 unidades y produce 25 valores. La máscara programada excluye movimientos contra paredes y ciertos conflictos entre robots, tanto en selección de acciones como en el máximo de la red objetivo. No decide qué persona rescatar ni qué ruta térmica tomar. Por tanto, evitar esas acciones inválidas no constituye un comportamiento descubierto íntegramente por la red. Las referencias usan planificación sobre el mismo motor; la aleatoria selecciona acciones conjuntas como control básico.
+
+DQN actualiza los parámetros con transiciones `(observación, acción, recompensa, siguiente observación, fin)` de una memoria de repetición y una red objetivo. Durante entrenamiento combina exploración aleatoria y selección por valor Q; en evaluación elige de forma determinista. Los límites de tiempo se distinguen de terminaciones reales.
+
+### Recompensa y configuración final
+
+**Tabla 2. Componentes de recompensa.**
+
+| Evento | Valor |
+|---|---:|
+| Paso | −1 |
+| Persona recogida | +5 |
+| Persona entregada | +50 |
+| Misión exitosa | +100 |
+| Destrucción | −100 |
 | Límite de pasos | −20 |
-| Punto de integridad perdido | −2 |
-| Factor de la guía de potencial | 2 |
-| Cota del potencial | 40 |
-| Descuento | 0,99 |
+| Cada punto de daño | −2 |
+| Cambio de potencial de progreso | `2 × (Φ(siguiente) − Φ(actual))` |
 
-Fuente: `artifacts/v2_pilot/metadata.json`. [PENDIENTE SARB-017: reemplazar por la configuración de los modelos finales si cambia.]
+El potencial negativo representa distancias restantes de evacuación, considerando personas transportadas y viajes adicionales. El descuento final es 1 y no se aplica el límite de potencial usado en otras configuraciones históricas. La recompensa es una elección de diseño, no una medida objetiva de calidad; comparar retornos de experimentos con recompensas diferentes sería incorrecto.
 
-## 4. Arquitectura
+Configuración final: tasa de aprendizaje 0,0001, replay de 50000 transiciones, lote 64, inicio de actualización a 500 pasos, una actualización cada cuatro pasos y red objetivo actualizada cada 500. Los parámetros exactos y versiones están en `artifacts/final/metadata.json`.
 
-El sistema se organiza en capas independientes. El motor de simulación (`sar_bot.core`) define escenarios inmutables, aplica las reglas y expone el estado; no depende de la interfaz ni del aprendizaje. Sobre él trabajan las estrategias, creadas con una fábrica común: DQN, ruta corta, ruta térmica y una política aleatoria. El entorno Gymnasium adapta el motor al formato que espera Stable-Baselines3 (Raffin et al., 2021; Towers et al., 2024), y el entrenamiento por etapas guarda metadatos, hashes y evaluaciones periódicas de cada ejecución.
+### Entrenamiento y selección
 
-La interfaz Pygame, desarrollada por la persona 3, permite elegir edificio y estrategia, colocar a las personas, validar el caso y reproducir la misión con pausa, avance por pasos y velocidad variable. También compara las cuatro estrategias sobre el mismo caso, conserva un historial y exporta trazas verificables. La evaluación experimental vive aparte: un evaluador unificado escribe un CSV por episodio, con las acciones de cada misión, y otro módulo genera tablas y figuras desde esos archivos. La Figura 1 muestra la interfaz en un caso de 12 × 12 con la ruta corta.
+Las particiones contienen 60 casos de entrenamiento, 20 de validación y 40 de prueba, en dos edificios conocidos, con distintas posiciones de personas y tres familias de dificultad. Los manifiestos registran identidades físicas y hashes; sus controles detectan solapamientos. Los casos fueron admitidos mediante certificación positiva por referencias, lo que condiciona sus resultados.
 
-![Interfaz en un caso de 12 × 12](demo/respaldo_12x12_desvio_corta.png)
+**Tabla 3. Experimentos de desarrollo, todos con semilla 0.** Los éxitos son sobre los mismos 20 casos de validación; las entregas tienen denominador 60.
 
-Figura 1. Interfaz de SAR-Bot al terminar la misión con la ruta corta en un caso del desvío térmico; el robot 1 quedó destruido en el corredor caliente.
+| Configuración | Pasos RL nuevos | Paso elegido | Éxitos | Entregas |
+|---|---:|---:|---:|---:|
+| Control inicial | 120000 | 120000 | 0/20 | 1/60 |
+| Recompensa densa | 120000 | 120000 | 0/20 | 5/60 |
+| Acciones restringidas | 120000 | 40000 | 2/20 | 10/60 |
+| Representación compacta | 120000 | 110000 | 1/20 | 6/60 |
+| Currículo, seleccionado | 160000 | 100000 nuevos | 3/20 | 18/60 |
+| Imitación y refinamiento RL, descartado | 20000 | 20000 | 1/20 | 14/60 |
 
-Fuente: `docs/demo/`, generada con `scripts/ui.py --headless`.
+Fuente: `results/sarb017/experiments.json` y registros de cada corrida. Son seis configuraciones relacionadas, **no seis semillas independientes**. Se realizaron 660000 pasos RL nuevos en estas corridas, además de un piloto previo de 6000. El experimento guiado también utilizó 2311 transiciones de demostraciones de la referencia térmica sobre entrenamiento y 200 épocas supervisadas; no fue seleccionado.
 
-## 5. Datos y protocolo experimental
+El currículo final parte del checkpoint de 40000 pasos de la corrida con máscara. Entrena 30000 pasos con una persona pendiente, 50000 con dos y 80000 con tres. Las personas restantes se consideran ya entregadas al inicio de los ejercicios parciales; no se recompensa esa inicialización. La evaluación siempre exige las tres personas pendientes. La corrida completa dura 160000 pasos nuevos y el checkpoint elegido corresponde a 100000 nuevos: su linaje contiene 140000 pasos contando el punto de partida. El modelo conserva el contador local de 100000 de la corrida reanudada. No recibió las demostraciones del experimento guiado.
 
-El editor genera configuraciones nuevas sobre un edificio preparado, pero para entrenar y evaluar se necesitaba un conjunto fijo y reproducible. Las particiones del perfil 12 × 12 se generaron con una semilla por edificio y solo aceptaron casos con una trayectoria de rescate completo encontrada por una referencia. El generador alterna tres familias heurísticas de dificultad (fácil, intermedia y exigente) según la distancia a la base y la exposición inicial. La separación entre particiones se hizo por firma física del caso, de modo que reordenar las etiquetas de las personas no permite repetir un caso. Las cantidades resultantes se muestran en la Tabla 3.
+La selección priorizó misiones completas y después personas entregadas en validación. Se consultó validación repetidamente para elegir configuración y checkpoint, por lo que su resultado es de desarrollo. La investigación se cerró antes de las 13:10 del día de entrega, conforme al presupuesto acordado.
 
-Tabla 3. Particiones congeladas del perfil 12 × 12.
+## 5. Congelación y evaluación final
 
-| Edificio | Entrenamiento | Validación | Prueba |
-|---|---:|---:|---:|
-| Centro de coordinación | 30 | 10 | 20 |
-| Desvío térmico | 30 | 10 | 20 |
-| Total | 60 | 20 | 40 |
+Se congelaron checkpoint, metadatos y protocolo **antes** de abrir los casos de prueba, en el commit `3f5eed5`. El modelo publicado tiene SHA-256 `0c68363d8471d52bba84ce4e1235fee70aaf4fcd592e3c254c43b365318d1bc5`. El protocolo exige una semilla, las cuatro estrategias y cinco semillas de acciones aleatorias; esta reducción de alcance estaba registrada previamente.
 
-Fuente: `configs/partitions/v2_12x12.json` y `docs/PARTICIONES_V2.md`.
+La ejecución reservada se abrió una vez y terminó el 26 de noviembre de 2026 a las 12:44 de Bogotá. `configs/final_protocol.started.json` registra apertura, terminación y hash del CSV. Se ejecutaron 320 episodios: 40 DQN, 40 ruta corta, 40 térmica y 200 aleatorios. Cada traza se reprodujo en un motor nuevo para comprobar las métricas. No se entrenó ni cambió el modelo final después de conocer prueba.
 
-La validación es la única partición que se usa para elegir checkpoints, hiperparámetros o la semilla que se mostrará. La prueba se abre una sola vez, con los modelos congelados, y cualquier ajuste posterior obligaría a reclasificarla como desarrollo. Se distinguen tres semillas: la de generación de posiciones, la de entrenamiento de cada modelo y la de acciones de la política aleatoria. Un verificador automático comprueba hashes, cuotas, exclusiones y que ninguna configuración de entrenamiento use validación o prueba.
+**Tabla 4. Prueba final.** Pasos y daño se promedian exclusivamente entre éxitos; el guion indica que no hay éxitos, por lo que el promedio no existe.
 
-[PENDIENTE SARB-015 a SARB-019: describir el entrenamiento con posiciones variables, hiperparámetros, presupuesto de pasos, criterio de selección sobre validación y las tres semillas congeladas, con sus hashes.]
-
-## 6. Referencias y métricas
-
-Las dos referencias deterministas asignan personas a robots y planifican el movimiento conjunto con A* (Hart, Nilsson y Raphael, 1968) sobre pares de posiciones, replanificando cuando cambian los objetivos. La ruta corta minimiza pasos e ignora el calor; la térmica añade al costo la exposición ponderada de ambos robots. Ninguna de las dos aprende. Optimizan los objetivos vigentes, no la misión completa, y su certificado de viabilidad no garantiza que DQN resuelva el mismo caso. La política aleatoria elige acciones uniformes con una semilla fija.
-
-Cada episodio parte de un entorno y una política nuevos sobre el mismo escenario congelado, y todas las métricas se calculan desde la secuencia de estados del motor. El CSV conserva éxito, personas entregadas, pasos, daño por robot, entregas por robot, esperas, bloqueos y estados expandidos, junto con el hash de las acciones; un verificador reproduce cada traza y compara fila por fila. Pasos y daño se promedian solo entre misiones exitosas, y toda proporción se informa con su denominador. Un fracaso temprano con poco daño no cuenta como mejor resultado.
-
-## 7. Resultados
-
-### 7.1 Referencias en la validación
-
-En la validación de 12 × 12, la ruta térmica completó los 20 casos y la ruta corta 17; los tres fracasos de la ruta corta fueron por robot destruido. La Tabla 4 resume ambos resultados junto con la referencia aleatoria, que no completó ninguno de sus 100 episodios. Entre los casos exitosos, la térmica tardó 41,0 pasos de media frente a 34,8 y recibió 10,1 puntos de daño frente a 38,0. Estas tasas están favorecidas por construcción, porque los casos entraron a la partición después de que una referencia los resolviera.
-
-Tabla 4. Referencias sobre la validación de 12 × 12.
-
-| Estrategia | Éxitos | Personas entregadas | Pasos medios (éxitos) | Daño medio (éxitos) | Destruidos | Límite de pasos |
+| Estrategia | Éxitos | Entregas | Destrucción | Tiempo agotado | Pasos medios en éxitos | Daño medio en éxitos |
 |---|---:|---:|---:|---:|---:|---:|
-| Ruta corta | 17/20 | 57/60 | 34,8 | 38,0 | 3 | 0 |
-| Ruta térmica | 20/20 | 60/60 | 41,0 | 10,1 | 0 | 0 |
-| Aleatoria (5 semillas) | 0/100 | 55/300 | — | — | 60 | 40 |
+| DQN final | 0/40 | 16/120 | 1 | 39 | — | — |
+| Ruta corta | 33/40 | 112/120 | 7 | 0 | 32,6 | 38,1 |
+| Ruta térmica | 40/40 | 120/120 | 0 | 0 | 39,1 | 12,2 |
+| Aleatoria, cinco semillas | 2/200 | 133/600 | 119 | 79 | 164,0 | 23,0 |
 
-Fuente: `results/sarb022/validacion_12x12/tablas.md`, generado desde `results/sarb020/v2_12x12_validation_referencias.csv`.
+Fuente: [tablas generadas](../results/final/figures/tablas.md), CSV y trazas en `results/final/`.
 
-La comparación emparejada es más precisa. Sobre los 17 casos que ambas resolvieron, la térmica usó 3,2 pasos más de media y recibió 26,3 puntos menos de daño. Recibió menos daño en 9 casos y el mismo en los 8 restantes; en ninguno recibió más. La Figura 2 muestra cada caso emparejado como una línea entre las dos estrategias, separada por edificio.
+![Misiones y rescates por estrategia](../results/final/figures/exito_y_rescates.svg)
 
-![Duración frente a daño](../results/sarb022/validacion_12x12/duracion_vs_danio.svg)
+DQN no completa ninguna misión reservada, incluso en la familia fácil: entrega 12/36 personas fáciles, 4/42 intermedias y 0/42 exigentes. En 39 casos termina por tiempo y en uno por destrucción. Esto describe el modo de fallo medido; no permite atribuirlo a una única causa interna de la red. La diferencia con validación indica una capacidad de respuesta insuficiente a posiciones no usadas para selección.
 
-Figura 2. Pasos frente a daño de las misiones exitosas en la validación de 12 × 12; cada línea une el mismo caso resuelto por la ruta corta y por la térmica.
+Las medias de todas las misiones exitosas de corta y térmica corresponden a conjuntos diferentes. La comparación adecuada de pasos y daño usa los **33 éxitos comunes**: la corta tarda 32,6 pasos y recibe 38,1 de daño, frente a 35,5 y 14,1 de la térmica. En esos pares, la térmica añade 2,9 pasos y reduce 24 puntos de daño en promedio; causa menos daño en 18 y el mismo en 15. No se afirma optimalidad de ninguna referencia.
 
-Fuente: `results/sarb022/validacion_12x12/`.
+![Duración y daño en misiones exitosas](../results/final/figures/duracion_vs_danio.svg)
 
-### 7.2 Escala y dificultad
+## 6. Aprendizaje persistente entre ejecuciones
 
-El estudio de escala comparó las referencias en 6 × 6, 10 × 10 y 12 × 12, y amplió el análisis con un conjunto de desarrollo de 30 casos generados en el edificio de 10 × 10. La geometría del calor resultó más influyente que el tamaño. En el desvío térmico, la ruta térmica encontró rodeos casi fríos: en los casos emparejados intermedios y exigentes usó entre 3,2 y 5,0 pasos más y recibió entre 57,6 y 124,8 puntos menos que la ruta corta. En el centro de coordinación, donde el calor rodea los destinos, la reducción fue de 11,4 y 29,1 puntos. El costo de planificar sí creció con la escala y la dificultad; la térmica llegó a expandir 34 726 estados en un caso exigente de 12 × 12.
+El modo «Aprender y guardar» usa una copia de sesión del modelo. Cada misión nueva genera experiencia real con exploración del 10 %. Al finalizar su reproducción, se verifican todas sus transiciones en el motor, se incorporan al replay y se realizan hasta 64 actualizaciones. La tasa local es 0,00005, la memoria admite 4096 transiciones y los lotes tienen como máximo 64. No se modifica la red en cada fotograma.
 
-Fuente: `results/sarb031/estudio/tablas.md` y `docs/ESTUDIO_ESCALA.md`.
+Se conservan pesos, red objetivo, optimizador, replay, estados aleatorios y contadores. La sesión se identifica por dimensiones, cantidad de personas y hash del modelo base. Se publica una generación únicamente después de escribir y verificar sus archivos; el puntero anterior permite recuperación. Un bloqueo del sistema evita dos escritores simultáneos. Las pruebas cubren reinicio, deduplicación, memoria, publicación interrumpida y recuperación.
 
-### 7.3 Controlador aprendido
+Pausar, reiniciar la reproducción, importar historial o comparar no genera actualizaciones. Una misión nueva tiene identidad propia para impedir que reproducirla entrene dos veces. Al cambiar a evaluación se usa el modelo base congelado. Las identidades reservadas de prueba se rechazan para aprendizaje. Las sesiones locales no forman parte del paquete de distribución.
 
-[PENDIENTE SARB-021: resultados de las tres semillas DQN y de las referencias sobre los 40 casos de prueba, por edificio, por semilla y agregados, con casos emparejados. Generar tablas y figuras con `scripts/report_figures.py`, pasando el CSV de prueba y una carpeta `--training` por semilla.]
+### Comprobación real y efecto observado
 
-[PENDIENTE SARB-019 y SARB-022: Figura con las curvas de entrenamiento por semilla y el checkpoint elegido.]
+Se lanzaron dos procesos independientes de la interfaz en modo sin ventana sobre `hub_training_01_easy` y `detour_training_01_easy`. La primera misión agotó 280 pasos y entregó una persona; la segunda recuperó el checkpoint y agotó 300 sin entregas. Se acumularon **2 misiones, 580 transiciones y 128 actualizaciones**, con replay de 580 elementos. Se verificó el cambio del hash de los parámetros de la red Q y la conservación del hash del artefacto base.
 
-Como antecedente de desarrollo, el piloto DQN de 10 × 10 resolvió su escenario de calentamiento en 6 pasos, pero no completó ninguno de los 30 casos con posiciones nuevas del mismo edificio. En ellos agotó el límite de 240 pasos con 342,1 movimientos bloqueados de media por episodio, mientras las referencias no tuvieron ninguno. Este resultado es de desarrollo y no anticipa el de los modelos finales. Sí muestra por qué el entrenamiento con posiciones variables era necesario.
+Sobre los 20 casos de validación, el modelo base obtuvo 3/20 éxitos y 18/60 entregas; tras esas dos misiones, la sesión obtuvo **0/20 y 3/60**. El aprendizaje local **empeoró** esta medición. Dos misiones no permiten estimar una tendencia: se demuestra persistencia y actualización, no mejora monotónica ni adaptación robusta. La comparación es descriptiva y no se utilizó para sustituir el checkpoint final. No volvió a evaluarse prueba con la sesión adaptada.
 
-## 8. Discusión
+Fuentes: `results/online/persistence.json`, `comparison.csv`, sus trazas y el checkpoint de sesión archivado. El script `record_online_evidence.py` archiva y compara parámetros sin entrenar.
 
-[PENDIENTE SARB-021: interpretar los resultados finales de DQN frente a las referencias y agregar los fallos reales de la prueba, analizados sin reajustar los modelos.]
+## 7. Interfaz y demostración
 
-Las trazas de desarrollo ya muestran dos mecanismos de fallo distintos. En un caso del desvío térmico, la ruta corta cruza una y otra vez un corredor que llega a 90 °C; el daño se acumula viaje a viaje hasta destruir, en el paso 45, al robot que traía a la última persona. La ruta térmica resuelve el mismo caso en 66 pasos sin daño, y entrega a las dos primeras personas solo cuatro pasos más tarde. El fallo del piloto DQN es de otra naturaleza: en un caso fácil con posiciones nuevas entrega a las dos personas cercanas en dos pasos y luego ambos robots permanecen en la base sin lograr moverse durante 238 pasos, mientras la tercera persona espera a tres celdas. Las trazas registran lo que ocurre, pero no explican por qué la red elige esas acciones.
+Pygame organiza preparación, ejecución y análisis. El editor conserva las paredes y focos del edificio y permite colocar tres personas, validar, guardar y cargar configuraciones. La misión muestra trayectorias, temperatura, estado de las personas e integridad por robot. El análisis compara estrategias sobre el mismo caso y permite conservar y reproducir el historial.
 
-Fuente: `results/sarb023/trazas.md` y `docs/ANALISIS_FALLOS.md`.
+El inicio predeterminado utiliza la referencia térmica para mostrar rescates funcionales con ubicaciones certificadas. El ejemplo DQN `scenarios/demo_final.json` corresponde a `hub_validation_03_easy`: rescata tres personas en 126 pasos sin daño. Se declara su procedencia de validación porque fue usado al seleccionar el checkpoint. La plantilla inicial con referencia térmica completa tres entregas en 66 pasos y recibe 42 de daño.
 
-La validez de las conclusiones tiene límites que deben declararse. Los casos experimentales se aceptaron porque una referencia los resolvió, así que su tasa de éxito no describe cualquier ubicación transitable. Los dos edificios de 12 × 12 se usan en las tres particiones; lo que se mide es la generalización a ubicaciones nuevas dentro de edificios conocidos, no a edificios nuevos. El controlador conoce el mapa completo y los sensores se calculan con él. La exposición térmica es una regla de juego y no un modelo físico de un incendio. El traslado de personas es abstracto, y el control centralizado no representa a dos robots que se comunican con límites.
+La preparación y el aprendizaje ocurren fuera del hilo de dibujo; las operaciones incompatibles se bloquean mientras se guarda. Se incluyeron lanzador `run.bat`, guion de 5–10 minutos y capturas de respaldo. [DEMO.md](DEMO.md) explica qué mostrar y cómo presentar los fallos sin sustituirlos por comportamiento programado atribuido a la red.
 
-Hay además límites propios del protocolo. Varias estrategias y semillas se evalúan sobre los mismos casos, de modo que sus episodios están emparejados y no son muestras independientes; por eso se informan conteos y casos emparejados en lugar de intervalos que supongan independencia. La referencia aleatoria repite la misma secuencia de acciones por semilla en todos los casos. Con 40 casos de prueba, cada caso vale 2,5 puntos de la tasa de una estrategia determinista.
+## 8. Validez, límites y trabajo futuro
 
-## 9. Conclusiones
+- **Una semilla:** no se estima variabilidad del entrenamiento. Las configuraciones comparten datos y linajes; no son réplicas independientes.
+- **Selección repetida:** validación orientó varias decisiones. Prueba se abrió después de congelar, sin ajustes posteriores.
+- **Certificación favorable a referencias:** los escenarios entraron porque algún planificador los resolvió. No permiten afirmar que la térmica resolvería cualquier disposición.
+- **Dependencia entre casos:** dos geometrías conocidas y posiciones variantes. Las mismas cinco semillas aleatorias se reutilizan entre casos; 200 episodios no equivalen a 200 escenarios independientes. Se presentan conteos y pares, sin intervalos que supongan independencia.
+- **Simplificación:** mapa completo, personas inmóviles, calor estático, sin batería ni incertidumbre perceptiva. La máscara añade conocimiento programado.
+- **Aprendizaje local:** las actualizaciones pueden causar regresiones; el mecanismo de guardado no garantiza calidad. El checkpoint base y la separación de modos permiten volver al comportamiento reproducible.
+- **Reproducibilidad:** las trazas permiten verificar reglas y métricas. Hardware y versiones pueden afectar tiempos de cómputo y trayectoria de un entrenamiento nuevo.
 
-[PENDIENTE: redactar después de SARB-021, respondiendo la pregunta del trabajo con los resultados medidos, incluidos los negativos.]
+Una siguiente versión debería dedicar un nuevo presupuesto a varias semillas, una validación menos reutilizada, tareas más graduales, mejores representaciones y control de regresiones antes de promover una sesión aprendida. Esa investigación requeriría una nueva prueba reservada. No se agrega funcionalidad a esta entrega tras observar los resultados finales.
 
-## 10. Contribución de los integrantes
+## 9. Entrega y reproducción
 
-Tabla 5. Responsabilidades principales según el backlog.
+El alcance técnico final está cerrado con código integrado en `main`, modelo congelado, protocolo, datos de prueba, resultados del aprendizaje persistente, figuras, informe, guion y pruebas. [VERSION_FINAL.md](VERSION_FINAL.md) registra las verificaciones y la distribución. El backlog original conserva las aspiraciones previas como historial; no se marcan como realizadas tareas humanas ni tres semillas que no se ejecutaron.
 
-| Integrante | Responsabilidad principal |
-|---|---|
-| Persona 1 [nombre pendiente] | Base del simulador, entorno de aprendizaje, entrenamiento, selección y congelación de modelos, aprendizaje continuo |
-| Persona 2 [nombre pendiente] | Validación de ubicaciones, viabilidad, generación de configuraciones y familias de escenarios |
-| Persona 3 [nombre pendiente] | Interfaz, editor, biblioteca de escenarios, comparación en pantalla, historial y trazas |
-| Persona 4 [nombre pendiente] | Particiones experimentales, comparación unificada y métricas, tablas y figuras, estudio de escala, evaluación final, informe y demostración |
+```powershell
+uv sync --locked --extra ui --extra rl --python 3.12
+.\run.bat
+uv run --locked --extra ui --extra rl python -m unittest discover -s tests
+uv run --locked --extra rl python scripts/evaluate_experiment.py --verify results/final/test.csv
+uv run --locked python scripts/report_figures.py --check results/final/figures
+```
 
-Fuente: `BACKLOG.md`. [PENDIENTE: cada integrante revisa y completa su fila.]
-
-## 11. Reproducibilidad
-
-El repositorio se instala con `uv sync --locked --extra ui --extra rl --python 3.12` desde la versión etiquetada. La comprobación en un clon limpio reprodujo las cifras de referencia de la base (`docs/INSTALACION_EQUIPOS.md`). Cada resultado de este informe se regenera con los comandos registrados en los metadatos de su CSV y en los archivos `fuentes.json` de sus tablas y figuras. Las opciones `--verify` de `scripts/evaluate_experiment.py` y `--check` de `scripts/report_figures.py` comprueban que nada cambió desde que se generó.
-
-[PENDIENTE SARB-027: etiqueta final, hash del commit y lista de archivos entregados.]
+Las comprobaciones reproducen trazas y regeneran figuras desde fuentes conservadas; no entrenan ni repiten la apertura de prueba. Las referencias bibliográficas siguientes describen el marco conceptual; las cifras y configuraciones de este informe proceden de los archivos del proyecto.
 
 ## Referencias
 
