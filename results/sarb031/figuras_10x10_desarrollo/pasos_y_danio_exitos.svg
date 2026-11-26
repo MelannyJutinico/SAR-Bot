@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="345" viewBox="0 0 920 345" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Pasos y daño entre misiones exitosas</title>
+<desc id="descripcion">Distribución de pasos y daño de las misiones exitosas por estrategia, con medias y tamaños de muestra.</desc>
+<rect width="920" height="345" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Pasos y daño entre misiones exitosas</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Desarrollo · conjunto v2_10x10_dev_v1 · perfil 10 × 10 con 3 personas · 30 casos distintos · 240 episodios</text>
+<text x="24" y="69" font-size="12" fill="#52514e">Cada punto es una misión exitosa y la línea negra su media. La cifra junto a cada estrategia es éxitos/episodios: los fracasos no</text>
+<text x="24" y="86" font-size="12" fill="#52514e">aportan puntos ni entran en la media, así que un fracaso temprano con poco daño no mejora el resultado.</text>
+<text x="340" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Pasos hasta terminar</text>
+<text x="560" y="119" font-size="11" fill="#898781">media</text>
+<text x="650" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Daño térmico total</text>
+<text x="870" y="119" font-size="11" fill="#898781">media</text>
+<text x="318" y="119" font-size="11" fill="#898781" text-anchor="end">éxitos</text>
+<line x1="340" y1="129" x2="340" y2="293" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="340" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="392.5" y1="129" x2="392.5" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="392.5" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">20</text>
+<line x1="445" y1="129" x2="445" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="445" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">40</text>
+<line x1="497.5" y1="129" x2="497.5" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="497.5" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">60</text>
+<line x1="550" y1="129" x2="550" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="550" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">80</text>
+<text x="445" y="325" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">Pasos simulados</text>
+<line x1="650" y1="129" x2="650" y2="293" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="650" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="702.5" y1="129" x2="702.5" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="702.5" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">50</text>
+<line x1="755" y1="129" x2="755" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="755" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">100</text>
+<line x1="807.5" y1="129" x2="807.5" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="807.5" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">150</text>
+<line x1="860" y1="129" x2="860" y2="293" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="860" y="308" font-size="11" fill="#898781" text-anchor="middle" class="tick">200</text>
+<text x="755" y="325" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">Puntos de daño (ambos robots)</text>
+<text x="24" y="149" font-size="12" fill="#0b0b0b" font-weight="600">Todos los casos</text>
+<rect x="36" y="172" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="181" font-size="12" fill="#0b0b0b">DQN v2_pilot · semilla 0</text>
+<text x="318" y="181" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="dqn:v2_pilot" data-k="0" data-n="30">0/30</text>
+<text x="346" y="181" font-size="11" fill="#898781">sin éxitos</text>
+<text x="656" y="181" font-size="11" fill="#898781">sin éxitos</text>
+<rect x="36" y="204" width="10" height="10" rx="2" fill="#eb6834"/>
+<text x="52" y="213" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<text x="318" y="213" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="shortest" data-k="26" data-n="30">26/30</text>
+<circle cx="361" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="8"><title>building10_dev_16_easy · Ruta corta: 8 pasos</title></circle>
+<circle cx="366.25" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="10"><title>building10_dev_04_easy · Ruta corta: 10 pasos</title></circle>
+<circle cx="366.25" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="10"><title>building10_dev_13_easy · Ruta corta: 10 pasos</title></circle>
+<circle cx="366.25" cy="215" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="10"><title>building10_dev_22_easy · Ruta corta: 10 pasos</title></circle>
+<circle cx="371.5" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="12"><title>building10_dev_07_easy · Ruta corta: 12 pasos</title></circle>
+<circle cx="371.5" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="12"><title>building10_dev_19_easy · Ruta corta: 12 pasos</title></circle>
+<circle cx="371.5" cy="215" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="12"><title>building10_dev_25_easy · Ruta corta: 12 pasos</title></circle>
+<circle cx="371.5" cy="197" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="12"><title>building10_dev_01_easy · Ruta corta: 12 pasos</title></circle>
+<circle cx="376.75" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="14"><title>building10_dev_28_easy · Ruta corta: 14 pasos</title></circle>
+<circle cx="397.75" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="22"><title>building10_dev_23_intermediate · Ruta corta: 22 pasos</title></circle>
+<circle cx="403" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="24"><title>building10_dev_10_easy · Ruta corta: 24 pasos</title></circle>
+<circle cx="403" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="24"><title>building10_dev_20_intermediate · Ruta corta: 24 pasos</title></circle>
+<circle cx="413.5" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="28"><title>building10_dev_05_intermediate · Ruta corta: 28 pasos</title></circle>
+<circle cx="424" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="32"><title>building10_dev_29_intermediate · Ruta corta: 32 pasos</title></circle>
+<circle cx="434.5" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="36"><title>building10_dev_14_intermediate · Ruta corta: 36 pasos</title></circle>
+<circle cx="445" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="40"><title>building10_dev_17_intermediate · Ruta corta: 40 pasos</title></circle>
+<circle cx="445" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="40"><title>building10_dev_02_intermediate · Ruta corta: 40 pasos</title></circle>
+<circle cx="445" cy="215" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="40"><title>building10_dev_26_intermediate · Ruta corta: 40 pasos</title></circle>
+<circle cx="455.5" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="44"><title>building10_dev_08_intermediate · Ruta corta: 44 pasos</title></circle>
+<circle cx="466" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="48"><title>building10_dev_24_demanding · Ruta corta: 48 pasos</title></circle>
+<circle cx="466" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="48"><title>building10_dev_11_intermediate · Ruta corta: 48 pasos</title></circle>
+<circle cx="473.88" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="51"><title>building10_dev_18_demanding · Ruta corta: 51 pasos</title></circle>
+<circle cx="489.62" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="57"><title>building10_dev_27_demanding · Ruta corta: 57 pasos</title></circle>
+<circle cx="497.5" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="60"><title>building10_dev_15_demanding · Ruta corta: 60 pasos</title></circle>
+<circle cx="508" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="64"><title>building10_dev_30_demanding · Ruta corta: 64 pasos</title></circle>
+<circle cx="523.75" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="70"><title>building10_dev_12_demanding · Ruta corta: 70 pasos</title></circle>
+<line x1="423.6" y1="196" x2="423.6" y2="222" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="shortest" data-metric="steps" data-value="31.85" data-n="26"><title>Todos los casos · Ruta corta: media 31,8 pasos en 26 éxitos</title></line>
+<text x="560" y="213" font-size="11" fill="#52514e">31,8</text>
+<circle cx="650" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_04_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_16_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="215" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_13_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="197" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_07_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="221" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_19_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_22_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_28_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="215" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_25_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="650" cy="197" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>building10_dev_01_easy · Ruta corta: 0 de daño</title></circle>
+<circle cx="668.9" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="18"><title>building10_dev_10_easy · Ruta corta: 18 de daño</title></circle>
+<circle cx="686.75" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="35"><title>building10_dev_26_intermediate · Ruta corta: 35 de daño</title></circle>
+<circle cx="689.9" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="38"><title>building10_dev_23_intermediate · Ruta corta: 38 de daño</title></circle>
+<circle cx="692" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="40"><title>building10_dev_11_intermediate · Ruta corta: 40 de daño</title></circle>
+<circle cx="701.45" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="49"><title>building10_dev_14_intermediate · Ruta corta: 49 de daño</title></circle>
+<circle cx="703.55" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="51"><title>building10_dev_29_intermediate · Ruta corta: 51 de daño</title></circle>
+<circle cx="708.8" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="56"><title>building10_dev_17_intermediate · Ruta corta: 56 de daño</title></circle>
+<circle cx="711.95" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="59"><title>building10_dev_20_intermediate · Ruta corta: 59 de daño</title></circle>
+<circle cx="755" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="100"><title>building10_dev_02_intermediate · Ruta corta: 100 de daño</title></circle>
+<circle cx="760.25" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="105"><title>building10_dev_24_demanding · Ruta corta: 105 de daño</title></circle>
+<circle cx="762.35" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="107"><title>building10_dev_15_demanding · Ruta corta: 107 de daño</title></circle>
+<circle cx="766.55" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="111"><title>building10_dev_18_demanding · Ruta corta: 111 de daño</title></circle>
+<circle cx="771.8" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="116"><title>building10_dev_12_demanding · Ruta corta: 116 de daño</title></circle>
+<circle cx="771.8" cy="203" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="116"><title>building10_dev_05_intermediate · Ruta corta: 116 de daño</title></circle>
+<circle cx="776" cy="215" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="120"><title>building10_dev_27_demanding · Ruta corta: 120 de daño</title></circle>
+<circle cx="790.7" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="134"><title>building10_dev_08_intermediate · Ruta corta: 134 de daño</title></circle>
+<circle cx="835.85" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="177"><title>building10_dev_30_demanding · Ruta corta: 177 de daño</title></circle>
+<line x1="707.83" y1="196" x2="707.83" y2="222" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="shortest" data-metric="damage" data-value="55.08" data-n="26"><title>Todos los casos · Ruta corta: media 55,1 de daño en 26 éxitos</title></line>
+<text x="870" y="213" font-size="11" fill="#52514e">55,1</text>
+<rect x="36" y="236" width="10" height="10" rx="2" fill="#1baf7a"/>
+<text x="52" y="245" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<text x="318" y="245" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="thermal" data-k="30" data-n="30">30/30</text>
+<circle cx="361" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="8"><title>building10_dev_16_easy · Ruta térmica: 8 pasos</title></circle>
+<circle cx="366.25" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="10"><title>building10_dev_22_easy · Ruta térmica: 10 pasos</title></circle>
+<circle cx="366.25" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="10"><title>building10_dev_04_easy · Ruta térmica: 10 pasos</title></circle>
+<circle cx="366.25" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="10"><title>building10_dev_13_easy · Ruta térmica: 10 pasos</title></circle>
+<circle cx="371.5" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="12"><title>building10_dev_25_easy · Ruta térmica: 12 pasos</title></circle>
+<circle cx="371.5" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="12"><title>building10_dev_19_easy · Ruta térmica: 12 pasos</title></circle>
+<circle cx="371.5" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="12"><title>building10_dev_01_easy · Ruta térmica: 12 pasos</title></circle>
+<circle cx="371.5" cy="229" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="12"><title>building10_dev_07_easy · Ruta térmica: 12 pasos</title></circle>
+<circle cx="376.75" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="14"><title>building10_dev_28_easy · Ruta térmica: 14 pasos</title></circle>
+<circle cx="403" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="24"><title>building10_dev_10_easy · Ruta térmica: 24 pasos</title></circle>
+<circle cx="408.25" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="26"><title>building10_dev_23_intermediate · Ruta térmica: 26 pasos</title></circle>
+<circle cx="424" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="32"><title>building10_dev_29_intermediate · Ruta térmica: 32 pasos</title></circle>
+<circle cx="434.5" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="36"><title>building10_dev_20_intermediate · Ruta térmica: 36 pasos</title></circle>
+<circle cx="434.5" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="36"><title>building10_dev_14_intermediate · Ruta térmica: 36 pasos</title></circle>
+<circle cx="445" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="40"><title>building10_dev_26_intermediate · Ruta térmica: 40 pasos</title></circle>
+<circle cx="452.88" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="43"><title>building10_dev_17_intermediate · Ruta térmica: 43 pasos</title></circle>
+<circle cx="455.5" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="44"><title>building10_dev_02_intermediate · Ruta térmica: 44 pasos</title></circle>
+<circle cx="466" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="48"><title>building10_dev_11_intermediate · Ruta térmica: 48 pasos</title></circle>
+<circle cx="468.62" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="49"><title>building10_dev_08_intermediate · Ruta térmica: 49 pasos</title></circle>
+<circle cx="471.25" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="50"><title>building10_dev_05_intermediate · Ruta térmica: 50 pasos</title></circle>
+<circle cx="487" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="56"><title>building10_dev_24_demanding · Ruta térmica: 56 pasos</title></circle>
+<circle cx="497.5" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="60"><title>building10_dev_03_demanding · Ruta térmica: 60 pasos</title></circle>
+<circle cx="500.12" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="61"><title>building10_dev_18_demanding · Ruta térmica: 61 pasos</title></circle>
+<circle cx="500.12" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="61"><title>building10_dev_30_demanding · Ruta térmica: 61 pasos</title></circle>
+<circle cx="500.12" cy="229" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="61"><title>building10_dev_06_demanding · Ruta térmica: 61 pasos</title></circle>
+<circle cx="502.75" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="62"><title>building10_dev_12_demanding · Ruta térmica: 62 pasos</title></circle>
+<circle cx="505.38" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="63"><title>building10_dev_15_demanding · Ruta térmica: 63 pasos</title></circle>
+<circle cx="513.25" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="66"><title>building10_dev_21_demanding · Ruta térmica: 66 pasos</title></circle>
+<circle cx="513.25" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="66"><title>building10_dev_27_demanding · Ruta térmica: 66 pasos</title></circle>
+<circle cx="523.75" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="70"><title>building10_dev_09_demanding · Ruta térmica: 70 pasos</title></circle>
+<line x1="440.98" y1="228" x2="440.98" y2="254" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="thermal" data-metric="steps" data-value="38.47" data-n="30"><title>Todos los casos · Ruta térmica: media 38,5 pasos en 30 éxitos</title></line>
+<text x="560" y="245" font-size="11" fill="#52514e">38,5</text>
+<circle cx="650" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_25_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_16_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_19_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="229" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_01_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="253" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_22_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_04_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_07_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_28_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="650" cy="229" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>building10_dev_13_easy · Ruta térmica: 0 de daño</title></circle>
+<circle cx="668.9" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="18"><title>building10_dev_26_intermediate · Ruta térmica: 18 de daño</title></circle>
+<circle cx="668.9" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="18"><title>building10_dev_10_easy · Ruta térmica: 18 de daño</title></circle>
+<circle cx="671" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="20"><title>building10_dev_17_intermediate · Ruta térmica: 20 de daño</title></circle>
+<circle cx="675.2" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="24"><title>building10_dev_23_intermediate · Ruta térmica: 24 de daño</title></circle>
+<circle cx="685.7" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="34"><title>building10_dev_02_intermediate · Ruta térmica: 34 de daño</title></circle>
+<circle cx="687.8" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="36"><title>building10_dev_11_intermediate · Ruta térmica: 36 de daño</title></circle>
+<circle cx="687.8" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="36"><title>building10_dev_29_intermediate · Ruta térmica: 36 de daño</title></circle>
+<circle cx="692" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="40"><title>building10_dev_09_demanding · Ruta térmica: 40 de daño</title></circle>
+<circle cx="693.05" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="41"><title>building10_dev_14_intermediate · Ruta térmica: 41 de daño</title></circle>
+<circle cx="694.1" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="42"><title>building10_dev_20_intermediate · Ruta térmica: 42 de daño</title></circle>
+<circle cx="698.3" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="46"><title>building10_dev_05_intermediate · Ruta térmica: 46 de daño</title></circle>
+<circle cx="698.3" cy="229" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="46"><title>building10_dev_08_intermediate · Ruta térmica: 46 de daño</title></circle>
+<circle cx="706.7" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="54"><title>building10_dev_15_demanding · Ruta térmica: 54 de daño</title></circle>
+<circle cx="708.8" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="56"><title>building10_dev_30_demanding · Ruta térmica: 56 de daño</title></circle>
+<circle cx="709.85" cy="247" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="57"><title>building10_dev_21_demanding · Ruta térmica: 57 de daño</title></circle>
+<circle cx="710.9" cy="229" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="58"><title>building10_dev_03_demanding · Ruta térmica: 58 de daño</title></circle>
+<circle cx="713" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="60"><title>building10_dev_12_demanding · Ruta térmica: 60 de daño</title></circle>
+<circle cx="715.1" cy="235" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="62"><title>building10_dev_27_demanding · Ruta térmica: 62 de daño</title></circle>
+<circle cx="719.3" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="66"><title>building10_dev_24_demanding · Ruta térmica: 66 de daño</title></circle>
+<circle cx="742.4" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="88"><title>building10_dev_18_demanding · Ruta térmica: 88 de daño</title></circle>
+<circle cx="771.8" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="116"><title>building10_dev_06_demanding · Ruta térmica: 116 de daño</title></circle>
+<line x1="685.63" y1="228" x2="685.63" y2="254" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="thermal" data-metric="damage" data-value="33.93" data-n="30"><title>Todos los casos · Ruta térmica: media 33,9 de daño en 30 éxitos</title></line>
+<text x="870" y="245" font-size="11" fill="#52514e">33,9</text>
+<rect x="36" y="268" width="10" height="10" rx="2" fill="#898781"/>
+<text x="52" y="277" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<text x="318" y="277" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="random" data-k="3" data-n="150">3/150</text>
+<circle cx="460.75" cy="273" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="steps" data-value="46"><title>building10_dev_28_easy · Aleatoria: 46 pasos</title></circle>
+<circle cx="460.75" cy="267" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="steps" data-value="46"><title>building10_dev_16_easy · Aleatoria: 46 pasos</title></circle>
+<circle cx="460.75" cy="279" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="steps" data-value="46"><title>building10_dev_22_easy · Aleatoria: 46 pasos</title></circle>
+<line x1="460.75" y1="260" x2="460.75" y2="286" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="random" data-metric="steps" data-value="46" data-n="3"><title>Todos los casos · Aleatoria: media 46,0 pasos en 3 éxitos</title></line>
+<text x="560" y="277" font-size="11" fill="#52514e">46,0</text>
+<circle cx="650" cy="273" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="damage" data-value="0"><title>building10_dev_28_easy · Aleatoria: 0 de daño</title></circle>
+<circle cx="650" cy="267" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="damage" data-value="0"><title>building10_dev_16_easy · Aleatoria: 0 de daño</title></circle>
+<circle cx="650" cy="279" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="damage" data-value="0"><title>building10_dev_22_easy · Aleatoria: 0 de daño</title></circle>
+<line x1="650" y1="260" x2="650" y2="286" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="random" data-metric="damage" data-value="0" data-n="3"><title>Todos los casos · Aleatoria: media 0,0 de daño en 3 éxitos</title></line>
+<text x="870" y="277" font-size="11" fill="#52514e">0,0</text>
+</svg>

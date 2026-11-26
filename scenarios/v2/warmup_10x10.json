@@ -1,0 +1,9 @@
+{
+  "schema_version": 2,
+  "name": "v2_rescate_cercano_tres_personas",
+  "width": 10, "height": 10, "base": [0, 0],
+  "victims": [[1, 0], [0, 1], [1, 1]],
+  "walls": [[4, 0], [4, 1], [4, 3], [4, 4], [4, 6], [4, 8], [4, 9], [0, 5], [1, 5], [2, 5], [4, 5], [6, 5], [7, 5], [8, 5], [9, 5]],
+  "heat": {"ambient": 25, "sources": []},
+  "max_steps": 80
+}

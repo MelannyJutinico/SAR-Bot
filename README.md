@@ -1,15 +1,45 @@
 # SAR-Bot
 
-Simulación académica de rescate cooperativo: dos robots deben evacuar a dos sobrevivientes en un edificio 2D con riesgo térmico acumulativo.
+**Para incorporarse al equipo:** empezar por [README_EQUIPO.md](README_EQUIPO.md) y continuar con el [backlog de entrega](BACKLOG.md). Esta página conserva la referencia técnica de la base implementada.
+
+Simulación académica de rescate cooperativo con dos robots, sobrevivientes configurables y exposición térmica. La base V2 integrada usa **10 × 10, tres personas y dos focos**; el equipo continuará hacia edificios de **12 × 12**. La versión histórica de 6 × 6 permanece disponible.
 
 **Asignatura:** Sistemas Inteligentes. **Equipo:** cuatro personas. **Plazo objetivo:** una semana.
 
 ## Estado del proyecto
 
-El repositorio comienza con la documentación del alcance y el plan de trabajo. Todavía no contiene el simulador, una política entrenada ni resultados experimentales.
+**Base V2 entregada:** motor generalizado, escenarios con varios focos, firmas y serialización, fábrica de estrategias, episodios desde objetos editados, aprendizaje por perfiles e interfaz básica para tres personas. Leer [CONTRATOS_V2.md](docs/CONTRATOS_V2.md) antes de modificar los módulos.
+
+Para ver el edificio grande funcionando con la referencia térmica:
+
+```powershell
+uv run --extra ui --extra rl python scripts/ui.py --scenario scenarios/v2/building_10x10.json --strategy thermal
+```
+
+![Base V2 de 10 × 10 con tres personas y dos focos](docs/images/ui-v2.png)
+
+Las referencias completan sus tres rescates. DQN V2 es todavía un piloto: aprende el rescate cercano, pero no completa el edificio grande en la evaluación realizada. El editor, nuevos edificios, generación variada y evaluación final siguen pendientes. El resto de resultados de esta sección corresponde a la **base V1**.
+
+Ya existe el motor, una interfaz Pygame, referencias geométrica y térmica, evaluación CSV y un entorno Gymnasium con entrenamiento DQN reproducible. El modelo recomendado usa sensores locales y completa los seis controles de entrenamiento, dos casos de validación y dos de prueba. Resuelve el pasillo compartido que fallaba antes; todavía no demuestra mejor gestión térmica ni generalización amplia.
 
 - [Contexto, alcance y reglas acordadas](docs/CONTEXTO.md)
 - [Plan de trabajo y base de la persona 1](docs/PLAN_DE_TRABAJO.md)
+- [Referencias y primeros resultados de desarrollo](docs/EVALUACION.md)
+- [Instalación, observaciones, recompensas y entrenamiento](docs/APRENDIZAJE.md)
+- [Interfaz visual y controles](docs/INTERFAZ.md)
+- [Guía para los cuatro integrantes](README_EQUIPO.md)
+- [Backlog con responsables, dependencias y criterios de aceptación](BACKLOG.md)
+- [Contratos y punto de partida V2](docs/CONTRATOS_V2.md)
+- [Edificios 12 × 12, calibración y generación reproducible](docs/ESCENARIOS_V2.md)
+- [Particiones experimentales congeladas del perfil 12 × 12](docs/PARTICIONES_V2.md)
+- [Comparación unificada y diccionario de métricas](docs/METRICAS.md)
+- [Tablas y figuras del informe generadas desde los resultados](docs/FIGURAS.md)
+- [Estudio de escala, reparto de rescates y dificultad](docs/ESTUDIO_ESCALA.md)
+- [Alcance y protocolo de entrega (borrador para el profesor)](docs/ALCANCE.md)
+- [Ejecución de la base en los cuatro equipos](docs/INSTALACION_EQUIPOS.md)
+- [Fallos y límites observados en trazas](docs/ANALISIS_FALLOS.md)
+- [Guion y respaldo de la demostración](docs/DEMO.md)
+- [Informe técnico (borrador)](docs/INFORME.md)
 
 Nosotros asumimos el rol de **persona 1**: construir la base integrada, implementar el aprendizaje y orientar la integración para que las otras tres personas continúen el entorno, la visualización y la evaluación.
 
@@ -19,7 +49,7 @@ Investigar si un controlador aprendido puede coordinar dos robots para completar
 
 ## Tecnología prevista
 
-Python, NumPy, Gymnasium, Stable-Baselines3 con DQN y Pygame. Las versiones y los comandos de instalación se fijarán al implementar la base y verificar compatibilidad.
+Python, NumPy, Gymnasium, Stable-Baselines3 con DQN y Pygame. Las versiones están fijadas en `uv.lock`, con PyTorch CPU.
 
 ## Principio térmico
 
@@ -27,4 +57,133 @@ El daño depende de la **temperatura y el tiempo de exposición**, incluso cuand
 
 ## Desarrollo
 
-La implementación aún está pendiente. No hay comandos de entrenamiento o demostración disponibles. Los cambios se trabajarán en ramas `feature/…` y se integrarán sobre una versión ejecutable común.
+El motor y las referencias usan únicamente la biblioteca estándar de Python 3.11 o superior. El aprendizaje requiere el extra `rl`. Los cambios se trabajan en ramas `feature/…`.
+
+### Abrir la interfaz
+
+```powershell
+uv sync --extra ui --extra rl --python 3.12
+uv run --extra ui --extra rl python scripts/ui.py
+```
+
+Abre el pasillo compartido con el modelo recomendado. Permite cambiar escenario y estrategia, iniciar, pausar, avanzar un paso, reiniciar y ajustar la velocidad. Muestra temperatura, recorridos, rescates e integridad de ambos robots.
+
+![Interfaz de SAR-Bot durante un rescate con riesgo térmico](docs/images/ui-preview.png)
+
+El primer episodio se prepara en segundo plano y comienza pausado. La velocidad solo afecta la reproducción; no modifica el daño. Los controles y la arquitectura están en [INTERFAZ.md](docs/INTERFAZ.md).
+
+### Ejecutar el agente ya entrenado
+
+```powershell
+uv sync --extra rl --python 3.12
+uv run --extra rl python scripts/demo.py --strategy dqn --model artifacts/sensors_dqn/model.zip
+```
+
+Para comparar el modelo cargado con las referencias:
+
+```powershell
+uv run --extra rl python scripts/evaluate_dqn.py --model artifacts/sensors_dqn/model.zip --split training
+```
+
+El modelo recomendado es el checkpoint de 60000 pasos de un entrenamiento de 155000. El último checkpoint empeoró y no fue seleccionado. Sus metadatos y resultados están en `artifacts/sensors_dqn/`. Se conserva la evidencia de los experimentos anteriores en `artifacts/initial_dqn/` y `artifacts/cooperation_dqn/`. Cada configuración se probó con una sola semilla; no es una entrega final validada.
+
+Para reproducir el pasillo compartido:
+
+```powershell
+uv run --extra rl python scripts/demo.py --strategy dqn --model artifacts/sensors_dqn/model.zip --scenario scenarios/pasillo_compartido.json
+```
+
+El modelo recomendado entrega ambas víctimas en 22 pasos, sin daño; la referencia geométrica necesita 20. En el escenario más caliente, DQN y la ruta corta reciben 74 puntos de daño; la referencia térmica recibe 34, pero tarda más. No se debe afirmar superioridad térmica de DQN.
+
+### Entrenar y verificar
+
+```powershell
+uv run --extra rl python -m unittest discover -s tests -v
+uv run --extra rl python scripts/train.py --config configs/dqn_sensors.json --run-dir outputs/nuevo-experimento
+```
+
+El directorio del experimento debe estar vacío. El entrenamiento registra episodios y evaluaciones, y guarda modelos por etapa, final y mejor. Sin `--config` conserva la configuración histórica inicial. No hace falta entrenar para ejecutar los checkpoints incluidos.
+
+### Ejecutar solo el motor y las referencias
+
+Con Python disponible:
+
+```powershell
+python scripts/demo.py
+python scripts/demo.py --json
+python -m unittest discover -s tests -v
+```
+
+Si Python está administrado por `uv`, ejecutar desde la raíz del repositorio:
+
+```powershell
+uv run --no-project --python 3.12 scripts/demo.py
+uv run --no-project --python 3.12 -m unittest discover -s tests -v
+```
+
+La demostración usa una secuencia programada para `scenarios/demo.json`: rescata a las dos víctimas en diez pasos globales; los robots terminan con integridad 82 y 100. **No es una política aprendida ni una referencia general de navegación.**
+
+Para usar navegación automática y calcular rutas a partir del mapa:
+
+```powershell
+uv run --no-project --python 3.12 scripts/demo.py --strategy shortest
+uv run --no-project --python 3.12 scripts/demo.py --strategy shortest --scenario scenarios/pasillo_compartido.json
+uv run --no-project --python 3.12 scripts/demo.py --strategy random --seed 0
+```
+
+`shortest` asigna víctimas distintas y busca movimientos conjuntos para llegar a los objetivos actuales en el menor número de pasos, sin considerar temperatura. Puede esperar o apartar un robot para evitar bloqueos; no garantiza completar cualquier misión. `random` selecciona entre las 25 acciones conjuntas usando una semilla reproducible. La demostración devuelve código de salida 1 si la misión fracasa o agota el tiempo.
+
+`thermal` añade el daño previsto al costo de los movimientos para buscar rutas más seguras. Tampoco aprende. La comparación de referencias incluye las tres estrategias.
+
+Para evaluar todas las referencias sobre los tres escenarios actuales:
+
+```powershell
+uv run --no-project --python 3.12 scripts/evaluate.py
+```
+
+El CSV se guarda en `outputs/reference_results.csv`, excluido de Git porque puede regenerarse. Se pueden indicar `--scenarios`, `--strategy`, `--seed` y `--output`. Esta ejecución produce un episodio por escenario y estrategia; no es una evaluación estadística ni un conjunto de prueba reservado.
+
+Las particiones históricas del perfil 6 × 6 están en `configs/scenario_splits.json`. La comparación DQN admite `--split training`, `--split validation` o `--split test`, y genera metadatos con hashes. Esos mapas se consultaron después de fijar el checkpoint y solo hay dos casos de prueba, así que quedan como antecedentes de desarrollo.
+
+Las particiones experimentales del perfil 12 × 12 están congeladas en `configs/partitions/v2_12x12.json`: 60 casos de entrenamiento, 20 de validación y 40 de prueba en dos edificios. Se usan con `--manifest configs/partitions/v2_12x12.json --split ...` y se verifican con `python scripts/build_partitions.py verify --manifest configs/partitions/v2_12x12.json`. Ver [PARTICIONES_V2.md](docs/PARTICIONES_V2.md).
+
+### Archivos para continuar
+
+| Archivo | Función |
+|---|---|
+| `src/sar_bot/core/simulation.py` | Estado y reglas del entorno |
+| `scenarios/demo.json` | Primer mapa y parámetros térmicos |
+| `scripts/demo.py` | Reproducción por consola y salida JSON |
+| `tests/test_simulation.py` | Verificación de reglas críticas |
+| `src/sar_bot/agents/reference.py` | Asignación, navegación conjunta y política aleatoria |
+| `scripts/evaluate.py` | Ejecución de referencias y exportación CSV |
+| `tests/test_reference.py` | Verificación de navegación y evaluación |
+| `src/sar_bot/env/rescue_env.py` | Observaciones y recompensa de Gymnasium |
+| `scripts/train.py` | Entrenamiento por etapas y checkpoints |
+| `scripts/evaluate_dqn.py` | Comparación de una política guardada con referencias |
+| `configs/dqn_initial.json` | Configuración reproducible del primer experimento |
+| `artifacts/initial_dqn/` | Modelo seleccionado, metadatos y resultados medidos |
+| `configs/dqn_sensors.json` | Experimento recomendado, con exploración por etapa y sensores |
+| `configs/scenario_splits.json` | Particiones históricas del perfil 6 × 6 |
+| `configs/partitions/v2_12x12.json` | Particiones congeladas del perfil 12 × 12, con hashes y testigos |
+| `scripts/build_partitions.py` | Construcción, verificación y resumen de particiones |
+| `scripts/evaluate_experiment.py` | Comparación unificada de DQN y referencias, con trazas verificables |
+| `scripts/report_figures.py` | Tablas y figuras SVG del informe desde un CSV conservado, con `--check` |
+| `scripts/scale_study.py` | Conjuntos de desarrollo generados y tablas de escala y dificultad |
+| `scripts/trace_story.py` | Descripción observable de episodios a partir de sus trazas |
+| `src/sar_bot/final_check.py` | Comprobación de modelos congelados antes de abrir la prueba final |
+| `configs/development/v2_10x10_dev.json` | Conjunto de desarrollo 10 × 10 con posiciones variables (no es partición) |
+| `artifacts/sensors_dqn/` | Modelo recomendado y comprobaciones de las tres particiones |
+| `scripts/ui.py` | Ventana interactiva y capturas sin ventana |
+| `src/sar_bot/ui/app.py` | Presentación y controles Pygame |
+| `src/sar_bot/ui/playback.py` | Episodios del motor y reloj de reproducción |
+
+`RescueSimulation.step(acción_conjunta)` avanza una unidad de tiempo para ambos robots. `snapshot()` expone datos JSON, y `reset()` reinicia el escenario estático. La acción conjunta es `5 * acción_robot_1 + acción_robot_2`, con acciones `UP=0`, `DOWN=1`, `LEFT=2`, `RIGHT=3`, `WAIT=4`.
+
+La validación comprueba estructura y conectividad del mapa. La comprobación acotada de viabilidad distingue entradas estructuralmente inválidas, casos certificados mediante una trayectoria real de `RescueSimulation` y casos no certificados dentro del presupuesto. Un fallo de las referencias no se presenta como prueba de imposibilidad y DQN no se usa para certificar.
+
+### Próximo hito
+
+Implementar el editor para que el profesor coloque tres personas antes de la misión, diseñar edificios de 12 × 12, entrenar por perfil con posiciones variables y cerrar la evaluación y presentación. El editor todavía no está implementado. La fuente principal de tareas pendientes es [BACKLOG.md](BACKLOG.md); batería, urgencia y fuego dinámico quedan fuera de este alcance.
+
+También falta mejorar la gestión térmica y repetir con varias semillas y más mapas reservados. Los resultados de prueba actuales ya se han consultado; para el nuevo desarrollo se conservarán como antecedentes y se reservarán nuevas configuraciones antes de la evaluación final.

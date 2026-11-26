@@ -1,0 +1,50 @@
+[
+  {
+    "scenario": "warmup_sin_calor",
+    "strategy": "dqn",
+    "outcome": "success",
+    "success": true,
+    "rescued": 2,
+    "steps": 2,
+    "damage_total": 0,
+    "integrity_robot_1": 100,
+    "integrity_robot_2": 100,
+    "return": 216.04
+  },
+  {
+    "scenario": "navegacion_sin_calor",
+    "strategy": "dqn",
+    "outcome": "success",
+    "success": true,
+    "rescued": 2,
+    "steps": 10,
+    "damage_total": 0,
+    "integrity_robot_1": 100,
+    "integrity_robot_2": 100,
+    "return": 241.8
+  },
+  {
+    "scenario": "rescate_inicial",
+    "strategy": "dqn",
+    "outcome": "success",
+    "success": true,
+    "rescued": 2,
+    "steps": 10,
+    "damage_total": 18,
+    "integrity_robot_1": 82,
+    "integrity_robot_2": 100,
+    "return": 223.8
+  },
+  {
+    "scenario": "ruta_caliente",
+    "strategy": "dqn",
+    "outcome": "success",
+    "success": true,
+    "rescued": 2,
+    "steps": 10,
+    "damage_total": 74,
+    "integrity_robot_1": 26,
+    "integrity_robot_2": 100,
+    "return": 167.8
+  }
+]

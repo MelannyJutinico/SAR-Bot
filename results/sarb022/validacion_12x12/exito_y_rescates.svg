@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="489" viewBox="0 0 920 489" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Éxito y personas entregadas por estrategia</title>
+<desc id="descripcion">Todos los casos, Ruta corta: 17/20 éxitos, 57/60 personas; Todos los casos, Ruta térmica: 20/20 éxitos, 60/60 personas; Todos los casos, Aleatoria: 0/100 éxitos, 55/300 personas; Centro de coordinación (hub), Ruta corta: 10/10 éxitos, 30/30 personas; Centro de coordinación (hub), Ruta térmica: 10/10 éxitos, 30/30 personas; Centro de coordinación (hub), Aleatoria: 0/50 éxitos, 33/150 personas; Desvío térmico (detour), Ruta corta: 7/10 éxitos, 27/30 personas; Desvío térmico (detour), Ruta térmica: 10/10 éxitos, 30/30 personas; Desvío térmico (detour), Aleatoria: 0/50 éxitos, 22/150 personas</desc>
+<rect width="920" height="489" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Éxito y personas entregadas por estrategia</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Validación · manifiesto v2_12x12_v1 · perfil 12 × 12 con 3 personas · 20 casos distintos · 140 episodios</text>
+<text x="24" y="69" font-size="12" fill="#52514e">Cada barra lleva su conteo: éxitos/episodios y personas entregadas/personas totales. Todas las estrategias resuelven los mismos</text>
+<text x="24" y="86" font-size="12" fill="#52514e">20 casos (datos emparejados); en una estrategia determinista cada caso vale 5 puntos de su tasa.</text>
+<text x="300" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Misiones exitosas</text>
+<text x="620" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Personas entregadas</text>
+<line x1="300" y1="129" x2="300" y2="437" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="300" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">0 %</text>
+<line x1="360" y1="129" x2="360" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="360" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">25 %</text>
+<line x1="420" y1="129" x2="420" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="420" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">50 %</text>
+<line x1="480" y1="129" x2="480" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="480" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">75 %</text>
+<line x1="540" y1="129" x2="540" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="540" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">100 %</text>
+<text x="420" y="469" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">% de episodios</text>
+<line x1="620" y1="129" x2="620" y2="437" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="620" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">0 %</text>
+<line x1="680" y1="129" x2="680" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="680" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">25 %</text>
+<line x1="740" y1="129" x2="740" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="740" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">50 %</text>
+<line x1="800" y1="129" x2="800" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="800" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">75 %</text>
+<line x1="860" y1="129" x2="860" y2="437" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="860" y="452" font-size="11" fill="#898781" text-anchor="middle" class="tick">100 %</text>
+<text x="740" y="469" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">% de personas</text>
+<text x="24" y="145" font-size="12" fill="#0b0b0b" font-weight="600">Todos los casos</text>
+<text x="52" y="169" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<rect x="36" y="160" width="10" height="10" rx="2" fill="#eb6834"/>
+<path d="M300,159h200a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-200z" fill="#eb6834" class="bar" data-group="all" data-series="shortest" data-metric="success" data-k="17" data-n="20"><title>Todos los casos · Ruta corta: 17/20</title></path>
+<text x="510" y="169" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="shortest" data-metric="success" data-k="17" data-n="20">17/20</text>
+<path d="M620,159h224a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-224z" fill="#eb6834" class="bar" data-group="all" data-series="shortest" data-metric="rescued" data-k="57" data-n="60"><title>Todos los casos · Ruta corta: 57/60</title></path>
+<text x="854" y="169" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="shortest" data-metric="rescued" data-k="57" data-n="60">57/60</text>
+<text x="52" y="193" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<rect x="36" y="184" width="10" height="10" rx="2" fill="#1baf7a"/>
+<path d="M300,183h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="all" data-series="thermal" data-metric="success" data-k="20" data-n="20"><title>Todos los casos · Ruta térmica: 20/20</title></path>
+<text x="546" y="193" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="thermal" data-metric="success" data-k="20" data-n="20">20/20</text>
+<path d="M620,183h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="all" data-series="thermal" data-metric="rescued" data-k="60" data-n="60"><title>Todos los casos · Ruta térmica: 60/60</title></path>
+<text x="866" y="193" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="thermal" data-metric="rescued" data-k="60" data-n="60">60/60</text>
+<text x="52" y="217" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<rect x="36" y="208" width="10" height="10" rx="2" fill="#898781"/>
+<text x="306" y="217" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="random" data-metric="success" data-k="0" data-n="100">0/100</text>
+<path d="M620,207h40a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-40z" fill="#898781" class="bar" data-group="all" data-series="random" data-metric="rescued" data-k="55" data-n="300"><title>Todos los casos · Aleatoria: 55/300</title></path>
+<text x="670" y="217" font-size="11" fill="#52514e" class="bar-label" data-group="all" data-series="random" data-metric="rescued" data-k="55" data-n="300">55/300</text>
+<text x="24" y="249" font-size="12" fill="#0b0b0b" font-weight="600">Centro de coordinación (hub)</text>
+<text x="52" y="273" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<rect x="36" y="264" width="10" height="10" rx="2" fill="#eb6834"/>
+<path d="M300,263h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#eb6834" class="bar" data-group="hub" data-series="shortest" data-metric="success" data-k="10" data-n="10"><title>Centro de coordinación (hub) · Ruta corta: 10/10</title></path>
+<text x="546" y="273" font-size="11" fill="#52514e" class="bar-label" data-group="hub" data-series="shortest" data-metric="success" data-k="10" data-n="10">10/10</text>
+<path d="M620,263h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#eb6834" class="bar" data-group="hub" data-series="shortest" data-metric="rescued" data-k="30" data-n="30"><title>Centro de coordinación (hub) · Ruta corta: 30/30</title></path>
+<text x="866" y="273" font-size="11" fill="#52514e" class="bar-label" data-group="hub" data-series="shortest" data-metric="rescued" data-k="30" data-n="30">30/30</text>
+<text x="52" y="297" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<rect x="36" y="288" width="10" height="10" rx="2" fill="#1baf7a"/>
+<path d="M300,287h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="hub" data-series="thermal" data-metric="success" data-k="10" data-n="10"><title>Centro de coordinación (hub) · Ruta térmica: 10/10</title></path>
+<text x="546" y="297" font-size="11" fill="#52514e" class="bar-label" data-group="hub" data-series="thermal" data-metric="success" data-k="10" data-n="10">10/10</text>
+<path d="M620,287h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="hub" data-series="thermal" data-metric="rescued" data-k="30" data-n="30"><title>Centro de coordinación (hub) · Ruta térmica: 30/30</title></path>
+<text x="866" y="297" font-size="11" fill="#52514e" class="bar-label" data-group="hub" data-series="thermal" data-metric="rescued" data-k="30" data-n="30">30/30</text>
+<text x="52" y="321" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<rect x="36" y="312" width="10" height="10" rx="2" fill="#898781"/>
+<text x="306" y="321" font-size="11" fill="#52514e" class="bar-label" data-group="hub" data-series="random" data-metric="success" data-k="0" data-n="50">0/50</text>
+<path d="M620,311h48.8a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-48.8z" fill="#898781" class="bar" data-group="hub" data-series="random" data-metric="rescued" data-k="33" data-n="150"><title>Centro de coordinación (hub) · Aleatoria: 33/150</title></path>
+<text x="678.8" y="321" font-size="11" fill="#52514e" class="bar-label" data-group="hub" data-series="random" data-metric="rescued" data-k="33" data-n="150">33/150</text>
+<text x="24" y="353" font-size="12" fill="#0b0b0b" font-weight="600">Desvío térmico (detour)</text>
+<text x="52" y="377" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<rect x="36" y="368" width="10" height="10" rx="2" fill="#eb6834"/>
+<path d="M300,367h164a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-164z" fill="#eb6834" class="bar" data-group="detour" data-series="shortest" data-metric="success" data-k="7" data-n="10"><title>Desvío térmico (detour) · Ruta corta: 7/10</title></path>
+<text x="474" y="377" font-size="11" fill="#52514e" class="bar-label" data-group="detour" data-series="shortest" data-metric="success" data-k="7" data-n="10">7/10</text>
+<path d="M620,367h212a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-212z" fill="#eb6834" class="bar" data-group="detour" data-series="shortest" data-metric="rescued" data-k="27" data-n="30"><title>Desvío térmico (detour) · Ruta corta: 27/30</title></path>
+<text x="842" y="377" font-size="11" fill="#52514e" class="bar-label" data-group="detour" data-series="shortest" data-metric="rescued" data-k="27" data-n="30">27/30</text>
+<text x="52" y="401" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<rect x="36" y="392" width="10" height="10" rx="2" fill="#1baf7a"/>
+<path d="M300,391h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="detour" data-series="thermal" data-metric="success" data-k="10" data-n="10"><title>Desvío térmico (detour) · Ruta térmica: 10/10</title></path>
+<text x="546" y="401" font-size="11" fill="#52514e" class="bar-label" data-group="detour" data-series="thermal" data-metric="success" data-k="10" data-n="10">10/10</text>
+<path d="M620,391h236a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-236z" fill="#1baf7a" class="bar" data-group="detour" data-series="thermal" data-metric="rescued" data-k="30" data-n="30"><title>Desvío térmico (detour) · Ruta térmica: 30/30</title></path>
+<text x="866" y="401" font-size="11" fill="#52514e" class="bar-label" data-group="detour" data-series="thermal" data-metric="rescued" data-k="30" data-n="30">30/30</text>
+<text x="52" y="425" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<rect x="36" y="416" width="10" height="10" rx="2" fill="#898781"/>
+<text x="306" y="425" font-size="11" fill="#52514e" class="bar-label" data-group="detour" data-series="random" data-metric="success" data-k="0" data-n="50">0/50</text>
+<path d="M620,415h31.2a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-31.2z" fill="#898781" class="bar" data-group="detour" data-series="random" data-metric="rescued" data-k="22" data-n="150"><title>Desvío térmico (detour) · Aleatoria: 22/150</title></path>
+<text x="661.2" y="425" font-size="11" fill="#52514e" class="bar-label" data-group="detour" data-series="random" data-metric="rescued" data-k="22" data-n="150">22/150</text>
+</svg>

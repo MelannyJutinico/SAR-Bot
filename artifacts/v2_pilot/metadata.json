@@ -1,0 +1,108 @@
+{
+  "config": {
+    "seed": 0,
+    "torch_threads": 1,
+    "evaluation_interval": 5000,
+    "observation_mode": "sensors",
+    "rewards": {
+      "step": -1.0,
+      "pickup": 5.0,
+      "delivery": 50.0,
+      "success": 100.0,
+      "destruction": -100.0,
+      "timeout": -20.0,
+      "damage": -2.0,
+      "shaping": 2.0,
+      "gamma": 0.99,
+      "potential_bound": 40.0
+    },
+    "dqn": {
+      "learning_rate": 0.0005,
+      "buffer_size": 50000,
+      "learning_starts": 500,
+      "batch_size": 64,
+      "gamma": 0.99,
+      "train_freq": 4,
+      "gradient_steps": 1,
+      "target_update_interval": 500,
+      "exploration_fraction": 0.8,
+      "exploration_initial_eps": 1.0,
+      "exploration_final_eps": 0.05,
+      "policy_kwargs": {
+        "net_arch": [
+          128,
+          128
+        ]
+      }
+    },
+    "stages": [
+      {
+        "name": "v2_warmup",
+        "steps": 30000,
+        "exploration": {
+          "initial": 1.0,
+          "final": 0.05,
+          "fraction": 0.8
+        },
+        "scenarios": [
+          "scenarios/v2/warmup_10x10.json"
+        ]
+      },
+      {
+        "name": "v2_building",
+        "steps": 60000,
+        "exploration": {
+          "initial": 0.6,
+          "final": 0.05,
+          "fraction": 0.8
+        },
+        "scenarios": [
+          "scenarios/v2/warmup_10x10.json",
+          "scenarios/v2/building_10x10.json"
+        ]
+      }
+    ],
+    "evaluation_scenarios": [
+      "scenarios/v2/warmup_10x10.json",
+      "scenarios/v2/building_10x10.json"
+    ]
+  },
+  "rewards": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99,
+    "potential_bound": 40.0
+  },
+  "git_revision": "0581164943aa4aae20fafb7cc33f9cd16592b57e",
+  "observation_profile": {
+    "schema_version": 2,
+    "width": 10,
+    "height": 10,
+    "victims": 3,
+    "mode": "sensors",
+    "observation_size": 302,
+    "actions": 25
+  },
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "packages": {
+    "torch": "2.15.0",
+    "gymnasium": "1.4.0",
+    "stable-baselines3": "2.9.2",
+    "numpy": "2.5.4"
+  },
+  "scenario_hashes": {
+    "scenarios/v2/building_10x10.json": "44e0953649a3d89abb05a77840f411e4c14f0b6ad67290b3e40e0354ea6b0748",
+    "scenarios/v2/warmup_10x10.json": "c310dc3b0d64e85788cd2325c567c7295b05b8f39729da9da029974dfe48aef9"
+  },
+  "evaluation_scope": "development/selection; overlap listed explicitly; not final test",
+  "evaluation_overlap_with_training": [
+    "v2_rescate_cercano_tres_personas",
+    "edificio_10x10_tres_personas"
+  ]
+}

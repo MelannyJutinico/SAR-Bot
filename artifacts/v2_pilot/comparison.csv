@@ -1,0 +1,9 @@
+damage_robot_1,damage_robot_2,damage_total,expanded_states,integrity_robot_1,integrity_robot_2,outcome,planning_failures,replans,rescued,return,scenario,scenario_id,seed,steps,strategy,success,victims_total
+,,0,,100,100,success,,,3,260.2952380952381,v2_rescate_cercano_tres_personas,be50e50645b81bf72654d7624845cbc809289f1a6358d11b3180222cc1737467,,6,dqn,True,3
+,,0,,100,100,time_limit,,,0,-229.26507936507934,edificio_10x10_tres_personas,39c0ecebd429a79da144d13c604fed2dedc306c5dd4f62cfbe2ca0b885e7edeb,,240,dqn,False,3
+0,0,0,16,100,100,success,0,4,3,,v2_rescate_cercano_tres_personas,be50e50645b81bf72654d7624845cbc809289f1a6358d11b3180222cc1737467,,6,shortest,True,3
+0,0,0,16,100,100,success,0,4,3,,v2_rescate_cercano_tres_personas,be50e50645b81bf72654d7624845cbc809289f1a6358d11b3180222cc1737467,,6,thermal,True,3
+0,0,0,0,100,100,time_limit,0,0,2,,v2_rescate_cercano_tres_personas,be50e50645b81bf72654d7624845cbc809289f1a6358d11b3180222cc1737467,0,80,random,False,3
+75,32,107,1368,25,68,success,0,4,3,,edificio_10x10_tres_personas,39c0ecebd429a79da144d13c604fed2dedc306c5dd4f62cfbe2ca0b885e7edeb,,58,shortest,True,3
+40,24,64,6733,60,76,success,0,4,3,,edificio_10x10_tres_personas,39c0ecebd429a79da144d13c604fed2dedc306c5dd4f62cfbe2ca0b885e7edeb,,62,thermal,True,3
+100,4,104,0,0,96,destroyed,0,0,0,,edificio_10x10_tres_personas,39c0ecebd429a79da144d13c604fed2dedc306c5dd4f62cfbe2ca0b885e7edeb,0,123,random,False,3

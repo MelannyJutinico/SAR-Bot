@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "generator": "sar_bot.report",
+  "results": {
+    "path": "results/sarb020/v2_10x10_piloto_desarrollo.csv",
+    "sha256": "acd79efd73256bbdab5dcc1f8d72b3212266b812ae1a51499872e0dd18a993e3",
+    "metadata_sha256": "2fb9ba1812a7722cc45159d2e97899f07c00b01bed070a5969ceced9c9a1451a",
+    "traces": "results/sarb020/v2_10x10_piloto_desarrollo.traces.jsonl",
+    "traces_sha256": "0b9bae3612aa4bac7dfe7b0a6bbf2b0aee648a11ffb57c5a226193bcc137aa1c",
+    "replayed": true
+  },
+  "training": [
+    {
+      "path": "artifacts/v2_pilot",
+      "label": "v2_pilot",
+      "seed": 0,
+      "files": {
+        "evaluations.jsonl": "e236194a45c94c7820bd23eba402703592b8b771f2cab898491b82f5de094345",
+        "metadata.json": "4268599954620639d84e433fb4ba6592c9f08385704df627e9797b658ffa53d1",
+        "model.zip": "77af198aee3cdd7b7134ca994a7bb6923b579f91ffe36b24124539f233999f2e"
+      }
+    }
+  ],
+  "output_dir": "results/sarb022/piloto_10x10",
+  "command": "uv run python scripts/report_figures.py --results results/sarb020/v2_10x10_piloto_desarrollo.csv --training artifacts/v2_pilot --output-dir results/sarb022/piloto_10x10",
+  "outputs": {
+    "curvas_entrenamiento.svg": "c6f32620d95cb38ccd835a51b8bd6f3859f595138d50103438ba8cd5d615ed4f",
+    "duracion_vs_danio.svg": "0d8bd2147851384a66572669db12dcf290f5f4fe39b358f7d3443328df54305f",
+    "exito_y_rescates.svg": "e0699b65358fa1419ab42c5d1e211a756578800b9f6cc590a6ee005c2e4119b3",
+    "pasos_y_danio_exitos.svg": "3efd999e8f3ee5731c7fb98561c5fc0fbf3df84ce50bfe0423019cae12c9be38",
+    "tablas.md": "db74cc8cd4ad1d39d44eb6e5c8724b6921f03bb0fa74b5cb0960447850eabe41"
+  }
+}

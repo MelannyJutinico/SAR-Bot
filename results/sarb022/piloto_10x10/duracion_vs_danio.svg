@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="477" viewBox="0 0 900 477" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Duración frente a daño en misiones exitosas</title>
+<desc id="descripcion">Pasos y daño de cada misión exitosa; las líneas unen el mismo caso entre las dos referencias deterministas.</desc>
+<rect width="900" height="477" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Duración frente a daño en misiones exitosas</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Desarrollo · perfil 10 × 10 con 3 personas · 2 casos distintos · 16 episodios</text>
+<text x="24" y="69" font-size="12" fill="#52514e">La línea gris une el mismo caso resuelto por ruta corta y por ruta térmica: muestra cuántos pasos cuesta reducir el daño. En</text>
+<text x="24" y="86" font-size="12" fill="#52514e">los casos idénticos (mismos pasos y daño) los dos puntos se superponen.</text>
+<circle cx="29" cy="109" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<text x="42" y="113" font-size="11" fill="#52514e">DQN (1 modelo)</text>
+<circle cx="151.24" cy="109" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="164.24" y="113" font-size="11" fill="#52514e">Ruta corta</text>
+<circle cx="248.84" cy="109" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<text x="261.84" y="113" font-size="11" fill="#52514e">Ruta térmica</text>
+<circle cx="358.76" cy="109" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2"/>
+<text x="371.76" y="113" font-size="11" fill="#52514e">Aleatoria</text>
+<line x1="445.2" y1="109" x2="457.2" y2="109" stroke="#898781" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.8"/>
+<text x="463.2" y="113" font-size="11" fill="#52514e">Mismo caso: ruta corta → ruta térmica</text>
+<text x="24" y="145" font-size="12" fill="#0b0b0b" font-weight="600">warmup_10x10</text>
+<text x="24" y="161" font-size="11" fill="#52514e">1 de 1 casos con éxito en ambas · 1 idénticos</text>
+<text x="24" y="176" font-size="11" fill="#52514e">Medias: 6,0 → 6,0 pasos · 0,0 → 0,0 de daño</text>
+<line x1="64" y1="201" x2="64" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="64" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="155.5" y1="201" x2="155.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="155.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">20</text>
+<line x1="247" y1="201" x2="247" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="247" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">40</text>
+<line x1="338.5" y1="201" x2="338.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="338.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">60</text>
+<line x1="430" y1="201" x2="430" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="430" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">80</text>
+<line x1="64" y1="421" x2="430" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="425" font-size="11" fill="#898781" text-anchor="end" class="tick">0</text>
+<line x1="64" y1="377" x2="430" y2="377" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="381" font-size="11" fill="#898781" text-anchor="end" class="tick">25</text>
+<line x1="64" y1="333" x2="430" y2="333" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="337" font-size="11" fill="#898781" text-anchor="end" class="tick">50</text>
+<line x1="64" y1="289" x2="430" y2="289" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="293" font-size="11" fill="#898781" text-anchor="end" class="tick">75</text>
+<line x1="64" y1="245" x2="430" y2="245" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="249" font-size="11" fill="#898781" text-anchor="end" class="tick">100</text>
+<line x1="64" y1="201" x2="430" y2="201" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="58" y="205" font-size="11" fill="#898781" text-anchor="end" class="tick">125</text>
+<text x="64" y="195" font-size="11" fill="#52514e">Daño térmico total</text>
+<text x="247" y="453" font-size="11" fill="#52514e" text-anchor="middle">Pasos hasta terminar</text>
+<line x1="91.45" y1="421" x2="91.45" y2="421" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="warmup_10x10" data-configuration="4a5ea4993fa6b5957547f3c7ca55f23c237207c4a5fece8addeedf274d51a2c4"><title>warmup_10x10: 6 → 6 pasos, 0 → 0 de daño</title></line>
+<circle cx="311.05" cy="421" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="point" data-group="warmup_10x10" data-series="random" data-steps="54" data-damage="0"><title>warmup_10x10 · Aleatoria: 54 pasos, 0 de daño</title></circle>
+<circle cx="338.5" cy="421" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="point" data-group="warmup_10x10" data-series="random" data-steps="60" data-damage="0"><title>warmup_10x10 · Aleatoria: 60 pasos, 0 de daño</title></circle>
+<circle cx="91.45" cy="421" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="point" data-group="warmup_10x10" data-series="dqn:v2_pilot" data-steps="6" data-damage="0"><title>warmup_10x10 · DQN v2_pilot · semilla 0: 6 pasos, 0 de daño</title></circle>
+<circle cx="91.45" cy="421" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="warmup_10x10" data-series="shortest" data-steps="6" data-damage="0"><title>warmup_10x10 · Ruta corta: 6 pasos, 0 de daño</title></circle>
+<circle cx="91.45" cy="421" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="warmup_10x10" data-series="thermal" data-steps="6" data-damage="0"><title>warmup_10x10 · Ruta térmica: 6 pasos, 0 de daño</title></circle>
+<text x="462" y="145" font-size="12" fill="#0b0b0b" font-weight="600">building_10x10</text>
+<text x="462" y="161" font-size="11" fill="#52514e">1 de 1 casos con éxito en ambas · 0 idénticos</text>
+<text x="462" y="176" font-size="11" fill="#52514e">Medias: 58,0 → 62,0 pasos · 107,0 → 64,0 de daño</text>
+<line x1="502" y1="201" x2="502" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="502" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="593.5" y1="201" x2="593.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="593.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">20</text>
+<line x1="685" y1="201" x2="685" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="685" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">40</text>
+<line x1="776.5" y1="201" x2="776.5" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="776.5" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">60</text>
+<line x1="868" y1="201" x2="868" y2="421" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="868" y="436" font-size="11" fill="#898781" text-anchor="middle" class="tick">80</text>
+<line x1="502" y1="421" x2="868" y2="421" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="425" font-size="11" fill="#898781" text-anchor="end" class="tick">0</text>
+<line x1="502" y1="377" x2="868" y2="377" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="381" font-size="11" fill="#898781" text-anchor="end" class="tick">25</text>
+<line x1="502" y1="333" x2="868" y2="333" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="337" font-size="11" fill="#898781" text-anchor="end" class="tick">50</text>
+<line x1="502" y1="289" x2="868" y2="289" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="293" font-size="11" fill="#898781" text-anchor="end" class="tick">75</text>
+<line x1="502" y1="245" x2="868" y2="245" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="249" font-size="11" fill="#898781" text-anchor="end" class="tick">100</text>
+<line x1="502" y1="201" x2="868" y2="201" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="496" y="205" font-size="11" fill="#898781" text-anchor="end" class="tick">125</text>
+<text x="502" y="195" font-size="11" fill="#52514e">Daño térmico total</text>
+<text x="685" y="453" font-size="11" fill="#52514e" text-anchor="middle">Pasos hasta terminar</text>
+<line x1="767.35" y1="232.68" x2="785.65" y2="308.36" stroke="#898781" stroke-width="1.5" stroke-linecap="round" class="pair" stroke-opacity="0.8" data-group="building_10x10" data-configuration="14f7d1f1e0232b64804abf93b30b7b75483ba52a60038da8e78c115ebd606934"><title>building_10x10: 58 → 62 pasos, 107 → 64 de daño</title></line>
+<circle cx="767.35" cy="232.68" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="point" data-group="building_10x10" data-series="shortest" data-steps="58" data-damage="107"><title>building_10x10 · Ruta corta: 58 pasos, 107 de daño</title></circle>
+<circle cx="785.65" cy="308.36" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="point" data-group="building_10x10" data-series="thermal" data-steps="62" data-damage="64"><title>building_10x10 · Ruta térmica: 62 pasos, 64 de daño</title></circle>
+</svg>

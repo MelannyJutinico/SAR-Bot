@@ -1,0 +1,10 @@
+{
+  "name": "ruta_caliente",
+  "width": 6,
+  "height": 6,
+  "base": [0, 0],
+  "victims": [[5, 0], [0, 5]],
+  "walls": [[2, 2], [2, 3], [4, 4]],
+  "heat": {"ambient": 25, "focus": [4, 0], "peak": 160, "falloff": 35},
+  "max_steps": 100
+}

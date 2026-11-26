@@ -1,0 +1,8 @@
+{
+  "name": "prueba_obstaculos_pasillo",
+  "width": 6, "height": 6, "base": [0, 0],
+  "victims": [[5, 0], [5, 5]],
+  "walls": [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [2, 1], [2, 2], [4, 3]],
+  "heat": {"ambient": 25, "focus": [3, 3], "peak": 80, "falloff": 20},
+  "max_steps": 100
+}

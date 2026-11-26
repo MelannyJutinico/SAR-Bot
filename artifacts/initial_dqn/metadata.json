@@ -1,0 +1,96 @@
+{
+  "config": {
+    "seed": 0,
+    "torch_threads": 1,
+    "evaluation_interval": 5000,
+    "rewards": {
+      "step": -1.0,
+      "pickup": 5.0,
+      "delivery": 50.0,
+      "success": 100.0,
+      "destruction": -100.0,
+      "timeout": -20.0,
+      "damage": -1.0,
+      "shaping": 2.0,
+      "gamma": 0.99
+    },
+    "dqn": {
+      "learning_rate": 0.0005,
+      "buffer_size": 50000,
+      "learning_starts": 500,
+      "batch_size": 64,
+      "gamma": 0.99,
+      "train_freq": 4,
+      "gradient_steps": 1,
+      "target_update_interval": 500,
+      "exploration_fraction": 0.5,
+      "exploration_initial_eps": 1.0,
+      "exploration_final_eps": 0.05,
+      "policy_kwargs": {
+        "net_arch": [
+          128,
+          128
+        ]
+      }
+    },
+    "stages": [
+      {
+        "name": "warmup",
+        "steps": 12000,
+        "scenarios": [
+          "scenarios/curriculum/warmup.json"
+        ]
+      },
+      {
+        "name": "navigation",
+        "steps": 30000,
+        "scenarios": [
+          "scenarios/curriculum/warmup.json",
+          "scenarios/curriculum/navigation.json"
+        ]
+      },
+      {
+        "name": "thermal",
+        "steps": 40000,
+        "scenarios": [
+          "scenarios/curriculum/warmup.json",
+          "scenarios/curriculum/navigation.json",
+          "scenarios/demo.json",
+          "scenarios/ruta_caliente.json"
+        ]
+      }
+    ],
+    "evaluation_scenarios": [
+      "scenarios/curriculum/warmup.json",
+      "scenarios/curriculum/navigation.json",
+      "scenarios/demo.json",
+      "scenarios/ruta_caliente.json"
+    ]
+  },
+  "rewards": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -1.0,
+    "shaping": 2.0,
+    "gamma": 0.99
+  },
+  "git_revision": "15ea0741e5bc60d7952fdceab974a5ecf7721e83",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "packages": {
+    "torch": "2.15.0",
+    "gymnasium": "1.4.0",
+    "stable-baselines3": "2.9.2",
+    "numpy": "2.5.4"
+  },
+  "scenario_hashes": {
+    "scenarios/curriculum/navigation.json": "ea335dd06701337453151ac20ec2f0706341e344f5d475920940b99c2368ab0a",
+    "scenarios/curriculum/warmup.json": "3f38b085e51abead0ce597d1c24df5514a50ba0a0bdc5ed3dafc1bb80cb6aef1",
+    "scenarios/demo.json": "4727b14840395e0e4f9db64f956b34d9ba74e84890c4a270e058a8fd962bf35e",
+    "scenarios/ruta_caliente.json": "a47b1c38d986812863a11d70f5b0eaf7e15129b01e04474968cb47a0d5990bed"
+  },
+  "evaluation_scope": "development scenarios also used in training; not held-out test"
+}

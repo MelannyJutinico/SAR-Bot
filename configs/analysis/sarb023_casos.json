@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "purpose": "Trazas de desarrollo y entrenamiento para SARB-023. No incluye la partición de prueba; los fallos de la evaluación final se agregan después de SARB-021 sin reajustar los modelos.",
+  "output_dir": "results/sarb023",
+  "cases": [
+    {
+      "key": "eficiente_dqn_6x6",
+      "role": "Rescate eficiente de una política aprendida",
+      "note": "Escenario de desarrollo que el modelo vio al entrenar: muestra una ejecución eficiente, no generalización.",
+      "results": "results/sarb031/v2_6x6_desarrollo.csv",
+      "scenario": "scenarios/pasillo_compartido.json",
+      "strategy": "dqn",
+      "model_label": "sensors_dqn"
+    },
+    {
+      "key": "termico_ruta_corta",
+      "role": "Caso térmico: la ruta corta cruza el calor",
+      "note": "Caso de la partición de entrenamiento de 12 × 12 evaluado solo con referencias.",
+      "results": "results/sarb031/v2_12x12_training_referencias.csv",
+      "scenario": "scenarios/partitions/v2_12x12/training/detour_training_14_intermediate.json",
+      "strategy": "shortest"
+    },
+    {
+      "key": "termico_ruta_termica",
+      "role": "Caso térmico: la ruta térmica rodea el calor",
+      "results": "results/sarb031/v2_12x12_training_referencias.csv",
+      "scenario": "scenarios/partitions/v2_12x12/training/detour_training_14_intermediate.json",
+      "strategy": "thermal"
+    },
+    {
+      "key": "fallo_dqn_posiciones_nuevas",
+      "role": "Fallo real: piloto DQN con posiciones nuevas",
+      "note": "Caso fácil del conjunto de desarrollo v2_10x10_dev_v1; el piloto solo se entrenó con las posiciones fijas del edificio.",
+      "results": "results/sarb031/v2_10x10_desarrollo.csv",
+      "scenario": "scenarios/development/v2_10x10/building10_dev_16_easy.json",
+      "strategy": "dqn",
+      "model_label": "v2_pilot"
+    },
+    {
+      "key": "fallo_dqn_referencia",
+      "role": "Mismo caso con la ruta térmica",
+      "results": "results/sarb031/v2_10x10_desarrollo.csv",
+      "scenario": "scenarios/development/v2_10x10/building10_dev_16_easy.json",
+      "strategy": "thermal"
+    }
+  ]
+}

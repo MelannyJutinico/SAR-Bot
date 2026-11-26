@@ -1,0 +1,22 @@
+{
+  "partition": "validation",
+  "model_sha256": "897538a81faadc8449e0d6045afe073638ca090e2072389b93a8dcab055bdff0",
+  "scenario_hashes": {
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\validation\\heat_shift.json": "d25481e268d1953e45e21d6a5c4f1507c9cc23829a678cdab1f5a8c7d6b0cdf3",
+    "C:\\Users\\Meruu\\Documents\\ChatGPT\\Sistemas Inteligentes\\scenarios\\validation\\corridor_targets.json": "3202c55ad77a339bc11010f09806e9ecce10fa2f03cdfb8c5aabfd47340d60c6"
+  },
+  "reward_config": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99
+  },
+  "random_seed": 0,
+  "thermal_reference_damage_weight": 2.0,
+  "episodes_per_strategy_and_scenario": 1
+}

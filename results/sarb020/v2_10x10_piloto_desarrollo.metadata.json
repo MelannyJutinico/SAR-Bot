@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-18T14:56:20+00:00",
+  "command": "scripts/evaluate_experiment.py --scenarios scenarios/v2/warmup_10x10.json scenarios/v2/building_10x10.json --model artifacts/v2_pilot/model.zip --output results/sarb020/v2_10x10_piloto_desarrollo.csv",
+  "git": {
+    "commit": "a21c4264fe1e0e5068900714384ad39015368415",
+    "dirty": false
+  },
+  "python": "3.11.9",
+  "packages": {
+    "gymnasium": "1.4.0",
+    "stable_baselines3": "2.9.2",
+    "torch": "2.15.0+cpu"
+  },
+  "partition": "development",
+  "manifest": null,
+  "profile": {
+    "width": 10,
+    "height": 10,
+    "victims": 3
+  },
+  "scenarios": {
+    "scenarios/v2/warmup_10x10.json": "c310dc3b0d64e85788cd2325c567c7295b05b8f39729da9da029974dfe48aef9",
+    "scenarios/v2/building_10x10.json": "44e0953649a3d89abb05a77840f411e4c14f0b6ad67290b3e40e0354ea6b0748"
+  },
+  "strategies": [
+    "dqn",
+    "shortest",
+    "thermal",
+    "random"
+  ],
+  "models": [
+    {
+      "label": "v2_pilot",
+      "path": "artifacts/v2_pilot/model.zip",
+      "sha256": "77af198aee3cdd7b7134ca994a7bb6923b579f91ffe36b24124539f233999f2e",
+      "training_seed": 0,
+      "reward_config_sha256": "5266a757e55e81226866a44a5d11abe2ecf3d075f81ba259a31d7d6c370e53ef"
+    }
+  ],
+  "random_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "thermal_damage_weight": 2.0,
+  "reward_config": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99,
+    "potential_bound": 40.0
+  },
+  "reward_config_sha256": "5266a757e55e81226866a44a5d11abe2ecf3d075f81ba259a31d7d6c370e53ef",
+  "reward_config_source": "model_metadata",
+  "episodes_per_case": {
+    "dqn": 1,
+    "shortest": 1,
+    "thermal": 1,
+    "random": 5
+  },
+  "notes": [
+    "Las referencias deterministas se ejecutan una vez por caso.",
+    "El retorno solo es comparable entre filas con el mismo reward_config_sha256.",
+    "compute_seconds mide cómputo en esta máquina; no es tiempo simulado."
+  ],
+  "columns": [
+    "episode_id",
+    "partition",
+    "manifest_id",
+    "scenario_path",
+    "scenario_name",
+    "building",
+    "difficulty",
+    "scenario_id",
+    "configuration_id",
+    "scenario_sha256",
+    "width",
+    "height",
+    "generation_seed",
+    "strategy",
+    "model_label",
+    "model_sha256",
+    "training_seed",
+    "random_seed",
+    "thermal_damage_weight",
+    "victims_total",
+    "rescued",
+    "success",
+    "outcome",
+    "steps",
+    "max_steps",
+    "damage_robot_1",
+    "damage_robot_2",
+    "damage_total",
+    "integrity_robot_1",
+    "integrity_robot_2",
+    "deliveries_robot_1",
+    "deliveries_robot_2",
+    "wait_actions",
+    "blocked_moves",
+    "planning_failures",
+    "replans",
+    "expanded_states",
+    "return",
+    "reward_config_sha256",
+    "actions_sha256",
+    "compute_seconds"
+  ],
+  "episodes": 16,
+  "configurations": 2,
+  "csv": "v2_10x10_piloto_desarrollo.csv",
+  "csv_sha256": "acd79efd73256bbdab5dcc1f8d72b3212266b812ae1a51499872e0dd18a993e3",
+  "traces": "v2_10x10_piloto_desarrollo.traces.jsonl",
+  "traces_sha256": "0b9bae3612aa4bac7dfe7b0a6bbf2b0aee648a11ffb57c5a226193bcc137aa1c"
+}

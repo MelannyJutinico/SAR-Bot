@@ -1,0 +1,124 @@
+{
+  "scope": "development only; one training seed; not a held-out benchmark",
+  "selected_checkpoint": {
+    "steps": 42000,
+    "stage": "navigation",
+    "elapsed_seconds": 95.14,
+    "results": [
+      {
+        "scenario": "warmup_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 2,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 216.04
+      },
+      {
+        "scenario": "navegacion_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 241.8
+      },
+      {
+        "scenario": "rescate_inicial",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 18,
+        "integrity_robot_1": 82,
+        "integrity_robot_2": 100,
+        "return": 223.8
+      },
+      {
+        "scenario": "ruta_caliente",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 74,
+        "integrity_robot_1": 26,
+        "integrity_robot_2": 100,
+        "return": 167.8
+      }
+    ],
+    "score": [
+      4,
+      8,
+      849.44
+    ]
+  },
+  "last_checkpoint": {
+    "steps": 82000,
+    "stage": "thermal",
+    "elapsed_seconds": 172.84,
+    "results": [
+      {
+        "scenario": "warmup_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 3,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 215.06
+      },
+      {
+        "scenario": "navegacion_sin_calor",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": 241.8
+      },
+      {
+        "scenario": "rescate_inicial",
+        "strategy": "dqn",
+        "outcome": "success",
+        "success": true,
+        "rescued": 2,
+        "steps": 10,
+        "damage_total": 18,
+        "integrity_robot_1": 82,
+        "integrity_robot_2": 100,
+        "return": 223.8
+      },
+      {
+        "scenario": "ruta_caliente",
+        "strategy": "dqn",
+        "outcome": "time_limit",
+        "success": false,
+        "rescued": 1,
+        "steps": 100,
+        "damage_total": 0,
+        "integrity_robot_1": 100,
+        "integrity_robot_2": 100,
+        "return": -25.499999999999915
+      }
+    ],
+    "score": [
+      3,
+      7,
+      655.1600000000001
+    ]
+  },
+  "model_sha256": "c7a406c70425981fe8b81f63ddfb3597353ea4d73b7913c49ee2d2d8c844b8d0"
+}

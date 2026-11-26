@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "manifest_id": "v2_12x12_v1",
+  "frozen_on": "2026-11-18",
+  "profile": {"width": 12, "height": 12, "victims": 3},
+  "output_manifest": "configs/partitions/v2_12x12.json",
+  "output_witnesses": "configs/partitions/v2_12x12.witnesses.jsonl",
+  "scenario_dir": "scenarios/partitions/v2_12x12",
+  "excluded_sources": ["configs/v2_scenario_families.json"],
+  "legacy_manifests": ["configs/scenario_splits.json"],
+  "min_test_total": 20,
+  "buildings": [
+    {
+      "key": "hub",
+      "template": "scenarios/v2/coordination_hub_12x12.json",
+      "generation_seed": 1209001,
+      "split_seed": 1209101,
+      "max_attempts": 5000,
+      "surplus_per_difficulty": 2,
+      "quotas": {
+        "training": {"easy": 10, "intermediate": 10, "demanding": 10},
+        "validation": {"easy": 4, "intermediate": 3, "demanding": 3},
+        "test": {"easy": 6, "intermediate": 7, "demanding": 7}
+      }
+    },
+    {
+      "key": "detour",
+      "template": "scenarios/v2/thermal_detour_12x12.json",
+      "generation_seed": 1209002,
+      "split_seed": 1209102,
+      "max_attempts": 5000,
+      "surplus_per_difficulty": 2,
+      "quotas": {
+        "training": {"easy": 10, "intermediate": 10, "demanding": 10},
+        "validation": {"easy": 4, "intermediate": 3, "demanding": 3},
+        "test": {"easy": 6, "intermediate": 7, "demanding": 7}
+      }
+    }
+  ]
+}

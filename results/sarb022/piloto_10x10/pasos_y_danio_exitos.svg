@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="681" viewBox="0 0 920 681" role="img" aria-labelledby="titulo descripcion" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title id="titulo">Pasos y daño entre misiones exitosas</title>
+<desc id="descripcion">Distribución de pasos y daño de las misiones exitosas por estrategia, con medias y tamaños de muestra.</desc>
+<rect width="920" height="681" fill="#fcfcfb"/>
+<text x="24" y="30" font-size="16" fill="#0b0b0b" font-weight="600">Pasos y daño entre misiones exitosas</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Desarrollo · perfil 10 × 10 con 3 personas · 2 casos distintos · 16 episodios</text>
+<text x="24" y="69" font-size="12" fill="#52514e">Cada punto es una misión exitosa y la línea negra su media. La cifra junto a cada estrategia es éxitos/episodios: los fracasos no</text>
+<text x="24" y="86" font-size="12" fill="#52514e">aportan puntos ni entran en la media, así que un fracaso temprano con poco daño no mejora el resultado.</text>
+<text x="340" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Pasos hasta terminar</text>
+<text x="560" y="119" font-size="11" fill="#898781">media</text>
+<text x="650" y="119" font-size="12" fill="#0b0b0b" font-weight="600">Daño térmico total</text>
+<text x="870" y="119" font-size="11" fill="#898781">media</text>
+<text x="318" y="119" font-size="11" fill="#898781" text-anchor="end">éxitos</text>
+<line x1="340" y1="129" x2="340" y2="629" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="340" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="392.5" y1="129" x2="392.5" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="392.5" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">20</text>
+<line x1="445" y1="129" x2="445" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="445" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">40</text>
+<line x1="497.5" y1="129" x2="497.5" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="497.5" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">60</text>
+<line x1="550" y1="129" x2="550" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="550" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">80</text>
+<text x="445" y="661" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">Pasos simulados</text>
+<line x1="650" y1="129" x2="650" y2="629" stroke="#c3c2b7" stroke-width="1" stroke-linecap="round"/>
+<text x="650" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">0</text>
+<line x1="692" y1="129" x2="692" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="692" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">25</text>
+<line x1="734" y1="129" x2="734" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="734" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">50</text>
+<line x1="776" y1="129" x2="776" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="776" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">75</text>
+<line x1="818" y1="129" x2="818" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="818" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">100</text>
+<line x1="860" y1="129" x2="860" y2="629" stroke="#e1e0d9" stroke-width="1" stroke-linecap="round"/>
+<text x="860" y="644" font-size="11" fill="#898781" text-anchor="middle" class="tick">125</text>
+<text x="755" y="661" font-size="11" fill="#52514e" text-anchor="middle" class="axis-title">Puntos de daño (ambos robots)</text>
+<text x="24" y="149" font-size="12" fill="#0b0b0b" font-weight="600">Todos los casos</text>
+<rect x="36" y="172" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="181" font-size="12" fill="#0b0b0b">DQN v2_pilot · semilla 0</text>
+<text x="318" y="181" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="dqn:v2_pilot" data-k="1" data-n="2">1/2</text>
+<circle cx="355.75" cy="177" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:v2_pilot" data-metric="steps" data-value="6"><title>warmup_10x10 · DQN v2_pilot · semilla 0: 6 pasos</title></circle>
+<line x1="355.75" y1="164" x2="355.75" y2="190" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="dqn:v2_pilot" data-metric="steps" data-value="6" data-n="1"><title>Todos los casos · DQN v2_pilot · semilla 0: media 6,0 pasos en 1 éxitos</title></line>
+<text x="560" y="181" font-size="11" fill="#52514e">6,0</text>
+<circle cx="650" cy="177" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="dqn:v2_pilot" data-metric="damage" data-value="0"><title>warmup_10x10 · DQN v2_pilot · semilla 0: 0 de daño</title></circle>
+<line x1="650" y1="164" x2="650" y2="190" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="dqn:v2_pilot" data-metric="damage" data-value="0" data-n="1"><title>Todos los casos · DQN v2_pilot · semilla 0: media 0,0 de daño en 1 éxitos</title></line>
+<text x="870" y="181" font-size="11" fill="#52514e">0,0</text>
+<rect x="36" y="204" width="10" height="10" rx="2" fill="#eb6834"/>
+<text x="52" y="213" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<text x="318" y="213" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="shortest" data-k="2" data-n="2">2/2</text>
+<circle cx="355.75" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="6"><title>warmup_10x10 · Ruta corta: 6 pasos</title></circle>
+<circle cx="492.25" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="steps" data-value="58"><title>building_10x10 · Ruta corta: 58 pasos</title></circle>
+<line x1="424" y1="196" x2="424" y2="222" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="shortest" data-metric="steps" data-value="32" data-n="2"><title>Todos los casos · Ruta corta: media 32,0 pasos en 2 éxitos</title></line>
+<text x="560" y="213" font-size="11" fill="#52514e">32,0</text>
+<circle cx="650" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="0"><title>warmup_10x10 · Ruta corta: 0 de daño</title></circle>
+<circle cx="829.76" cy="209" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="shortest" data-metric="damage" data-value="107"><title>building_10x10 · Ruta corta: 107 de daño</title></circle>
+<line x1="739.88" y1="196" x2="739.88" y2="222" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="shortest" data-metric="damage" data-value="53.5" data-n="2"><title>Todos los casos · Ruta corta: media 53,5 de daño en 2 éxitos</title></line>
+<text x="870" y="213" font-size="11" fill="#52514e">53,5</text>
+<rect x="36" y="236" width="10" height="10" rx="2" fill="#1baf7a"/>
+<text x="52" y="245" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<text x="318" y="245" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="thermal" data-k="2" data-n="2">2/2</text>
+<circle cx="355.75" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="6"><title>warmup_10x10 · Ruta térmica: 6 pasos</title></circle>
+<circle cx="502.75" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="steps" data-value="62"><title>building_10x10 · Ruta térmica: 62 pasos</title></circle>
+<line x1="429.25" y1="228" x2="429.25" y2="254" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="thermal" data-metric="steps" data-value="34" data-n="2"><title>Todos los casos · Ruta térmica: media 34,0 pasos en 2 éxitos</title></line>
+<text x="560" y="245" font-size="11" fill="#52514e">34,0</text>
+<circle cx="650" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="0"><title>warmup_10x10 · Ruta térmica: 0 de daño</title></circle>
+<circle cx="757.52" cy="241" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="thermal" data-metric="damage" data-value="64"><title>building_10x10 · Ruta térmica: 64 de daño</title></circle>
+<line x1="703.76" y1="228" x2="703.76" y2="254" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="thermal" data-metric="damage" data-value="32" data-n="2"><title>Todos los casos · Ruta térmica: media 32,0 de daño en 2 éxitos</title></line>
+<text x="870" y="245" font-size="11" fill="#52514e">32,0</text>
+<rect x="36" y="268" width="10" height="10" rx="2" fill="#898781"/>
+<text x="52" y="277" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<text x="318" y="277" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="all" data-series="random" data-k="2" data-n="10">2/10</text>
+<circle cx="481.75" cy="273" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="steps" data-value="54"><title>warmup_10x10 · Aleatoria: 54 pasos</title></circle>
+<circle cx="497.5" cy="273" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="steps" data-value="60"><title>warmup_10x10 · Aleatoria: 60 pasos</title></circle>
+<line x1="489.62" y1="260" x2="489.62" y2="286" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="random" data-metric="steps" data-value="57" data-n="2"><title>Todos los casos · Aleatoria: media 57,0 pasos en 2 éxitos</title></line>
+<text x="560" y="277" font-size="11" fill="#52514e">57,0</text>
+<circle cx="650" cy="273" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="damage" data-value="0"><title>warmup_10x10 · Aleatoria: 0 de daño</title></circle>
+<circle cx="650" cy="267" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="all" data-series="random" data-metric="damage" data-value="0"><title>warmup_10x10 · Aleatoria: 0 de daño</title></circle>
+<line x1="650" y1="260" x2="650" y2="286" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="all" data-series="random" data-metric="damage" data-value="0" data-n="2"><title>Todos los casos · Aleatoria: media 0,0 de daño en 2 éxitos</title></line>
+<text x="870" y="277" font-size="11" fill="#52514e">0,0</text>
+<text x="24" y="317" font-size="12" fill="#0b0b0b" font-weight="600">warmup_10x10</text>
+<rect x="36" y="340" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="349" font-size="12" fill="#0b0b0b">DQN v2_pilot · semilla 0</text>
+<text x="318" y="349" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="warmup_10x10" data-series="dqn:v2_pilot" data-k="1" data-n="1">1/1</text>
+<circle cx="355.75" cy="345" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="dqn:v2_pilot" data-metric="steps" data-value="6"><title>warmup_10x10 · DQN v2_pilot · semilla 0: 6 pasos</title></circle>
+<line x1="355.75" y1="332" x2="355.75" y2="358" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="dqn:v2_pilot" data-metric="steps" data-value="6" data-n="1"><title>warmup_10x10 · DQN v2_pilot · semilla 0: media 6,0 pasos en 1 éxitos</title></line>
+<text x="560" y="349" font-size="11" fill="#52514e">6,0</text>
+<circle cx="650" cy="345" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="dqn:v2_pilot" data-metric="damage" data-value="0"><title>warmup_10x10 · DQN v2_pilot · semilla 0: 0 de daño</title></circle>
+<line x1="650" y1="332" x2="650" y2="358" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="dqn:v2_pilot" data-metric="damage" data-value="0" data-n="1"><title>warmup_10x10 · DQN v2_pilot · semilla 0: media 0,0 de daño en 1 éxitos</title></line>
+<text x="870" y="349" font-size="11" fill="#52514e">0,0</text>
+<rect x="36" y="372" width="10" height="10" rx="2" fill="#eb6834"/>
+<text x="52" y="381" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<text x="318" y="381" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="warmup_10x10" data-series="shortest" data-k="1" data-n="1">1/1</text>
+<circle cx="355.75" cy="377" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="shortest" data-metric="steps" data-value="6"><title>warmup_10x10 · Ruta corta: 6 pasos</title></circle>
+<line x1="355.75" y1="364" x2="355.75" y2="390" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="shortest" data-metric="steps" data-value="6" data-n="1"><title>warmup_10x10 · Ruta corta: media 6,0 pasos en 1 éxitos</title></line>
+<text x="560" y="381" font-size="11" fill="#52514e">6,0</text>
+<circle cx="650" cy="377" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="shortest" data-metric="damage" data-value="0"><title>warmup_10x10 · Ruta corta: 0 de daño</title></circle>
+<line x1="650" y1="364" x2="650" y2="390" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="shortest" data-metric="damage" data-value="0" data-n="1"><title>warmup_10x10 · Ruta corta: media 0,0 de daño en 1 éxitos</title></line>
+<text x="870" y="381" font-size="11" fill="#52514e">0,0</text>
+<rect x="36" y="404" width="10" height="10" rx="2" fill="#1baf7a"/>
+<text x="52" y="413" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<text x="318" y="413" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="warmup_10x10" data-series="thermal" data-k="1" data-n="1">1/1</text>
+<circle cx="355.75" cy="409" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="thermal" data-metric="steps" data-value="6"><title>warmup_10x10 · Ruta térmica: 6 pasos</title></circle>
+<line x1="355.75" y1="396" x2="355.75" y2="422" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="thermal" data-metric="steps" data-value="6" data-n="1"><title>warmup_10x10 · Ruta térmica: media 6,0 pasos en 1 éxitos</title></line>
+<text x="560" y="413" font-size="11" fill="#52514e">6,0</text>
+<circle cx="650" cy="409" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="thermal" data-metric="damage" data-value="0"><title>warmup_10x10 · Ruta térmica: 0 de daño</title></circle>
+<line x1="650" y1="396" x2="650" y2="422" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="thermal" data-metric="damage" data-value="0" data-n="1"><title>warmup_10x10 · Ruta térmica: media 0,0 de daño en 1 éxitos</title></line>
+<text x="870" y="413" font-size="11" fill="#52514e">0,0</text>
+<rect x="36" y="436" width="10" height="10" rx="2" fill="#898781"/>
+<text x="52" y="445" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<text x="318" y="445" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="warmup_10x10" data-series="random" data-k="2" data-n="5">2/5</text>
+<circle cx="481.75" cy="441" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="random" data-metric="steps" data-value="54"><title>warmup_10x10 · Aleatoria: 54 pasos</title></circle>
+<circle cx="497.5" cy="441" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="random" data-metric="steps" data-value="60"><title>warmup_10x10 · Aleatoria: 60 pasos</title></circle>
+<line x1="489.62" y1="428" x2="489.62" y2="454" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="random" data-metric="steps" data-value="57" data-n="2"><title>warmup_10x10 · Aleatoria: media 57,0 pasos en 2 éxitos</title></line>
+<text x="560" y="445" font-size="11" fill="#52514e">57,0</text>
+<circle cx="650" cy="441" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="random" data-metric="damage" data-value="0"><title>warmup_10x10 · Aleatoria: 0 de daño</title></circle>
+<circle cx="650" cy="435" r="4" fill="#898781" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="warmup_10x10" data-series="random" data-metric="damage" data-value="0"><title>warmup_10x10 · Aleatoria: 0 de daño</title></circle>
+<line x1="650" y1="428" x2="650" y2="454" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="warmup_10x10" data-series="random" data-metric="damage" data-value="0" data-n="2"><title>warmup_10x10 · Aleatoria: media 0,0 de daño en 2 éxitos</title></line>
+<text x="870" y="445" font-size="11" fill="#52514e">0,0</text>
+<text x="24" y="485" font-size="12" fill="#0b0b0b" font-weight="600">building_10x10</text>
+<rect x="36" y="508" width="10" height="10" rx="2" fill="#2a78d6"/>
+<text x="52" y="517" font-size="12" fill="#0b0b0b">DQN v2_pilot · semilla 0</text>
+<text x="318" y="517" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="building_10x10" data-series="dqn:v2_pilot" data-k="0" data-n="1">0/1</text>
+<text x="346" y="517" font-size="11" fill="#898781">sin éxitos</text>
+<text x="656" y="517" font-size="11" fill="#898781">sin éxitos</text>
+<rect x="36" y="540" width="10" height="10" rx="2" fill="#eb6834"/>
+<text x="52" y="549" font-size="12" fill="#0b0b0b">Ruta corta</text>
+<text x="318" y="549" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="building_10x10" data-series="shortest" data-k="1" data-n="1">1/1</text>
+<circle cx="492.25" cy="545" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="building_10x10" data-series="shortest" data-metric="steps" data-value="58"><title>building_10x10 · Ruta corta: 58 pasos</title></circle>
+<line x1="492.25" y1="532" x2="492.25" y2="558" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="building_10x10" data-series="shortest" data-metric="steps" data-value="58" data-n="1"><title>building_10x10 · Ruta corta: media 58,0 pasos en 1 éxitos</title></line>
+<text x="560" y="549" font-size="11" fill="#52514e">58,0</text>
+<circle cx="829.76" cy="545" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="building_10x10" data-series="shortest" data-metric="damage" data-value="107"><title>building_10x10 · Ruta corta: 107 de daño</title></circle>
+<line x1="829.76" y1="532" x2="829.76" y2="558" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="building_10x10" data-series="shortest" data-metric="damage" data-value="107" data-n="1"><title>building_10x10 · Ruta corta: media 107,0 de daño en 1 éxitos</title></line>
+<text x="870" y="549" font-size="11" fill="#52514e">107,0</text>
+<rect x="36" y="572" width="10" height="10" rx="2" fill="#1baf7a"/>
+<text x="52" y="581" font-size="12" fill="#0b0b0b">Ruta térmica</text>
+<text x="318" y="581" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="building_10x10" data-series="thermal" data-k="1" data-n="1">1/1</text>
+<circle cx="502.75" cy="577" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="building_10x10" data-series="thermal" data-metric="steps" data-value="62"><title>building_10x10 · Ruta térmica: 62 pasos</title></circle>
+<line x1="502.75" y1="564" x2="502.75" y2="590" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="building_10x10" data-series="thermal" data-metric="steps" data-value="62" data-n="1"><title>building_10x10 · Ruta térmica: media 62,0 pasos en 1 éxitos</title></line>
+<text x="560" y="581" font-size="11" fill="#52514e">62,0</text>
+<circle cx="757.52" cy="577" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2" class="dot" data-group="building_10x10" data-series="thermal" data-metric="damage" data-value="64"><title>building_10x10 · Ruta térmica: 64 de daño</title></circle>
+<line x1="757.52" y1="564" x2="757.52" y2="590" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round" class="mean" data-group="building_10x10" data-series="thermal" data-metric="damage" data-value="64" data-n="1"><title>building_10x10 · Ruta térmica: media 64,0 de daño en 1 éxitos</title></line>
+<text x="870" y="581" font-size="11" fill="#52514e">64,0</text>
+<rect x="36" y="604" width="10" height="10" rx="2" fill="#898781"/>
+<text x="52" y="613" font-size="12" fill="#0b0b0b">Aleatoria · 5 semillas</text>
+<text x="318" y="613" font-size="11" fill="#52514e" text-anchor="end" class="count" data-group="building_10x10" data-series="random" data-k="0" data-n="5">0/5</text>
+<text x="346" y="613" font-size="11" fill="#898781">sin éxitos</text>
+<text x="656" y="613" font-size="11" fill="#898781">sin éxitos</text>
+</svg>

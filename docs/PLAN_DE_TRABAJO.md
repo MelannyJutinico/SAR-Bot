@@ -1,10 +1,14 @@
 # Plan de trabajo: cuatro personas y una semana
 
+**Plan de cierre vigente:** las tareas pendientes, dependencias y criterios de aceptación están en [BACKLOG.md](../BACKLOG.md). La guía de incorporación está en [README_EQUIPO.md](../README_EQUIPO.md). Este documento resume la base ya construida y la distribución de responsabilidades.
+
+**Ampliación V2:** se entregó una base de 10 × 10, tres sobrevivientes, varios focos y contratos generalizados. El objetivo siguiente es diseñar edificios de 12 × 12. Los contratos y límites del piloto están en [CONTRATOS_V2.md](CONTRATOS_V2.md); no confundir los resultados V1 con aprendizaje validado del nuevo alcance.
+
 ## Nuestro rol: persona 1
 
 Nosotros construiremos la base integrada, el aprendizaje y la dirección técnica. Las otras tres personas refinarán y continuarán esa base. La meta inicial es que todos puedan ejecutar el mismo proyecto y trabajar en módulos separados.
 
-## Base que dejaremos durante los primeros dos días
+## Base construida por la persona 1
 
 1. Estructura Python con dependencias verificadas e instrucciones de instalación.
 2. Motor con dos robots, recogida, entrega, obstáculos y pasos globales.
@@ -16,7 +20,7 @@ Nosotros construiremos la base integrada, el aprendizaje y la dirección técnic
 8. Evaluación que exporte resultados por episodio.
 9. Verificaciones de reglas críticas y un escenario de misión completa reproducible.
 
-La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. El estado actual del repositorio es documentación: estos componentes todavía están pendientes.
+La base debe funcionar de principio a fin, aunque su aspecto visual y el desempeño inicial sean modestos. Ya existe el motor, exposición térmica, referencias geométrica y térmica, evaluación CSV, Gymnasium, entrenamiento DQN, interfaz Pygame y verificaciones. El modelo con sensores completa seis controles y cuatro configuraciones nuevas separadas. Siguen pendientes refinar la interfaz, una política que gestione mejor el calor y una evaluación más amplia con varias semillas y nuevos casos reservados.
 
 ## Separación de responsabilidades
 
@@ -27,9 +31,9 @@ La base debe funcionar de principio a fin, aunque su aspecto visual y el desempe
 | 3 | Visualización | Pygame, controles, indicadores y claridad de la demostración |
 | 4 | Evaluación y documentación | Referencia refinada, experimentos, gráficas e informe |
 
-Durante la construcción inicial, la persona 2 diseña escenarios, la 3 prepara vistas con estados de ejemplo y la 4 especifica casos de verificación y resultados esperados.
+Para el cierre, persona 2 continúa con validación, viabilidad y posiciones variables; persona 3 construye el editor sobre la interfaz inicial; persona 4 organiza particiones, evaluación, gráficas e informe. Persona 1 mantiene el aprendizaje y la integración. Las asignaciones detalladas están en el backlog.
 
-## Estructura prevista, todavía por implementar
+## Estructura de la base disponible
 
 ```text
 src/sar_bot/
@@ -46,7 +50,9 @@ docs/              # Contexto, diseño y resultados
 
 El motor será la única fuente de las reglas. La interfaz no calculará daño ni decidirá rescates. La evaluación y el entrenamiento consumirán el mismo entorno.
 
-## Calendario relativo
+## Calendario original de construcción de la base
+
+La siguiente tabla conserva la planificación de la primera versión. Para el trabajo restante usar el calendario de cierre de [BACKLOG.md](../BACKLOG.md).
 
 | Día | Hito |
 |---|---|
@@ -74,12 +80,12 @@ El calendario es un objetivo, no evidencia de progreso ni una garantía de conve
 
 ## Criterios de entrega
 
-- [ ] Instalación documentada y reproducible.
-- [ ] Dos robots y dos sobrevivientes visibles.
-- [ ] Calor y daño acumulativo según tiempo simulado.
-- [ ] Controlador entrenado guardado y cargable.
-- [ ] Referencia comparable y resultados medidos.
-- [ ] Panel de integridad, turnos, rescates y estado de misión.
-- [ ] Pausa, reinicio, velocidad y selección de estrategia.
+- [x] Instalación documentada y reproducible.
+- [x] Dos robots y sobrevivientes configurables visibles; interfaz inicial para tres personas en V2.
+- [x] Calor y daño acumulativo según tiempo simulado.
+- [x] Primer controlador entrenado guardado y cargable.
+- [x] Referencia comparable y resultados de desarrollo medidos; falta evaluación final.
+- [x] Panel de integridad, pasos, rescates y estado de misión.
+- [x] Pausa, reinicio, velocidad y selección de estrategia.
 - [ ] Informe de resultados y limitaciones.
 - [ ] Todos los integrantes pueden explicar el problema y sus reglas.

@@ -1,0 +1,35 @@
+{
+  "seed": 0,
+  "torch_threads": 1,
+  "evaluation_interval": 5000,
+  "rewards": {
+    "step": -1.0, "pickup": 5.0, "delivery": 50.0,
+    "success": 100.0, "destruction": -100.0,
+    "timeout": -20.0, "damage": -1.0, "shaping": 2.0, "gamma": 0.99
+  },
+  "dqn": {
+    "learning_rate": 0.0005,
+    "buffer_size": 50000,
+    "learning_starts": 500,
+    "batch_size": 64,
+    "gamma": 0.99,
+    "train_freq": 4,
+    "gradient_steps": 1,
+    "target_update_interval": 500,
+    "exploration_fraction": 0.5,
+    "exploration_initial_eps": 1.0,
+    "exploration_final_eps": 0.05,
+    "policy_kwargs": {"net_arch": [128, 128]}
+  },
+  "stages": [
+    {"name": "warmup", "steps": 12000, "scenarios": ["scenarios/curriculum/warmup.json"]},
+    {"name": "navigation", "steps": 30000, "scenarios": ["scenarios/curriculum/warmup.json", "scenarios/curriculum/navigation.json"]},
+    {"name": "thermal", "steps": 40000, "scenarios": ["scenarios/curriculum/warmup.json", "scenarios/curriculum/navigation.json", "scenarios/demo.json", "scenarios/ruta_caliente.json"]}
+  ],
+  "evaluation_scenarios": [
+    "scenarios/curriculum/warmup.json",
+    "scenarios/curriculum/navigation.json",
+    "scenarios/demo.json",
+    "scenarios/ruta_caliente.json"
+  ]
+}

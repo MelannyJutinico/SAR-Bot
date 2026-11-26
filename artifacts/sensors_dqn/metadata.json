@@ -1,0 +1,127 @@
+{
+  "config": {
+    "seed": 0,
+    "torch_threads": 1,
+    "evaluation_interval": 10000,
+    "observation_mode": "sensors",
+    "rewards": {
+      "step": -1.0,
+      "pickup": 5.0,
+      "delivery": 50.0,
+      "success": 100.0,
+      "destruction": -100.0,
+      "timeout": -20.0,
+      "damage": -2.0,
+      "shaping": 2.0,
+      "gamma": 0.99
+    },
+    "dqn": {
+      "learning_rate": 0.0005,
+      "buffer_size": 100000,
+      "learning_starts": 500,
+      "batch_size": 64,
+      "gamma": 0.99,
+      "train_freq": 4,
+      "gradient_steps": 1,
+      "target_update_interval": 500,
+      "exploration_fraction": 0.8,
+      "exploration_initial_eps": 1.0,
+      "exploration_final_eps": 0.05,
+      "policy_kwargs": {
+        "net_arch": [
+          128,
+          128
+        ]
+      }
+    },
+    "stages": [
+      {
+        "name": "local_rescue",
+        "steps": 15000,
+        "exploration": {
+          "initial": 1.0,
+          "final": 0.05,
+          "fraction": 0.8
+        },
+        "scenarios": [
+          "scenarios/curriculum/warmup.json",
+          "scenarios/curriculum/handoff.json"
+        ]
+      },
+      {
+        "name": "cooperation",
+        "steps": 50000,
+        "exploration": {
+          "initial": 0.6,
+          "final": 0.05,
+          "fraction": 0.8
+        },
+        "scenarios": [
+          "scenarios/pasillo_compartido.json",
+          "scenarios/pasillo_compartido.json",
+          "scenarios/pasillo_compartido.json",
+          "scenarios/curriculum/handoff.json",
+          "scenarios/curriculum/navigation.json",
+          "scenarios/curriculum/warmup.json"
+        ]
+      },
+      {
+        "name": "thermal",
+        "steps": 90000,
+        "exploration": {
+          "initial": 0.6,
+          "final": 0.05,
+          "fraction": 0.8
+        },
+        "scenarios": [
+          "scenarios/ruta_caliente.json",
+          "scenarios/ruta_caliente.json",
+          "scenarios/ruta_caliente.json",
+          "scenarios/demo.json",
+          "scenarios/demo.json",
+          "scenarios/pasillo_compartido.json",
+          "scenarios/pasillo_compartido.json",
+          "scenarios/curriculum/handoff.json",
+          "scenarios/curriculum/navigation.json",
+          "scenarios/curriculum/warmup.json"
+        ]
+      }
+    ],
+    "evaluation_scenarios": [
+      "scenarios/curriculum/warmup.json",
+      "scenarios/curriculum/navigation.json",
+      "scenarios/curriculum/handoff.json",
+      "scenarios/demo.json",
+      "scenarios/ruta_caliente.json",
+      "scenarios/pasillo_compartido.json"
+    ]
+  },
+  "rewards": {
+    "step": -1.0,
+    "pickup": 5.0,
+    "delivery": 50.0,
+    "success": 100.0,
+    "destruction": -100.0,
+    "timeout": -20.0,
+    "damage": -2.0,
+    "shaping": 2.0,
+    "gamma": 0.99
+  },
+  "git_revision": "d33c415d6cfe4d4c70a2dc444c5eb4696e4ec1c4",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "packages": {
+    "torch": "2.15.0",
+    "gymnasium": "1.4.0",
+    "stable-baselines3": "2.9.2",
+    "numpy": "2.5.4"
+  },
+  "scenario_hashes": {
+    "scenarios/curriculum/handoff.json": "2678129dfe75a2052431d93b671d68ef711b2531090f649d46324d4f07eafa96",
+    "scenarios/curriculum/navigation.json": "ea335dd06701337453151ac20ec2f0706341e344f5d475920940b99c2368ab0a",
+    "scenarios/curriculum/warmup.json": "3f38b085e51abead0ce597d1c24df5514a50ba0a0bdc5ed3dafc1bb80cb6aef1",
+    "scenarios/demo.json": "4727b14840395e0e4f9db64f956b34d9ba74e84890c4a270e058a8fd962bf35e",
+    "scenarios/pasillo_compartido.json": "321cda8e3dbdbec575265e37ab65fb991025a49d516db03d97ebdf8508ab9617",
+    "scenarios/ruta_caliente.json": "a47b1c38d986812863a11d70f5b0eaf7e15129b01e04474968cb47a0d5990bed"
+  },
+  "evaluation_scope": "development scenarios also used in training; not held-out test"
+}
