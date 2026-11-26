@@ -22,7 +22,7 @@ from stable_baselines3.common.monitor import Monitor
 from sar_bot.core import Scenario
 from sar_bot.env import RescueEnv, RewardConfig
 from sar_bot.learning import evaluate_model, model_score, observation_mode_for_model
-from sar_bot.training import StageExploration
+from sar_bot.training import StageExploration, resolve_training_config
 
 
 class DevelopmentEvaluation(BaseCallback):
@@ -48,7 +48,8 @@ class DevelopmentEvaluation(BaseCallback):
             self.model.save(self.run_dir / "best_model")
         status = "; ".join(f"{r['scenario']}: {r['rescued']}/{r['victims_total']}, {r['outcome']}, "
                            f"pasos={r['steps']}, daño={r['damage_total']}" for r in results)
-        print(f"[{self.stage} | {self.model.num_timesteps} pasos] {status}", flush=True)
+        print(f"[{self.stage} | {self.model.num_timesteps} pasos] "
+              f"Exitos: {score[0]}/{len(results)}, rescatados: {score[1]} | {status}", flush=True)
         return results
 
     def _on_step(self):
@@ -62,12 +63,17 @@ def main():
     parser.add_argument("--config", type=Path, default=ROOT / "configs/dqn_initial.json")
     parser.add_argument("--run-dir", type=Path, default=ROOT / "outputs/dqn-initial")
     parser.add_argument("--seed", type=int, help="Sobrescribe la semilla del JSON para una ejecución independiente")
+    parser.add_argument("--pilot-steps", type=int, help="Pasos por etapa para un piloto acotado; no demuestra convergencia")
     args = parser.parse_args()
     config = json.loads(args.config.read_text(encoding="utf-8"))
+    try:
+        config, partition = resolve_training_config(config, ROOT, args.pilot_steps)
+    except (ValueError, OSError, KeyError) as error:
+        parser.error(str(error))
     if args.seed is not None:
-        if not 0 <= args.seed < 2**32:
-            parser.error("La semilla debe estar entre 0 y 2**32 - 1")
         config["seed"] = args.seed
+    if type(config["seed"]) is not int or not 0 <= config["seed"] < 2**32:
+        parser.error("La semilla debe estar entre 0 y 2**32 - 1")
     if args.run_dir.exists() and any(args.run_dir.iterdir()):
         parser.error("run-dir debe estar vacío para no sobrescribir otro experimento")
     rewards = RewardConfig(**config["rewards"])
@@ -83,6 +89,8 @@ def main():
     checked_env = RescueEnv([s for stage in scenarios_by_stage for s in stage] + evaluation,
                            rewards, observation_mode=observation_mode)
     check_env(checked_env)
+    print(f"Perfil {checked_env.profile}; etapas: " + ", ".join(
+        f"{s['name']}={len(s['scenarios'])} casos/{s['steps']} pasos" for s in config["stages"]), flush=True)
     for stage in config["stages"]:
         if "exploration" in stage:
             StageExploration(0, stage["steps"], **stage["exploration"])
@@ -103,8 +111,12 @@ def main():
                     name: importlib.metadata.version(name)
                     for name in ("torch", "gymnasium", "stable-baselines3", "numpy")},
                 "scenario_hashes": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths},
-                "evaluation_scope": "development/selection; overlap listed explicitly; not final test",
+                "evaluation_scope": ("validation/selection; frozen manifest; test not evaluated" if partition
+                                     else "development/selection; overlap listed explicitly; not final test"),
+                "partition_manifest": partition,
                 "evaluation_overlap_with_training": overlap}
+    if partition:
+        (args.run_dir / "partition_manifest.json").write_bytes((ROOT / partition["path"]).read_bytes())
     if initial_model is not None:
         metadata["initial_model"] = {
             "path": config["initial_model"],
@@ -156,6 +168,17 @@ def main():
         best = DQN.load(args.run_dir / "best_model", device="cpu")
         results = evaluate_model(best, evaluation, rewards)
         (args.run_dir / "best_results.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
+        selected = max((json.loads(line) for line in (args.run_dir / "evaluations.jsonl").read_text(
+            encoding="utf-8").splitlines()), key=lambda item: tuple(item["score"]))
+        summary = {"scope": "pilot" if args.pilot_steps else "training",
+                   "training_steps": model.num_timesteps, "training_seed": config["seed"],
+                   "selected_steps": selected["steps"], "selection_split": "validation" if partition else "development",
+                   "validation_cases": len(results), "successes": sum(r["success"] for r in results),
+                   "rescued": sum(r["rescued"] for r in results),
+                   "elapsed_seconds": round(time.monotonic() - callback.started, 2),
+                   "model_sha256": hashlib.sha256((args.run_dir / "best_model.zip").read_bytes()).hexdigest(),
+                   "test_evaluated": False}
+        (args.run_dir / "training_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
         print(f"Entrenamiento terminado. Mejor modelo de desarrollo: {args.run_dir / 'best_model.zip'}")
     finally:
         if model is not None:

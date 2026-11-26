@@ -65,7 +65,15 @@ class RescueEnv(gym.Env):
             shape=(self.observation_size(self.width, self.height, self.victim_count, observation_mode),),
             dtype=np.float32
         )
-        self._distances = [self._compute_distances(s) for s in scenarios]
+        # Las ubicaciones y el calor no cambian las distancias geométricas.
+        # Compartirlas por edificio evita duplicar una tabla O(celdas²) por caso.
+        distances_by_geometry = {}
+        self._distances = []
+        for scenario in scenarios:
+            geometry = (scenario.width, scenario.height, scenario.walls)
+            if geometry not in distances_by_geometry:
+                distances_by_geometry[geometry] = self._compute_distances(scenario)
+            self._distances.append(distances_by_geometry[geometry])
         # Toda entrega con capacidad uno cuesta a lo sumo dos recorridos simples
         # por persona. Escala fija por edificio: no altera el potencial entre pasos.
         self._potential_scales = [min(1.0, self.rewards.potential_bound / max(

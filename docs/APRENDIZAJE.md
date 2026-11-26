@@ -155,6 +155,30 @@ El pasillo largo ahora queda resuelto con un único controlador que también com
 
 Los diez casos evaluados usan mapa conocido y distancias calculadas a partir del mapa; no se evalúa exploración a ciegas. Una sola semilla y dos configuraciones de prueba no bastan para generalización amplia.
 
+## Entrenamiento V2 con particiones 12 × 12
+
+`configs/dqn_v2_12x12.json` usa el manifiesto congelado `v2_12x12_v1` y sensores de 390 entradas. El currículo comienza con ocho configuraciones fáciles (cuatro por edificio), continúa con las veinte fáciles y termina con las sesenta de entrenamiento. Los presupuestos iniciales son 20000, 40000 y 60000 pasos; no garantizan convergencia. No cambian reglas térmicas ni observaciones.
+
+Los veinte casos de validación seleccionan checkpoints por rescates completos, personas entregadas y retorno. La configuración efectiva guarda rutas explícitas, semilla, hashes y manifiesto. El entrenador rechaza un caso ajeno a entrenamiento o selección ajena a validación por su firma física, aunque el archivo haya sido copiado con otro nombre. Los cuarenta casos de prueba no se evalúan ni entran en la memoria de experiencias.
+
+Piloto de integración acotado (6000 pasos nuevos, no es un resultado final):
+
+```powershell
+uv run --locked --extra rl python scripts/train.py --config configs/dqn_v2_12x12.json --run-dir outputs/v2-12x12-pilot-s0 --pilot-steps 2000 --seed 0
+```
+
+Entrenamiento con el presupuesto completo de la configuración:
+
+```powershell
+uv run --locked --extra rl python scripts/train.py --config configs/dqn_v2_12x12.json --run-dir outputs/v2-12x12-s0 --seed 0
+```
+
+Cada directorio debe ser nuevo. `metadata.json` registra el currículo expandido y las particiones; `evaluations.jsonl` conserva la selección; `training_summary.json` identifica presupuesto, checkpoint elegido, éxitos y hash. `best_model.zip` es el seleccionado y `final_model.zip` el último, que puede ser peor. No confundir un piloto que ejecuta actualizaciones con un agente que ya resuelve el rescate.
+
+El entorno comparte tablas de distancias entre configuraciones con las mismas paredes y dimensiones. La evaluación reutiliza un entorno para la lista completa, sin cambiar los resultados por escenario. Esto evita recalcular tablas geométricas por cada nueva ubicación y conserva los perfiles V1.
+
+Este entrenamiento sigue siendo por ejecuciones independientes. La persistencia de memoria y el aprendizaje en vivo continúan en SARB-033/034; aquí no se implementan.
+
 ## Fuentes técnicas
 
 - [Gymnasium: API del entorno](https://gymnasium.farama.org/api/env/)

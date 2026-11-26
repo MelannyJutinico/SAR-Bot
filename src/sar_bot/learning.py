@@ -23,9 +23,23 @@ def observation_mode_for_model(model, scenario):
 
 def evaluate_model(model, scenarios, rewards: RewardConfig | None = None):
     results = []
+    if not scenarios:
+        return results
+    mode = observation_mode_for_model(model, scenarios[0])
     for scenario in scenarios:
-        env = RescueEnv([scenario], rewards, observation_mode=observation_mode_for_model(model, scenario))
-        observation, _ = env.reset(seed=0)
+        observation_mode_for_model(model, scenario)
+    # Un mismo entorno comparte las tablas geométricas de los edificios.
+    env = RescueEnv(scenarios, rewards, observation_mode=mode)
+    try:
+        return _evaluate_in_env(model, scenarios, env)
+    finally:
+        env.close()
+
+
+def _evaluate_in_env(model, scenarios, env):
+    results = []
+    for index, scenario in enumerate(scenarios):
+        observation, _ = env.reset(seed=0, options={"scenario_index": index})
         episode_return = 0.0
         while True:
             action, _ = model.predict(observation, deterministic=True)
@@ -44,7 +58,6 @@ def evaluate_model(model, scenarios, rewards: RewardConfig | None = None):
             "integrity_robot_2": state.robots[1].integrity,
             "return": episode_return,
         })
-        env.close()
     return results
 
 
